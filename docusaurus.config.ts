@@ -35,6 +35,18 @@ const config: Config = {
     locales: ['en'],
   },
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'plugin-docs',
+        path: 'plugin-docs/references',
+        routeBasePath: 'api',
+        exclude: ['**/*.template', '**/api/**'],
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -86,6 +98,12 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Tutorial',
+        },
+        {
+          to: '/plugin-docs/intro',
+          label: 'Plugin Docs',
+          position: 'left',
+          activeBaseRegex: '/plugin-docs/',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {

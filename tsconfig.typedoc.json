@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@baosky/plugin": ["./node_modules/@baosky/plugin/src/baosky.d.ts"],
+      "@baosky/plugin/*": ["./node_modules/@baosky/plugin/src/*"]
+    }
+  },
+  "include": [
+    "index.ts",
+    "node_modules/@baosky/plugin/src/**/*.d.ts"
+  ]
+}
