@@ -470,7 +470,7 @@ function generateMarkdown() {
                 const anchor = `${ns.name.toLowerCase()}-${func.name.toLowerCase()}`;
                 md += `<div id="${anchor}"></div>\n\n`;
                 md += '<details>\n';
-                md += `<summary><code>${escapeHtml(func.signature)}</code></summary>\n\n`;
+                md += `<summary><code>${escapeSignature(func.signature)}</code></summary>\n\n`;
 
                 if (func.description) {
                     md += '##### 描述\n';
@@ -478,23 +478,27 @@ function generateMarkdown() {
                 }
 
                 if (func.parameters.length > 0) {
-                    md += '##### 参数\n';
+                    md += '##### 参数\n\n';
                     func.parameters.forEach(param => {
                         const optional = param.optional ? ' (可选)' : '';
-                        md += `- **${param.name}**: \`${linkifyCodeTypes(param.type)}\`${optional}  \n`;
+                        const typeWithLinks = linkifyCodeTypes(param.type);
+                        // 使用 JSX style 对象而不是字符串
+                        md += `<div style={{marginLeft: '1em', marginBottom: '0.5em'}}>\n`;
+                        md += `<strong>${param.name}</strong>: <span style={{fontFamily: 'var(--ifm-font-family-monospace)', background: 'var(--ifm-code-background)', padding: '2px 6px', borderRadius: '3px', fontSize: '90%'}}>${typeWithLinks}</span>${optional}<br/>\n`;
                         if (param.description) {
-                            md += `  ${convertJSDocLinks(param.description)}\n`;
+                            md += `<span style={{marginLeft: '1em'}}>${convertJSDocLinks(param.description)}</span>\n`;
                         }
-                        md += '\n';
+                        md += `</div>\n\n`;
                     });
                 }
 
-                md += '##### 返回值\n';
-                md += `- \`${linkifyCodeTypes(func.returnType)}\``;
+                md += '##### 返回值\n\n';
+                const returnTypeWithLinks = linkifyCodeTypes(func.returnType);
+                md += `<div style={{marginLeft: '1em'}}><span style={{fontFamily: 'var(--ifm-font-family-monospace)', background: 'var(--ifm-code-background)', padding: '2px 6px', borderRadius: '3px', fontSize: '90%'}}>${returnTypeWithLinks}</span>`;
                 if (func.returnDescription) {
                     md += ` - ${convertJSDocLinks(func.returnDescription)}`;
                 }
-                md += '\n\n';
+                md += '</div>\n\n';
 
                 if (func.examples.length > 0) {
                     md += '##### 示例\n';
@@ -534,8 +538,9 @@ function generateMarkdown() {
                     md += `${convertJSDocLinks(event.description)}\n\n`;
                 }
 
-                md += '##### 类型\n';
-                md += `- \`${linkifyCodeTypes(event.typeString)}\`\n\n`;
+                md += '##### 类型\n\n';
+                const eventTypeWithLinks = linkifyCodeTypes(event.typeString);
+                md += `<div style={{marginLeft: '1em'}}><span style={{fontFamily: 'var(--ifm-font-family-monospace)', background: 'var(--ifm-code-background)', padding: '2px 6px', borderRadius: '3px', fontSize: '90%'}}>${eventTypeWithLinks}</span></div>\n\n`;
 
                 if (event.examples.length > 0) {
                     md += '##### 示例\n';
@@ -618,7 +623,7 @@ function generateMarkdown() {
                 md += '##### Constructors\n\n';
                 cls.constructors.forEach(ctor => {
                     md += '<details>\n';
-                    md += `<summary><code>${escapeHtml(ctor.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${escapeSignature(ctor.signature)}</code></summary>\n\n`;
                     if (ctor.description) {
                         md += `${convertJSDocLinks(ctor.description)}\n\n`;
                     }
@@ -651,7 +656,7 @@ function generateMarkdown() {
                     const methodAnchor = `${cls.anchor}-${method.name?.toLowerCase()}`;
                     md += `<div id="${methodAnchor}"></div>\n\n`;
                     md += '<details>\n';
-                    md += `<summary><code>${escapeHtml(method.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${escapeSignature(method.signature)}</code></summary>\n\n`;
                     if (method.description) {
                         md += `${convertJSDocLinks(method.description)}\n\n`;
                     }
@@ -698,7 +703,7 @@ function generateMarkdown() {
                     const methodAnchor = `${iface.anchor}-${method.name?.toLowerCase()}`;
                     md += `<div id="${methodAnchor}"></div>\n\n`;
                     md += '<details>\n';
-                    md += `<summary><code>${escapeHtml(method.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${escapeSignature(method.signature)}</code></summary>\n\n`;
                     if (method.description) {
                         md += `${convertJSDocLinks(method.description)}\n\n`;
                     }
@@ -717,6 +722,17 @@ function generateMarkdown() {
  * 转义 HTML 特殊字符和 MDX 特殊字符
  */
 function escapeHtml(text) {
+    return text
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/{/g, '&#123;')
+        .replace(/}/g, '&#125;');
+}
+
+/**
+ * 转义签名中的特殊字符（转义尖括号和花括号，符合 MDX v3 要求）
+ */
+function escapeSignature(text) {
     return text
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -767,12 +783,19 @@ function convertJSDocLinks(text) {
         return placeholder;
     });
 
+    // 处理换行符：将多个连续换行替换为占位符，单个换行替换为空格
+    // 这样可以保持段落分隔，同时避免 MDX 解析错误
+    text = text.replace(/\n\n+/g, '___LINE_BREAK___').replace(/\n/g, ' ');
+
     // 转义所有 MDX 特殊字符（<>{}）
     text = text
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/{/g, '&#123;')
         .replace(/}/g, '&#125;');
+
+    // 将换行占位符替换为 <br/> 标签（在转义之后，所以不会被转义）
+    text = text.replace(/___LINE_BREAK___/g, '<br/><br/>');
 
     // 恢复 JSDoc 链接为 HTML（不会被转义，因为已经转义完了）
     links.forEach((link, index) => {
@@ -858,27 +881,56 @@ function linkifyTypes(typeString) {
 function linkifyCodeTypes(typeString) {
     if (!typeString) return escapeCode(typeString || '');
 
-    // 先转义 HTML
-    let escaped = escapeCode(typeString);
+    // 先转义尖括号和花括号，使用占位符避免后续替换影响
+    // 使用不包含单词字符的占位符，以免影响\b单词边界匹配
+    let result = typeString
+        .replace(/</g, '«LT»')
+        .replace(/>/g, '«GT»')
+        .replace(/{/g, '«LB»')
+        .replace(/}/g, '«RB»');
 
-    // 然后添加链接（使用 HTML <a> 标签而不是 Markdown 链接）
+    // 匹配类型名（使用大写字母开头的标识符）
     const typePattern = /\b([A-Z][a-zA-Z0-9]*)\b/g;
 
-    return escaped.replace(typePattern, (match, typeName) => {
+    // 收集所有需要替换的类型及其位置
+    const replacements = [];
+    let match;
+
+    while ((match = typePattern.exec(result)) !== null) {
+        const typeName = match[1];
+
         // 跳过基本类型
         if (PRIMITIVE_TYPES.has(typeName)) {
-            return match;
+            continue;
         }
 
         // 检查是否在符号表中
         if (symbols.has(typeName)) {
             const symbol = symbols.get(typeName);
-            // 使用 HTML <a> 标签，在 code 标签内也能渲染
-            return `<a href="#${symbol.anchor}">${typeName}</a>`;
+            replacements.push({
+                start: match.index,
+                end: match.index + typeName.length,
+                original: typeName,
+                replacement: `<a href="#${symbol.anchor}">${typeName}</a>`
+            });
         }
+    }
 
-        return match;
+    // 从后往前替换，避免位置偏移
+    replacements.sort((a, b) => b.start - a.start);
+
+    replacements.forEach(({ start, end, replacement }) => {
+        result = result.substring(0, start) + replacement + result.substring(end);
     });
+
+    // 将占位符替换为HTML实体
+    result = result
+        .replace(/«LT»/g, '&lt;')
+        .replace(/«GT»/g, '&gt;')
+        .replace(/«LB»/g, '&#123;')
+        .replace(/«RB»/g, '&#125;');
+
+    return result;
 }
 
 /**
