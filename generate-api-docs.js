@@ -470,7 +470,8 @@ function generateMarkdown() {
                 const anchor = `${ns.name.toLowerCase()}-${func.name.toLowerCase()}`;
                 md += `<div id="${anchor}"></div>\n\n`;
                 md += '<details>\n';
-                md += `<summary><code>${escapeSignature(func.signature)}</code></summary>\n\n`;
+                // summary 中直接使用带链接的签名，onclick 会阻止事件冒泡
+                md += `<summary><code>${linkifyCodeTypes(func.signature)}</code></summary>\n\n`;
 
                 if (func.description) {
                     md += '##### 描述\n';
@@ -623,7 +624,7 @@ function generateMarkdown() {
                 md += '##### Constructors\n\n';
                 cls.constructors.forEach(ctor => {
                     md += '<details>\n';
-                    md += `<summary><code>${escapeSignature(ctor.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${linkifyCodeTypes(ctor.signature)}</code></summary>\n\n`;
                     if (ctor.description) {
                         md += `${convertJSDocLinks(ctor.description)}\n\n`;
                     }
@@ -656,7 +657,7 @@ function generateMarkdown() {
                     const methodAnchor = `${cls.anchor}-${method.name?.toLowerCase()}`;
                     md += `<div id="${methodAnchor}"></div>\n\n`;
                     md += '<details>\n';
-                    md += `<summary><code>${escapeSignature(method.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${linkifyCodeTypes(method.signature)}</code></summary>\n\n`;
                     if (method.description) {
                         md += `${convertJSDocLinks(method.description)}\n\n`;
                     }
@@ -703,7 +704,7 @@ function generateMarkdown() {
                     const methodAnchor = `${iface.anchor}-${method.name?.toLowerCase()}`;
                     md += `<div id="${methodAnchor}"></div>\n\n`;
                     md += '<details>\n';
-                    md += `<summary><code>${escapeSignature(method.signature)}</code></summary>\n\n`;
+                    md += `<summary><code>${linkifyCodeTypes(method.signature)}</code></summary>\n\n`;
                     if (method.description) {
                         md += `${convertJSDocLinks(method.description)}\n\n`;
                     }
@@ -809,7 +810,7 @@ function convertJSDocLinks(text) {
             // 如果类型在符号表中，创建链接；否则只返回描述文本
             if (symbols.has(reference)) {
                 const symbol = symbols.get(reference);
-                replacement = `<a href="#${symbol.anchor}">${description}</a>`;
+                replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${description}</a>`;
             } else {
                 replacement = description;
             }
@@ -821,7 +822,7 @@ function convertJSDocLinks(text) {
             // 尝试用最后一部分创建链接
             if (symbols.has(lastName)) {
                 const symbol = symbols.get(lastName);
-                replacement = `<a href="#${symbol.anchor}">${lastName}</a>`;
+                replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${lastName}</a>`;
             } else {
                 replacement = lastName;
             }
@@ -833,7 +834,7 @@ function convertJSDocLinks(text) {
         // 否则，如果类型在符号表中，转换为 HTML 链接
         else if (symbols.has(reference)) {
             const symbol = symbols.get(reference);
-            replacement = `<a href="#${symbol.anchor}">${reference}</a>`;
+            replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${reference}</a>`;
         } else {
             replacement = reference;
         }
@@ -868,7 +869,7 @@ function linkifyTypes(typeString) {
         // 检查是否在符号表中
         if (symbols.has(typeName)) {
             const symbol = symbols.get(typeName);
-            return `<a href="#${symbol.anchor}">${typeName}</a>`;
+            return `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${typeName}</a>`;
         }
 
         return match;
@@ -911,7 +912,8 @@ function linkifyCodeTypes(typeString) {
                 start: match.index,
                 end: match.index + typeName.length,
                 original: typeName,
-                replacement: `<a href="#${symbol.anchor}">${typeName}</a>`
+                // 添加 onClick 阻止事件冒泡（React/JSX 用 onClick 而不是 onclick）
+                replacement: `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${typeName}</a>`
             });
         }
     }
