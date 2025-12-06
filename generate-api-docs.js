@@ -454,17 +454,16 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 
 <BrowserOnly>
   {() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !window.__apiDocsInitialized) {
+      window.__apiDocsInitialized = true;
+
       // 快速滚动到锚点的函数
       const scrollToHash = (hash) => {
         if (hash) {
           const id = hash.startsWith('#') ? hash.slice(1) : hash;
           const element = document.getElementById(id);
           if (element) {
-            // 使用 requestAnimationFrame 确保在 DOM 更新后滚动
-            requestAnimationFrame(() => {
-              element.scrollIntoView({ behavior: 'instant', block: 'start' });
-            });
+            element.scrollIntoView({ behavior: 'instant', block: 'start' });
           }
         }
       };
@@ -474,34 +473,51 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
         const target = e.target.closest('a[href^="#"]');
         if (target && target.hash) {
           e.preventDefault();
-          e.stopPropagation(); // 阻止事件冒泡，防止触发 details 展开/折叠
+          e.stopPropagation();
+          e.stopImmediatePropagation(); // 完全阻止事件传播
 
           const hash = target.hash;
-          // 立即滚动
           scrollToHash(hash);
-          // 更新 URL
+
+          // 使用 pushState 支持浏览器后退
           if (window.location.hash !== hash) {
             window.history.pushState(null, '', hash);
           }
         }
       };
 
-      // 使用 hashchange 事件处理浏览器前进/后退和所有 hash 变化
-      const handleHashChange = () => {
-        // 延迟执行以确保在 Docusaurus 处理后运行
-        setTimeout(() => {
+      // 阻止所有 popstate 事件传播
+      const handlePopState = (e) => {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        // 直接处理滚动
+        requestAnimationFrame(() => {
           scrollToHash(window.location.hash);
-        }, 0);
+        });
       };
 
+      // 使用 hashchange 事件处理所有 hash 变化
+      const handleHashChange = (e) => {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        scrollToHash(window.location.hash);
+      };
+
+      // 使用最高优先级（capture + 尽早注册）
       document.addEventListener('click', handleAnchorClick, true);
-      window.addEventListener('hashchange', handleHashChange);
+      window.addEventListener('popstate', handlePopState, true);
+      window.addEventListener('hashchange', handleHashChange, true);
 
       return () => {
+        window.__apiDocsInitialized = false;
         document.removeEventListener('click', handleAnchorClick, true);
-        window.removeEventListener('hashchange', handleHashChange);
+        window.removeEventListener('popstate', handlePopState, true);
+        window.removeEventListener('hashchange', handleHashChange, true);
       };
     }
+    return null;
   }}
 </BrowserOnly>
 
