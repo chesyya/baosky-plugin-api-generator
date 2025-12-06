@@ -446,12 +446,84 @@ function parseFile(filePath) {
 function generateMarkdown() {
     let md = '# @baosky/plugin API 文档\n\n';
     md += '> 本文档自动生成自 TypeScript 源代码\n\n';
-    md += '---\n\n';
+
+    // 添加性能优化 CSS 和绕过 React Router 的脚本
+    md += `
+import styles from '@site/src/css/api-performance.module.css';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+<BrowserOnly>
+  {() => {
+    if (typeof window !== 'undefined') {
+      // 快速滚动到锚点的函数
+      const scrollToHash = (hash) => {
+        if (hash) {
+          const id = hash.startsWith('#') ? hash.slice(1) : hash;
+          const element = document.getElementById(id);
+          if (element) {
+            // 使用 requestAnimationFrame 确保在 DOM 更新后滚动
+            requestAnimationFrame(() => {
+              element.scrollIntoView({ behavior: 'instant', block: 'start' });
+            });
+          }
+        }
+      };
+
+      // 绕过 Docusaurus 的点击处理，使用原生锚点跳转
+      const handleAnchorClick = (e) => {
+        const target = e.target.closest('a[href^="#"]');
+        if (target && target.hash) {
+          e.preventDefault();
+          e.stopPropagation(); // 阻止事件冒泡，防止触发 details 展开/折叠
+
+          const hash = target.hash;
+          // 立即滚动
+          scrollToHash(hash);
+          // 更新 URL
+          if (window.location.hash !== hash) {
+            window.history.pushState(null, '', hash);
+          }
+        }
+      };
+
+      // 使用 hashchange 事件处理浏览器前进/后退和所有 hash 变化
+      const handleHashChange = () => {
+        // 延迟执行以确保在 Docusaurus 处理后运行
+        setTimeout(() => {
+          scrollToHash(window.location.hash);
+        }, 0);
+      };
+
+      document.addEventListener('click', handleAnchorClick, true);
+      window.addEventListener('hashchange', handleHashChange);
+
+      return () => {
+        document.removeEventListener('click', handleAnchorClick, true);
+        window.removeEventListener('hashchange', handleHashChange);
+      };
+    }
+  }}
+</BrowserOnly>
+
+<div className={styles.apiDocs}>
+
+`;
 
     // 按 namespace 名称排序
     const sortedNamespaces = Array.from(namespaces.values()).sort((a, b) =>
         a.name.localeCompare(b.name)
     );
+
+    // 添加快速导航目录
+    md += '## 快速导航\n\n';
+    sortedNamespaces.forEach(ns => {
+        const funcCount = ns.functions.length;
+        const eventCount = ns.events.length;
+        const varCount = ns.variables.length;
+        const total = funcCount + eventCount + varCount;
+        md += `- [**${ns.name}**](#${ns.name.toLowerCase()}) (${total} items)\n`;
+    });
+    md += '\n---\n\n';
 
     sortedNamespaces.forEach(ns => {
         md += `## ${ns.name}\n\n`;
@@ -716,6 +788,9 @@ function generateMarkdown() {
         });
     }
 
+    // 关闭性能优化 div
+    md += '\n</div>\n';
+
     return md;
 }
 
@@ -810,7 +885,7 @@ function convertJSDocLinks(text) {
             // 如果类型在符号表中，创建链接；否则只返回描述文本
             if (symbols.has(reference)) {
                 const symbol = symbols.get(reference);
-                replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${description}</a>`;
+                replacement = `<a href="#${symbol.anchor}">${description}</a>`;
             } else {
                 replacement = description;
             }
@@ -822,7 +897,7 @@ function convertJSDocLinks(text) {
             // 尝试用最后一部分创建链接
             if (symbols.has(lastName)) {
                 const symbol = symbols.get(lastName);
-                replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${lastName}</a>`;
+                replacement = `<a href="#${symbol.anchor}">${lastName}</a>`;
             } else {
                 replacement = lastName;
             }
@@ -834,7 +909,7 @@ function convertJSDocLinks(text) {
         // 否则，如果类型在符号表中，转换为 HTML 链接
         else if (symbols.has(reference)) {
             const symbol = symbols.get(reference);
-            replacement = `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${reference}</a>`;
+            replacement = `<a href="#${symbol.anchor}">${reference}</a>`;
         } else {
             replacement = reference;
         }
@@ -869,7 +944,7 @@ function linkifyTypes(typeString) {
         // 检查是否在符号表中
         if (symbols.has(typeName)) {
             const symbol = symbols.get(typeName);
-            return `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${typeName}</a>`;
+            return `<a href="#${symbol.anchor}">${typeName}</a>`;
         }
 
         return match;
@@ -912,8 +987,8 @@ function linkifyCodeTypes(typeString) {
                 start: match.index,
                 end: match.index + typeName.length,
                 original: typeName,
-                // 添加 onClick 阻止事件冒泡（React/JSX 用 onClick 而不是 onclick）
-                replacement: `<a href="#${symbol.anchor}" onClick={(e) => e.stopPropagation()}>${typeName}</a>`
+                // 使用纯 CSS pointer-events 方案，不用 onClick（避免内存泄漏）
+                replacement: `<a href="#${symbol.anchor}">${typeName}</a>`
             });
         }
     }

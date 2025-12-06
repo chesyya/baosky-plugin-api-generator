@@ -1,0 +1,52 @@
+/* API 文档性能优化 CSS */
+
+.apiDocs {
+  /* 启用 CSS containment 提升性能 */
+  contain: layout style paint;
+}
+
+/* summary 正常可点击，链接通过 JavaScript stopPropagation 防止触发展开/折叠 */
+
+/* 优化 details 元素渲染性能 */
+.apiDocs details {
+  /* content-visibility: auto 让浏览器只渲染可见区域 */
+  content-visibility: auto;
+
+  /* 提供预估高度，帮助浏览器优化滚动 */
+  contain-intrinsic-size: auto 100px;
+
+  /* 启用 GPU 加速 */
+  will-change: contents;
+
+  /* 优化布局性能 */
+  contain: layout style;
+}
+
+/* 优化折叠/展开动画性能 */
+.apiDocs details[open] {
+  contain-intrinsic-size: auto 500px;
+}
+
+/* 优化锚点跳转 */
+.apiDocs :target {
+  scroll-margin-top: 80px;
+}
+
+/* 优化代码块性能 */
+.apiDocs code {
+  contain: layout style paint;
+}
+
+/* 减少不必要的重绘 */
+.apiDocs summary {
+  cursor: pointer;
+  /* 防止选中文本导致重绘 */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 优化链接渲染 */
+.apiDocs a {
+  /* 减少 hover 时的重绘 */
+  will-change: color;
+}
