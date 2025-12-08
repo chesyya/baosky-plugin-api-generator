@@ -4,67 +4,67 @@ ContentId: 8027f6fb-6c9e-4106-8ef1-f9b0ba1b7085
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Explain the structure of a Visual Studio Code extension (plug-in)
+MetaDescription: Explain the structure of a Baosky 插件 (plug-in)
 ---
 
-# Extension Anatomy
+# 插件结构
 
-In the last topic, you were able to get a basic extension running. How does it work under the hood?
+在上一主题中，您已经能够运行一个基本的插件。它在底层是如何工作的呢？
 
-The `Hello World` extension does 3 things:
+`Hello World` 插件做了 3 件事：
 
-- Registers the [`onCommand`](/api/references/activation-events#onCommand) [**Activation Event**](/api/references/activation-events): `onCommand:helloworld.helloWorld`, so the extension becomes activated when user runs the `Hello World` command.
-  > **Note:** Starting with [VS Code 1.74.0](https://code.visualstudio.com/updates/v1_74#_implicit-activation-events-for-declared-extension-contributions), commands declared in the `commands` section of `package.json` automatically activate the extension when invoked, without requiring an explicit `onCommand` entry in `activationEvents`.
-- Uses the [`contributes.commands`](/api/references/contribution-points#contributes.commands) [**Contribution Point**](/api/references/contribution-points) to make the command `Hello World` available in the Command Palette, and bind it to a command ID `helloworld.helloWorld`.
-- Uses the [`commands.registerCommand`](/api/references/vscode-api#commands.registerCommand) [**VS Code API**](/api/references/vscode-api) to bind a function to the registered command ID `helloworld.helloWorld`.
+- 注册 [`onCommand`](/api/references/activation-events#onCommand) [**激活事件**](/api/references/activation-events)：`onCommand:helloworld.helloWorld`，这样当用户运行 `Hello World` 命令时，插件就会被激活。
+  > **注意：** 从 [Baosky 1.74.0](#) 开始，在 `package.json` 的 `commands` 部分声明的命令在调用时会自动激活插件，而不需要在 `activationEvents` 中显式添加 `onCommand` 条目。
+- 使用 [`contributes.commands`](/api/references/contribution-points#contributes.commands) [**贡献点**](/api/references/contribution-points)，使 `Hello World` 命令在命令面板中可用，并将其绑定到命令 ID `helloworld.helloWorld`。
+- 使用 [`commands.registerCommand`](/api/references/vscode-api#commands.registerCommand) [**Baosky API**](/api/references/vscode-api) 将函数绑定到已注册的命令 ID `helloworld.helloWorld`。
 
-Understanding these three concepts is crucial to writing extensions in VS Code:
+理解这三个概念对于在 Baosky 中编写插件至关重要：
 
-- [**Activation Events**](/api/references/activation-events): events upon which your extension becomes active.
-- [**Contribution Points**](/api/references/contribution-points): static declarations that you make in the `package.json` [Extension Manifest](#extension-manifest) to extend VS Code.
-- [**VS Code API**](/api/references/vscode-api): a set of JavaScript APIs that you can invoke in your extension code.
+- [**激活事件**](/api/references/activation-events)：使插件变为活动状态的事件。
+- [**贡献点**](/api/references/contribution-points)：您在 `package.json` [插件清单](#插件清单)中进行的静态声明，用于扩展 Baosky。
+- [**Baosky API**](/api/references/vscode-api)：一组 JavaScript API，您可以在插件代码中调用它们。
 
-In general, your extension would use a combination of Contribution Points and VS Code API to extend VS Code's functionality. The [Extension Capabilities Overview](/api/extension-capabilities/overview) topic helps you find the right Contribution Point and VS Code API for your extension.
+一般来说，您的插件会结合使用贡献点和 Baosky API 来扩展 Baosky 的功能。[插件功能概述](/api/插件-capabilities/overview)主题可帮助您为插件找到合适的贡献点和 Baosky API。
 
-Let's take a closer look at `Hello World` sample's source code and see how these concepts apply to it.
+让我们仔细看看 `Hello World` 示例的源代码，了解这些概念如何应用于它。
 
-## Extension File Structure
+## 插件文件结构
 
 ```
 .
 ├── .vscode
-│   ├── launch.json     // Config for launching and debugging the extension
-│   └── tasks.json      // Config for build task that compiles TypeScript
-├── .gitignore          // Ignore build output and node_modules
-├── README.md           // Readable description of your extension's functionality
+│   ├── launch.json     // 用于启动和调试插件的配置
+│   └── tasks.json      // 用于编译 TypeScript 的构建任务配置
+├── .gitignore          // 忽略构建输出和 node_modules
+├── README.md           // 插件功能的可读描述
 ├── src
-│   └── extension.ts    // Extension source code
-├── package.json        // Extension manifest
-├── tsconfig.json       // TypeScript configuration
+│   └── extension.ts    // 插件源代码
+├── package.json        // 插件清单
+├── tsconfig.json       // TypeScript 配置
 ```
 
-You can read more about the configuration files:
+您可以阅读更多关于配置文件的信息：
 
-- `launch.json` used to configure VS Code [Debugging](/docs/debugtest/debugging)
-- `tasks.json` for defining VS Code [Tasks](/docs/debugtest/tasks)
-- `tsconfig.json` consult the TypeScript [Handbook](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+- `launch.json` 用于配置 Baosky [调试](/docs/debugtest/debugging)
+- `tasks.json` 用于定义 Baosky [任务](/docs/debugtest/tasks)
+- `tsconfig.json` 请参阅 TypeScript [手册](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
-However, let's focus on `package.json` and `extension.ts`, which are essential to understanding the `Hello World` extension.
+不过，让我们重点关注 `package.json` 和 `extension.ts`，它们对于理解 `Hello World` 插件至关重要。
 
-### Extension Manifest
+### 插件清单
 
-Each VS Code extension must have a `package.json` as its [Extension Manifest](/api/references/extension-manifest). The `package.json` contains a mix of Node.js fields such as `scripts` and `devDependencies` and VS Code specific fields such as `publisher`, `activationEvents` and `contributes`. You can find descriptions of all VS Code specific fields in [Extension Manifest Reference](/api/references/extension-manifest). Here are some most important fields:
+每个 Baosky 插件都必须有一个 `package.json` 作为其[插件清单](/api/references/插件-manifest)。`package.json` 包含 Node.js 字段（如 `scripts` 和 `devDependencies`）和 Baosky 特定字段（如 `publisher`、`activationEvents` 和 `contributes`）的混合。您可以在[插件清单参考](/api/references/插件-manifest)中找到所有 Baosky 特定字段的描述。以下是一些最重要的字段：
 
-- `name` and `publisher`: VS Code uses `<publisher>.<name>` as a unique ID for the extension. For example, the Hello World sample has the ID `vscode-samples.helloworld-sample`. VS Code uses the ID to uniquely identify your extension.
-- `main`: The extension entry point.
-- `activationEvents` and `contributes`: [Activation Events](/api/references/activation-events) and [Contribution Points](/api/references/contribution-points).
-- `engines.vscode`: This specifies the minimum version of VS Code API that the extension depends on.
+- `name` 和 `publisher`：Baosky 使用 `<publisher>.<name>` 作为插件的唯一 ID。例如，Hello World 示例的 ID 是 `vscode-samples.helloworld-sample`。Baosky 使用此 ID 来唯一标识您的插件。
+- `main`：插件入口点。
+- `activationEvents` 和 `contributes`：[激活事件](/api/references/activation-events)和[贡献点](/api/references/contribution-points)。
+- `engines.vscode`：指定插件所依赖的 Baosky API 的最低版本。
 
 ```json
 {
   "name": "helloworld-sample",
   "displayName": "helloworld-sample",
-  "description": "HelloWorld example for VS Code",
+  "description": "HelloWorld example for Baosky",
   "version": "0.0.1",
   "publisher": "vscode-samples",
   "repository": "https://github.com/microsoft/vscode-extension-samples/helloworld-sample",
@@ -96,16 +96,16 @@ Each VS Code extension must have a `package.json` as its [Extension Manifest](/a
 }
 ```
 
-> **Note**: If your extension targets a VS Code version prior to 1.74, you must explicitly list `onCommand:helloworld.helloWorld` in `activationEvents`.
+> **注意**：如果您的插件针对 1.74 之前的 Baosky 版本，您必须在 `activationEvents` 中显式列出 `onCommand:helloworld.helloWorld`。
 
-## Extension Entry File
+## 插件入口文件
 
-The extension entry file exports two functions, `activate` and `deactivate`. `activate` is executed when your registered **Activation Event** happens. `deactivate` gives you a chance to clean up before your extension becomes deactivated. For many extensions, explicit cleanup may not be required, and the `deactivate` method can be removed. However, if an extension needs to perform an operation when VS Code is shutting down or the extension is disabled or uninstalled, this is the method to do so.
+插件入口文件导出两个函数：`activate` 和 `deactivate`。当您注册的**激活事件**发生时，`activate` 会被执行。`deactivate` 让您有机会在插件被停用之前进行清理。对于许多插件来说，可能不需要显式清理，可以删除 `deactivate` 方法。但是，如果插件需要在 Baosky 关闭或插件被禁用或卸载时执行操作，这就是要使用的方法。
 
-The VS Code extension API is declared in the [@types/vscode](https://www.npmjs.com/package/@types/vscode) type definitions. The version of the `vscode` type definitions is controlled by the value in the `engines.vscode` field in `package.json`. The `vscode` types give you IntelliSense, Go to Definition, and other TypeScript language features in your code.
+Baosky 插件 API 在 [@types/vscode](https://www.npmjs.com/package/@types/vscode) 类型定义中声明。`vscode` 类型定义的版本由 `package.json` 中 `engines.vscode` 字段的值控制。`vscode` 类型为您的代码提供 IntelliSense、转到定义以及其他 TypeScript 语言功能。
 
 ```ts
-// The module 'vscode' contains the VS Code extensibility API
+// The module 'vscode' contains the Baosky extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 

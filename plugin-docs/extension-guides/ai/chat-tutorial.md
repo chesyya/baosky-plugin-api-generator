@@ -4,30 +4,30 @@ ContentId: bea1d4c5-71e5-4b27-ac1e-fa9b59886dab
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Tutorial that walks you through creating a GitHub Copilot chat participant in VS Code by using the Chat API.
+MetaDescription: 本教程将指导您使用聊天 API 在 Baosky 中创建 GitHub Copilot 聊天参与者。
 ---
 
-# Tutorial: Build a code tutorial chat participant with the Chat API
+# 教程:使用聊天 API 构建代码教程聊天参与者
 
-In this tutorial, you'll learn how to create a Visual Studio Code extension that integrates with the GitHub Copilot Chat experience. You'll use the Chat extension API to contribute a chat participant. Your participant will be a code tutor that can provide explanations and sample exercises for programming concepts.
+在本教程中,您将学习如何创建与 GitHub Copilot 聊天体验集成的 Baosky 插件。您将使用聊天插件 API 来贡献聊天参与者。您的参与者将是一个代码导师,可以提供编程概念的解释和示例练习。
 
-## Prerequisites
+## 前提条件
 
-You'll need the following tools and accounts to complete this tutorial:
+您需要以下工具和帐户来完成本教程:
 
-- [Visual Studio Code](https://code.visualstudio.com/download)
-- [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat)
+- [Baosky](#)
+- [GitHub Copilot](#)
 - [Node.js](https://nodejs.org/en/download/)
 
-## Step 1: Set up your project
+## 步骤 1: 设置您的项目
 
-First, generate the extension project by using Yeoman and the VS Code Extension Generator.
+首先,使用 Yeoman 和 Baosky 插件生成器生成插件项目。
 
 ```bash
 npx --package yo --package generator-code -- yo code
 ```
 
-Select the following options to complete the setup:
+选择以下选项以完成设置:
 
 ```bash
 # ? What type of extension do you want to create? New Extension (TypeScript)
@@ -41,19 +41,19 @@ Select the following options to complete the setup:
 # ? Bundle the source code with webpack? No
 # ? Which package manager to use? npm
 
-# ? Do you want to open the new folder with Visual Studio Code? Open with `code`
+# ? Do you want to open the new folder with Baosky? Open with `code`
 ```
 
-Once your extension project is generated, there are two files you will be working in: `extension.ts` and `package.json`, which you can learn more about in the [Extension Anatomy docs](/api/get-started/extension-anatomy#extension-file-structure). As a quick overview:
+一旦生成了插件项目,您将在两个文件中工作:`插件.ts` 和 `package.json`,您可以在[插件结构文档](/api/get-started/插件-anatomy#插件-file-structure)中了解更多信息。作为快速概述:
 
-- `extension.ts` is the main entry point for your extension and contains the logic for your chat participant.
-- `package.json` contains the metadata for your extension, such as the name and description of your participant.
+- `插件.ts` 是插件的主入口点,包含聊天参与者的逻辑。
+- `package.json` 包含插件的元数据,例如参与者的名称和描述。
 
-Delete the auto-generated code in the `extension.ts` `activate()` method. This is where you will place our logic for our chat participant.
+删除 `插件.ts` 中 `activate()` 方法中自动生成的代码。这是您将放置聊天参与者逻辑的地方。
 
-## Step 2: Register a Chat participant
+## 步骤 2: 注册聊天参与者
 
-In the `package.json` file, replace the auto-generated `contributes` section with the following:
+在 `package.json` 文件中,将自动生成的 `contributes` 部分替换为以下内容:
 
 ```json
 "contributes":{
@@ -69,39 +69,39 @@ In the `package.json` file, replace the auto-generated `contributes` section wit
 }
 ```
 
-This code registers a chat participant with the following attributes:
+此代码注册了一个具有以下属性的聊天参与者:
 
-- Unique ID `chat-tutorial.code-tutor`, which will be referenced in the code
-- Full name `Code Tutor`, which will be shown in the title area of a response from your participant
-- Name `tutor`, which will be used to reference the chat participant as `@tutor` in the Chat view
-- Description "What can I teach you?", which will be shown in the chat input field as a placeholder text
+- 唯一 ID `chat-tutorial.code-tutor`,将在代码中引用
+- 完整名称 `Code Tutor`,将显示在参与者响应的标题区域中
+- 名称 `tutor`,将用于在聊天视图中引用聊天参与者为 `@tutor`
+- 描述 "What can I teach you?",将作为占位符文本显示在聊天输入字段中
 
-Finally, setting `isSticky: true` will automatically prepend the participant name in the chat input field after the user has started interacting with the participant.
+最后,设置 `isSticky: true` 将在用户开始与参与者交互后自动在聊天输入字段中添加参与者名称前缀。
 
-## Step 3: Craft the prompt
+## 步骤 3: 制作提示
 
-Now that the participant is registered, you can start implementing the logic for the code tutor. In the `extension.ts` file, you will define a prompt for the requests.
+现在参与者已注册,您可以开始实现代码导师的逻辑。在 `插件.ts` 文件中,您将为请求定义一个提示。
 
-Crafting a good prompt is the key to getting the best response from your participant. Check out [this article](https://platform.openai.com/docs/guides/prompt-engineering) for tips on prompt engineering.
+制作一个好的提示是从参与者获得最佳响应的关键。查看[这篇文章](https://platform.openai.com/docs/guides/prompt-engineering)以获取提示工程技巧。
 
-Your code tutor should emulate a real-world tutor by guiding the student to understand the concept instead of providing direct answers. Additionally, the tutor should remain focused on the topic and refrain from answering non-programming questions.
+您的代码导师应该通过引导学生理解概念而不是提供直接答案来模拟真实世界的导师。此外,导师应该专注于主题,并避免回答非编程问题。
 
-Consider the following two prompts. Which is more likely to give the specified behavior?
+考虑以下两个提示。哪个更有可能给出指定的行为?
 
 1. > You are a helpful code tutor. Your job is to teach the user with simple descriptions and sample code of the concept.
 2. > You are a helpful code tutor. Your job is to teach the user with simple descriptions and sample code of the concept. Respond with a guided overview of the concept in a series of messages. Do not give the user the answer directly, but guide them to find the answer themselves. If the user asks a non-programming question, politely decline to respond.
 
-The second prompt is more specific and gives the participant a clear direction on how to respond. Add this prompt in the `extension.ts` file.
+第二个提示更具体,并为参与者提供了如何响应的明确方向。在 `插件.ts` 文件中添加此提示。
 
 ```ts
 const BASE_PROMPT = 'You are a helpful code tutor. Your job is to teach the user with simple descriptions and sample code of the concept. Respond with a guided overview of the concept in a series of messages. Do not give the user the answer directly, but guide them to find the answer themselves. If the user asks a non-programming question, politely decline to respond.';
 ```
 
-## Step 4: Implement the request handler
+## 步骤 4: 实现请求处理程序
 
-Now that the prompt is selected, you need to implement the request handler. This is what will process the user's chat request. You will define the request handler, perform logic for processing the request, and return a response to the user.
+现在已选择了提示,您需要实现请求处理程序。这将处理用户的聊天请求。您将定义请求处理程序,执行处理请求的逻辑,并向用户返回响应。
 
-First, define the handler:
+首先,定义处理程序:
 
 ```ts
 // define a chat handler
@@ -111,9 +111,9 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 }
 ```
 
-Within the body of this handler, initialize the prompt and a `messages` array with the prompt. Then, send in what the user typed in the chat box. You can access this through `request.prompt`.
+在此处理程序的主体中,初始化提示和一个包含提示的 `messages` 数组。然后,发送用户在聊天框中输入的内容。您可以通过 `request.prompt` 访问此内容。
 
-Send the request using `request.model.sendRequest`, which will send the request using the currently selected model. Finally, stream the response to the user.
+使用 `request.model.sendRequest` 发送请求,这将使用当前选定的模型发送请求。最后,将响应流式传输给用户。
 
 ```ts
 // define a chat handler
@@ -142,11 +142,11 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 };
 ```
 
-## Step 5: Create the chat participant
+## 步骤 5: 创建聊天参与者
 
-Once the handler is implemented, the last step is to create the chat participant by using the `createChatParticipant` method in the Chat extension API. Make sure to use the same ID that you used in the `package.json`.
+一旦实现了处理程序,最后一步是使用聊天插件 API 中的 `createChatParticipant` 方法创建聊天参与者。确保使用您在 `package.json` 中使用的相同 ID。
 
-You should further customize your participant by adding an icon for it. This will show in the Chat view when interacting with the participant.
+您应该通过为其添加图标来进一步自定义您的参与者。这将在与参与者交互时显示在聊天视图中。
 
 ```ts
 // define a chat handler
@@ -181,28 +181,28 @@ const tutor = vscode.chat.createChatParticipant("chat-tutorial.code-tutor", hand
 tutor.iconPath = vscode.Uri.joinPath(context.extensionUri, 'tutor.jpeg');
 ```
 
-## Step 6: Run the code
+## 步骤 6: 运行代码
 
-You are now ready to try out your chat participant!
-Press `kbstyle(F5)` to run the code. A new window of VS Code will open with your chat participant.
+您现在已准备好尝试您的聊天参与者!
+按 `kbstyle(F5)` 运行代码。将打开一个新的 Baosky 窗口,其中包含您的聊天参与者。
 
-In the Copilot Chat pane, you can now invoke your participant by typing `@tutor`!
+在 Copilot 聊天窗格中,您现在可以通过输入 `@tutor` 来调用您的参与者!
 
-![Participant in Chat pane](../images/ai/chat-tutorial/participant.png)
+<!-- 图片已移除 -->
 
-Test it out by typing what you want to learn about. You should see a response giving you an overview of the concept!
+通过输入您想要学习的内容进行测试。您应该会看到一个响应,为您提供概念的概述!
 
-If you type a related message to continue the conversation, you'll notice that the participant doesn't give a follow-up response based on your conversation. That's because our current participant is only sending in the user's current message, and not the participant message history.
+如果您输入相关消息以继续对话,您会注意到参与者没有根据您的对话给出后续响应。这是因为我们当前的参与者仅发送用户的当前消息,而不是参与者消息历史记录。
 
-In the screenshot below, the tutor correctly responds with a starting explanation of stacks. However, in the follow-up, it does not understand that the user is continuing the conversation to see an implementation of stacks in Python, so it instead gives a generic response about Python.
+在下面的屏幕截图中,导师正确地响应了堆栈的起始解释。但是,在后续中,它不理解用户正在继续对话以查看 Python 中堆栈的实现,因此它给出了关于 Python 的通用响应。
 
-![Participant with no message history](../images/ai/chat-tutorial/participant-no-message-history.png)
+<!-- 图片已移除 -->
 
-## Step 7: Add message history for more context
+## 步骤 7: 添加消息历史记录以获得更多上下文
 
-One of the biggest values of Copilot Chat is the ability to iterate over several messages to get the best response. To do this, you want to send in the participant's message history to the chat request. You can access this through `context.history`.
+Copilot 聊天的最大价值之一是能够在多条消息上进行迭代以获得最佳响应。为此,您希望将参与者的消息历史记录发送到聊天请求。您可以通过 `context.history` 访问此内容。
 
-You'll need to retrieve that history and add it to the `messages` array. You will need to do this before the `request.prompt` is added.
+您需要检索该历史记录并将其添加到 `messages` 数组中。您需要在添加 `request.prompt` 之前执行此操作。
 
 ```ts
 // define a chat handler
@@ -246,17 +246,17 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 };
 ```
 
-Now when you run the code, you can have a conversation with your participant with all the context of the previous messages! In the screenshot below, the participant correctly understands that the user is requesting to see an implementation of stacks in Python.
+现在当您运行代码时,您可以与参与者进行对话,并包含所有先前消息的上下文!在下面的屏幕截图中,参与者正确地理解用户正在请求查看 Python 中堆栈的实现。
 
-![Participant with message history](../images/ai/chat-tutorial/participant-message-history.png)
+<!-- 图片已移除 -->
 
-## Step 8: Add a command
+## 步骤 8: 添加命令
 
-Now that the basic participant is implemented, you can extend it by adding a command. Commands are a shorthand notation for common user intents, and are indicated by the `/` symbol. The extension can then use the command to prompt the language model accordingly.
+现在已实现基本参与者,您可以通过添加命令来扩展它。命令是常见用户意图的速记符号,由 `/` 符号表示。然后插件可以使用命令相应地提示语言模型。
 
-It would be great to add a command to prompt your tutor to give a practice exercise for a concept. You'll need to register the command in the `package.json` file and implement the logic in `extension.ts`. You can name the command `exercise` so that it can be invoked by typing `/exercise`.
+添加一个命令以提示您的导师为概念提供练习题会很棒。您需要在 `package.json` 文件中注册该命令并在 `插件.ts` 中实现逻辑。您可以将命令命名为 `exercise`,以便可以通过输入 `/exercise` 来调用它。
 
-In `package.json` add the `commands` property to the `chatParticipants` property. Here, you'll specify the name of the command and a quick description:
+在 `package.json` 中,将 `commands` 属性添加到 `chatParticipants` 属性。在这里,您将指定命令的名称和快速描述:
 
 ```json
 "contributes": {
@@ -278,15 +278,15 @@ In `package.json` add the `commands` property to the `chatParticipants` property
   },
 ```
 
-To implement the logic for getting sample exercises from the tutor, the simplest way is to change the prompt that you send in to the request. Create a new prompt, `EXERCISES_PROMPT`, that asks the participant to return sample exercises. Here's an example of what that could look like:
+要实现从导师获取示例练习的逻辑,最简单的方法是更改您发送到请求的提示。创建一个新提示 `EXERCISES_PROMPT`,要求参与者返回示例练习。以下是其外观的示例:
 
 ```ts
 const EXERCISES_PROMPT = 'You are a helpful tutor. Your job is to teach the user with fun, simple exercises that they can complete in the editor. Your exercises should start simple and get more complex as the user progresses. Move one concept at a time, and do not move on to the next concept until the user provides the correct answer. Give hints in your exercises to help the user learn. If the user is stuck, you can provide the answer and explain why it is the answer. If the user asks a non-programming question, politely decline to respond.';
 ```
 
-In the request handler, you then need to add logic to detect that the user referenced the command. You can do this through the `request.command` property.
+在请求处理程序中,您需要添加逻辑以检测用户是否引用了命令。您可以通过 `request.command` 属性执行此操作。
 
-If the command is referenced, update the prompt to the newly created `EXERCISES_PROMPT`
+如果引用了命令,请将提示更新为新创建的 `EXERCISES_PROMPT`
 
 ```ts
 // define a chat handler
@@ -334,20 +334,20 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 };
 ```
 
-And that's all that needs to be added! The rest of the logic to get the message history, send the request, and stream the request all stays the same.
+这就是所需添加的全部内容!获取消息历史记录、发送请求和流式传输请求的其余逻辑都保持不变。
 
-Now you can type `/exercise`, which will bring up your chat participant, and you can get interactive exercises to practice coding!
+现在您可以输入 `/exercise`,这将调出您的聊天参与者,您可以获得交互式练习来练习编码!
 
-![Participant with a slash command](../images/ai/chat-tutorial/exercise-command.png)
+<!-- 图片已移除 -->
 
-## Next steps
+## 后续步骤
 
-Congratulations! You have successfully created a chat participant that can provide explanations and sample exercises for programming concepts. You can further extend your participant by fine-tuning the prompts, adding more slash commands, or leveraging other APIs like the [Language Model API](/api/extension-guides/ai/language-model). Once ready, you can also publish your extension to the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/vscode).
+恭喜!您已成功创建了一个可以提供编程概念解释和示例练习的聊天参与者。您可以通过微调提示、添加更多斜杠命令或利用其他 API(如[语言模型 API](/api/插件-guides/ai/language-model))来进一步扩展您的参与者。准备好后,您还可以将插件发布到 [Baosky Marketplace](#)。
 
-You can find the complete source code for this tutorial in the [vscode-extensions-sample repository](https://github.com/microsoft/vscode-extension-samples/tree/main/chat-tutorial).
+您可以在 [vscode-插件-sample 存储库](https://github.com/microsoft/vscode-插件-samples/tree/main/chat-tutorial)中找到本教程的完整源代码。
 
-## Related content
+## 相关内容
 
-- [Chat API extension guide](/api/extension-guides/ai/chat)
-- [Tutorial: Generate AI-powered code annotations by using the Language Model API](/api/extension-guides/ai/language-model-tutorial)
-- [Language Model API extension guide](/api/extension-guides/ai/language-model)
+- [聊天 API 插件指南](/api/插件-guides/ai/chat)
+- [教程:使用语言模型 API 生成 AI 驱动的代码注释](/api/插件-guides/ai/language-model-tutorial)
+- [语言模型 API 插件指南](/api/插件-guides/ai/language-model)

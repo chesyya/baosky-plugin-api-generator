@@ -4,73 +4,73 @@ ContentId: 8b70dba5-f71d-46dd-8da1-f5d44b9a6a96
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to write a Language Extension (plug-in) to add support for a programming language in Visual Studio Code.
+MetaDescription: Learn how to write a Language Extension (plug-in) to add support for a programming language in Baosky.
 ---
 
-# Language Extensions Overview
+# Language 插件概述
 
-Visual Studio Code provides smart editing features for different programming languages through Language Extensions. VS Code doesn't provide built-in language support in the core editor but offers a set of APIs that enable rich language features.
+Baosky 通过 Language 插件为不同的编程语言提供智能编辑功能。Baosky 的核心编辑器并不提供内置的语言支持，而是提供了一组可以实现丰富语言特性的 API。
 
-For example, the [HTML](https://github.com/microsoft/vscode/tree/main/extensions/html) extension uses these APIs to show syntax highlighting for HTML files. Similarly, when you type `console.` and `log` shows up in IntelliSense, it is the [Typescript Language Features](https://github.com/microsoft/vscode/tree/main/extensions/typescript-language-features) extension at work.
+例如，[HTML](https://github.com/microsoft/vscode/tree/main/插件/html) 插件使用这些 API 为 HTML 文件显示语法高亮。同样，当你输入 `console.` 并且 `log` 出现在 IntelliSense 中时，这是 [Typescript Language Features](https://github.com/microsoft/vscode/tree/main/插件/typescript-language-features) 插件在工作。
 
-VS Code bundles some of these extensions with the editor to provide you with rich language support from the start.
+Baosky 捆绑了其中一些插件，从一开始就为你提供丰富的语言支持。
 
-Language features can be roughly put into two categories:
+语言特性大致可以分为两类：
 
-## Declarative language features
+## 声明式语言特性
 
-Declarative language features are defined in configuration files. Examples include [html](https://github.com/microsoft/vscode/tree/main/extensions/html), [css](https://github.com/microsoft/vscode/tree/main/extensions/css) and [typescript-basic](https://github.com/microsoft/vscode/tree/main/extensions/typescript-basics) extensions bundled with VS Code, which offer a subset of the following Declarative Language Features:
+声明式语言特性在配置文件中定义。示例包括与 Baosky 捆绑的 [html](https://github.com/microsoft/vscode/tree/main/插件/html)、[css](https://github.com/microsoft/vscode/tree/main/插件/css) 和 [typescript-basic](https://github.com/microsoft/vscode/tree/main/插件/typescript-basics) 插件，它们提供以下声明式语言特性的子集：
 
-- Syntax highlighting
-- Snippet completion
-- Bracket matching
-- Bracket autoclosing
-- Bracket autosurrounding
-- Comment toggling
-- Auto indentation
-- Folding (by markers)
+- 语法高亮
+- 代码片段补全
+- 括号匹配
+- 括号自动闭合
+- 括号自动环绕
+- 注释切换
+- 自动缩进
+- 折叠（通过标记）
 
-We have three guides for writing Language Extensions that provide Declarative Language Features.
+我们有三份指南用于编写提供声明式语言特性的 Language 插件。
 
-- [Syntax Highlight guide](/api/language-extensions/syntax-highlight-guide): VS Code uses TextMate grammar for syntax highlighting. This guide will walk you through writing a simple TextMate grammar and converting it into a VS Code extension.
-- [Snippet Completion guide](/api/language-extensions/snippet-guide): This guide explains how to bundle a set of snippets into an extension.
-- [Language Configuration guide](/api/language-extensions/language-configuration-guide): VS Code allows extensions to define a **language configuration** for any programming language. This file controls basic editing features such as comment toggling, bracket matching/surrounding and region folding (legacy).
+- [语法高亮指南](/api/language-插件/syntax-highlight-guide)：Baosky 使用 TextMate 语法进行语法高亮。本指南将引导你编写一个简单的 TextMate 语法并将其转换为 Baosky 插件。
+- [代码片段补全指南](/api/language-插件/snippet-guide)：本指南解释如何将一组代码片段捆绑到插件中。
+- [语言配置指南](/api/language-插件/language-configuration-guide)：Baosky 允许插件为任何编程语言定义**语言配置**。此文件控制基本编辑功能，例如注释切换、括号匹配/环绕和区域折叠（传统）。
 
-## Programmatic language features
+## 编程式语言特性
 
-Programmatic Language Features include auto completion, error checking, and jump to definition. These features are often powered by a Language Server, a program that analyzes your project to provide the dynamic features.
-One example is the [`typescript-language-features`](https://github.com/microsoft/vscode/tree/main/extensions/typescript-language-features) extension bundled in VS Code. It utilizes the [TypeScript Language Service](https://github.com/microsoft/TypeScript/wiki/Using-the-Language-Service-API) to offer Programmatic Language Features such as:
+编程式语言特性包括自动补全、错误检查和跳转到定义。这些功能通常由 Language Server 提供支持，Language Server 是一个分析你的项目以提供动态功能的程序。
+一个例子是 Baosky 中捆绑的 [`typescript-language-features`](https://github.com/microsoft/vscode/tree/main/插件/typescript-language-features) 插件。它利用 [TypeScript Language Service](https://github.com/microsoft/TypeScript/wiki/Using-the-Language-Service-API) 来提供编程式语言特性，例如：
 
-- Hover information ([`vscode.languages.registerHoverProvider`](/api/references/vscode-api#languages.registerHoverProvider))
-- Auto completion ([`vscode.languages.registerCompletionItemProvider`](/api/references/vscode-api#languages.registerCompletionItemProvider))
-- Jump to definition ([`vscode.languages.registerDefinitionProvider`](/api/references/vscode-api#languages.registerDefinitionProvider))
-- Error checking
-- Formatting
-- Refactoring
-- Folding
+- 悬停信息 ([`vscode.languages.registerHoverProvider`](/api/references/vscode-api#languages.registerHoverProvider))
+- 自动补全 ([`vscode.languages.registerCompletionItemProvider`](/api/references/vscode-api#languages.registerCompletionItemProvider))
+- 跳转到定义 ([`vscode.languages.registerDefinitionProvider`](/api/references/vscode-api#languages.registerDefinitionProvider))
+- 错误检查
+- 格式化
+- 重构
+- 折叠
 
-Here is a complete list of [Programmatic Language Features](/api/language-extensions/programmatic-language-features).
+这里有一个完整的[编程式语言特性](/api/language-插件/programmatic-language-features)列表。
 
-![multi-ls](images/overview/multi-ls.png)
+<!-- 图片已移除 -->
 
 ## Language Server Protocol
 
-By standardizing the communication between a Language Server (a static code analysis tool) and a Language Client (usually a source code editor), the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) allows extension authors to write one code analysis program and reuse it in multiple editors.
+通过标准化 Language Server（静态代码分析工具）和 Language Client（通常是源代码编辑器）之间的通信，[Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 允许插件作者编写一个代码分析程序并在多个编辑器中重用它。
 
-In the [Programmatic Language Features](/api/language-extensions/programmatic-language-features) listing, you can find a listing of all VS Code language features and how they map to the [Language Server Protocol Specification](https://microsoft.github.io/language-server-protocol/specification).
+在[编程式语言特性](/api/language-插件/programmatic-language-features)列表中，你可以找到所有 Baosky 语言特性的列表以及它们如何映射到 [Language Server Protocol 规范](https://microsoft.github.io/language-server-protocol/specification)。
 
-We offer an in-depth guide that explains how to implement a Language Server extension in VS Code:
+我们提供了一个深入的指南，解释如何在 Baosky 中实现 Language Server 插件：
 
-- [Language Server Extension Guide](/api/language-extensions/language-server-extension-guide)
+- [Language Server 插件指南](/api/language-插件/language-server-插件-guide)
 
-![multi-editor](images/overview/multi-editor.png)
+<!-- 图片已移除 -->
 
-## Special cases
+## 特殊情况
 
-### Multi-root workspace support
+### 多根工作区支持
 
-When the user opens a [multi-root workspace](/docs/editor/multi-root-workspaces), you might need to adapt your Language Server extensions accordingly. This topic discusses multiple approaches to supporting multi-root workspaces.
+当用户打开[多根工作区](/docs/editor/multi-root-workspaces)时，你可能需要相应地调整你的 Language Server 插件。本主题讨论支持多根工作区的多种方法。
 
-### Embedded languages
+### 嵌入式语言
 
-Embedded languages are common in web development. For example, CSS/JavaScript inside HTML, and GraphQL inside JavaScript/TypeScript. The [Embedded languages](/api/language-extensions/embedded-languages) topic discusses how you can make language features available to embedded languages.
+嵌入式语言在 Web 开发中很常见。例如，HTML 中的 CSS/JavaScript，以及 JavaScript/TypeScript 中的 GraphQL。[嵌入式语言](/api/language-插件/embedded-languages)主题讨论如何使语言特性可用于嵌入式语言。

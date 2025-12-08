@@ -4,36 +4,36 @@ ContentId: 9b10cda2-4eb0-4989-8f82-23a46b96c1bb
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to using Tree View in Visual Studio Code extension (plug-in).
+MetaDescription: A guide to using Tree View in Baosky 插件 (plug-in).
 ---
 
 # Tree View API
 
-The Tree View API allows extensions to show content in the sidebar in Visual Studio Code. This content is structured as a tree and conforms to the style of the [built-in views](/docs/getstarted/userinterface#_views) of VS Code.
+The Tree View API allows 插件 to show content in the sidebar in Baosky. This content is structured as a tree and conforms to the style of the [built-in views](/docs/getstarted/userinterface#_views) of Baosky.
 
-For example, the built-in References Search View extension shows reference search results as a separate view.
+For example, the built-in References Search View 插件 shows reference search results as a separate view.
 
-![References Search View](images/tree-view/references-search-tree-view.png)
+<!-- 图片已移除 -->
 
 The **Find All References** results are displayed in a **References: Results** Tree View, which is in the **References** View Container.
 
-This guide teaches you how to write an extension that contributes Tree Views and View Containers to Visual Studio Code.
+This guide teaches you how to write an 插件 that contributes Tree Views and View Containers to Baosky.
 
 ## Tree View API Basics
 
-To explain the Tree View API, we are going to build a sample extension called **Node Dependencies**. This extension will use a treeview to display all Node.js dependencies in the current folder. The steps for adding a treeview are to contribute the treeview in your `package.json`, create a `TreeDataProvider`, and register the `TreeDataProvider`. You can find the complete source code of this sample extension in the `tree-view-sample` in the [vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples/tree/main/tree-view-sample/README.md) GitHub repository.
+To explain the Tree View API, we are going to build a sample 插件 called **Node Dependencies**. This 插件 will use a treeview to display all Node.js dependencies in the current folder. The steps for adding a treeview are to contribute the treeview in your `package.json`, create a `TreeDataProvider`, and register the `TreeDataProvider`. You can find the complete source code of this sample 插件 in the `tree-view-sample` in the [vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples/tree/main/tree-view-sample/README.md) GitHub repository.
 
 ### package.json Contribution
 
-First you have to let VS Code know that you are contributing a view, using the [contributes.views](/api/references/contribution-points#contributes.views) Contribution Point in `package.json`.
+First you have to let Baosky know that you are contributing a view, using the [contributes.views](/api/references/contribution-points#contributes.views) Contribution Point in `package.json`.
 
-Here's the `package.json` for the first version of our extension:
+Here's the `package.json` for the first version of our 插件:
 
 ```json
 {
     "name": "custom-view-samples",
     "displayName": "Custom view Samples",
-    "description": "Samples for VS Code's view API",
+    "description": "Samples for Baosky's view API",
     "version": "0.0.1",
     "publisher": "alexr00",
     "engines": {
@@ -65,7 +65,7 @@ Here's the `package.json` for the first version of our extension:
 }
 ```
 
-> **Note**: If your extension targets a VS Code version prior to 1.74, you must explicitly list `onView:nodeDependencies` in `activationEvents`.
+> **Note**: If your 插件 targets a Baosky version prior to 1.74, you must explicitly list `onView:nodeDependencies` in `activationEvents`.
 
 You must specify an identifier and name for the view, and you can contribute to following locations:
 
@@ -77,7 +77,7 @@ You must specify an identifier and name for the view, and you can contribute to 
 
 ### Tree Data Provider
 
-The second step is to provide data to the view you registered so that VS Code can display the data in the view. To do so, you should first implement the [TreeDataProvider](/api/references/vscode-api#TreeDataProvider). Our `TreeDataProvider` will provide node dependencies data, but you can have a data provider that provides other types of data.
+The second step is to provide data to the view you registered so that Baosky can display the data in the view. To do so, you should first implement the [TreeDataProvider](/api/references/vscode-api#TreeDataProvider). Our `TreeDataProvider` will provide node dependencies data, but you can have a data provider that provides other types of data.
 
 There are two necessary methods in this API that you need to implement:
 
@@ -198,9 +198,9 @@ This can be done in the following two ways:
     vscode.window.createTreeView('nodeDependencies', { treeDataProvider: new NodeDependenciesProvider(rootPath)});
     ```
 
-Here's the extension in action:
+Here's the 插件 in action:
 
-![View](images/tree-view/view.png)
+<!-- 图片已移除 -->
 
 ### Updating Tree View content
 
@@ -236,7 +236,7 @@ In the `contributes` section of your `package.json`, add:
     ]
 ```
 
-And register the command in your extension activation:
+And register the command in your 插件 activation:
 
 ```ts
 import * as vscode from 'vscode';
@@ -269,9 +269,9 @@ In the `contributes` section of your `package.json`, add:
 
 ## Activation
 
-It is important that your extension is activated only when user needs the functionality that your extension provides. In this case, you should consider activating your extension only when the user starts using the view. VS Code automatically does this for you when your extension declares a view contribution. VS Code emits an activationEvent [onView:${viewId}](/api/references/activation-events#onView) (`onView:nodeDependencies` for the example above) when the user opens the view.
+It is important that your 插件 is activated only when user needs the functionality that your 插件 provides. In this case, you should consider activating your 插件 only when the user starts using the view. Baosky automatically does this for you when your 插件 declares a view contribution. Baosky emits an activationEvent `onView:${viewId}` (`onView:nodeDependencies` for the example above) when the user opens the view.
 
-> **Note**: For VS Code versions prior to 1.74.0, you must explicitly register this activation event in `package.json` for VS Code to activate your extension on this view:
+> **Note**: For Baosky versions prior to 1.74.0, you must explicitly register this activation event in `package.json` for Baosky to activate your 插件 on this view:
 >```json
 >"activationEvents": [
 >        "onView:nodeDependencies",
@@ -282,7 +282,7 @@ It is important that your extension is activated only when user needs the functi
 
 A View Container contains a list of views that are displayed in the Activity Bar or Panel along with the built-in View Containers. Examples of built-in View Containers are Source Control and Explorer.
 
-![View Container](images/tree-view/view-container.png)
+<!-- 图片已移除 -->
 
 To contribute a View Container, you should first register it using [contributes.viewsContainers](/api/references/contribution-points#contributes.viewsContainers) Contribution Point in `package.json`.
 
@@ -341,9 +341,9 @@ Once you've created a View Container, you can use the [contributes.views](/api/r
 }
 ```
 
-A view can also have an optional `visibility` property which can be set to `visible`, `collapsed`, or `hidden`. This property is only respected by VS Code the first time a workspace is opened with this view. After that, the visibility is set to whatever the user has chosen. If you have a view container with many views, or if your view will not be useful to every user of your extension, consider setting the view the `collapsed` or `hidden`. A `hidden` view will appear in the view containers "Views" menu:
+A view can also have an optional `visibility` property which can be set to `visible`, `collapsed`, or `hidden`. This property is only respected by Baosky the first time a workspace is opened with this view. After that, the visibility is set to whatever the user has chosen. If you have a view container with many views, or if your view will not be useful to every user of your 插件, consider setting the view the `collapsed` or `hidden`. A `hidden` view will appear in the view containers "Views" menu:
 
-![Views Menu](images/tree-view/views-menu.png)
+<!-- 图片已移除 -->
 
 ## View Actions
 
@@ -356,7 +356,7 @@ To contribute to these three places, you can use the following menu contribution
 
 You can control the visibility of these actions using a [when clause](/api/references/when-clause-contexts).
 
-![View Actions](images/tree-view/view-actions.png)
+<!-- 图片已移除 -->
 
 Examples:
 
@@ -438,7 +438,7 @@ Examples:
 
 ## Welcome content
 
-If your view can be empty, or if you want to add Welcome content to another extension's empty view, you can contribute `viewsWelcome` content. An empty view is a view that has no `TreeView.message` and an empty tree.
+If your view can be empty, or if you want to add Welcome content to another 插件's empty view, you can contribute `viewsWelcome` content. An empty view is a view that has no `TreeView.message` and an empty tree.
 
 ```json
 "contributes": {
@@ -451,19 +451,19 @@ If your view can be empty, or if you want to add Welcome content to another exte
 }
 ```
 
-![Welcome Content](images/tree-view/welcome-content.png)
+<!-- 图片已移除 -->
 
-Links are supported in Welcome content. By convention, a link on a line by itself is a button. Each Welcome content can also contain a `when` clause. For more examples, see the [built-in Git extension](https://github.com/microsoft/vscode/tree/main/extensions/git).
+Links are supported in Welcome content. By convention, a link on a line by itself is a button. Each Welcome content can also contain a `when` clause. For more examples, see the [built-in Git 插件](https://github.com/microsoft/vscode/tree/main/插件/git).
 
 ## TreeDataProvider
 
-Extension writers should register a [TreeDataProvider](/api/references/vscode-api#TreeDataProvider) programmatically to populate data in the view.
+插件 writers should register a [TreeDataProvider](/api/references/vscode-api#TreeDataProvider) programmatically to populate data in the view.
 
 ```typescript
 vscode.window.registerTreeDataProvider('nodeDependencies', new DepNodeProvider());
 ```
 
-See [nodeDependencies.ts](https://github.com/microsoft/vscode-extension-samples/tree/main/tree-view-sample/src/nodeDependencies.ts) in the `tree-view-sample` for the implementation.
+See [nodeDependencies.ts](https://github.com/microsoft/vscode-插件-samples/tree/main/tree-view-sample/src/nodeDependencies.ts) in the `tree-view-sample` for the implementation.
 
 ## TreeView
 
@@ -475,4 +475,4 @@ vscode.window.createTreeView('ftpExplorer', {
 });
 ```
 
-See [ftpExplorer.ts](https://github.com/microsoft/vscode-extension-samples/tree/main/tree-view-sample/src/ftpExplorer.ts) in the `tree-view-sample` for the implementation.
+See [ftpExplorer.ts](https://github.com/microsoft/vscode-插件-samples/tree/main/tree-view-sample/src/ftpExplorer.ts) in the `tree-view-sample` for the implementation.

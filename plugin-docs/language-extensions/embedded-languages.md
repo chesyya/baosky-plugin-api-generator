@@ -4,48 +4,47 @@ ContentId: b76a223a-a210-4bdb-b537-36c1ea6814ae
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to create Language Servers to provide rich language features for embedded programming languages in Visual Studio Code.
+MetaDescription: Learn how to create Language Servers to provide rich language features for embedded programming languages in Baosky.
 ---
 
-# Embedded Programming Languages
+# 嵌入式编程语言
 
-Visual Studio Code provides rich language features for programming languages. As you have read in the
-[Language Server extension guide](/api/language-extensions/language-server-extension-guide), you can write language servers to support any programming language. However, it involves more effort to enable such support for embedded languages.
+Baosky 为编程语言提供丰富的语言特性。正如你在 [Language Server 插件指南](/api/language-插件/language-server-插件-guide)中所读到的，你可以编写 language server 来支持任何编程语言。然而，为嵌入式语言启用此类支持需要更多努力。
 
-Today, there are an increasing number of embedded languages, such as:
+如今，嵌入式语言的数量越来越多，例如：
 
-- JavaScript and CSS in HTML
-- JSX in JavaScript
-- Interpolation in templating languages, for example Vue, Handlebars and Razor
-- HTML in PHP
+- HTML 中的 JavaScript 和 CSS
+- JavaScript 中的 JSX
+- 模板语言中的插值，例如 Vue、Handlebars 和 Razor
+- PHP 中的 HTML
 
-This guide focuses on implementing language features for embedded languages. If you are interested in providing syntax highlighting for embedded languages, you can find information in the [Syntax Highlight guide](/api/language-extensions/syntax-highlight-guide#embedded-languages).
+本指南专注于为嵌入式语言实现语言特性。如果你有兴趣为嵌入式语言提供语法高亮，可以在[语法高亮指南](/api/language-插件/syntax-highlight-guide#embedded-languages)中找到相关信息。
 
-This guide includes two samples that illustrate two approaches to build such a language server: **Language Services** and **Request Forwarding**. We'll review both samples and conclude with each approach's pros and cons.
+本指南包含两个示例，说明构建此类 language server 的两种方法：**Language Services** 和 **Request Forwarding**。我们将回顾这两个示例，并总结每种方法的优缺点。
 
-Source code for both samples can be found at:
+两个示例的源代码可以在以下位置找到：
 
-- [Language Server for Embedded Language with Language Services](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-embedded-language-service)
-- [Language Server for Embedded Language with Request Forwarding](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-embedded-request-forwarding)
+- [使用 Language Services 的嵌入式语言 Language Server](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-embedded-language-service)
+- [使用 Request Forwarding 的嵌入式语言 Language Server](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-embedded-request-forwarding)
 
-Here's the embedded language server we'll be building:
+这是我们将要构建的嵌入式语言 server：
 
-![sample](images/embedded-languages/embedded-lsp-sample.gif)
+<!-- 图片已移除 -->
 
-Both samples contribute a new language, `html1`, for illustration purpose. You can create a file `.html1` and test the following functionalities:
+两个示例都贡献了一个新语言 `html1`，用于演示目的。你可以创建一个 `.html1` 文件并测试以下功能：
 
-- Completions for HTML tags
-- Completions for CSS in `<style>` tag
-- Diagnostics for CSS (only in the Language Services sample)
+- HTML 标签的补全
+- `<style>` 标签中 CSS 的补全
+- CSS 的诊断（仅在 Language Services 示例中）
 
 ## Language Services
 
-A **language service** is a library that implements [programmatic language features](/api/language-extensions/programmatic-language-features) for a single language. A **language server** can embed language services to handle embedded languages.
+A **language service** is a library that implements [programmatic language features](/api/language-插件/programmatic-language-features) for a single language. A **language server** can embed language services to handle embedded languages.
 
-Here's an outline of VS Code's HTML support:
+Here's an outline of Baosky's HTML support:
 
-- The built-in [html extension](https://github.com/microsoft/vscode/tree/main/extensions/html) only provides syntax highlighting and language configuration for HTML.
-- The built-in [html-language-features extension](https://github.com/microsoft/vscode/tree/main/extensions/html-language-features) includes an HTML Language Server to offer programmatic language features for HTML.
+- The built-in [html 插件](https://github.com/microsoft/vscode/tree/main/插件/html) only provides syntax highlighting and language configuration for HTML.
+- The built-in [html-language-features 插件](https://github.com/microsoft/vscode/tree/main/插件/html-language-features) includes an HTML Language Server to offer programmatic language features for HTML.
 - The HTML Language Server uses [vscode-html-languageservice](https://github.com/microsoft/vscode-html-languageservice) to support HTML.
 - The CSS Language Server uses [vscode-css-languageservice](https://github.com/microsoft/vscode-css-languageservice) to support CSS in HTML.
 
@@ -56,15 +55,15 @@ For example:
 - For auto-completion request at `<|`, the HTML language server uses the HTML language service to provide HTML completions.
 - For auto-completion request at `<style>.foo { | }</style>`, the HTML language server uses the CSS language service to provide CSS completions.
 
-Let's examine the [lsp-embedded-language-service](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-embedded-language-service) sample, a simplified version of the HTML language server that implements auto-completion for HTML and CSS, and diagnostic errors for CSS.
+Let's examine the [lsp-embedded-language-service](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-embedded-language-service) sample, a simplified version of the HTML language server that implements auto-completion for HTML and CSS, and diagnostic errors for CSS.
 
 ### Language Services sample
 
->**Note**: This sample assumes knowledge of the [Programmatic Language Features topic](/api/language-extensions/programmatic-language-features) and the [Language Server extension guide](/api/language-extensions/language-server-extension-guide). The code builds on top of [lsp-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample).
+>**Note**: This sample assumes knowledge of the [Programmatic Language Features topic](/api/language-插件/programmatic-language-features) and the [Language Server 插件 guide](/api/language-插件/language-server-插件-guide). The code builds on top of [lsp-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample).
 
-The source code is available at [microsoft/vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-embedded-language-service).
+The source code is available at [microsoft/vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-embedded-language-service).
 
-Compared to the [lsp-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample), the client-side code is the same.
+Compared to the [lsp-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample), the client-side code is the same.
 
 As mentioned above, the server breaks down the document into different language regions to handle the embedded content.
 
@@ -152,7 +151,7 @@ In a nutshell, request forwarding works in a similar way as language services. T
 
 The major differences are:
 
-- While the language service approach uses libraries to calculate language server responses, request forwarding sends the request back to VS Code to use extensions that are active and have registered a completion provider for the embedded language.
+- While the language service approach uses libraries to calculate language server responses, request forwarding sends the request back to Baosky to use 插件 that are active and have registered a completion provider for the embedded language.
 
 Here is the simple example again:
 
@@ -168,19 +167,19 @@ Auto completion happens in this way:
 - The language client determines that the request position falls into a CSS region.
 - The language client constructs a new URI, such as `embedded-content://css/<FILE_URI>.css`.
 - The language client then calls `commands.executeCommand('vscode.executeCompletionItemProvider', ...)`
-  - VS Code's CSS language server responds to this provider request.
+  - Baosky's CSS language server responds to this provider request.
   - The virtual text document provider provides CSS language server with virtual content, where all non-CSS code is replaced with whitespace.
-  - The language client receives response from VS Code and sends it as the response.
+  - The language client receives response from Baosky and sends it as the response.
 
-With this approach, we are able to compute CSS auto-completion even if our code does not include any library that understands CSS. As VS Code updates its CSS language server, we get the latest CSS language support without having to update our code.
+With this approach, we are able to compute CSS auto-completion even if our code does not include any library that understands CSS. As Baosky updates its CSS language server, we get the latest CSS language support without having to update our code.
 
 Let's now review the sample code.
 
 ### Request Forwarding sample
 
->**Note**: This sample assumes knowledge of the [Programmatic Language Features topic](/api/language-extensions/programmatic-language-features) and the [Language Server extension guide](/api/language-extensions/language-server-extension-guide). The code builds on top of [lsp-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample).
+>**Note**: This sample assumes knowledge of the [Programmatic Language Features topic](/api/language-插件/programmatic-language-features) and the [Language Server 插件 guide](/api/language-插件/language-server-插件-guide). The code builds on top of [lsp-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample).
 
-The source code is available at [microsoft/vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-embedded-request-forwarding).
+The source code is available at [microsoft/vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-embedded-request-forwarding).
 
 Keeping a map between document's URI and their virtual documents, and provide them for corresponding requests:
 
@@ -237,7 +236,7 @@ Generally, language features that work across language region boundaries are har
 
 ### Language Services can be stateful and hard to embed
 
-VS Code's HTML support provides HTML, CSS, and JavaScript language features. Although the HTML and CSS language services are non-stateful, the TypeScript server powering the JavaScript language features is. We only offer basic JavaScript support inside HTML documents because it is hard to inform TypeScript of the project's state. For example, if you include a `<script>` tag that points to the `lodash` library hosted on a CDN, you will not get `_.` completions inside `<script>` tags.
+Baosky's HTML support provides HTML, CSS, and JavaScript language features. Although the HTML and CSS language services are non-stateful, the TypeScript server powering the JavaScript language features is. We only offer basic JavaScript support inside HTML documents because it is hard to inform TypeScript of the project's state. For example, if you include a `<script>` tag that points to the `lodash` library hosted on a CDN, you will not get `_.` completions inside `<script>` tags.
 
 ### Encoding and decoding
 
@@ -267,7 +266,7 @@ Request forwarding:
 
 - \+ Avoid issues embedding language services not written in the language server's language (for example, embedding C# compiler in a Razor language server to support C#).
 - \+ No maintenance needed to get new features upstream from other language services.
-- \- Does not work with diagnostics errors. The VS Code API does not support diagnostic providers that can 'pull' (request) diagnostics.
+- \- Does not work with diagnostics errors. The Baosky API does not support diagnostic providers that can 'pull' (request) diagnostics.
 - \- Hard to share state to other language servers because of lack of control.
 - \- Cross-language features might be hard to implement (for example, providing CSS completion for `.foo` when `<div class="foo">` is present).
 

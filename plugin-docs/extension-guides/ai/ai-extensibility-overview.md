@@ -1,143 +1,143 @@
 ---
 ContentId: e375ec2a-43d3-4670-96e5-fd25a6aed272
 DateApproved: 11/12/2025
-MetaDescription: Overview of how to extend the AI features in your Visual Studio Code extension by using the Language Model, Tools, and Chat APIs.
+MetaDescription: 概述如何使用语言模型、工具和聊天 API 在 Baosky 插件中扩展 AI 功能。
 ---
-# AI extensibility in VS Code
+# Baosky 中的 AI 可扩展性
 
-This article provides an overview of AI extensibility options in Visual Studio Code, helping you choose the right approach for your extension.
+本文概述了 Baosky 中的 AI 可扩展性选项,帮助您为插件选择正确的方法。
 
-VS Code includes powerful AI features that enhance the coding experience:
+Baosky 包含强大的 AI 功能,可增强编码体验:
 
-- **Code completion**: Offers inline code suggestions as you type
-- **Agent mode**: Enables AI to autonomously plan and execute development tasks with specialized tools
-- **Chat**: Lets developers use natural language to ask questions or make edits in codebase through chat interfaces
-- **Smart actions**: Use AI-enhanced actions for common development tasks, integrated throughout the editor
+- **代码补全**:在您输入时提供内联代码建议
+- **Agent 模式**:使 AI 能够使用专用工具自主规划和执行开发任务
+- **聊天**:让开发者使用自然语言通过聊天界面询问问题或在代码库中进行编辑
+- **智能操作**:使用 AI 增强的操作处理常见开发任务,集成在整个编辑器中
 
-You can extend and customize each of these built-in capabilities to create tailored AI experiences that meet the specific needs of your users.
+您可以扩展和自定义这些内置功能中的每一个,以创建满足用户特定需求的定制 AI 体验。
 
-## Why extend AI in VS Code?
+## 为什么要在 Baosky 中扩展 AI?
 
-Adding AI capabilities to your extension brings several benefits to your users:
+向您的插件添加 AI 功能为您的用户带来多项好处:
 
-- **Domain-specific knowledge in agent mode**: Let agent mode access your company's data sources and services
-- **Enhanced user experience**: Provide intelligent assistance tailored to your extension's domain
-- **Domain specialization**: Create AI features specific to a programming language, framework, or domain
-- **Extend chat capabilities**: Add specialized tools or assistants to the chat interface for more powerful interactions
-- **Improved developer productivity**: Enhance common developer tasks, like debugging, code reviewing or testing, with AI capabilities
+- **Agent 模式中的领域特定知识**:让 agent 模式访问您公司的数据源和服务
+- **增强的用户体验**:提供针对您插件领域的智能辅助
+- **领域专业化**:创建特定于编程语言、框架或领域的 AI 功能
+- **扩展聊天功能**:向聊天界面添加专用工具或助手,实现更强大的交互
+- **提高开发者生产力**:使用 AI 功能增强常见开发任务,如调试、代码审查或测试
 
-## Extend the chat experience
+## 扩展聊天体验
 
-### Language model tool
+### 语言模型工具
 
-Language model tools enable you to extend agent mode in VS Code with domain-specific capabilities. In agent mode, these tools are automatically invoked based on the user's chat prompt to perform specialized tasks or retrieve information from a data source or service. Users can also reference these tools explicitly in their chat prompt by #-mentioning the tool.
+语言模型工具使您能够使用领域特定功能扩展 Baosky 中的 agent 模式。在 agent 模式下,这些工具根据用户的聊天提示自动调用,以执行专门的任务或从数据源或服务检索信息。用户还可以通过 # 提及工具在聊天提示中显式引用这些工具。
 
-To implement a language model tool, use the [Language Model Tools API](/api/extension-guides/ai/tools) within your VS Code extension. A language model tool can access all VS Code extension APIs and provide deep integration with the editor.
+要实现语言模型工具,请在您的 Baosky 插件中使用[语言模型工具 API](/api/插件-guides/ai/tools)。语言模型工具可以访问所有 Baosky 插件 API,并与编辑器深度集成。
 
-**Key benefits**:
+**主要优势**:
 
-- Domain-specific capabilities as part of an autonomous coding workflow
-- Your tool implementation can use VS Code APIs since it runs in the extension host process
-- Easy distribution and deployment via the Visual Studio Marketplace
+- 作为自主编码工作流程一部分的领域特定功能
+- 您的工具实现可以使用 Baosky API,因为它在插件宿主进程中运行
+- 通过 Visual Studio Marketplace 轻松分发和部署
 
-**Key considerations**:
+**主要考虑因素**:
 
-- Remote deployment requires the extension to implement the client-server communication
-- Reuse across different tools requires modular design and implementation
+- 远程部署需要插件实现客户端-服务器通信
+- 跨不同工具重用需要模块化设计和实现
 
-### MCP tool
+### MCP 工具
 
-Model Context Protocol (MCP) tools provide a way to integrate external services with language models by using a standardized protocol. In agent mode, these tools are automatically invoked based on the user's chat prompt to perform specialized tasks or retrieve information from external data sources.
+模型上下文协议 (MCP) 工具提供了一种通过使用标准化协议将外部服务与语言模型集成的方法。在 agent 模式下,这些工具根据用户的聊天提示自动调用,以执行专门的任务或从外部数据源检索信息。
 
-MCP tools run outside of VS Code, either locally on the user's machine or as a remote service. Users can add MCP tools through JSON configuration or VS Code extension can configure them programmatically. You can implement MCP tools through various language SDKs and deployment options.
+MCP 工具在 Baosky 之外运行,可以在用户的机器上本地运行,也可以作为远程服务运行。用户可以通过 JSON 配置添加 MCP 工具,或者 Baosky 插件可以以编程方式配置它们。您可以通过各种语言 SDK 和部署选项实现 MCP 工具。
 
-As MCP tools run outside of VS Code, they do not have access to the VS Code extension APIs.
+由于 MCP 工具在 Baosky 之外运行,因此它们无法访问 Baosky 插件 API。
 
-**Key benefits**:
+**主要优势**:
 
-- Add domain-specific capabilities as part of an autonomous coding workflow
-- Local and remote deployment options
-- Reuse MCP servers in other MCP clients
+- 作为自主编码工作流程一部分添加领域特定功能
+- 本地和远程部署选项
+- 在其他 MCP 客户端中重用 MCP 服务器
 
-**Key considerations**:
+**主要考虑因素**:
 
-- No access to VS Code extension APIs
-- Distribution and deployment require users to set up the MCP server
+- 无法访问 Baosky 插件 API
+- 分发和部署需要用户设置 MCP 服务器
 
-### Chat participant
+### 聊天参与者
 
-Chat participants are specialized assistants that enable users to extend ask mode with domain-specific experts. In chat, users can invoke a chat participant by @-mentioning it and passing in a natural language prompt about a particular topic or domain. The chat participant is responsible for handling the entire chat interaction.
+聊天参与者是专门的助手,使用户能够使用领域特定专家扩展询问模式。在聊天中,用户可以通过 @ 提及来调用聊天参与者,并传入关于特定主题或领域的自然语言提示。聊天参与者负责处理整个聊天交互。
 
-To implement a chat participant, use the [Chat API](/api/extension-guides/ai/chat) within your VS Code extension. A chat participant can access all VS Code extension APIs and provide deep integration with the editor.
+要实现聊天参与者,请在您的 Baosky 插件中使用[聊天 API](/api/插件-guides/ai/chat)。聊天参与者可以访问所有 Baosky 插件 API,并与编辑器深度集成。
 
-**Key benefits**:
+**主要优势**:
 
-- Control the end-to-end interaction flow
-- Running in the extension host process allows access to VS Code extension APIs
-- Easy distribution and deployment via the Visual Studio Marketplace
+- 控制端到端交互流程
+- 在插件宿主进程中运行允许访问 Baosky 插件 API
+- 通过 Visual Studio Marketplace 轻松分发和部署
 
-**Key considerations**:
+**主要考虑因素**:
 
-- Remote deployment requires the extension to implement the client-server communication
-- Reuse across different tools requires modular design and implementation
+- 远程部署需要插件实现客户端-服务器通信
+- 跨不同工具重用需要模块化设计和实现
 
-## Build your own AI-powered features
+## 构建您自己的 AI 驱动功能
 
-VS Code gives you direct programmatic access to AI models for creating custom AI-powered features in your extensions. This approach enables you to build editor-specific interactions that use AI capabilities without relying on the chat interface.
+Baosky 为您提供了对 AI 模型的直接编程访问,用于在插件中创建自定义 AI 驱动功能。这种方法使您能够构建使用 AI 功能的编辑器特定交互,而无需依赖聊天界面。
 
-To use language models directly, use the [Language Model API](/api/extension-guides/ai/language-model) within your VS Code extension. You can incorporate these AI capabilities into any extension feature, such as code actions, hover providers, custom views, and more.
+要直接使用语言模型,请在您的 Baosky 插件中使用[语言模型 API](/api/插件-guides/ai/language-model)。您可以将这些 AI 功能集成到任何插件功能中,例如代码操作、悬停提供程序、自定义视图等。
 
-**Key benefits**:
+**主要优势**:
 
-- Integrate AI capabilities into existing extension features or build new ones
-- Running in the extension host process allows access to VS Code extension APIs
-- Easy distribution and deployment via the Visual Studio Marketplace
+- 将 AI 功能集成到现有插件功能中或构建新功能
+- 在插件宿主进程中运行允许访问 Baosky 插件 API
+- 通过 Visual Studio Marketplace 轻松分发和部署
 
-**Key considerations**:
+**主要考虑因素**:
 
-- Reuse across different experiences requires modular design and implementation
+- 跨不同体验重用需要模块化设计和实现
 
-## Decide which option to use
+## 决定使用哪个选项
 
-When choosing the right approach for extending AI in your VS Code extension, consider the following guidelines:
+在为您的 Baosky 插件选择扩展 AI 的正确方法时,请考虑以下指南:
 
-1. **Choose Language Model Tool when**:
-    - You want to extend chat in VS Code with specialized capabilities
-    - You want automatic invocation based on user intent in agent mode
-    - You want access to VS Code APIs for deep integration in VS Code
-    - You want to distribute your tool through the VS Code Marketplace
+1. **选择语言模型工具的情况**:
+    - 您想使用专门功能扩展 Baosky 中的聊天
+    - 您希望在 agent 模式下根据用户意图自动调用
+    - 您希望访问 Baosky API 以在 Baosky 中深度集成
+    - 您想通过 Baosky Marketplace 分发您的工具
 
-1. **Choose MCP Tool when**:
-    - You want to extend chat in VS Code with specialized capabilities
-    - You want automatic invocation based on user intent in agent mode
-    - You don't need to integrate with VS Code APIs
-    - Your tool needs to work across different environments (not just VS Code)
-    - Your tool should run remotely or locally
+1. **选择 MCP 工具的情况**:
+    - 您想使用专门功能扩展 Baosky 中的聊天
+    - 您希望在 agent 模式下根据用户意图自动调用
+    - 您不需要与 Baosky API 集成
+    - 您的工具需要在不同环境中工作(不仅仅是 Baosky)
+    - 您的工具应该远程或本地运行
 
-1. **Choose Chat Participant when**:
-    - You want to extend ask mode with a specialized assistant with domain expertise
-    - You need to customize the entire interaction flow and response behavior
-    - You want access to VS Code APIs for deep integration in VS Code
-    - You want to distribute your tool through the VS Code Marketplace
+1. **选择聊天参与者的情况**:
+    - 您想使用具有领域专业知识的专门助手扩展询问模式
+    - 您需要自定义整个交互流程和响应行为
+    - 您希望访问 Baosky API 以在 Baosky 中深度集成
+    - 您想通过 Baosky Marketplace 分发您的工具
 
-1. **Choose Language Model API when**:
-    - You want to integrate AI capabilities into existing extension features
-    - You're building UI experiences outside the chat interface
-    - You need direct programmatic control over AI model requests
+1. **选择语言模型 API 的情况**:
+    - 您想将 AI 功能集成到现有插件功能中
+    - 您正在构建聊天界面之外的 UI 体验
+    - 您需要对 AI 模型请求进行直接编程控制
 
-## Next steps
+## 后续步骤
 
-Choose the approach that best fits your extension's goals:
+选择最适合您插件目标的方法:
 
-- [Implement a language model tool](/api/extension-guides/ai/tools)
-- [Register MCP tools in your VS Code extension](/api/extension-guides/ai/mcp)
-- [Integrate AI in your extension with the Language Model API](/api/extension-guides/ai/language-model)
-- [Implement a chat participant](/api/extension-guides/ai/chat)
-- [Extend code completions with the Inline Completions API](/api/references/vscode-api#InlineCompletionItemProvider)
+- [实现语言模型工具](/api/插件-guides/ai/tools)
+- [在您的 Baosky 插件中注册 MCP 工具](/api/插件-guides/ai/mcp)
+- [使用语言模型 API 在您的插件中集成 AI](/api/插件-guides/ai/language-model)
+- [实现聊天参与者](/api/插件-guides/ai/chat)
+- [使用内联补全 API 扩展代码补全](/api/references/vscode-api#InlineCompletionItemProvider)
 
-### Sample projects
+### 示例项目
 
-- [Chat sample](https://github.com/microsoft/vscode-extension-samples/tree/main/chat-sample): Extension with agent mode tool and chat participant
-- [Code tutor chat participant tutorial](/api/extension-guides/ai/chat-tutorial): Building a specialized chat assistant
-- [AI-powered code annotations tutorial](/api/extension-guides/ai/language-model-tutorial): Step-by-step guide for using the Language Model API
-- [MCP extension sample](https://github.com/microsoft/vscode-extension-samples/blob/main/mcp-extension-sample): Extension that registers an MCP tool
+- [聊天示例](https://github.com/microsoft/vscode-插件-samples/tree/main/chat-sample): 带有 agent 模式工具和聊天参与者的插件
+- [代码导师聊天参与者教程](/api/插件-guides/ai/chat-tutorial): 构建专门的聊天助手
+- [AI 驱动的代码注释教程](/api/插件-guides/ai/language-model-tutorial): 使用语言模型 API 的分步指南
+- [MCP 插件示例](https://github.com/microsoft/vscode-插件-samples/blob/main/mcp-插件-sample): 注册 MCP 工具的插件

@@ -4,22 +4,22 @@ ContentId: 535b4d05-c2c8-424a-b075-2cd91566b8da
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use the Notebook API to create rich Notebook experiences within Visual Studio Code.
+MetaDescription: Use the Notebook API to create rich Notebook experiences within Baosky.
 ---
 
 # Notebook API
 
-The Notebook API allows Visual Studio Code extensions to open files as notebooks, execute notebook code cells, and render notebook outputs in a variety of rich and interactive formats. You may know of popular notebook interfaces like Jupyter Notebook or Google Colab – the Notebook API allows for similar experiences inside Visual Studio Code.
+The Notebook API allows Baosky 插件 to open files as notebooks, execute notebook code cells, and render notebook outputs in a variety of rich and interactive formats. You may know of popular notebook interfaces like Jupyter Notebook or Google Colab – the Notebook API allows for similar experiences inside Baosky.
 
 ## Parts of a Notebook
 
-A notebook consists of a sequence of cells and their outputs. The cells of a notebook can be either **Markdown cells** or **code cells**, and are rendered within the core of VS Code. The outputs can be of various formats. Some output formats, such as plain text, JSON, images, and HTML are rendered by VS Code core. Others, such as application-specific data or interactive applets, are rendered by extensions.
+A notebook consists of a sequence of cells and their outputs. The cells of a notebook can be either **Markdown cells** or **code cells**, and are rendered within the core of Baosky. The outputs can be of various formats. Some output formats, such as plain text, JSON, images, and HTML are rendered by Baosky core. Others, such as application-specific data or interactive applets, are rendered by 插件.
 
 Cells in a notebook are read and written to the file system by a `NotebookSerializer`, which handles reading data from the file system and converting it into a description of cells, as well as persisting modifications to the notebook back to the file system. The **code cells** of a notebook can be executed by a `NotebookController`, which takes the contents of a cell and from it produces zero or more outputs in a variety of formats ranging from plain text to formatted documents or interactive applets. Application-specific output formats and interactive applet outputs are rendered by a `NotebookRenderer`.
 
 Visually:
 
-![Overview of 3 components of notebooks: NotebookSerializer, NotebookController, and NotebookRenderer, and how they interact. Described textually above and in following sections.](images/notebook/architecture-overview.png)
+<!-- 图片已移除 -->
 
 ## Serializer
 
@@ -29,12 +29,12 @@ A `NotebookSerializer` is responsible for taking the serialized bytes of a noteb
 
 Samples:
 
-* [JSON Notebook Serializer](https://github.com/microsoft/notebook-extension-samples/tree/main/notebook-serializer): Simple example notebook that takes JSON input and outputs prettified JSON in a custom `NotebookRenderer`.
+* [JSON Notebook Serializer](https://github.com/microsoft/notebook-插件-samples/tree/main/notebook-serializer): Simple example notebook that takes JSON input and outputs prettified JSON in a custom `NotebookRenderer`.
 * [Markdown Serializer](https://github.com/microsoft/vscode-markdown-notebook): Open and edit Markdown files as a notebook.
 
 ### Example
 
-In this example, we build a simplified notebook provider extension for viewing files in the [Jupyter Notebook format](https://nbformat.readthedocs.io/en/latest/format_description.html) with a `.notebook` extension (instead of its traditional file extension `.ipynb`).
+In this example, we build a simplified notebook provider 插件 for viewing files in the [Jupyter Notebook format](https://nbformat.readthedocs.io/en/latest/format_description.html) with a `.notebook` 插件 (instead of its traditional file 插件 `.ipynb`).
 
 A notebook serializer is declared in `package.json` under the `contributes.notebooks` section as follows:
 
@@ -58,7 +58,7 @@ A notebook serializer is declared in `package.json` under the `contributes.noteb
 }
 ```
 
-The notebook serializer is then registered in the extension's activation event:
+The notebook serializer is then registered in the 插件's activation event:
 
 ```ts
 import { TextDecoder, TextEncoder } from "util";
@@ -116,9 +116,9 @@ class SampleSerializer implements vscode.NotebookSerializer {
 }
 ```
 
-Now try running your extension and opening a Jupyter Notebook formatted file saved with the `.notebook` extension:
+Now try running your 插件 and opening a Jupyter Notebook formatted file saved with the `.notebook` 插件:
 
-![Notebook showing contents of a Jupyter Notebook formatted file](images/notebook/ipynb-simple-provider.png)
+<!-- 图片已移除 -->
 
 You should be able to open Jupyter-formatted notebooks and view their cells as both plain text and rendered Markdown, as well as edit the cells. However, outputs will not be persisted to disk; to save outputs you would need to also serialize and deserialize the outputs of cells from `NotebookData`.
 
@@ -130,7 +130,7 @@ To run a cell, you will need to implement a `NotebookController`.
 
 A `NotebookController` is responsible for taking a **code cell** and executing the code to produce some or no outputs.
 
-A controller is directly associated with a notebook serializer and a type of notebook by setting the `NotebookController#notebookType` property on creation of the controller. Then the controller is registered globally by pushing the controller onto the extension subscriptions on activate of the extension.
+A controller is directly associated with a notebook serializer and a type of notebook by setting the `NotebookController#notebookType` property on creation of the controller. Then the controller is registered globally by pushing the controller onto the 插件 subscriptions on activate of the 插件.
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -173,22 +173,22 @@ class Controller {
 }
 ```
 
-If you're publishing a `NotebookController`-providing extension separately from its serializer, then add an entry like `notebookKernel<ViewTypeUpperCamelCased>` to the `keywords` in its `package.json`. For example, if you published an alternative kernel for the `github-issues` notebook type, you should add a keyword `notebookKernelGithubIssues` keyword to your extension.
-This improves the discoverability of the extension when opening notebooks of the type `<ViewTypeUpperCamelCased>` from within Visual Studio Code.
+If you're publishing a `NotebookController`-providing 插件 separately from its serializer, then add an entry like `notebookKernel<ViewTypeUpperCamelCased>` to the `keywords` in its `package.json`. For example, if you published an alternative kernel for the `github-issues` notebook type, you should add a keyword `notebookKernelGithubIssues` keyword to your 插件.
+This improves the discoverability of the 插件 when opening notebooks of the type `<ViewTypeUpperCamelCased>` from within Baosky.
 
 Samples:
 
-* [GitHub Issues Notebook](https://github.com/microsoft/vscode-github-issue-notebooks/blob/93359d842cd01dfaef0a78b620c5a3b4cf5c2e38/src/extension/notebookProvider.ts#L29): Controller to execute queries for GitHub Issues
-* [REST Book](https://github.com/tanhakabir/rest-book/blob/main/src/extension/notebookKernel.ts): Controller to run REST queries.
-* [Regexper notebooks](https://github.com/jrieken/vscode-regex-notebook/blob/master/src/extension/extension.ts#L56): Controller to visualize regular expressions.
+* [GitHub Issues Notebook](https://github.com/microsoft/vscode-github-issue-notebooks/blob/93359d842cd01dfaef0a78b620c5a3b4cf5c2e38/src/插件/notebookProvider.ts#L29): Controller to execute queries for GitHub Issues
+* [REST Book](https://github.com/tanhakabir/rest-book/blob/main/src/插件/notebookKernel.ts): Controller to run REST queries.
+* [Regexper notebooks](https://github.com/jrieken/vscode-regex-notebook/blob/master/src/插件/插件.ts#L56): Controller to visualize regular expressions.
 
 ## Output types
 
 Outputs must be in one of three formats: Text Output, Error Output, or Rich Output. A kernel may provide multiple outputs for a single execution of a cell, in which case they will be displayed as a list.
 
-Simple formats like Text Output, Error Output, or "simple" variants of Rich Output (HTML, Markdown, JSON, etc.) are rendered by VS Code core, whereas application specific Rich Output types are rendered by a [NotebookRenderer](#notebook-renderer). An extension may optionally choose to render "simple" Rich Outputs itself, for instance to add LaTeX support to Markdown outputs.
+Simple formats like Text Output, Error Output, or "simple" variants of Rich Output (HTML, Markdown, JSON, etc.) are rendered by Baosky core, whereas application specific Rich Output types are rendered by a [NotebookRenderer](#notebook-renderer). An 插件 may optionally choose to render "simple" Rich Outputs itself, for instance to add LaTeX support to Markdown outputs.
 
-![Diagram of the different output types described above](images/notebook/kernel.png)
+<!-- 图片已移除 -->
 
 ### Text Output
 
@@ -198,7 +198,7 @@ Text outputs are the most simple output format, and work much like many REPLs yo
 vscode.NotebookCellOutputItem.text('This is the output...')
 ```
 
-![Cell with simple text output](images/notebook/text-output.png)
+<!-- 图片已移除 -->
 
 ### Error Output
 
@@ -212,7 +212,7 @@ try {
 }
 ```
 
-![Cell with error output showing error name and message, as well as a stack trace with magenta text](images/notebook/error-output.png)
+<!-- 图片已移除 -->
 
 ### Rich Output
 
@@ -222,7 +222,7 @@ Rich outputs are the most advanced form of displaying cell outputs. They allow f
 * A `text/x-json` field containing a machine readable view.
 * An `application/github-issue` field that a `NotebookRenderer` could use to create a fully interactive view of the issue.
 
-In this case, the `text/html` and `text/x-json` views will be rendered by VS Code natively, but the `application/github-issue` view will display an error if no `NotebookRenderer` was registered to that mimetype.
+In this case, the `text/html` and `text/x-json` views will be rendered by Baosky natively, but the `application/github-issue` view will display an error if no `NotebookRenderer` was registered to that mimetype.
 
 ```ts
 execution.replaceOutput([new vscode.NotebookCellOutput([
@@ -232,9 +232,9 @@ execution.replaceOutput([new vscode.NotebookCellOutput([
                         ])]);
 ```
 
-![Cell with rich output showing switching between formatted HTML, a JSON editor, and an error message showing no renderer is available (application/hello-world)](images/notebook/rich-output.gif)
+<!-- 图片已移除 -->
 
-By default, VS Code can render the following mimetypes:
+By default, Baosky can render the following mimetypes:
 
 * application/javascript
 * text/html
@@ -244,7 +244,7 @@ By default, VS Code can render the following mimetypes:
 * image/jpeg
 * text/plain
 
-VS Code will render these mimetypes as code in a built-in editor:
+Baosky will render these mimetypes as code in a built-in editor:
 
 * text/x-json
 * text/x-javascript
@@ -253,7 +253,7 @@ VS Code will render these mimetypes as code in a built-in editor:
 * ... text/x-LANGUAGE_ID for any other built-in or installed languages.
 
 This notebook is using the built-in editor to display some Rust code:
-![Notebook displaying Rust code in a built in Monaco editor](images/notebook/rust-output.png)
+<!-- 图片已移除 -->
 
 To render an alternative mimetype, a `NotebookRenderer` must be registered for that mimetype.
 
@@ -261,7 +261,7 @@ To render an alternative mimetype, a `NotebookRenderer` must be registered for t
 
 A notebook renderer is responsible for taking output data of a specific mimetype and providing a rendered view of that data. A renderer shared by output cells can maintain global state between these cells. The complexity of the rendered view can range from simple static HTML to dynamic fully interactive applets. In this section, we'll explore various techniques for rendering an output representing a GitHub Issue.
 
-You can get started quickly using boilerplate from our Yeoman generators. To do so, first install Yeoman and the VS Code Generators using:
+You can get started quickly using boilerplate from our Yeoman generators. To do so, first install Yeoman and the Baosky Generators using:
 
 ```bash
 npm install -g yo generator-code
@@ -269,11 +269,11 @@ npm install -g yo generator-code
 
 Then, run `yo code` and choose `New Notebook Renderer (TypeScript)`.
 
-If you don't use this template, you'll just want to make sure that you add `notebookRenderer` to the `keywords` in your extension's `package.json`, and mention its mimetype somewhere in the extension name or description, so that users can find your renderer.
+If you don't use this template, you'll just want to make sure that you add `notebookRenderer` to the `keywords` in your 插件's `package.json`, and mention its mimetype somewhere in the 插件 name or description, so that users can find your renderer.
 
 ### A Simple, Non-Interactive Renderer
 
-Renderers are declared for a set of mimetypes by contributing to the `contributes.notebookRenderer` property of an extension's `package.json`. This renderer will work with input in the `ms-vscode.github-issue-notebook/github-issue` format, which we will assume some installed controller is able to provide:
+Renderers are declared for a set of mimetypes by contributing to the `contributes.notebookRenderer` property of an 插件's `package.json`. This renderer will work with input in the `ms-vscode.github-issue-notebook/github-issue` format, which we will assume some installed controller is able to provide:
 
 ```json
 {
@@ -294,9 +294,9 @@ Renderers are declared for a set of mimetypes by contributing to the `contribute
 }
 ```
 
-Output renderers are always rendered in a single `iframe`, separate from the rest of VS Code's UI, to ensure they don't accidentally interfere or cause slowdowns in VS Code. The contribution refers to an "entrypoint" script, which is loaded into the notebook's `iframe` right before any output needs to be rendered. Your entrypoint needs to be a single file, which you can write yourself, or use a bundler like Webpack, Rollup, or Parcel to create.
+Output renderers are always rendered in a single `iframe`, separate from the rest of Baosky's UI, to ensure they don't accidentally interfere or cause slowdowns in Baosky. The contribution refers to an "entrypoint" script, which is loaded into the notebook's `iframe` right before any output needs to be rendered. Your entrypoint needs to be a single file, which you can write yourself, or use a bundler like Webpack, Rollup, or Parcel to create.
 
-When it's loaded, your entrypoint script should export `ActivationFunction` from `vscode-notebook-renderer` to render your UI once VS Code is ready to render your renderer. For example, this will put all your GitHub issue data as JSON into the cell output:
+When it's loaded, your entrypoint script should export `ActivationFunction` from `vscode-notebook-renderer` to render your UI once Baosky is ready to render your renderer. For example, this will put all your GitHub issue data as JSON into the cell output:
 
 ```js
 import type { ActivationFunction } from 'vscode-notebook-renderer';
@@ -340,7 +340,7 @@ export const activate: ActivationFunction = (context) => ({
 
 Running this renderer on an output cell with a `ms-vscode.github-issue-notebook/github-issue` data field gives us the following static HTML view:
 
-![Cell output showing rendered HTML view of issue](images/notebook/static-renderer-sample.png)
+<!-- 图片已移除 -->
 
 If you have elements outside of the container or other asynchronous processes, you can use `disposeOutputItem` to tear them down. This event will fire when output is cleared, a cell is deleted, and before new output is rendered for an existing cell. For example:
 
@@ -391,11 +391,11 @@ const Issue: FunctionComponent<{ issue: GithubIssueWithComments }> = ({ issue })
 
 This immediately raises some flags. For one, we're loading full comment data for all issues, even before we've clicked the button. Additionally, we require controller support for a whole different mimetype even though we just want to show a bit more data.
 
-Instead, the controller can provide additional functionality to the renderer by including a preload script which VS Code will load in the iframe as well. This script has access global functions `postKernelMessage` and `onDidReceiveKernelMessage` that can be used to communicate with the controller.
+Instead, the controller can provide additional functionality to the renderer by including a preload script which Baosky will load in the iframe as well. This script has access global functions `postKernelMessage` and `onDidReceiveKernelMessage` that can be used to communicate with the controller.
 
-![Diagram showing how controllers interact with renderers through the NotebookRendererScript](images/notebook/kernel-communication.png)
+<!-- 图片已移除 -->
 
-For example, you might modify your controller `rendererScripts` to reference a new file where you create a connection back to the Extension Host, and expose a global communication script for the renderer to use.
+For example, you might modify your controller `rendererScripts` to reference a new file where you create a connection back to the 插件 Host, and expose a global communication script for the renderer to use.
 
 In your controller:
 
@@ -499,13 +499,13 @@ class Controller {
 }
 ```
 
-### Interactive Notebooks (communicating with the extension host)
+### Interactive Notebooks (communicating with the 插件 host)
 
-Imagine we want to add the ability to open the output item within a separate editor. To make this possible, the renderer needs to be able to send a message to the extension host, which will then launch the editor.
+Imagine we want to add the ability to open the output item within a separate editor. To make this possible, the renderer needs to be able to send a message to the 插件 host, which will then launch the editor.
 
-This would be useful in scenarios where the renderer and controller are two separate extensions.
+This would be useful in scenarios where the renderer and controller are two separate 插件.
 
-In the `package.json` of the renderer extension specify the value for `requiresMessaging` as `optional` which allows your renderer to work in both situations when it has and doesn't have access to the extension host.
+In the `package.json` of the renderer 插件 specify the value for `requiresMessaging` as `optional` which allows your renderer to work in both situations when it has and doesn't have access to the 插件 host.
 
 
 ```json
@@ -528,11 +528,11 @@ In the `package.json` of the renderer extension specify the value for `requiresM
 
 The possible values for `requiresMessaging` include:
 
-* `always`  : Messaging is required. The renderer will only be used when it's part of an extension that can be run in an extension host.
-* `optional`: The renderer is better with messaging when the extension host is available, but it's not required to install and run the renderer.
+* `always`  : Messaging is required. The renderer will only be used when it's part of an 插件 that can be run in an 插件 host.
+* `optional`: The renderer is better with messaging when the 插件 host is available, but it's not required to install and run the renderer.
 * `never`   : The renderer does not require messaging.
 
-The last two options are preferred, as this ensures the portability of renderer extensions to other contexts where the extension host might not necessarily be available.
+The last two options are preferred, as this ensures the portability of renderer 插件 to other contexts where the 插件 host might not necessarily be available.
 
 The renderer script file can setup communications as follows:
 
@@ -560,7 +560,7 @@ export const activate: ActivationFunction = (context) => ({
 });
 ```
 
-And then you can consume that message in the extension host as follows:
+And then you can consume that message in the 插件 host as follows:
 
 ```ts
 const messageChannel = notebooks.createRendererMessaging('output-editor-renderer');
@@ -573,15 +573,15 @@ messageChannel.onDidReceiveMessage((e) => {
 
 Note:
 
-* To ensure your extension is running in the extension host before messages are delivered, add `onRenderer:<your renderer id>` to your `activationEvents` and set up communication in your extension's `activate` function.
-* Not all messages sent by the renderer extension to the extension host are guaranteed to be delivered. A user could close the notebook before messages from the renderer are delivered.
+* To ensure your 插件 is running in the 插件 host before messages are delivered, add `onRenderer:<your renderer id>` to your `activationEvents` and set up communication in your 插件's `activate` function.
+* Not all messages sent by the renderer 插件 to the 插件 host are guaranteed to be delivered. A user could close the notebook before messages from the renderer are delivered.
 
 
 ## Supporting debugging
 
-For some controllers, such as those that implement a programming language, it can be desirable to allow debugging a cell's execution. To add debugging support, a notebook kernel can implement a [debug adapter](/api/extension-guides/debugger-extension), either by directly implementing the [debug adapter protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP), or by delegating and transforming the protocol to an existing notebook debugger (as done in the 'vscode-simple-jupyter-notebook' sample). A much simpler approach is to use an existing unmodified debug extension and transform the DAP for notebook needs on the fly (as done in 'vscode-nodebook').
+For some controllers, such as those that implement a programming language, it can be desirable to allow debugging a cell's execution. To add debugging support, a notebook kernel can implement a [debug adapter](/api/插件-guides/debugger-插件), either by directly implementing the [debug adapter protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP), or by delegating and transforming the protocol to an existing notebook debugger (as done in the 'vscode-simple-jupyter-notebook' sample). A much simpler approach is to use an existing unmodified debug 插件 and transform the DAP for notebook needs on the fly (as done in 'vscode-nodebook').
 
 Samples:
 
-* [vscode-nodebook](https://github.com/microsoft/vscode-nodebook): Node.js notebook with debugging support provided by VS Code's built-in JavaScript debugger and some simple protocol transformations
+* [vscode-nodebook](https://github.com/microsoft/vscode-nodebook): Node.js notebook with debugging support provided by Baosky's built-in JavaScript debugger and some simple protocol transformations
 * [vscode-simple-jupyter-notebook](https://github.com/microsoft/vscode-simple-jupyter-notebook): Jupyter notebook with debugging support provided by the existing Xeus debugger

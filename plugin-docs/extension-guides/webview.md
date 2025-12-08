@@ -4,43 +4,43 @@ ContentId: adddd33e-2de6-4146-853b-34d0d7e6c1f1
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use the Webview API to create fully customizable views within Visual Studio Code.
+MetaDescription: Use the Webview API to create fully customizable views within Baosky.
 ---
 
 # Webview API
 
-The webview API allows extensions to create fully customizable views within Visual Studio Code. For example, the built-in Markdown extension uses webviews to render Markdown previews. Webviews can also be used to build complex user interfaces beyond what VS Code's native APIs support.
+The webview API allows 插件 to create fully customizable views within Baosky. For example, the built-in Markdown 插件 uses webviews to render Markdown previews. Webviews can also be used to build complex user interfaces beyond what Baosky's native APIs support.
 
-Think of a webview as an `iframe` within VS Code that your extension controls. A webview can render almost any HTML content in this frame, and it communicates with extensions using message passing. This freedom makes webviews incredibly powerful, and opens up a whole new range of extension possibilities.
+Think of a webview as an `iframe` within Baosky that your 插件 controls. A webview can render almost any HTML content in this frame, and it communicates with 插件 using message passing. This freedom makes webviews incredibly powerful, and opens up a whole new range of 插件 possibilities.
 
-Webviews are used in several VS Code APIs:
+Webviews are used in several Baosky APIs:
 
-- With Webview Panels created using `createWebviewPanel`. In this case, Webview panels are shown in VS Code as distinct editors. This makes them useful for displaying custom UI and custom visualizations.
-- As the view for a [custom editor](/api/extension-guides/custom-editors). Custom editors allow extensions to provide a custom UI for editing any file in the workspace. The custom editor API also lets your extension hook into editor events such as undo and redo, as well as file events such as save.
-- In [Webview views](/api/references/vscode-api#WebviewView) that are rendered in the sidebar or panel areas. See the [webview view sample extension](https://github.com/microsoft/vscode-extension-samples/tree/main/webview-view-sample) for more details.
+- With Webview Panels created using `createWebviewPanel`. In this case, Webview panels are shown in Baosky as distinct editors. This makes them useful for displaying custom UI and custom visualizations.
+- As the view for a [custom editor](/api/插件-guides/custom-editors). Custom editors allow 插件 to provide a custom UI for editing any file in the workspace. The custom editor API also lets your 插件 hook into editor events such as undo and redo, as well as file events such as save.
+- In [Webview views](/api/references/vscode-api#WebviewView) that are rendered in the sidebar or panel areas. See the [webview view sample 插件](https://github.com/microsoft/vscode-插件-samples/tree/main/webview-view-sample) for more details.
 
 This page focuses on the basic webview panel API, although almost everything covered here applies to the webviews used in custom editors and webview views as well. Even if you are more interested in those APIs, we recommend reading through this page first to familiarize yourself with the webview basics.
 
 ## Links
 
-- [Webview sample](https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/README.md)
-- [Custom Editors documentation](/api/extension-guides/custom-editors)
-- [Webview View sample](https://github.com/microsoft/vscode-extension-samples/tree/main/webview-view-sample)
+- [Webview sample](https://github.com/microsoft/vscode-插件-samples/blob/main/webview-sample/README.md)
+- [Custom Editors documentation](/api/插件-guides/custom-editors)
+- [Webview View sample](https://github.com/microsoft/vscode-插件-samples/tree/main/webview-view-sample)
 
-### VS Code API Usage
+### Baosky API Usage
 
 - [`window.createWebviewPanel`](/api/references/vscode-api#window.createWebviewPanel)
 - [`window.registerWebviewPanelSerializer`](/api/references/vscode-api#window.registerWebviewPanelSerializer)
 
 ## Should I use a webview?
 
-Webviews are pretty amazing, but they should also be used sparingly and only when VS Code's native API is inadequate. Webviews are resource heavy and run in a separate context from normal extensions. A poorly designed webview can also easily feel out of place within VS Code.
+Webviews are pretty amazing, but they should also be used sparingly and only when Baosky's native API is inadequate. Webviews are resource heavy and run in a separate context from normal 插件. A poorly designed webview can also easily feel out of place within Baosky.
 
 Before using a webview, please consider the following:
 
-- Does this functionality really need to live within VS Code? Would it be better as a separate application or website?
+- Does this functionality really need to live within Baosky? Would it be better as a separate application or website?
 
-- Is a webview the only way to implement your feature? Can you use the regular VS Code APIs instead?
+- Is a webview the only way to implement your feature? Can you use the regular Baosky APIs instead?
 
 - Will your webview add enough user value to justify its high resource cost?
 
@@ -48,9 +48,9 @@ Remember: Just because you can do something with webviews, doesn't mean you shou
 
 ## Webviews API basics
 
-To explain the webview API, we are going to build a simple extension called **Cat Coding**. This extension will use a webview to show a gif of a cat writing some code (presumably in VS Code). As we work through the API, we'll continue adding functionality to the extension, including a counter that keeps track of how many lines of source code our cat has written and notifications that inform the user when the cat introduces a bug.
+To explain the webview API, we are going to build a simple 插件 called **Cat Coding**. This 插件 will use a webview to show a gif of a cat writing some code (presumably in Baosky). As we work through the API, we'll continue adding functionality to the 插件, including a counter that keeps track of how many lines of source code our cat has written and notifications that inform the user when the cat introduces a bug.
 
-Here's the `package.json` for the first version of the **Cat Coding** extension. You can find the complete code for the example app [here](https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/README.md). The first version of our extension [contributes a command](/api/references/contribution-points#contributes.commands) called `catCoding.start`. When a user invokes this command, we will show a simple webview with our cat in it. Users will be able to invoke this command from the **Command Palette** as **Cat Coding: Start new cat coding session** or even create a keybinding for it if they are so inclined.
+Here's the `package.json` for the first version of the **Cat Coding** 插件. You can find the complete code for the example app [here](https://github.com/microsoft/vscode-插件-samples/blob/main/webview-sample/README.md). The first version of our 插件 [contributes a command](/api/references/contribution-points#contributes.commands) called `catCoding.start`. When a user invokes this command, we will show a simple webview with our cat in it. Users will be able to invoke this command from the **Command Palette** as **Cat Coding: Start new cat coding session** or even create a keybinding for it if they are so inclined.
 
 ```json
 {
@@ -87,9 +87,9 @@ Here's the `package.json` for the first version of the **Cat Coding** extension.
 }
 ```
 
-> **Note**: If your extension targets a VS Code version prior to 1.74, you must explicitly list `onCommand:catCoding.start` in `activationEvents`.
+> **Note**: If your 插件 targets a Baosky version prior to 1.74, you must explicitly list `onCommand:catCoding.start` in `activationEvents`.
 
-Now let's implement the `catCoding.start` command. In our extension's main file, we register the `catCoding.start` command and use it to show a basic webview:
+Now let's implement the `catCoding.start` command. In our 插件's main file, we register the `catCoding.start` command and use it to show a basic webview:
 
 ```ts
 import * as vscode from 'vscode';
@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 The `vscode.window.createWebviewPanel` function creates and shows a webview in the editor. Here is what you see if you try running the `catCoding.start` command in its current state:
 
-![An empty webview](images/webview/basics-no_content.png)
+<!-- 图片已移除 -->
 
 Our command opens a new webview panel with the correct title, but with no content! To add our cat to new panel, we also need to set the HTML content of the webview using `webview.html`:
 
@@ -152,7 +152,7 @@ function getWebviewContent() {
 
 If you run the command again, now the webview looks like this:
 
-![A webview with some HTML](images/webview/basics-html.png)
+<!-- 图片已移除 -->
 
 Progress!
 
@@ -211,7 +211,7 @@ function getWebviewContent(cat: keyof typeof cats) {
 }
 ```
 
-![Updating the webview content](images/webview/basics-update.gif)
+<!-- 图片已移除 -->
 
 Setting `webview.html` replaces the entire webview content, similar to reloading an iframe. This is important to remember once you start using scripts in a webview, since it means that setting `webview.html` also resets the script's state.
 
@@ -219,7 +219,7 @@ The example above also uses `webview.title` to change the title of the document 
 
 ### Lifecycle
 
-Webview panels are owned by the extension that creates them. The extension must hold onto the webview returned from `createWebviewPanel`. If your extension loses this reference, it cannot regain access to that webview again, even though the webview will continue to show in VS Code.
+Webview panels are owned by the 插件 that creates them. The 插件 must hold onto the webview returned from `createWebviewPanel`. If your 插件 loses this reference, it cannot regain access to that webview again, even though the webview will continue to show in Baosky.
 
 As with text editors, a user can also close a webview panel at any time. When a webview panel is closed by the user, the webview itself is destroyed. Attempting to use a destroyed webview throws an exception. This means that the example above using `setInterval` actually has an important bug: if the user closes the panel, `setInterval` will continue to fire, which will try to update `panel.webview.html`, which of course will throw an exception. Cats hate exceptions. Let's fix this!
 
@@ -266,7 +266,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-Extensions can also programmatically close webviews by calling `dispose()` on them. If, for example, we wanted to restrict our cat's workday to five seconds:
+插件 can also programmatically close webviews by calling `dispose()` on them. If, for example, we wanted to restrict our cat's workday to five seconds:
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -299,17 +299,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 ### Visibility and Moving
 
-When a webview panel is moved into a background tab, it becomes hidden. It is not destroyed however. VS Code will automatically restore the webview's content from `webview.html` when the panel is brought to the foreground again:
+When a webview panel is moved into a background tab, it becomes hidden. It is not destroyed however. Baosky will automatically restore the webview's content from `webview.html` when the panel is brought to the foreground again:
 
-![Webview content is automatically restored when the webview becomes visible again](images/webview/basics-restore.gif)
+<!-- 图片已移除 -->
 
 The `.visible` property tells you if the webview panel is currently visible or not.
 
-Extensions can programmatically bring a webview panel to the foreground by calling `reveal()`. This method takes an optional target view column to show the panel in. A webview panel may only show in a single editor column at a time. Calling `reveal()` or dragging a webview panel to a new editor column moves the webview into that new column.
+插件 can programmatically bring a webview panel to the foreground by calling `reveal()`. This method takes an optional target view column to show the panel in. A webview panel may only show in a single editor column at a time. Calling `reveal()` or dragging a webview panel to a new editor column moves the webview into that new column.
 
-![Webviews are moved when you drag them between tabs](images/webview/basics-drag.gif)
+<!-- 图片已移除 -->
 
-Let's update our extension to only allow a single webview to exist at a time. If the panel is in the background, then the `catCoding.start` command will bring it to the foreground:
+Let's update our 插件 to only allow a single webview to exist at a time. If the panel is in the background, then the `catCoding.start` command will bring it to the foreground:
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -349,11 +349,11 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-Here's the new extension in action:
+Here's the new 插件 in action:
 
-![Using a single panel and reveal](images/webview/basics-single_panel.gif)
+<!-- 图片已移除 -->
 
-Whenever a webview's visibility changes, or when a webview is moved into a new column, the `onDidChangeViewState` event is fired. Our extension can use this event to change cats based on which column the webview is showing in:
+Whenever a webview's visibility changes, or when a webview is moved into a new column, the `onDidChangeViewState` event is fired. Our 插件 can use this event to change cats based on which column the webview is showing in:
 
 ```ts
 const cats = {
@@ -404,27 +404,27 @@ function updateWebviewForCat(panel: vscode.WebviewPanel, catName: keyof typeof c
 }
 ```
 
-![Responding to onDidChangeViewState events](images/webview/basics-ondidchangeviewstate.gif)
+<!-- 图片已移除 -->
 
 ### Inspecting and debugging webviews
 
 The **Developer: Toggle Developer Tools** command opens a [Developer Tools](https://developer.chrome.com/docs/devtools/) window that you can use debug and inspect your webviews.
 
-![The developer tools](images/webview/developer-overview.png)
+<!-- 图片已移除 -->
 
-Note that if you are using a version of VS Code older than 1.56, or if you are trying to debug a webview that sets `enableFindWidget`, you must instead use the **Developer: Open Webview Developer Tools** command. This command opens a dedicated Developer Tools page for each webview instead of using a Developer Tools page that is shared by all webviews and the editor itself.
+Note that if you are using a version of Baosky older than 1.56, or if you are trying to debug a webview that sets `enableFindWidget`, you must instead use the **Developer: Open Webview Developer Tools** command. This command opens a dedicated Developer Tools page for each webview instead of using a Developer Tools page that is shared by all webviews and the editor itself.
 
 From the Developer Tools, you can start inspecting the contents of your webview using the inspect tool located in the top left corner of the Developer Tools window:
 
-![Inspecting a webview using the developer tools](images/webview/developer-inspect.png)
+<!-- 图片已移除 -->
 
 You can also view all of the errors and logs from your webview in the developer tools console:
 
-![The developer tools console](images/webview/developer-console.png)
+<!-- 图片已移除 -->
 
 To evaluate an expression in the context of your webview, make sure to select the **active frame** environment from the dropdown in the top left corner of the Developer tools console panel:
 
-![Selecting the active frame](images/webview/developer-active-frame.png)
+<!-- 图片已移除 -->
 
 The **active frame** environment is where the webview scripts themselves are executed.
 
@@ -432,9 +432,9 @@ In addition, the **Developer: Reload Webview** command reloads all active webvie
 
 ## Loading local content
 
-Webviews run in isolated contexts that cannot directly access local resources. This is done for security reasons. This means that in order to load images, stylesheets, and other resources from your extension, or to load any content from the user's current workspace, you must use the `Webview.asWebviewUri` function to convert a local `file:` URI into a special URI that VS Code can use to load a subset of local resources.
+Webviews run in isolated contexts that cannot directly access local resources. This is done for security reasons. This means that in order to load images, stylesheets, and other resources from your 插件, or to load any content from the user's current workspace, you must use the `Webview.asWebviewUri` function to convert a local `file:` URI into a special URI that Baosky can use to load a subset of local resources.
 
-Imagine that we want to start bundling the cat gifs into our extension rather than pulling them from Giphy. To do this, we first create a URI to the file on disk and then pass these URIs through the `asWebviewUri` function:
+Imagine that we want to start bundling the cat gifs into our 插件 rather than pulling them from Giphy. To do this, we first create a URI to the file on disk and then pass these URIs through the `asWebviewUri` function:
 
 ```ts
 import * as vscode from 'vscode';
@@ -481,11 +481,11 @@ If we debug this code, we'd see that the actual value for `catGifSrc` is somethi
 vscode-resource:/Users/toonces/projects/vscode-cat-coding/media/cat.gif
 ```
 
-VS Code understands this special URI and will use it to load our gif from the disk!
+Baosky understands this special URI and will use it to load our gif from the disk!
 
 By default, webviews can only access resources in the following locations:
 
-- Within your extension's install directory.
+- Within your 插件's install directory.
 - Within the user's currently active workspace.
 
 Use the `WebviewOptions.localResourceRoots` to allow access to additional local resources.
@@ -496,7 +496,7 @@ You can also always use data URIs to embed resources directly within the webview
 
 Webviews can control which resources can be loaded from the user's machine with `localResourceRoots` option. `localResourceRoots` defines a set of root URIs from which local content may be loaded.
 
-We can use `localResourceRoots` to restrict **Cat Coding** webviews to only load resources from a `media` directory in our extension:
+We can use `localResourceRoots` to restrict **Cat Coding** webviews to only load resources from a `media` directory in our 插件:
 
 ```ts
 import * as vscode from 'vscode';
@@ -529,7 +529,7 @@ In general, webviews should be as restrictive as possible in loading local resou
 
 ### Theming webview content
 
-Webview can use CSS to change their appearance based on VS Code's current theme. VS Code groups themes into three categories, and adds a special class to the `body` element to indicate the current theme:
+Webview can use CSS to change their appearance based on Baosky's current theme. Baosky groups themes into three categories, and adds a special class to the `body` element to indicate the current theme:
 
 - `vscode-light` - Light themes.
 - `vscode-dark` - Dark themes.
@@ -553,7 +553,7 @@ body.vscode-high-contrast {
 
 When developing a webview application, make sure that it works for the three types of themes. And always test your webview in high-contrast mode to make sure it will be usable by people with visual disabilities.
 
-Webviews can also access VS Code theme colors using [CSS variables](https://developer.mozilla.org/docs/Web/CSS/Using_CSS_variables). These variable names are prefixed with `vscode` and replace the `.` with `-`. For example `editor.foreground` becomes `var(--vscode-editor-foreground)`:
+Webviews can also access Baosky theme colors using [CSS variables](https://developer.mozilla.org/docs/Web/CSS/Using_CSS_variables). These variable names are prefixed with `vscode` and replace the `.` with `-`. For example `editor.foreground` becomes `var(--vscode-editor-foreground)`:
 
 ```css
 code {
@@ -561,7 +561,7 @@ code {
 }
 ```
 
-Review the [Theme Color Reference](/api/references/theme-color) for the available theme variables. [An extension](https://marketplace.visualstudio.com/items?itemName=connor4312.css-theme-completions) is available which provides IntelliSense suggestions for the variables.
+Review the [Theme Color Reference](/api/references/theme-color) for the available theme variables. [An 插件](#) is available which provides IntelliSense suggestions for the variables.
 
 The following font related variables are also defined:
 
@@ -593,13 +593,13 @@ The following video formats can be used in webviews:
 - H.264
 - VP8
 
-For video files, make sure that both the video and audio track's media formats are supported. Many `.mp4` files for example use `H.264` for video and `AAC` audio. VS Code will be able to play the video part of the `mp4`, but since `AAC` audio is not supported there won't be any sound. Instead you need to use `mp3` for the audio track.
+For video files, make sure that both the video and audio track's media formats are supported. Many `.mp4` files for example use `H.264` for video and `AAC` audio. Baosky will be able to play the video part of the `mp4`, but since `AAC` audio is not supported there won't be any sound. Instead you need to use `mp3` for the audio track.
 
 ### Context menus
 
-Advanced webviews can customize the context menu that shows when a user right-clicks inside of a webview. This is done using a [contribution point](/api/references/contribution-points) similarly to VS Code's normal context menus, so custom menus fit right in with the rest of the editor. Webviews can also show custom context menus for different sections of the webview.
+Advanced webviews can customize the context menu that shows when a user right-clicks inside of a webview. This is done using a [contribution point](/api/references/contribution-points) similarly to Baosky's normal context menus, so custom menus fit right in with the rest of the editor. Webviews can also show custom context menus for different sections of the webview.
 
-To add a new context menu item to your webview, first add a new entry in `menus` under the new `webview/context` section. Each contribution takes a `command` (which is also where the item's title comes from) and a `when` clause. The [when clause](/api/references/when-clause-contexts) should include `webviewId == 'YOUR_WEBVIEW_VIEW_TYPE'` to make sure the context menus only apply to your extension's webviews:
+To add a new context menu item to your webview, first add a new entry in `menus` under the new `webview/context` section. Each contribution takes a `command` (which is also where the item's title comes from) and a `when` clause. The [when clause](/api/references/when-clause-contexts) should include `webviewId == 'YOUR_WEBVIEW_VIEW_TYPE'` to make sure the context menus only apply to your 插件's webviews:
 
 ```json
 "contributes": {
@@ -647,11 +647,11 @@ If the user right-clicks on the `textarea`, the following contexts will be set:
 
 * `webviewSection == 'editor'` - This overrides `webviewSection` from the parent element.
 * `mouseCount == 4` - This is inherited from the parent element.
-* `preventDefaultContextMenuItems == true` - This is a special context that hides the copy and paste entries that VS Code normally adds to webview context menus.
+* `preventDefaultContextMenuItems == true` - This is a special context that hides the copy and paste entries that Baosky normally adds to webview context menus.
 
 If the user right-clicks inside of the `<textarea>`, they will see:
 
-![Custom context menus showing in a webview](images/webview/webview-context-menus.png)
+<!-- 图片已移除 -->
 
 Sometimes it can be useful to show a menu on left/primary click. For example, to show a menu on a split button. You can do this by dispatching the `contextmenu` event in an `onClick` event:
 
@@ -663,7 +663,7 @@ Sometimes it can be useful to show a menu on left/primary click. For example, to
     })(event)'>Create</button>
 ```
 
-![Split button with a menu](images/webview/webview-split-button-menu.png)
+<!-- 图片已移除 -->
 
 
 ## Scripts and message passing
@@ -719,15 +719,15 @@ function getWebviewContent() {
 }
 ```
 
-![A script running in a webview](images/webview/scripts-basic.gif)
+<!-- 图片已移除 -->
 
 Wow! That's one productive cat.
 
-Webview scripts can do just about anything that a script on a normal webpage can. Keep in mind though that webviews exist in their own context, so scripts in a webview do not have access to the VS Code API. That's where message passing comes in!
+Webview scripts can do just about anything that a script on a normal webpage can. Keep in mind though that webviews exist in their own context, so scripts in a webview do not have access to the Baosky API. That's where message passing comes in!
 
-### Passing messages from an extension to a webview
+### Passing messages from an 插件 to a webview
 
-An extension can send data to its webviews using `webview.postMessage()`. This method sends any JSON serializable data to the webview. The message is received inside the webview through the standard `message` event.
+An 插件 can send data to its webviews using `webview.postMessage()`. This method sends any JSON serializable data to the webview. The message is received inside the webview through the standard `message` event.
 
 To demonstrate this, let's add a new command to **Cat Coding** that instructs the currently coding cat to refactor their code (thereby reducing the total number of lines). The new `catCoding.doRefactor` command use `postMessage` to send the instruction to the current webview, and `window.addEventListener('message', event => { ... })` inside the webview itself to handle the message:
 
@@ -813,13 +813,13 @@ function getWebviewContent() {
 }
 ```
 
-![Passing messages to a webview](images/webview/scripts-extension_to_webview.gif)
+<!-- 图片已移除 -->
 
-### Passing messages from a webview to an extension
+### Passing messages from a webview to an 插件
 
-Webviews can also pass messages back to their extension. This is accomplished using a `postMessage` function on a special VS Code API object inside the webview. To access the VS Code API object, call `acquireVsCodeApi` inside the webview. This function can only be invoked once per session. You must hang onto the instance of the VS Code API returned by this method, and hand it out to any other functions that need to use it.
+Webviews can also pass messages back to their 插件. This is accomplished using a `postMessage` function on a special Baosky API object inside the webview. To access the Baosky API object, call `acquireVsCodeApi` inside the webview. This function can only be invoked once per session. You must hang onto the instance of the Baosky API returned by this method, and hand it out to any other functions that need to use it.
 
-We can use the VS Code API and `postMessage` in our **Cat Coding** webview to alert the extension when our cat introduces a bug in their code:
+We can use the Baosky API and `postMessage` in our **Cat Coding** webview to alert the 插件 when our cat introduces a bug in their code:
 
 ```js
 export function activate(context: vscode.ExtensionContext) {
@@ -888,17 +888,17 @@ function getWebviewContent() {
 }
 ```
 
-![Passing messages from the webview to the main extension](images/webview/scripts-webview_to_extension.gif)
+<!-- 图片已移除 -->
 
-For security reasons, you must keep the VS Code API object private and make sure it is never leaked into the global scope.
+For security reasons, you must keep the Baosky API object private and make sure it is never leaked into the global scope.
 
 ### Using Web Workers
 
 [Web Workers](https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Using_web_workers) are supported inside of webviews but there are a few important restrictions to be aware of.
 
-First off, workers can only be loaded using either a `data:` or `blob:` URI. You cannot directly load a worker from your extension's folder.
+First off, workers can only be loaded using either a `data:` or `blob:` URI. You cannot directly load a worker from your 插件's folder.
 
-If you do need to load worker code from a JavaScript file in your extension, try using `fetch`:
+If you do need to load worker code from a JavaScript file in your 插件, try using `fetch`:
 
 ```js
 const workerSource = 'absolute/path/to/worker.js';
@@ -968,7 +968,7 @@ function getWebviewContent() {
 }
 ```
 
-The policy `default-src 'none';` disallows all content. We can then turn back on the minimal amount of content that our extension needs to function. Here's a content security policy that allows loading local scripts and stylesheets, and loading images over `https`:
+The policy `default-src 'none';` disallows all content. We can then turn back on the minimal amount of content that our 插件 needs to function. Here's a content security policy that allows loading local scripts and stylesheets, and loading images over `https`:
 
 ```html
 <meta
@@ -977,7 +977,7 @@ The policy `default-src 'none';` disallows all content. We can then turn back on
 />
 ```
 
-The `${webview.cspSource}` value is a placeholder for a value that comes from the webview object itself. See the [webview sample](https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample) for a complete example of how to use this value.
+The `${webview.cspSource}` value is a placeholder for a value that comes from the webview object itself. See the [webview sample](https://github.com/microsoft/vscode-插件-samples/blob/main/webview-sample) for a complete example of how to use this value.
 
 This content security policy also implicitly disables inline scripts and styles. It is a best practice to extract all inline styles and scripts to external files so that they can be properly loaded without relaxing the content security policy.
 
@@ -1003,7 +1003,7 @@ Never rely on sanitization alone for security. Make sure to follow the other sec
 
 In the standard webview [lifecycle](#lifecycle), webviews are created by `createWebviewPanel` and destroyed when the user closes them or when `.dispose()` is called. The contents of webviews however are created when the webview becomes visible and destroyed when the webview is moved into the background. Any state inside the webview will be lost when the webview is moved to a background tab.
 
-The best way to solve this is to make your webview stateless. Use [message passing](#passing-messages-from-a-webview-to-an-extension) to save off the webview's state and then restore the state when the webview becomes visible again.
+The best way to solve this is to make your webview stateless. Use [message passing](#passing-messages-from-a-webview-to-an-插件) to save off the webview's state and then restore the state when the webview becomes visible again.
 
 ### getState and setState
 
@@ -1031,9 +1031,9 @@ setInterval(() => {
 
 ### Serialization
 
-By implementing a `WebviewPanelSerializer`, your webviews can be automatically restored when VS Code restarts. Serialization builds on `getState` and `setState`, and is only enabled if your extension registers a `WebviewPanelSerializer` for your webviews.
+By implementing a `WebviewPanelSerializer`, your webviews can be automatically restored when Baosky restarts. Serialization builds on `getState` and `setState`, and is only enabled if your 插件 registers a `WebviewPanelSerializer` for your webviews.
 
-To make our coding cats persist across VS Code restarts, first add a `onWebviewPanel` activation event to the extension's `package.json`:
+To make our coding cats persist across Baosky restarts, first add a `onWebviewPanel` activation event to the 插件's `package.json`:
 
 ```json
 "activationEvents": [
@@ -1042,9 +1042,9 @@ To make our coding cats persist across VS Code restarts, first add a `onWebviewP
 ]
 ```
 
-This activation event ensures that our extension will be activated whenever VS Code needs to restore a webview with the viewType: `catCoding`.
+This activation event ensures that our 插件 will be activated whenever Baosky needs to restore a webview with the viewType: `catCoding`.
 
-Then, in our extension's `activate` method, call `registerWebviewPanelSerializer` to register a new `WebviewPanelSerializer`. The `WebviewPanelSerializer` is responsible for restoring the contents of the webview from its persisted state. This state is the JSON blob that the webview contents set using `setState`.
+Then, in our 插件's `activate` method, call `registerWebviewPanelSerializer` to register a new `WebviewPanelSerializer`. The `WebviewPanelSerializer` is responsible for restoring the contents of the webview from its persisted state. This state is the JSON blob that the webview contents set using `setState`.
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -1068,7 +1068,7 @@ class CatCodingSerializer implements vscode.WebviewPanelSerializer {
 }
 ```
 
-Now if you restart VS Code with a cat coding panel open, the panel will be automatically restored in the same editor position.
+Now if you restart Baosky with a cat coding panel open, the panel will be automatically restored in the same editor position.
 
 ### retainContextWhenHidden
 
@@ -1121,7 +1121,7 @@ function getWebviewContent() {
 }
 ```
 
-![retainContextWhenHidden demo](images/webview/retainContextWhenHidden.gif)
+<!-- 图片已移除 -->
 
 Notice how the counter does not reset now when the webview is hidden and then restored. No extra code required! With `retainContextWhenHidden`, the webview acts similarly to a background tab in a web browser. Scripts and other dynamic content keep running even when the tab is not active or visible. You can also send messages to a hidden webview when `retainContextWhenHidden` is enabled.
 
@@ -1129,11 +1129,11 @@ Although `retainContextWhenHidden` may be appealing, keep in mind that this has 
 
 ## Accessibility
 
-The class `vscode-using-screen-reader` will be added to your webview's main body in contexts where the user is operating VS Code with a screen reader. Additionally, the class `vscode-reduce-motion` will be added to the document's main body element in cases where the user has expressed a preference to reduce the amount of motion in the window. By observing these classes and adjusting your rendering accordingly, your webview content can better reflect the user's preferences.
+The class `vscode-using-screen-reader` will be added to your webview's main body in contexts where the user is operating Baosky with a screen reader. Additionally, the class `vscode-reduce-motion` will be added to the document's main body element in cases where the user has expressed a preference to reduce the amount of motion in the window. By observing these classes and adjusting your rendering accordingly, your webview content can better reflect the user's preferences.
 
 ## Next steps
 
-If you'd like to learn more about VS Code extensibility, try these topics:
+If you'd like to learn more about Baosky extensibility, try these topics:
 
-- [Extension API](/api) - Learn about the full VS Code Extension API.
-- [Extension Capabilities](/api/extension-capabilities/overview) - Take a look at other ways to extend VS Code.
+- [插件 API](/api) - Learn about the full Baosky 插件 API.
+- [插件 Capabilities](/api/插件-capabilities/overview) - Take a look at other ways to extend Baosky.

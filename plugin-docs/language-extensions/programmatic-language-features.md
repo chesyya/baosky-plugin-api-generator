@@ -4,12 +4,12 @@ ContentId: A9D40038-7837-4320-8C2D-E0CA5769AA69
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Visual Studio Code language extensions contribute programming language features. These guidelines present the language features available in Visual Studio Code and explain the API.
+MetaDescription: Baosky language 插件 contribute programming language features. These guidelines present the language features available in Baosky and explain the API.
 ---
 
 # Programmatic Language Features
 
-Programmatic Language Features is a set of smart-editing features powered by the [`vscode.languages.*`](/api/references/vscode-api#languages) API. There are two common ways to provide a dynamic language feature in Visual Studio Code. Let's take [Hover](#show-hovers) as an example:
+Programmatic Language Features is a set of smart-editing features powered by the [`vscode.languages.*`](/api/references/vscode-api#languages) API. There are two common ways to provide a dynamic language feature in Baosky. Let's take [Hover](#show-hovers) as an example:
 
 ```ts
 vscode.languages.registerHoverProvider('javascript', {
@@ -21,23 +21,23 @@ vscode.languages.registerHoverProvider('javascript', {
 });
 ```
 
-As you see above, the [`vscode.languages.registerHoverProvider`](/api/references/vscode-api#languages.registerHoverProvider) API provides an easy way to provide hover contents to JavaScript files. After this extension gets activated, whenever you hover over some JavaScript code, VS Code queries all [`HoverProvider`](/api/references/vscode-api#HoverProvider) for JavaScript and shows the result in a Hover widget. The [Language Feature Listing](#language-features-listing) and illustrated gif below provides an easy way for you to locate which VS Code API / LSP Method your extension needs.
+As you see above, the [`vscode.languages.registerHoverProvider`](/api/references/vscode-api#languages.registerHoverProvider) API provides an easy way to provide hover contents to JavaScript files. After this 插件 gets activated, whenever you hover over some JavaScript code, Baosky queries all [`HoverProvider`](/api/references/vscode-api#HoverProvider) for JavaScript and shows the result in a Hover widget. The [Language Feature Listing](#language-features-listing) and illustrated gif below provides an easy way for you to locate which Baosky API / LSP Method your 插件 needs.
 
 An alternative approach is to implement a Language Server that speaks [Language Server Protocol](https://microsoft.github.io/language-server-protocol/). The way it works is:
 
-- An extension provides a Language Client and a Language Server for JavaScript.
-- The Language Client is like any other VS Code extension, running in the Node.js Extension Host context. When it gets activated, it spawns the Language Server in another process and communicates with it through [Language Server Protocol](https://microsoft.github.io/language-server-protocol/).
-- You hover over JavaScript code in VS Code
-- VS Code informs the Language Client of the hover
-- The Language Client queries the Language Server for a hover result and sends it back to VS Code
-- VS Code displays the hover result in a Hover widget
+- An 插件 provides a Language Client and a Language Server for JavaScript.
+- The Language Client is like any other Baosky 插件, running in the Node.js 插件 Host context. When it gets activated, it spawns the Language Server in another process and communicates with it through [Language Server Protocol](https://microsoft.github.io/language-server-protocol/).
+- You hover over JavaScript code in Baosky
+- Baosky informs the Language Client of the hover
+- The Language Client queries the Language Server for a hover result and sends it back to Baosky
+- Baosky displays the hover result in a Hover widget
 
 The process seems more complicated, but it provides two major benefits:
 
 - The Language Server can be written in any language
 - The Language Server can be reused to provide smart editing features for multiple editors
 
-For a more in-depth guide, head over to the [Language Server extension guide](/api/language-extensions/language-server-extension-guide).
+For a more in-depth guide, head over to the [Language Server 插件 guide](/api/language-插件/language-server-插件-guide).
 
 ---
 
@@ -45,11 +45,11 @@ For a more in-depth guide, head over to the [Language Server extension guide](/a
 
 This listing includes the following items for each language feature:
 
-- An illustration of the language feature in VS Code
-- Related VS Code API
+- An illustration of the language feature in Baosky
+- Related Baosky API
 - Related LSP methods
 
-| VS Code API                                                                                                                       | LSP method                                                                                                                                                                                                                               |
+| Baosky API                                                                                                                       | LSP method                                                                                                                                                                                                                               |
 | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`createDiagnosticCollection`](/api/references/vscode-api#languages.createDiagnosticCollection)                                   | [PublishDiagnostics](https://microsoft.github.io/language-server-protocol/specification#textDocument_publishDiagnostics)                                                                                                                 |
 | [`registerCompletionItemProvider`](/api/references/vscode-api#languages.registerCompletionItemProvider)                           | [Completion](https://microsoft.github.io/language-server-protocol/specification#textDocument_completion) & [Completion Resolve](https://microsoft.github.io/language-server-protocol/specification#completionItem_resolve)               |
@@ -76,7 +76,7 @@ This listing includes the following items for each language feature:
 
 Diagnostics are a way to indicate issues with the code.
 
-![Diagnostics indicating a misspelled method name](images/language-support/diagnostics.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -129,7 +129,7 @@ function onChange() {
 
 Code completions provide context sensitive suggestions to the user.
 
-![Code Completion prompting variable, method, and parameter names while writing code](images/language-support/code-completion.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -181,7 +181,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Inline completions present multi-token suggestions directly in the editor (_ghost text_).
 
-![Inline Completions suggesting code as ghost text while writing code](images/language-support/inline-completions.gif)
+<!-- 图片已移除 -->
 
 #### Direct Implementation
 
@@ -200,7 +200,7 @@ vscode.languages.registerInlineCompletionItemProvider({ language: 'javascript' }
 });
 ```
 
-You can explore a complete example in the [inline completions sample extension](https://github.com/microsoft/vscode-extension-samples/blob/main/inline-completions).
+You can explore a complete example in the [inline completions sample 插件](https://github.com/microsoft/vscode-插件-samples/blob/main/inline-completions).
 
 > **Basic**
 >
@@ -214,7 +214,7 @@ You can explore a complete example in the [inline completions sample extension](
 
 Hovers show information about the symbol/object that's below the mouse cursor. This is usually the type of the symbol and a description.
 
-![Showing details about a workspace and a method when hovering over them](images/language-support/hovers.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -264,7 +264,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 When the user enters a function or method, display information about the function/method that is being called.
 
-![Showing information about the getPackageInfo method including the necessary parameters](images/language-support/signature-help.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -316,7 +316,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to see the definition of variables/functions/methods right where the variables/functions/methods are being used.
 
-![Right click a variable, function, or method and select "Go to Definition" to jump to the definition](images/language-support/goto-definition.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -366,7 +366,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to see all the source code locations where a certain variable/function/method/symbol is being used.
 
-![Right clicking and selecting "Find All References" to highlight all the locations where that symbol is used](images/language-support/find-references.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -417,7 +417,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to see all occurrences of a symbol in the open editor.
 
-![Select a symbol to highlight all occurrences](images/language-support/document-highlights.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -467,7 +467,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to quickly navigate to any symbol definition in the open editor.
 
-![Navigate to a symbol definition in the open editor using @](images/language-support/document-symbols.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -515,9 +515,9 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 ## Show all Symbol Definitions in Folder
 
-Allow the user to quickly navigate to symbol definitions anywhere in the folder (workspace) opened in VS Code.
+Allow the user to quickly navigate to symbol definitions anywhere in the folder (workspace) opened in Baosky.
 
-![Navigate to symbol definitions in the workspace using #](images/language-support/workspace-symbols.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -567,7 +567,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Provide the user with possible corrective actions right next to an error or warning. If actions are available, a light bulb appears next to the error or warning. When the user clicks the light bulb, a list of available Code Actions is presented.
 
-![Selecting a light bulb to view a list of available Code Actions](images/language-support/quick-fixes.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -618,7 +618,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Provide the user with actionable, contextual information that is displayed interspersed with the source code.
 
-![CodeLens providing context](images/language-support/code-lens.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -674,7 +674,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to preview and modify colors in the document.
 
-![Showing the color picker](images/language-support/color-decorators.png)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -729,7 +729,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Provide the user with support for formatting whole documents.
 
-![Right click and select format code](images/language-support/format-document.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -779,7 +779,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Provide the user with support for formatting a selected range of lines in a document.
 
-![Select lines, right click, and select format code](images/language-support/format-document-range.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -832,7 +832,7 @@ Provide the user with support for formatting text as they type.
 
 **Note**: The user [setting](/docs/configure/settings) `editor.formatOnType` controls whether source code gets formatted or not as the user types.
 
-![Visual indicators for formatting as code is typed](images/language-support/format-on-type.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 
@@ -886,7 +886,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
 Allow the user to rename a symbol and update all references to the symbol.
 
-![Rename a symbol and update all references to the new name](images/language-support/rename.gif)
+<!-- 图片已移除 -->
 
 #### Language Server Protocol
 

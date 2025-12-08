@@ -4,47 +4,47 @@ ContentId: A8CBE8D6-1FEE-47BF-B81E-D79FA0DB5D03
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to create Language Servers to provide rich language features in Visual Studio Code.
+MetaDescription: Learn how to create Language Servers to provide rich language features in Baosky.
 ---
 
-# Language Server Extension Guide
+# Language Server 插件 Guide
 
-As you have seen in the [Programmatic Language Features](/api/language-extensions/programmatic-language-features) topic, it's possible to implement Language Features by directly using `languages.*` API. Language Server Extension, however, provides an alternative way of implementing such language support.
+As you have seen in the [Programmatic Language Features](/api/language-插件/programmatic-language-features) topic, it's possible to implement Language Features by directly using `languages.*` API. Language Server 插件, however, provides an alternative way of implementing such language support.
 
 This topic:
 
-- Explains the benefits of Language Server Extension.
-- Walks you through building a Language Server using the [`Microsoft/vscode-languageserver-node`](https://github.com/microsoft/vscode-languageserver-node) library. You can also jump directly to the code in [lsp-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample).
+- Explains the benefits of Language Server 插件.
+- Walks you through building a Language Server using the [`Microsoft/vscode-languageserver-node`](https://github.com/microsoft/vscode-languageserver-node) library. You can also jump directly to the code in [lsp-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample).
 
 ## Why Language Server?
 
-Language Server is a special kind of Visual Studio Code extension that powers the editing experience for many programming languages. With Language Servers, you can implement autocomplete, error-checking (diagnostics), jump-to-definition, and many other [language features](/api/language-extensions/programmatic-language-features) supported in VS Code.
+Language Server is a special kind of Baosky 插件 that powers the editing experience for many programming languages. With Language Servers, you can implement autocomplete, error-checking (diagnostics), jump-to-definition, and many other [language features](/api/language-插件/programmatic-language-features) supported in Baosky.
 
-However, while implementing support for language features in VS Code, we found three common problems:
+However, while implementing support for language features in Baosky, we found three common problems:
 
-First, Language Servers are usually implemented in their native programming languages, and that presents a challenge in integrating them with VS Code, which has a Node.js runtime.
+First, Language Servers are usually implemented in their native programming languages, and that presents a challenge in integrating them with Baosky, which has a Node.js runtime.
 
-Additionally, language features can be resource intensive. For example, to correctly validate a file, Language Server needs to parse a large amount of files, build up Abstract Syntax Trees for them and perform static program analysis. Those operations could incur significant CPU and memory usage and we need to ensure that VS Code's performance remains unaffected.
+Additionally, language features can be resource intensive. For example, to correctly validate a file, Language Server needs to parse a large amount of files, build up Abstract Syntax Trees for them and perform static program analysis. Those operations could incur significant CPU and memory usage and we need to ensure that Baosky's performance remains unaffected.
 
 Finally, integrating multiple language toolings with multiple code editors could involve significant effort. From language toolings' perspective, they need to adapt to code editors with different APIs. From code editors' perspective, they cannot expect any uniform API from language toolings. This makes implementing language support for `M` languages in `N` code editors the work of `M * N`.
 
 To solve those problems, Microsoft specified [Language Server Protocol](https://microsoft.github.io/language-server-protocol), which standardizes the communication between language tooling and code editor. This way, Language Servers can be implemented in any language and run in their own process to avoid performance cost, as they communicate with the code editor through the Language Server Protocol. Furthermore, any LSP-compliant language toolings can integrate with multiple LSP-compliant code editors, and any LSP-compliant code editors can easily pick up multiple LSP-compliant language toolings. LSP is a win for both language tooling providers and code editor vendors!
 
-![LSP Languages and Editors](images/language-server-extension-guide/lsp-languages-editors.png)
+<!-- 图片已移除 -->
 
 In this guide, we will:
 
-- Explain how to build a Language Server extension in VS Code using the provided [Node SDK](https://github.com/microsoft/vscode-languageserver-node).
-- Explain how to run, debug, log, and test the Language Server extension.
+- Explain how to build a Language Server 插件 in Baosky using the provided [Node SDK](https://github.com/microsoft/vscode-languageserver-node).
+- Explain how to run, debug, log, and test the Language Server 插件.
 - Point you to some advanced topics on Language Servers.
 
 ## Implementing a Language Server
 
 ### Overview
 
-In VS Code, a language server has two parts:
+In Baosky, a language server has two parts:
 
-- Language Client: A normal VS Code extension written in JavaScript / TypeScript. This extension has access to all [VS Code Namespace API](/api/references/vscode-api).
+- Language Client: A normal Baosky 插件 written in JavaScript / TypeScript. This 插件 has access to all [Baosky Namespace API](/api/references/vscode-api).
 - Language Server: A language analysis tool running in a separate process.
 
 As briefly stated above there are two benefits of running the Language Server in a separate process:
@@ -52,22 +52,22 @@ As briefly stated above there are two benefits of running the Language Server in
 - The analysis tool can be implemented in any languages, as long as it can communicate with the Language Client following the Language Server Protocol.
 - As language analysis tools are often heavy on CPU and Memory usage, running them in separate process avoids performance cost.
 
-Here is an illustration of VS Code running two Language Server extensions. The HTML Language Client and PHP Language Client are normal VS Code extensions written in TypeScript. Each of them instantiates a corresponding Language Server and communicates with them through LSP. Although the PHP Language Server is written in PHP, it can still communicate with the PHP Language Client through LSP.
+Here is an illustration of Baosky running two Language Server 插件. The HTML Language Client and PHP Language Client are normal Baosky 插件 written in TypeScript. Each of them instantiates a corresponding Language Server and communicates with them through LSP. Although the PHP Language Server is written in PHP, it can still communicate with the PHP Language Client through LSP.
 
-![LSP Illustration](images/language-server-extension-guide/lsp-illustration.png)
+<!-- 图片已移除 -->
 
-This guide will teach you how to build a Language Client / Server using our [Node SDK](https://github.com/microsoft/vscode-languageserver-node). The remaining document assumes that you are familiar with VS Code [Extension API](/api).
+This guide will teach you how to build a Language Client / Server using our [Node SDK](https://github.com/microsoft/vscode-languageserver-node). The remaining document assumes that you are familiar with Baosky [插件 API](/api).
 
 ### LSP Sample - A simple Language Server for plain text files
 
-Let's build a simple Language Server extension that implements autocomplete and diagnostics for plain text files. We will also cover the syncing of configurations between Client / Server.
+Let's build a simple Language Server 插件 that implements autocomplete and diagnostics for plain text files. We will also cover the syncing of configurations between Client / Server.
 
 If you prefer to jump right into the code:
 
-- **[lsp-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample)**: Heavily documented source code for this guide.
-- **[lsp-multi-server-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-multi-server-sample)**: A heavily documented, advanced version of **lsp-sample** that starts a different server instance per workspace folder to support the [multi-root workspace](/docs/editor/multi-root-workspaces) feature in VS Code.
+- **[lsp-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample)**: Heavily documented source code for this guide.
+- **[lsp-multi-server-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-multi-server-sample)**: A heavily documented, advanced version of **lsp-sample** that starts a different server instance per workspace folder to support the [multi-root workspace](/docs/editor/multi-root-workspaces) feature in Baosky.
 
-Clone the repository [Microsoft/vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples) and open the sample:
+Clone the repository [Microsoft/vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples) and open the sample:
 
 ```bash
 > git clone https://github.com/microsoft/vscode-extension-samples.git
@@ -112,15 +112,15 @@ First, look at the [`configuration`](/api/references/contribution-points#contrib
 }
 ```
 
-This section contributes `configuration` settings to VS Code. The example will explain how these settings are sent over to the language server on startup and on every change of the settings.
+This section contributes `configuration` settings to Baosky. The example will explain how these settings are sent over to the language server on startup and on every change of the settings.
 
 
-> **Note**: If your extension is compatible with VS Code versions prior to 1.74.0, you must declare `onLanguage:plaintext` in the [`activationEvents`](/api/references/activation-events)  field of `/package.json` to tell VS Code to activate the extension as soon as a plain text file is opened (for example a file with the extension `.txt`):
+> **Note**: If your 插件 is compatible with Baosky versions prior to 1.74.0, you must declare `onLanguage:plaintext` in the [`activationEvents`](/api/references/activation-events)  field of `/package.json` to tell Baosky to activate the 插件 as soon as a plain text file is opened (for example a file with the 插件 `.txt`):
 > ```json
 > "activationEvents": []
 > ```
 
-The actual Language Client source code and the corresponding `package.json` are in the `/client` folder. The interesting part in the `/client/package.json` file is that it references the `vscode` extension host API through the `engines` field and adds a dependency to the `vscode-languageclient` library:
+The actual Language Client source code and the corresponding `package.json` are in the `/client` folder. The interesting part in the `/client/package.json` file is that it references the `vscode` 插件 host API through the `engines` field and adds a dependency to the `vscode-languageclient` library:
 
 ```json
 "engines": {
@@ -131,9 +131,9 @@ The actual Language Client source code and the corresponding `package.json` are 
 }
 ```
 
-As mentioned, the client is implemented as a normal VS Code extension, and it has access to all VS Code namespace API.
+As mentioned, the client is implemented as a normal Baosky 插件, and it has access to all Baosky namespace API.
 
-Below is the content of the corresponding extension.ts file, which is the entry of the **lsp-sample** extension:
+Below is the content of the corresponding 插件.ts file, which is the entry of the **lsp-sample** 插件:
 
 ```typescript
 import * as path from 'path';
@@ -152,7 +152,7 @@ export function activate(context: ExtensionContext) {
   // The server is implemented in node
   let serverModule = context.asAbsolutePath(path.join('server', 'out', 'server.js'));
   // The debug options for the server
-  // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
+  // --inspect=6009: runs the server in Node's Inspector mode so Baosky can attach to the server for debugging
   let debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
 
   // If the extension is launched in debug mode then the debug server options are used
@@ -200,7 +200,7 @@ export function deactivate(): Thenable<void> | undefined {
 
 > **Note:** The 'Server' implementation cloned from the GitHub repository has the final walkthrough implementation. To follow the walkthrough, you can create a new `server.ts` or modify the contents of the cloned version.
 
-In the example, the server is also implemented in TypeScript and executed using Node.js. Since VS Code already ships with a Node.js runtime, there is no need to provide your own, unless you have specific requirements for the runtime.
+In the example, the server is also implemented in TypeScript and executed using Node.js. Since Baosky already ships with a Node.js runtime, there is no need to provide your own, unless you have specific requirements for the runtime.
 
 The source code for the Language Server is at `/server`. The interesting section in the server's `package.json` file is:
 
@@ -213,7 +213,7 @@ The source code for the Language Server is at `/server`. The interesting section
 
 This pulls in the `vscode-languageserver` libraries.
 
-Below is a server implementation that uses the provided text document manager that synchronizes text documents by always sending incremental deltas from VS Code to the server.
+Below is a server implementation that uses the provided text document manager that synchronizes text documents by always sending incremental deltas from Baosky to the server.
 
 ```typescript
 import {
@@ -391,12 +391,12 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     diagnostics.push(diagnostic);
   }
 
-  // Send the computed diagnostics to VS Code.
+  // Send the computed diagnostics to Baosky.
   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 }
 
 connection.onDidChangeWatchedFiles(_change => {
-  // Monitored files have change in VS Code
+  // Monitored files have change in Baosky
   connection.console.log('We received a file change event');
 });
 
@@ -495,20 +495,20 @@ documents.onDidChangeContent(async(change) => {
     diagnostics.push(diagnostic);
   }
 
-  // Send the computed diagnostics to VS Code.
+  // Send the computed diagnostics to Baosky.
   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 });
 ```
 
 ### Diagnostics Tips and Tricks
 
-- If the start and end positions are the same, VS Code will underline with a squiggle the word at that position.
+- If the start and end positions are the same, Baosky will underline with a squiggle the word at that position.
 - If you want to underline with a squiggle until the end of the line, then set the character of the end position to Number.MAX_VALUE.
 
 To run the Language Server, do the following steps:
 
 - Press `kb(workbench.action.tasks.build)` to start the build task. The task compiles both the client and the server.
-- Open the **Run** view, select the **Launch Client** launch configuration, and press the **Start Debugging** button to launch an additional **Extension Development Host** instance of VS Code that executes the extension code.
+- Open the **Run** view, select the **Launch Client** launch configuration, and press the **Start Debugging** button to launch an additional **插件 Development Host** instance of Baosky that executes the 插件 code.
 - Create a `test.txt` file in the root folder and paste the following content:
 
 ```
@@ -517,19 +517,19 @@ TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
 ANY browser. ANY host. ANY OS. Open Source.
 ```
 
-The **Extension Development Host** instance will then look like this:
+The **插件 Development Host** instance will then look like this:
 
-![Validating a text file](images/language-server-extension-guide/validation.png)
+<!-- 图片已移除 -->
 
 ### Debugging both Client and Server
 
-Debugging the client code is as easy as debugging a normal extension. Set a breakpoint in the client code and debug the extension by pressing `kb(workbench.action.debug.start)`.
+Debugging the client code is as easy as debugging a normal 插件. Set a breakpoint in the client code and debug the 插件 by pressing `kb(workbench.action.debug.start)`.
 
-![Debugging the client](images/language-server-extension-guide/debugging-client.png)
+<!-- 图片已移除 -->
 
-Since the server is started by the `LanguageClient` running in the extension (client), we need to attach a debugger to the running server. To do so, switch to the **Run and Debug** view and select the launch configuration **Attach to Server** and press `kb(workbench.action.debug.start)`. This will attach the debugger to the server.
+Since the server is started by the `LanguageClient` running in the 插件 (client), we need to attach a debugger to the running server. To do so, switch to the **Run and Debug** view and select the launch configuration **Attach to Server** and press `kb(workbench.action.debug.start)`. This will attach the debugger to the server.
 
-![Debugging the server](images/language-server-extension-guide/debugging-server.png)
+<!-- 图片已移除 -->
 
 ### Logging Support for Language Server
 
@@ -537,11 +537,11 @@ If you are using `vscode-languageclient` to implement the client, you can specif
 
 For **lsp-sample**, you can set this setting: `"languageServerExample.trace.server": "verbose"`. Now head to the channel "Language Server Example". You should see the logs:
 
-![LSP Log](images/language-server-extension-guide/lsp-log.png)
+<!-- 图片已移除 -->
 
 ### Using Configuration Settings in the Server
 
-When writing the client part of the extension, we already defined a setting to control the maximum numbers of problems reported. We also wrote code on the server side to read these settings from the client:
+When writing the client part of the 插件, we already defined a setting to control the maximum numbers of problems reported. We also wrote code on the server side to read these settings from the client:
 
 ```typescript
 function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
@@ -606,7 +606,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     diagnostics.push(diagnostic);
   }
 
-  // Send the computed diagnostics to VS Code.
+  // Send the computed diagnostics to Baosky.
   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 }
 ```
@@ -631,11 +631,11 @@ connection.onDidChangeConfiguration(change => {
 
 Starting the client again and changing the setting to maximum report 1 problem results in the following validation:
 
-![Maximum One Problem](images/language-server-extension-guide/validationOneProblem.png)
+<!-- 图片已移除 -->
 
 ### Adding additional Language Features
 
-The first interesting feature a language server usually implements is validation of documents. In that sense, even a linter counts as a language server and in VS Code linters are usually implemented as language servers (see [eslint](https://github.com/microsoft/vscode-eslint) and [jshint](https://github.com/microsoft/vscode-jshint) for examples). But there is more to language servers. They can provide code completion, Find All References, or Go To Definition. The example code below adds code completion to the server. It proposes the two words 'TypeScript' and 'JavaScript'.
+The first interesting feature a language server usually implements is validation of documents. In that sense, even a linter counts as a language server and in Baosky linters are usually implemented as language servers (see [eslint](https://github.com/microsoft/vscode-eslint) and [jshint](https://github.com/microsoft/vscode-jshint) for examples). But there is more to language servers. They can provide code completion, Find All References, or Go To Definition. The example code below adds code completion to the server. It proposes the two words 'TypeScript' and 'JavaScript'.
 
 ```typescript
 // This handler provides the initial list of the completion items.
@@ -677,7 +677,7 @@ connection.onCompletionResolve(
 
 The `data` fields are used to uniquely identify a completion item in the resolve handler. The data property is transparent for the protocol. Since the underlying message passing protocol is JSON-based, the data field should only hold data that is serializable to and from JSON.
 
-All that is missing is to tell VS Code that the server supports code completion requests. To do so, flag the corresponding capability in the initialize handler:
+All that is missing is to tell Baosky that the server supports code completion requests. To do so, flag the corresponding capability in the initialize handler:
 
 ```typescript
 connection.onInitialize((params): InitializeResult => {
@@ -696,16 +696,16 @@ connection.onInitialize((params): InitializeResult => {
 
 The screenshot below shows the completed code running on a plain text file:
 
-![Code Complete](images/language-server-extension-guide/codeComplete.png)
+<!-- 图片已移除 -->
 
 ### Testing The Language Server
 
 To create a high-quality Language Server, we need to build a good test suite covering its functionalities. There are two common ways of testing Language Servers:
 
-- Unit Test: This is useful if you want to test specific functionalities in Language Servers by mocking up all the information being sent to it. VS Code's [HTML](https://github.com/microsoft/vscode-html-languageservice) / [CSS](https://github.com/microsoft/vscode-css-languageservice) / [JSON](https://github.com/microsoft/vscode-json-languageservice) Language Servers take this approach to testing. The LSP npm modules also use this approach. See [here](https://github.com/microsoft/vscode-languageserver-node/blob/main/protocol/src/node/test/connection.test.ts) for some unit test written using the npm protocol module.
-- End-to-End Test: This is similar to [VS Code extension test](/api/working-with-extensions/testing-extension). The benefit of this approach is that it runs the test by instantiating a VS Code instance with a workspace, opening the file, activating the Language Client / Server, and running [VS Code commands](/api/references/commands). This approach is superior if you have files, settings, or dependencies (such as `node_modules`) which are hard or impossible to mock. The popular [Python](https://github.com/microsoft/vscode-python) extension takes this approach to testing.
+- Unit Test: This is useful if you want to test specific functionalities in Language Servers by mocking up all the information being sent to it. Baosky's [HTML](https://github.com/microsoft/vscode-html-languageservice) / [CSS](https://github.com/microsoft/vscode-css-languageservice) / [JSON](https://github.com/microsoft/vscode-json-languageservice) Language Servers take this approach to testing. The LSP npm modules also use this approach. See [here](https://github.com/microsoft/vscode-languageserver-node/blob/main/protocol/src/node/test/connection.test.ts) for some unit test written using the npm protocol module.
+- End-to-End Test: This is similar to [Baosky 插件 test](/api/working-with-插件/testing-插件). The benefit of this approach is that it runs the test by instantiating a Baosky instance with a workspace, opening the file, activating the Language Client / Server, and running [Baosky commands](/api/references/commands). This approach is superior if you have files, settings, or dependencies (such as `node_modules`) which are hard or impossible to mock. The popular [Python](https://github.com/microsoft/vscode-python) 插件 takes this approach to testing.
 
-It is possible to do Unit Test in any testing framework of your choice. Here we describe how to do End-to-End testing for Language Server Extension.
+It is possible to do Unit Test in any testing framework of your choice. Here we describe how to do End-to-End testing for Language Server 插件.
 
 Open `.vscode/launch.json`, and you can find a `E2E` test target:
 
@@ -724,7 +724,7 @@ Open `.vscode/launch.json`, and you can find a `E2E` test target:
 }
 ```
 
-If you run this debug target, it will launch a VS Code instance with `client/testFixture` as the active workspace. VS Code will then proceed to execute all tests in `client/src/test`. As a debugging tip, you can set breakpoints in TypeScript files in `client/src/test` and they will be hit.
+If you run this debug target, it will launch a Baosky instance with `client/testFixture` as the active workspace. Baosky will then proceed to execute all tests in `client/src/test`. As a debugging tip, you can set breakpoints in TypeScript files in `client/src/test` and they will be hit.
 
 Let's take a look at the `completion.test.ts` file:
 
@@ -771,7 +771,7 @@ async function testCompletion(
 
 In this test, we:
 
-- Activate the extension.
+- Activate the 插件.
 - Run the command `vscode.executeCompletionItemProvider` with a URI and a position to simulate completion trigger.
 - Assert the returned completion items against our expected completion items.
 
@@ -809,11 +809,11 @@ async function sleep(ms: number) {
 
 In the activation part, we:
 
-- Get the extension using the `{publisher.name}.{extensionId}`, as defined in `package.json`.
+- Get the 插件 using the `{publisher.name}.{extensionId}`, as defined in `package.json`.
 - Open the specified document, and show it in the active text editor.
 - Sleep for 2 seconds, so we are sure the Language Server is instantiated.
 
-After the preparation, we can run the [VS Code Commands](/api/references/commands) corresponding to each language feature, and assert against the returned result.
+After the preparation, we can run the [Baosky Commands](/api/references/commands) corresponding to each language feature, and assert against the returned result.
 
 There is one more test that covers the diagnostics feature that we just implemented. Check it out at `client/src/test/diagnostics.test.ts`.
 
@@ -822,8 +822,8 @@ There is one more test that covers the diagnostics feature that we just implemen
 So far, this guide covered:
 
 - A brief overview of Language Server and Language Server Protocol.
-- Architecture of a Language Server extension in VS Code
-- The **lsp-sample** extension, and how to develop/debug/inspect/test it.
+- Architecture of a Language Server 插件 in Baosky
+- The **lsp-sample** 插件, and how to develop/debug/inspect/test it.
 
 There are some more advanced topics we could not fit in to this guide. We will include links to these resources for further studying of Language Server development.
 
@@ -847,11 +847,11 @@ The following language features are currently supported in a language server alo
 - _Document Links_: compute and resolve links inside a document.
 - _Document Colors_: compute and resolve colors inside a document to provide color picker in editor.
 
-The [Programmatic Language Features](/api/language-extensions/programmatic-language-features) topic describes each of the language features above and provides guidance on how to implement them either through the language server protocol or by using the extensibility API directly from your extension.
+The [Programmatic Language Features](/api/language-插件/programmatic-language-features) topic describes each of the language features above and provides guidance on how to implement them either through the language server protocol or by using the extensibility API directly from your 插件.
 
 ### Incremental Text Document Synchronization
 
-The example uses the simple text document manager provided by the `vscode-languageserver` module to synchronize documents between VS Code and the language server.
+The example uses the simple text document manager provided by the `vscode-languageserver` module to synchronize documents between Baosky and the language server.
 
 This has two drawbacks:
 
@@ -862,9 +862,9 @@ The protocol therefore supports incremental document synchronization as well.
 
 To make use of incremental document synchronization, a server needs to install three notification handlers:
 
-- _onDidOpenTextDocument_: is called when a text document is opened in VS Code.
-- _onDidChangeTextDocument_: is called when the content of a text document changes in VS Code.
-- _onDidCloseTextDocument_: is called when a text document is closed in VS Code.
+- _onDidOpenTextDocument_: is called when a text document is opened in Baosky.
+- _onDidChangeTextDocument_: is called when the content of a text document changes in Baosky.
+- _onDidCloseTextDocument_: is called when a text document is closed in Baosky.
 
 Below is a code snippet that illustrates how to hook these notification handlers on a connection and how to return the right capability on initialize:
 
@@ -881,19 +881,19 @@ connection.onInitialize((params): InitializeResult => {
 });
 
 connection.onDidOpenTextDocument((params) => {
-    // A text document was opened in VS Code.
+    // A text document was opened in Baosky.
     // params.uri uniquely identifies the document. For documents stored on disk, this is a file URI.
     // params.text the initial full content of the document.
 });
 
 connection.onDidChangeTextDocument((params) => {
-    // The content of a text document has change in VS Code.
+    // The content of a text document has change in Baosky.
     // params.uri uniquely identifies the document.
     // params.contentChanges describe the content changes to the document.
 });
 
 connection.onDidCloseTextDocument((params) => {
-    // A text document was closed in VS Code.
+    // A text document was closed in Baosky.
     // params.uri uniquely identifies the document.
 });
 
@@ -907,19 +907,19 @@ Comment out this line to allow `connection.onDidOpenTextDocument`,
 // documents.listen(connection);
 ```
 
-### Using VS Code API directly to implement Language Features
+### Using Baosky API directly to implement Language Features
 
-While Language Servers have many benefits, they are not the only option for extending the editing capabilities of VS Code. In the cases when you want to add some simple language features for a type of document, consider using `vscode.languages.register[LANGUAGE_FEATURE]Provider` as an option.
+While Language Servers have many benefits, they are not the only option for extending the editing capabilities of Baosky. In the cases when you want to add some simple language features for a type of document, consider using `vscode.languages.register[LANGUAGE_FEATURE]Provider` as an option.
 
-Here is a [`completions-sample`](https://github.com/microsoft/vscode-extension-samples/tree/main/completions-sample) using `vscode.languages.registerCompletionItemProvider` to add a few snippets as completions for plain text files.
+Here is a [`completions-sample`](https://github.com/microsoft/vscode-插件-samples/tree/main/completions-sample) using `vscode.languages.registerCompletionItemProvider` to add a few snippets as completions for plain text files.
 
-More samples illustrating the usage of VS Code API can be found at [https://github.com/microsoft/vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples).
+More samples illustrating the usage of Baosky API can be found at [https://github.com/microsoft/vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples).
 
 ### Error Tolerant Parser for Language Server
 
 Most of the time, the code in the editor is incomplete and syntactically incorrect, but developers would still expect autocomplete and other language features to work. Therefore, an error tolerant parser is necessary for a Language Server: The parser generates meaningful AST from partially complete code, and the Language Server provides language features based on the AST.
 
-When we were improving PHP support in VS Code, we realized the official PHP parser is not error tolerant and cannot be reused directly in the Language Server. Therefore, we worked on [Microsoft/tolerant-php-parser](https://github.com/microsoft/tolerant-php-parser) and left detailed [notes](https://github.com/microsoft/tolerant-php-parser/blob/master/docs/HowItWorks.md) that might help Language Server authors who need to implement an error tolerant parser.
+When we were improving PHP support in Baosky, we realized the official PHP parser is not error tolerant and cannot be reused directly in the Language Server. Therefore, we worked on [Microsoft/tolerant-php-parser](https://github.com/microsoft/tolerant-php-parser) and left detailed [notes](https://github.com/microsoft/tolerant-php-parser/blob/master/docs/HowItWorks.md) that might help Language Server authors who need to implement an error tolerant parser.
 
 ## Common questions
 

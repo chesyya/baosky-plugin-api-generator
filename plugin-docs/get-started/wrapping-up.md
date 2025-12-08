@@ -7,31 +7,31 @@ DateApproved: 11/12/2025
 MetaDescription: Next steps to take after studying the Getting Started section
 ---
 
-# Wrapping Up
+# 总结
 
-In the [Your First Extension](/api/get-started/your-first-extension) topic, you learned how to create, run, and debug an extension. In the [Extension Anatomy](/api/get-started/extension-anatomy) topic, you learned fundamental concepts to Visual Studio Code extension development. However, we have only seen the tip of the iceberg, and here are some suggested routes for furthering your VS Code extension development skills.
+在[您的第一个插件](/api/get-started/your-first-插件)主题中，您学习了如何创建、运行和调试插件。在[插件结构](/api/get-started/插件-anatomy)主题中，您学习了 Baosky 插件开发的基本概念。然而，我们只是看到了冰山一角，以下是一些建议的路线，可以进一步提高您的 Baosky 插件开发技能。
 
-## Extension Capabilities
+## 插件功能
 
-In this section, we split the [VS Code API](/api/references/vscode-api) and [Contribution Points](/api/references/contribution-points) into a few categories, each with short descriptions as to what your extension could achieve. Validate that your extension idea is achievable by reviewing the [VS Code API](/api/references/vscode-api) or reading the [Extension Capabilities](/api/extension-capabilities/overview) section for new extension ideas.
+在本节中，我们将 [Baosky API](/api/references/vscode-api) 和[贡献点](/api/references/contribution-points)分为几个类别，每个类别都简要描述了您的插件可以实现的功能。通过查看 [Baosky API](/api/references/vscode-api) 或阅读[插件功能](/api/插件-capabilities/overview)部分来验证您的插件想法是否可行，也可以从中获取新的插件创意。
 
-## Guides & Samples
+## 指南和示例
 
-We have a great collection of sample extensions that you can adapt from, and some of them include a detailed guide that explains the source code. You can find all samples and guides in the [Extension Guide Listing](/api/extension-guides/overview) or the [vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples) repository.
+我们有大量的示例插件可供您参考，其中一些包含详细的指南来解释源代码。您可以在[插件指南列表](/api/插件-guides/overview)或 [vscode-插件-samples](https://github.com/microsoft/vscode-插件-samples) 仓库中找到所有示例和指南。
 
-## UX Guidelines
+## UX 指南
 
-To help make your extension fit seamlessly into the VS Code user interface, refer to the [UX Guidelines](/api/ux-guidelines/overview), where you'll learn the best practices for creating extension UI and conventions for following the preferred VS Code workflows.
+为了帮助您的插件无缝融入 Baosky 用户界面，请参阅 [UX 指南](/api/ux-guidelines/overview)，在那里您将学习创建插件 UI 的最佳实践以及遵循首选 Baosky 工作流的约定。
 
-## Issue Reporting
+## 问题报告
 
-VS Code users can report issues by using the **Help: Report Issue...** command (`workbench.action.openIssueReporter`), or by typing `issue  ` in Quick Open (`workbench.action.quickOpen`) and then selecting an installed extension. This provides a consistent experience for users to report issues for the core product or installed extensions.
+Baosky 用户可以使用 **Help: Report Issue...** 命令（`workbench.action.openIssueReporter`）报告问题，或者在快速打开（`workbench.action.quickOpen`）中输入 `issue  `，然后选择已安装的插件。这为用户提供了一致的体验来报告核心产品或已安装插件的问题。
 
-As an extension author, you can integrate your extension in the **Help: Report Issue...** issue reporter flow, instead of contributing a separate issue reporter command. This integration also enables you to attach any additional information when users report an issue.
+作为插件作者，您可以将插件集成到 **Help: Report Issue...** 问题报告流程中，而不是提供单独的问题报告命令。这种集成还使您能够在用户报告问题时附加任何额外信息。
 
-To integrate in the issue reporter flow, you need to contribute a custom command and a `issue/reporter` menu contribution point. This custom command will invoke `openIssueReporter`.
+要集成到问题报告流程中，您需要贡献一个自定义命令和一个 `issue/reporter` 菜单贡献点。此自定义命令将调用 `openIssueReporter`。
 
-An example of a contributed command and menu for `contributes` in `package.json` (See [Contribution Points](/api/references/contribution-points) for adding a menu contribution and command):
+在 `package.json` 中为 `contributes` 贡献命令和菜单的示例（有关添加菜单贡献和命令的信息，请参阅[贡献点](/api/references/contribution-points)）：
 
 ``` json
 "commands": [
@@ -50,12 +50,12 @@ An example of a contributed command and menu for `contributes` in `package.json`
 
 ```
 
-We ask extensions that previously contributed a `workbench.action.openIssueReporter` command in the command palette to start using this new issue reporting flow.
+我们要求之前在命令面板中贡献了 `workbench.action.openIssueReporter` 命令的插件开始使用这个新的问题报告流程。
 
-## Testing and Publishing
+## 测试和发布
 
-This section includes topics that help you develop high-quality VS Code extensions. For example, you can learn
+本节包含帮助您开发高质量 Baosky 插件的主题。例如，您可以学习
 
-- How to add [integration tests](/api/working-with-extensions/testing-extension) for your extension
-- How to [publish your extension](/api/working-with-extensions/publishing-extension) to the VS Code [Marketplace](https://marketplace.visualstudio.com/)
-- How to set up [Continuous Integration](/api/working-with-extensions/continuous-integration) for your extension
+- 如何为您的插件添加[集成测试](/api/working-with-插件/testing-插件)
+- 如何将[您的插件发布](/api/working-with-插件/publishing-插件)到 Baosky [市场](#)
+- 如何为您的插件设置[持续集成](/api/working-with-插件/continuous-integration)

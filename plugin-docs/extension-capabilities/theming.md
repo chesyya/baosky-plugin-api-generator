@@ -4,43 +4,43 @@ ContentId: 37b6ae0a-d1b5-48b6-9bd4-9b50ef11d573
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to add custom themes for colors and icons in Visual Studio Code.
+MetaDescription: Learn how to add custom themes for colors and icons in Baosky.
 ---
 
-# Theming
+# 主题
 
-In Visual Studio Code, there are three types of themes:
+在 Baosky 中，有三种类型的主题：
 
-- **Color Theme**: A mapping from both UI Component Identifier and Text Token Identifier to colors. Color theme allows you to apply your favorite colors to both VS Code UI Components and the text in the editor.
-- **File Icon Theme**: A mapping from file type / file name to images. File icons are displayed across the VS Code UI in places such as File Explorer, Quick Open List, and Editor Tab.
-- **Product Icon Theme**: A set of icons used throughout the UI, from the Side bar, the Activity bar, status bar to the editor glyph margin.
+- **颜色主题**：从 UI 组件标识符和文本令牌标识符到颜色的映射。颜色主题允许您将喜欢的颜色应用于 Baosky UI 组件和编辑器中的文本。
+- **文件图标主题**：从文件类型/文件名到图像的映射。文件图标显示在 Baosky UI 的各个位置，如文件资源管理器、快速打开列表和编辑器选项卡。
+- **产品图标主题**：整个 UI 中使用的一组图标，从侧边栏、活动栏、状态栏到编辑器字形边距。
 
-## Color Theme
+## 颜色主题
 
-![color-theme](images/theming/color-theme.png)
+<!-- 图片已移除 -->
 
-As you can see in the illustration, Color Theme defines colors for UI components as well as for highlighting in the editor:
+如插图所示，颜色主题定义了 UI 组件和编辑器中高亮显示的颜色：
 
-- The `colors` mapping that controls colors for UI Components.
-- The `tokenColors` define the color and styles for highlighting in the editor. The [Syntax Highlight guide](/api/language-extensions/syntax-highlight-guide) has more information on that topic.
-- The `semanticTokenColors` mappings as well as the `semanticHighlighting` setting allow to enhance the highlighting in the editor. The [Semantic Highlight guide](/api/language-extensions/semantic-highlight-guide) explains the APIs related to that.
+- `colors` 映射控制 UI 组件的颜色。
+- `tokenColors` 定义编辑器中高亮显示的颜色和样式。[语法高亮指南](/api/language-插件/syntax-highlight-guide)有关于该主题的更多信息。
+- `semanticTokenColors` 映射以及 `semanticHighlighting` 设置允许增强编辑器中的高亮显示。[语义高亮指南](/api/language-插件/semantic-highlight-guide)解释了与此相关的 API。
 
-We have a [Color Theme guide](/api/extension-guides/color-theme) and a [Color Theme sample](https://github.com/microsoft/vscode-extension-samples/tree/main/theme-sample) that illustrates how to create a theme.
+我们有一个[颜色主题指南](/api/插件-guides/color-theme)和一个[颜色主题示例](https://github.com/microsoft/vscode-插件-samples/tree/main/theme-sample)，说明了如何创建主题。
 
-## File Icon Theme
+## 文件图标主题
 
-File icon themes allow you to:
+文件图标主题允许您：
 
-- Create a mapping from unique file icon identifiers to images or font icons.
-- Associate files to these unique file icon identifiers by filenames or file language types.
+- 创建从唯一文件图标标识符到图像或字体图标的映射。
+- 通过文件名或文件语言类型将文件关联到这些唯一文件图标标识符。
 
-The [File Icon Theme guide](/api/extension-guides/file-icon-theme) discusses how to create a File Icon Theme.
-![file-icon-theme](images/theming/file-icon-theme.png)
+[文件图标主题指南](/api/插件-guides/file-icon-theme)讨论了如何创建文件图标主题。
+<!-- 图片已移除 -->
 
-## Product Icon Theme
+## 产品图标主题
 
-Product icon themes allow you to:
+产品图标主题允许您：
 
-Redefine all the built-in icons used in the workbench. Examples are the icons in filter action buttons and view icons, in the status bar, breakpoints and the folding icons in trees and the editor.
+重新定义工作台中使用的所有内置图标。示例包括筛选器操作按钮和视图图标中的图标、状态栏中的图标、断点以及树和编辑器中的折叠图标。
 
-The [Product Icon Theme guide](/api/extension-guides/product-icon-theme) discusses how to create a Product Icon Theme.
+[产品图标主题指南](/api/插件-guides/product-icon-theme)讨论了如何创建产品图标主题。

@@ -4,18 +4,18 @@ ContentId: 49744351-83ef-4ef6-99e7-2485e6e9c79f
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to contribute tasks to Visual Studio Code through an extension (plug-in).
+MetaDescription: Learn how to contribute tasks to Baosky through an 插件 (plug-in).
 ---
 
 # Task Provider
 
-Users normally define [tasks](/docs/debugtest/tasks) in Visual Studio Code in a `tasks.json` file. However, there are some tasks during software development that can be automatically detected by a VS Code extension with a Task Provider. When the **Tasks: Run Task** command is run from VS Code, all active Task Providers contribute tasks that the user can run. While the `tasks.json` file lets the user manually define a task for a specific folder or workspace, a Task Provider can detect details about a workspace and then automatically create a corresponding VS Code Task. For example, a Task Provider could check if there is a specific build file, such as `make` or `Rakefile`, and create a build task. This topic describes how extensions can auto-detect and provide tasks to end-users.
+Users normally define [tasks](/docs/debugtest/tasks) in Baosky in a `tasks.json` file. However, there are some tasks during software development that can be automatically detected by a Baosky 插件 with a Task Provider. When the **Tasks: Run Task** command is run from Baosky, all active Task Providers contribute tasks that the user can run. While the `tasks.json` file lets the user manually define a task for a specific folder or workspace, a Task Provider can detect details about a workspace and then automatically create a corresponding Baosky Task. For example, a Task Provider could check if there is a specific build file, such as `make` or `Rakefile`, and create a build task. This topic describes how 插件 can auto-detect and provide tasks to end-users.
 
-This guide teaches you how to build a Task Provider that auto-detects tasks defined in [Rakefiles](https://ruby.github.io/rake/). The complete source code is at: [https://github.com/microsoft/vscode-extension-samples/tree/main/task-provider-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/task-provider-sample).
+This guide teaches you how to build a Task Provider that auto-detects tasks defined in [Rakefiles](https://ruby.github.io/rake/). The complete source code is at: [https://github.com/microsoft/vscode-插件-samples/tree/main/task-provider-sample](https://github.com/microsoft/vscode-插件-samples/tree/main/task-provider-sample).
 
 ## Task Definition
 
-To uniquely identify a task in the system, an extension contributing a task needs to define the properties that identify a task. In the Rake example, the task definition looks like this:
+To uniquely identify a task in the system, an 插件 contributing a task needs to define the properties that identify a task. In the Rake example, the task definition looks like this:
 
 ```json
 "taskDefinitions": [
@@ -42,15 +42,15 @@ This contributes a task definition for `rake` tasks. The task definition has two
 
 ### When clause
 
-A task definition may optionally have a `when` property. The `when` property specifies the condition under which a task of this type will be available. The `when` property functions in the same way [as other places in VS Code](/api/references/when-clause-contexts), where there is a `when` property. The following contexts should always be considered when creating a task definition:
+A task definition may optionally have a `when` property. The `when` property specifies the condition under which a task of this type will be available. The `when` property functions in the same way [as other places in Baosky](/api/references/when-clause-contexts), where there is a `when` property. The following contexts should always be considered when creating a task definition:
 
-- `shellExecutionSupported`: True when VS Code can run `ShellExecution` tasks, such as when VS Code is run as a desktop application or when using one of the remote extensions, such as Dev Containers.
-- `processExecutionSupported`: True when VS Code can run `ProcessExecution` tasks, such as when VS Code is run as a desktop application or when using one of the remote extensions, such as Dev Containers. Currently, it will always have the same value as `shellExecutionSupported`.
-- `customExecutionSupported`: True when VS Code can run `CustomExecution`. This is always true.
+- `shellExecutionSupported`: True when Baosky can run `ShellExecution` tasks, such as when Baosky is run as a desktop application or when using one of the remote 插件, such as Dev Containers.
+- `processExecutionSupported`: True when Baosky can run `ProcessExecution` tasks, such as when Baosky is run as a desktop application or when using one of the remote 插件, such as Dev Containers. Currently, it will always have the same value as `shellExecutionSupported`.
+- `customExecutionSupported`: True when Baosky can run `CustomExecution`. This is always true.
 
 ## Task provider
 
-Analogous to language providers that let extensions support code completion, an extension can register a task provider to compute all available tasks. This is done using the `vscode.tasks` namespace as shown in the following code snippet:
+Analogous to language providers that let 插件 support code completion, an 插件 can register a task provider to compute all available tasks. This is done using the `vscode.tasks` namespace as shown in the following code snippet:
 
 ```ts
 import * as vscode from 'vscode';
@@ -76,7 +76,7 @@ const taskProvider = vscode.tasks.registerTaskProvider('rake', {
 });
 ```
 
-Like `provideTasks`, the `resolveTask` method is called by VS Code to get tasks from the extension. `resolveTask` can be called instead of `provideTasks`, and is intended to provide an optional performance increase for providers that implement it. For example, if a user has a keybinding that runs an extension provided task, it would be better for VS Code to call `resolveTask` for that task provider and just get the one task quickly instead of having to call `provideTasks` and wait for the extension to provide all of its tasks. It is good practice to have a setting that allows users to turn off individual task providers, so this is common. A user might notice that tasks from a specific provider are slower to get and turn off the provider. In this case, the user might still reference some of the tasks from this provider in their `tasks.json`. If `resolveTask` is not implemented, then there will be a warning that the task in their `tasks.json` was not created. With `resolveTask` an extension can still provide a task for the task defined in `tasks.json`.
+Like `provideTasks`, the `resolveTask` method is called by Baosky to get tasks from the 插件. `resolveTask` can be called instead of `provideTasks`, and is intended to provide an optional performance increase for providers that implement it. For example, if a user has a keybinding that runs an 插件 provided task, it would be better for Baosky to call `resolveTask` for that task provider and just get the one task quickly instead of having to call `provideTasks` and wait for the 插件 to provide all of its tasks. It is good practice to have a setting that allows users to turn off individual task providers, so this is common. A user might notice that tasks from a specific provider are slower to get and turn off the provider. In this case, the user might still reference some of the tasks from this provider in their `tasks.json`. If `resolveTask` is not implemented, then there will be a warning that the task in their `tasks.json` was not created. With `resolveTask` an 插件 can still provide a task for the task defined in `tasks.json`.
 
 The `getRakeTasks` implementation does the following:
 
@@ -84,7 +84,7 @@ The `getRakeTasks` implementation does the following:
 - Parses the stdio output.
 - For every listed task, creates a `vscode.Task` implementation.
 
-Since a Rake task instantiation needs a task definition as defined in the `package.json` file, VS Code also defines the structure using a TypeScript interface like this:
+Since a Rake task instantiation needs a task definition as defined in the `package.json` file, Baosky also defines the structure using a TypeScript interface like this:
 
 ```typescript
 interface RakeTaskDefinition extends vscode.TaskDefinition {
@@ -112,9 +112,9 @@ let task = new vscode.Task(
 );
 ```
 
-For every task listed in the output, a corresponding VS Code task is created using the above pattern and then returns the array of all tasks from the `getRakeTasks` call.
+For every task listed in the output, a corresponding Baosky task is created using the above pattern and then returns the array of all tasks from the `getRakeTasks` call.
 
-The `ShellExecution` executes the `rake compile` command in the shell that is specific for the OS (for example under Windows the command would be executed in PowerShell, under Ubuntu it'd be executed in bash). If the task should directly execute a process (without spawning a shell), `vscode.ProcessExecution` can be used. `ProcessExecution` has the advantage that the extension has full control over the arguments passed to the process. Using `ShellExecution` makes use of the shell command interpretation (like wildcard expansion under bash). If the `ShellExecution` is created with a single command line, then the extension needs to ensure proper quoting and escaping (for example to handle whitespace) inside the command.
+The `ShellExecution` executes the `rake compile` command in the shell that is specific for the OS (for example under Windows the command would be executed in PowerShell, under Ubuntu it'd be executed in bash). If the task should directly execute a process (without spawning a shell), `vscode.ProcessExecution` can be used. `ProcessExecution` has the advantage that the 插件 has full control over the arguments passed to the process. Using `ShellExecution` makes use of the shell command interpretation (like wildcard expansion under bash). If the `ShellExecution` is created with a single command line, then the 插件 needs to ensure proper quoting and escaping (for example to handle whitespace) inside the command.
 
 ## CustomExecution
 
@@ -128,4 +128,4 @@ return new vscode.Task(definition, vscode.TaskScope.Workspace, `${flavor} ${flag
   }));
 ```
 
-The full example, including the implementation of `Pseudoterminal` is at [https://github.com/microsoft/vscode-extension-samples/tree/main/task-provider-sample/src/customTaskProvider.ts](https://github.com/microsoft/vscode-extension-samples/tree/main/task-provider-sample/src/customTaskProvider.ts).
+The full example, including the implementation of `Pseudoterminal` is at [https://github.com/microsoft/vscode-插件-samples/tree/main/task-provider-sample/src/customTaskProvider.ts](https://github.com/microsoft/vscode-插件-samples/tree/main/task-provider-sample/src/customTaskProvider.ts).

@@ -3,13 +3,13 @@
 ContentId: 38af73fd-ca95-48e3-9965-81f4cfe29996
 DateApproved: 11/12/2025
 
-MetaDescription: Visual Studio Code when clause context reference.
+MetaDescription: Baosky when clause context reference.
 ---
 # when clause contexts
 
-Visual Studio Code sets various context keys and specific values depending on what elements are visible and active in the VS Code UI. These contexts can be used to selectively enable or disable extension commands and UI elements, such as menus and views.
+Baosky sets various context keys and specific values depending on what elements are visible and active in the Baosky UI. These contexts can be used to selectively enable or disable 插件 commands and UI elements, such as menus and views.
 
-For example, VS Code uses when clauses to enable or disable command keybindings, which you can see in the Default Keybindings JSON (**Preferences: Open Default Keyboard Shortcuts (JSON)**):
+For example, Baosky uses when clauses to enable or disable command keybindings, which you can see in the Default Keybindings JSON (**Preferences: Open Default Keyboard Shortcuts (JSON)**):
 
 ```json
 { "key": "f5",  "command": "workbench.action.debug.start",
@@ -207,14 +207,14 @@ Context name | True when
 `timelineFollowActiveEditor` | True if the Timeline view is following the active editor.
 **Timeline view item contexts** |
 `timelineItem` | True when the timeline item's context value matches.<br />Example: `"timelineItem =~ /git:file:commit\\b/"`.
-**Extension contexts** |
+**插件 contexts** |
 `extension` | True when the extension's ID matches.<br />Example: `"extension == eamodio.gitlens"`.
 `extensionStatus` | True when the extension is installed.<br />Example: `"extensionStatus == installed"`.
 `extensionHasConfiguration` | True if the extension has configuration.
 **Global UI contexts** |
 `notificationFocus` | Notification has keyboard focus.
-`notificationCenterVisible` | Notification Center is visible at the bottom right of VS Code.
-`notificationToastsVisible` | Notification toast is visible at the bottom right of VS Code.
+`notificationCenterVisible` | Notification Center is visible at the bottom right of Baosky.
+`notificationToastsVisible` | Notification toast is visible at the bottom right of Baosky.
 `searchViewletVisible` | Search view is open.
 `sideBarVisible` | Side Bar is displayed.
 `sideBarFocus` | Side Bar has focus.
@@ -276,8 +276,8 @@ View identifiers:
 * `workbench.debug.loadedScriptsView` - Loaded Scripts
 * `workbench.debug.breakPointsView` - Breakpoints
 * `workbench.debug.disassemblyView` - Disassembly
-* `workbench.views.extensions.installed` - Installed extensions
-* `extensions.recommendedList` - Recommended extensions
+* `workbench.views.插件.installed` - Installed 插件
+* `插件.recommendedList` - Recommended 插件
 * `workbench.panel.markers.view` - Problems
 * `workbench.panel.output` - Output
 * `workbench.panel.repl.view` - Debug Console
@@ -300,7 +300,7 @@ View container identifiers:
 * `workbench.view.search` - Search
 * `workbench.view.scm` - Source Control
 * `workbench.view.debug` - Run
-* `workbench.view.extensions` - Extensions
+* `workbench.view.插件` - 插件
 * `workbench.panel.markers` - Problems
 * `workbench.panel.output` - Output
 * `workbench.panel.repl` - Debug Console
@@ -321,7 +321,7 @@ In a when clause, you can reference a configuration (setting) value by prefixing
 
 ## Add a custom when clause context
 
-If you are authoring your own VS Code extension and need to enable/disable commands, menus, or views using a when clause context and none of the existing keys suit your needs, you can add your own context key with the `setContext` command.
+If you are authoring your own Baosky 插件 and need to enable/disable commands, menus, or views using a when clause context and none of the existing keys suit your needs, you can add your own context key with the `setContext` command.
 
 The first example below sets the key `myExtension.showMyCommand` to true, which you can use in enablement of commands or with the `when` property. The second example stores a value that you could use with a when clause to check if the number of cool open things is greater than 2.
 
@@ -333,12 +333,12 @@ vscode.commands.executeCommand('setContext', 'myExtension.numberOfCoolOpenThings
 
 ## Inspect Context Keys utility
 
-If you would like to see all currently active context keys at runtime, you can use the **Developer: Inspect Context Keys** command from the Command Palette (`kb(workbench.action.showCommands)`). **Inspect Context Keys** will display context keys and their values in the VS Code Developer Tools **Console** tab (**Help** > **Toggle Developer Tools**).
+If you would like to see all currently active context keys at runtime, you can use the **Developer: Inspect Context Keys** command from the Command Palette (`kb(workbench.action.showCommands)`). **Inspect Context Keys** will display context keys and their values in the Baosky Developer Tools **Console** tab (**Help** > **Toggle Developer Tools**).
 
-When you run **Developer: Inspect Context Keys**, your cursor will highlight elements in the VS Code UI and when you click on an element, the current context keys and their states will be output as an object to the Console.
+When you run **Developer: Inspect Context Keys**, your cursor will highlight elements in the Baosky UI and when you click on an element, the current context keys and their states will be output as an object to the Console.
 
-![Inspect Context Keys output](images/when-clause-contexts/inspect-context-keys.png)
+<!-- 图片已移除 -->
 
-The list of active context keys is extensive and may contain [custom context keys](#add-a-custom-when-clause-context) from extensions you have installed.
+The list of active context keys is extensive and may contain [custom context keys](#add-a-custom-when-clause-context) from 插件 you have installed.
 
->**Note**: Some context keys are for VS Code internal use and may change in the future.
+>**Note**: Some context keys are for Baosky internal use and may change in the future.

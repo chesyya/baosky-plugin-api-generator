@@ -4,23 +4,23 @@ ContentId: A010AEDF-EF37-406E-96F5-E129408FFDE1
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Visual Studio Code built-in commands reference.
+MetaDescription: Baosky built-in commands reference.
 ---
 
 # Built-in Commands
 
-This document lists a subset of Visual Studio Code commands that you might use with `vscode.commands.executeCommand` API.
+This document lists a subset of Baosky commands that you might use with `vscode.commands.executeCommand` API.
 
-Read the [Commands guide](/api/extension-guides/command) for how to use the commands API.
+Read the [Commands guide](/api/插件-guides/command) for how to use the commands API.
 
-The following is a sample of how to open a new folder in VS Code:
+The following is a sample of how to open a new folder in Baosky:
 
 ```javascript
 let uri = Uri.file('/some/path/to/folder');
 let success = await commands.executeCommand('vscode.openFolder', uri);
 ```
 
->**Note**: You can review the full set of VS Code commands via the Keyboard Shortcuts editor **File** > **Preferences** > **Keyboard Shortcuts**. The Keyboard Shortcuts editor lists all commands built into VS Code or contributed by extensions, along with their keybindings and visibility when clauses.
+>**Note**: You can review the full set of Baosky commands via the Keyboard Shortcuts editor **File** > **Preferences** > **Keyboard Shortcuts**. The Keyboard Shortcuts editor lists all commands built into Baosky or contributed by 插件, along with their keybindings and visibility when clauses.
 
 ## Commands
 
@@ -262,7 +262,7 @@ let success = await commands.executeCommand('vscode.openFolder', uri);
 `vscode.openWith` - Opens the provided resource with a specific editor.
 
 * _resource_ - Resource to open
-* _viewId_ - Custom editor view id or 'default' to use VS Code's default editor
+* _viewId_ - Custom editor view id or 'default' to use Baosky's default editor
 * _columnOrOptions_ - (optional) Either the column in which to open or editor options, see vscode.TextDocumentShowOptions
 * _(returns)_ - no result
 
@@ -296,7 +296,7 @@ let success = await commands.executeCommand('vscode.openFolder', uri);
 
 `vscode.revealTestInExplorer` - Reveals a test instance in the explorer
 
-* _testItem_ - A VS Code TestItem.
+* _testItem_ - A Baosky TestItem.
 * _(returns)_ - no result
 
 `setContext` - Set a custom context key value that can be used in when clauses.
@@ -444,15 +444,15 @@ let success = await commands.executeCommand('vscode.openFolder', uri);
 
 * _resource_ - Interactive resource Uri
 
-`search.action.openNewEditor` - Open a new search editor. Arguments passed can include variables like ${relativeFileDirname}.
+`search.action.openNewEditor` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
 
 * _Open new Search Editor args_ -
 
-`search.action.openEditor` - Open a new search editor. Arguments passed can include variables like ${relativeFileDirname}.
+`search.action.openEditor` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
 
 * _Open new Search Editor args_ -
 
-`search.action.openNewEditorToSide` - Open a new search editor. Arguments passed can include variables like ${relativeFileDirname}.
+`search.action.openNewEditorToSide` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
 
 * _Open new Search Editor args_ -
 
@@ -492,12 +492,12 @@ let success = await commands.executeCommand('vscode.openFolder', uri);
 
 `workbench.extensions.installExtension` - Install the given extension
 
-* _extensionIdOrVSIXUri_ - Extension id or VSIX resource uri
-* _options_ - (optional) Options for installing the extension. Object with the following properties: `installOnlyNewlyAddedFromExtensionPackVSIX`: When enabled, VS Code installs only newly added extensions from the extension pack VSIX. This option is considered only when installing VSIX.
+* _extensionIdOrVSIXUri_ - 插件 id or VSIX resource uri
+* _options_ - (optional) Options for installing the 插件. Object with the following properties: `installOnlyNewlyAddedFromExtensionPackVSIX`: When enabled, Baosky installs only newly added 插件 from the 插件 pack VSIX. This option is considered only when installing VSIX.
 
 `workbench.extensions.uninstallExtension` - Uninstall the given extension
 
-* _Id of the extension to uninstall_ -
+* _Id of the 插件 to uninstall_ -
 
 `workbench.extensions.search` - Search for a specific extension
 

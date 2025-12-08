@@ -4,12 +4,12 @@ ContentId: C83BB647-A37E-45CE-BA4C-837B397C2ABE
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: To support lazy activation of Visual Studio Code extensions (plug-ins), your extension controls when it should be loaded through a set of Activation Events.
+MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您的插件可以通过一组激活事件来控制何时应该加载。
 ---
 
-# Activation Events
+# 激活事件
 
-**Activation Events** is a set of JSON declarations that you make in the `activationEvents` field of `package.json` [Extension Manifest](/api/references/extension-manifest). Your extension becomes activated when the **Activation Event** happens. Here is a list of all available **Activation Events**:
+**激活事件**是您在 `package.json` [插件清单](/api/references/extension-manifest)的 `activationEvents` 字段中声明的一组 JSON 声明。当**激活事件**发生时，您的插件就会被激活。以下是所有可用的**激活事件**列表：
 
 - [`onAuthenticationRequest`](/api/references/activation-events#onAuthenticationRequest)
 - [`onChatParticipant`](/api/references/activation-events#onChatParticipant)
@@ -41,11 +41,11 @@ MetaDescription: To support lazy activation of Visual Studio Code extensions (pl
 - [`workspaceContains`](/api/references/activation-events#workspaceContains)
 - [`*`](/api/references/activation-events#Start-up)
 
-We also provide a reference of all fields in the [`package.json` extension manifest](/api/references/extension-manifest).
+我们还提供了 [`package.json` 插件清单](/api/references/extension-manifest)中所有字段的参考。
 
 ## onLanguage
 
-This activation event is emitted and interested extensions will be activated whenever a file that resolves to a certain language gets opened.
+每当打开解析为特定语言的文件时，都会发出此激活事件，相关的插件将被激活。
 
 ```json
 "activationEvents": [
@@ -53,9 +53,9 @@ This activation event is emitted and interested extensions will be activated whe
 ]
 ```
 
-The `onLanguage` event takes a [language identifier](/docs/languages/identifiers) value.
+`onLanguage` 事件接受一个[语言标识符](/docs/languages/identifiers)值。
 
-Multiple languages can be declared with separate `onLanguage` entries in the `activationEvents` array.
+可以在 `activationEvents` 数组中使用单独的 `onLanguage` 条目来声明多种语言。
 
 ```json
 "activationEvents": [
@@ -65,9 +65,9 @@ Multiple languages can be declared with separate `onLanguage` entries in the `ac
 ]
 ```
 
-> **Note**: Beginning with VS Code 1.74.0, languages contributed by your extension do not require a corresponding `onLanguage` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.74.0 开始，您的插件贡献的语言不再需要相应的 `onLanguage` 激活事件声明即可激活您的插件。
 
-Additionally, if your extension needs to be activated before any language is used, you can use the generic `onLanguage` activation event to ensure this:
+此外，如果您的插件需要在使用任何语言之前激活，您可以使用通用的 `onLanguage` 激活事件来确保这一点：
 
 ```json
 "activationEvents": [
@@ -75,11 +75,11 @@ Additionally, if your extension needs to be activated before any language is use
 ]
 ```
 
-> **Note**: It is best practice to activate only when a user needs your extension. If your extension works on a subset of languages, it is better for the user to list that subset than to activate on all languages.
+> **注意**：最佳实践是仅在用户需要您的插件时才激活。如果您的插件适用于某个语言子集，最好列出该子集，而不是在所有语言上激活。
 
 ## onCommand
 
-This activation event is emitted and interested extensions will be activated whenever a command is being invoked:
+每当调用命令时，都会发出此激活事件，相关的插件将被激活：
 
 ```json
 "activationEvents": [
@@ -87,11 +87,11 @@ This activation event is emitted and interested extensions will be activated whe
 ]
 ```
 
-> **Note**: Beginning with VS Code 1.74.0, commands contributed by your extension do not require a corresponding `onCommand` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.74.0 开始，您的插件贡献的命令不再需要相应的 `onCommand` 激活事件声明即可激活您的插件。
 
 ## onDebug
 
-This activation event is emitted and interested extensions will be activated before a debug session is started:
+在调试会话开始之前，会发出此激活事件，相关的插件将被激活：
 
 ```json
 "activationEvents": [
@@ -99,31 +99,31 @@ This activation event is emitted and interested extensions will be activated bef
 ]
 ```
 
-These are four more fine-grained `onDebug` activation events:
+还有四个更细粒度的 `onDebug` 激活事件：
 
 ### onDebugAdapterProtocolTracker
 
-`onDebugAdapterProtocolTracker` is emitted whenever a debug session with the specific type is about to be launched and a debug protocol tracker might be needed.
+当即将启动具有特定类型的调试会话并且可能需要调试协议跟踪器时，会发出 `onDebugAdapterProtocolTracker`。
 
 ### onDebugDynamicConfigurations
 
-This activation event is emitted just before the `provideDebugConfigurations` method of the `DebugConfigurationProvider` is called to provide dynamic debug configurations when the user asks for them, such as through the UI via the "Select and Start Debugging" command.
+在调用 `DebugConfigurationProvider` 的 `provideDebugConfigurations` 方法以提供动态调试配置之前，会发出此激活事件，例如当用户通过 UI 的"选择并开始调试"命令请求它们时。
 
-The presence of this activation event is used as a signal that the extension contributes dynamic debug configurations.
+此激活事件的存在用作插件贡献动态调试配置的信号。
 
 ### onDebugInitialConfigurations
 
-This activation event is emitted just before the `provideDebugConfigurations` method of the `DebugConfigurationProvider` is called to provide initial debug configurations, such as whenever a `launch.json` needs to be created.
+在调用 `DebugConfigurationProvider` 的 `provideDebugConfigurations` 方法以提供初始调试配置之前，会发出此激活事件，例如每当需要创建 `launch.json` 时。
 
 ### onDebugResolve
 
-`onDebugResolve:type` is fired just before the `resolveDebugConfiguration` method of the `DebugConfigurationProvider` for the specified type is called.
+在为指定类型调用 `DebugConfigurationProvider` 的 `resolveDebugConfiguration` 方法之前，会触发 `onDebugResolve:type`。
 
-**Rule of thumb:** If activation of a debug extension is lightweight, use `onDebug`. If it is heavyweight, use `onDebugInitialConfigurations` and/or `onDebugResolve` depending on whether the `DebugConfigurationProvider` implements the corresponding methods `provideDebugConfigurations` and/or `resolveDebugConfiguration`. See [Using a DebugConfigurationProvider](/api/extension-guides/debugger-extension#using-a-debugconfigurationprovider) for more details on these methods.
+**经验法则：**如果调试插件的激活是轻量级的，请使用 `onDebug`。如果是重量级的，则根据 `DebugConfigurationProvider` 是否实现了相应的方法 `provideDebugConfigurations` 和/或 `resolveDebugConfiguration`，使用 `onDebugInitialConfigurations` 和/或 `onDebugResolve`。有关这些方法的更多详细信息，请参见[使用 DebugConfigurationProvider](/api/extension-guides/debugger-extension#using-a-debugconfigurationprovider)。
 
 ## workspaceContains
 
-`workspaceContains:path` is emitted and interested extensions will be activated whenever a folder is opened and the folder contains at least one file that matches a [glob pattern](/docs/editor/glob-patterns).
+每当打开文件夹并且该文件夹包含至少一个与[全局模式](/docs/editor/glob-patterns)匹配的文件时，就会发出 `workspaceContains:path`，相关的插件将被激活。
 
 ```json
 "activationEvents": [
@@ -133,7 +133,7 @@ This activation event is emitted just before the `provideDebugConfigurations` me
 
 ## onFileSystem
 
-`onFileSystem:scheme` is emitted and interested extensions will be activated whenever a file or folder from a specific _scheme_ is read. This is usually the `file`-scheme, but with custom file system providers more schemes come into place, e.g `ftp` or `ssh`.
+每当读取来自特定 _scheme_ 的文件或文件夹时，就会发出 `onFileSystem:scheme`，相关的插件将被激活。这通常是 `file` scheme，但通过自定义文件系统提供程序，会出现更多 scheme，例如 `ftp` 或 `ssh`。
 
 ```json
 "activationEvents": [
@@ -143,9 +143,9 @@ This activation event is emitted just before the `provideDebugConfigurations` me
 
 ## onView
 
-This activation event is emitted and interested extensions will be activated whenever a view of the specified id is expanded in the VS Code sidebar. Built-in views do not emit an activation event.
+每当在 Baosky 侧边栏中展开指定 id 的视图时，都会发出此激活事件，相关的插件将被激活。内置视图不会发出激活事件。
 
-The activation event below will fire whenever a view with the `nodeDependencies` id is visible:
+下面的激活事件将在具有 `nodeDependencies` id 的视图可见时触发：
 
 ```json
 "activationEvents": [
@@ -153,11 +153,11 @@ The activation event below will fire whenever a view with the `nodeDependencies`
 ]
 ```
 
-> **Note**: Beginning with VS Code 1.74.0, views contributed by your extension do not require a corresponding `onView` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.74.0 开始，您的插件贡献的视图不再需要相应的 `onView` 激活事件声明即可激活您的插件。
 
 ## onUri
 
-This activation event is emitted and interested extensions will be activated whenever a system-wide Uri for that extension is opened. The Uri scheme is fixed to either `vscode` or `vscode-insiders`. The Uri authority must be the extension's identifier. The rest of the Uri is arbitrary.
+每当打开该插件的系统范围 Uri 时，都会发出此激活事件，相关的插件将被激活。Uri scheme 固定为 `vscode` 或 `vscode-insiders`。Uri authority 必须是插件的标识符。Uri 的其余部分是任意的。
 
 ```json
 "activationEvents": [
@@ -165,17 +165,17 @@ This activation event is emitted and interested extensions will be activated whe
 ]
 ```
 
-If the `vscode.git` extension defines `onUri` as an activation event, it will be activated in any of the following Uris are open:
+如果 `vscode.git` 插件将 `onUri` 定义为激活事件，它将在打开以下任何 Uri 时被激活：
 
 - `vscode://vscode.git/init`
 - `vscode://vscode.git/clone?url=https%3A%2F%2Fgithub.com%2FMicrosoft%2Fvscode-vsce.git`
-- `vscode-insiders://vscode.git/init` (for VS Code Insiders)
+- `vscode-insiders://vscode.git/init`（用于 Baosky Insiders）
 
 ## onWebviewPanel
 
-This activation event is emitted and interested extensions will be activated whenever VS Code needs to restore a [webview](/api/extension-guides/webview) with the matching `viewType`.
+每当 Baosky 需要还原具有匹配 `viewType` 的 [webview](/api/extension-guides/webview) 时，都会发出此激活事件，相关的插件将被激活。
 
-For example, the declaration of `onWebviewPanel` below:
+例如，下面的 `onWebviewPanel` 声明：
 
 ```json
 "activationEvents": [
@@ -183,13 +183,13 @@ For example, the declaration of `onWebviewPanel` below:
 ]
 ```
 
-will cause the extension to be activated when VS Code needs to restore a webview with the viewType: `catCoding`. The viewType is set in the call to `window.createWebviewPanel` and you will need to have another activation event (for example, onCommand) to initially activate your extension and create the webview.
+将导致在 Baosky 需要还原具有 viewType: `catCoding` 的 webview 时激活插件。viewType 在调用 `window.createWebviewPanel` 时设置，您需要有另一个激活事件（例如 onCommand）来初始激活您的插件并创建 webview。
 
 ## onCustomEditor
 
-This activation event is emitted and interested extensions will be activated whenever VS Code needs to create a [custom editor](/api/extension-guides/custom-editors) with the matching `viewType`.
+每当 Baosky 需要创建具有匹配 `viewType` 的[自定义编辑器](/api/extension-guides/custom-editors)时，都会发出此激活事件，相关的插件将被激活。
 
-For example, the declaration of `onCustomEditor` below:
+例如，下面的 `onCustomEditor` 声明：
 
 ```json
 "activationEvents": [
@@ -197,15 +197,15 @@ For example, the declaration of `onCustomEditor` below:
 ]
 ```
 
-will cause the extension to be activated when VS Code needs to restore a custom editor with the viewType: `catCustoms.pawDraw`. The viewType is set in the [`customEditors` contribution point](/api/extension-guides/custom-editors#contribution-point) and bound to a provider with `registerCustomEditorProvider`.
+将导致在 Baosky 需要还原具有 viewType: `catCustoms.pawDraw` 的自定义编辑器时激活插件。viewType 在 [`customEditors` 贡献点](/api/extension-guides/custom-editors#contribution-point)中设置，并通过 `registerCustomEditorProvider` 绑定到提供程序。
 
-> **Note**: Beginning with VS Code 1.74.0, custom editors contributed by your extension do not require a corresponding `onCustomEditor` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.74.0 开始，您的插件贡献的自定义编辑器不再需要相应的 `onCustomEditor` 激活事件声明即可激活您的插件。
 
 ## onAuthenticationRequest
 
-This activation event is emitted and interested extensions will be activated whenever an extension requests an authentication session (via the `authentication.getSession()` API) with the matching `providerId`.
+每当插件请求具有匹配 `providerId` 的身份验证会话（通过 `authentication.getSession()` API）时，都会发出此激活事件，相关的插件将被激活。
 
-For example, the declaration of `onAuthenticationRequest` below:
+例如，下面的 `onAuthenticationRequest` 声明：
 
 ```json
 "activationEvents": [
@@ -213,13 +213,13 @@ For example, the declaration of `onAuthenticationRequest` below:
 ]
 ```
 
-will cause the extension to be activated when VS Code needs retrieve an `AuthenticationSession` of type `github`.
+将导致在 Baosky 需要检索类型为 `github` 的 `AuthenticationSession` 时激活插件。
 
-> **Note**: Beginning with VS Code 1.74.0, authentication providers contributed by your extension do not require a corresponding `onAuthenticationRequest` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.74.0 开始，您的插件贡献的身份验证提供程序不再需要相应的 `onAuthenticationRequest` 激活事件声明即可激活您的插件。
 
 ## onStartupFinished
 
-This activation event is emitted and interested extensions will be activated **some time after** VS Code starts up. This is similar to the `*` activation event, but it will not slow down VS Code startup. Currently, this event is emitted after all the `*` activated extensions have finished activating.
+此激活事件在 Baosky 启动后**一段时间**发出，相关的插件将被激活。这类似于 `*` 激活事件，但不会减慢 Baosky 启动速度。目前，此事件在所有 `*` 激活的插件完成激活后发出。
 
 ```json
 "activationEvents": [
@@ -229,7 +229,7 @@ This activation event is emitted and interested extensions will be activated **s
 
 ## onTaskType
 
-`onTaskType:type` is emitted emitted whenever tasks of a certain type need to be listed or resolved.
+每当需要列出或解析某种类型的任务时，就会发出 `onTaskType:type`。
 
 ```json
 "activationEvents": [
@@ -237,11 +237,11 @@ This activation event is emitted and interested extensions will be activated **s
 ]
 ```
 
-> **Note**: Beginning with VS Code 1.76.0, tasks contributed by your extension do not require a corresponding `onTaskType` activation event declaration for your extension to be activated.
+> **注意**：从 Baosky 1.76.0 开始，您的插件贡献的任务不再需要相应的 `onTaskType` 激活事件声明即可激活您的插件。
 
 ## onEditSession
 
-`onEditSession:scheme` is emitted when an edit session is accessed with the given scheme.
+当使用给定 scheme 访问编辑会话时，会发出 `onEditSession:scheme`。
 
 ```json
 "activationEvents": [
@@ -251,7 +251,7 @@ This activation event is emitted and interested extensions will be activated **s
 
 ## onSearch
 
-`onSearch:scheme` is emitted when a search is started in the folder with the given scheme.
+当在具有给定 scheme 的文件夹中开始搜索时，会发出 `onSearch:scheme`。
 
 ```json
 "activationEvents": [
@@ -261,7 +261,7 @@ This activation event is emitted and interested extensions will be activated **s
 
 ## onOpenExternalUri
 
-An activation event emitted whenever an external URI, such as an http or https link, is being opened.
+每当打开外部 URI（例如 http 或 https 链接）时发出的激活事件。
 
 ```json
 "activationEvents": [
@@ -271,7 +271,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onNotebook
 
-`onNotebook:type` is emitted when the specified notebook document type is opened.
+当打开指定的 notebook 文档类型时，会发出 `onNotebook:type`。
 
 ```json
 "activationEvents": [
@@ -282,7 +282,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onRenderer
 
-`onRenderer:id` is emitted when a notebook output renderer is used.
+当使用 notebook 输出渲染器时，会发出 `onRenderer:id`。
 
 ```json
 "activationEvents": [
@@ -292,7 +292,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onTerminal
 
-`onTerminal:shellType` is emitted when a specific terminal with the given shell type is opened.
+当打开具有给定 shell 类型的特定终端时，会发出 `onTerminal:shellType`。
 
 ```json
 "activationEvents": [
@@ -302,7 +302,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onTerminalProfile
 
-`onTerminalProfile:id` is emitted when a specific terminal profile is launched.
+当启动特定终端配置文件时，会发出 `onTerminalProfile:id`。
 
 ```json
 "activationEvents": [
@@ -312,7 +312,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onTerminalShellIntegration
 
-`onTerminalShellIntegration:shellType` is emitted when a terminal with the given shell type has shell integration activated.
+当具有给定 shell 类型的终端激活了 shell 集成时，会发出 `onTerminalShellIntegration:shellType`。
 
 ```json
 "activationEvents": [
@@ -322,7 +322,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onWalkthrough
 
-`onWalkthrough:id` is emitted when a specified walkthrough is opened.
+当打开指定的演练时，会发出 `onWalkthrough:id`。
 
 ```json
 "activationEvents": [
@@ -332,7 +332,7 @@ An activation event emitted whenever an external URI, such as an http or https l
 
 ## onIssueReporterOpened
 
-This activation event is emitted when the issue reporter is opened (for example, by using **Help: Report Issue**).
+当问题报告器被打开时（例如，通过使用 **Help: Report Issue**），会发出此激活事件。
 
 ```json
 "activationEvents": [
@@ -342,7 +342,7 @@ This activation event is emitted when the issue reporter is opened (for example,
 
 ## onChatParticipant
 
-An activation event emitted when the specified chat participant is invoked.
+当调用指定的聊天参与者时发出的激活事件。
 
 ```json
 "activationEvents": [
@@ -352,7 +352,7 @@ An activation event emitted when the specified chat participant is invoked.
 
 ## onLanguageModelTool
 
-An activation event emitted when the specified language model tool is invoked.
+当调用指定的语言模型工具时发出的激活事件。
 
 ```json
 "activationEvents": [
@@ -360,11 +360,11 @@ An activation event emitted when the specified language model tool is invoked.
 ]
 ```
 
-## Start up
+## 启动
 
-The `*` activation event is emitted and interested extensions will be activated whenever VS Code starts up.
+每当 Baosky 启动时，都会发出 `*` 激活事件，相关的插件将被激活。
 
-> **Note:** To ensure a great user experience, please use this activation event in your extension only when no other activation events combination works in your use-case.
+> **注意**：为了确保良好的用户体验，请仅在其他激活事件组合无法满足您的用例时才在插件中使用此激活事件。
 
 ```json
 "activationEvents": [
@@ -372,6 +372,6 @@ The `*` activation event is emitted and interested extensions will be activated 
 ]
 ```
 
-> **Note:** An extension can listen to multiple activation events, and that is preferable to listening to `"*"`.
+> **注意**：插件可以监听多个激活事件，这比监听 `"*"` 更可取。
 
-> **Note:** An extension **must** export an `activate()` function from its main module and it will be invoked **only once** by VS Code when any of the specified activation events is emitted. Also, an extension **should** export a `deactivate()` function from its main module to perform cleanup tasks on VS Code shutdown. Extension **must** return a Promise from `deactivate()` if the cleanup process is asynchronous. An extension may return `undefined` from `deactivate()` if the cleanup runs synchronously.
+> **注意**：插件**必须**从其主模块导出 `activate()` 函数，并且当发出任何指定的激活事件时，Baosky **只会调用一次**该函数。此外，插件**应该**从其主模块导出 `deactivate()` 函数，以在 Baosky 关闭时执行清理任务。如果清理过程是异步的，插件**必须**从 `deactivate()` 返回 Promise。如果清理同步运行，插件可以从 `deactivate()` 返回 `undefined`。

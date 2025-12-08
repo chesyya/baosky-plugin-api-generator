@@ -4,27 +4,27 @@ ContentId: fdd5476c-13e2-4f78-9dd3-0157eed36a29
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for using context menus in a Visual Studio Code extension.
+MetaDescription: UX guidelines for using context menus in a Baosky 插件.
 ---
 
-# Context Menus
+# 上下文菜单
 
-[Menu items](/api/references/contribution-points#contributes.menus) appear in views, actions, and right-click menus. It's important that the grouping of menus remain consistent. If your extension has actions that relate to files, place your actions in the File Explorer context menu (when appropriate). If an extension has actions for certain file types, only display it for those items.
+[菜单项](/api/references/contribution-points#contributes.menus)出现在视图、操作和右键菜单中。保持菜单分组的一致性非常重要。如果您的插件有与文件相关的操作，请将您的操作放置在文件资源管理器的上下文菜单中（在适当的情况下）。如果插件对特定文件类型有操作，只为这些项目显示它。
 
-**✔️ Do**
+**✔️ 应该**
 
-* Show actions when contextually appropriate
-* Group similar actions together
-* Place large groups of actions into a submenu
+* 在上下文适当时显示操作
+* 将相似的操作分组在一起
+* 将大量操作分组放入子菜单
 
-❌ Don't
+❌ 不应该
 
-* Show actions for every file without context
+* 为每个文件显示操作而不考虑上下文
 
-![Context Menu](images/examples/context-menu.png)
+<!-- 图片已移除 -->
 
-*This example places a **Copy GitHub Permalink** next to the other copy commands. This action only appears on files that are from a GitHub repository.*
+*此示例将 **Copy GitHub Permalink** 放置在其他复制命令旁边。此操作仅在来自 GitHub 仓库的文件上出现。*
 
-## Links
+## 链接
 
-* [Context Menu API reference](/api/references/contribution-points#contributes.menus)
+* [上下文菜单 API 参考](/api/references/contribution-points#contributes.menus)

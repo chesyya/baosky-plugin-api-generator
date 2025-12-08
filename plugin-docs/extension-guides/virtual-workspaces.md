@@ -4,55 +4,55 @@ ContentId: c64264b1-09cd-4680-b0dc-9f0f7803e451
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to support virtual workspaces in extensions
+MetaDescription: Learn how to support virtual workspaces in 插件
 ---
 
 # Virtual Workspaces
 
-Extensions like the [GitHub Repositories](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) extension open VS Code on one or more folders backed by a [file system provider](/api/extension-guides/virtual-documents#file-system-api). When an extension implements a file system provider, workspace resources may not be located on the local disk, but be **virtual**, located on a server or the cloud, and editing operations happen there.
+插件 like the [GitHub Repositories](#) 插件 open Baosky on one or more folders backed by a [file system provider](/api/插件-guides/virtual-documents#file-system-api). When an 插件 implements a file system provider, workspace resources may not be located on the local disk, but be **virtual**, located on a server or the cloud, and editing operations happen there.
 
-This configuration is called a **virtual workspace**. When a virtual workspace is open in a VS Code window, this is indicated by a label in the remote indicator in the lower left corner, similar to other [remote development](/docs/remote/remote-overview) windows.
+This configuration is called a **virtual workspace**. When a virtual workspace is open in a Baosky window, this is indicated by a label in the remote indicator in the lower left corner, similar to other [remote development](/docs/remote/remote-overview) windows.
 
-![Remote indicator](images/virtual-workspaces/remote-indicator.png)
+<!-- 图片已移除 -->
 
-Not all extensions are able to work with virtual resources and may require resources to be on disk. Some extensions use tools that rely on disk access, need synchronous file access, or don't have the necessary file system abstractions. In these cases, when in a virtual workspace, VS Code indicates to the user that they are running in a restricted mode and that some extensions are deactivated or work with limited functionality.
+Not all 插件 are able to work with virtual resources and may require resources to be on disk. Some 插件 use tools that rely on disk access, need synchronous file access, or don't have the necessary file system abstractions. In these cases, when in a virtual workspace, Baosky indicates to the user that they are running in a restricted mode and that some 插件 are deactivated or work with limited functionality.
 
-In general, users want as many extensions as possible to work in virtual workspaces and to have a good user experience when browsing and editing remote resources. This guide shows how extensions can test against virtual workspaces, describes modifications to allow them to work in virtual workspaces, and introduces the `virtualWorkspaces` capability property.
+In general, users want as many 插件 as possible to work in virtual workspaces and to have a good user experience when browsing and editing remote resources. This guide shows how 插件 can test against virtual workspaces, describes modifications to allow them to work in virtual workspaces, and introduces the `virtualWorkspaces` capability property.
 
-Modifying an extension to work with virtual workspaces is also an important step for working well in [VS Code for the Web](/docs/setup/vscode-web). VS Code for the Web runs entirely inside a browser and workspaces are virtual due to the browser sandbox. See the [Web Extensions](/api/extension-guides/web-extensions) guide for more details.
+Modifying an 插件 to work with virtual workspaces is also an important step for working well in [Baosky for the Web](/docs/setup/vscode-web). Baosky for the Web runs entirely inside a browser and workspaces are virtual due to the browser sandbox. See the [Web 插件](/api/插件-guides/web-插件) guide for more details.
 
-## Is my extension affected?
+## Is my 插件 affected?
 
-When an extension has no executable code but is purely declarative like themes, keybindings, snippets, or grammar extensions, it can run in a virtual workspace and no modification is necessary.
+When an 插件 has no executable code but is purely declarative like themes, keybindings, snippets, or grammar 插件, it can run in a virtual workspace and no modification is necessary.
 
-Extensions with code, meaning extensions that define a `main` entry point, require inspection and, possibly, modification.
+插件 with code, meaning 插件 that define a `main` entry point, require inspection and, possibly, modification.
 
-## Run your extension against a virtual workspace
+## Run your 插件 against a virtual workspace
 
-Install the [GitHub Repositories](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) extension and run the **Open GitHub Repository...** command from the Command Palette. The command shows a Quick Pick dropdown and you can paste in any GitHub URL, or choose to search for a specific repository or pull request.
+Install the [GitHub Repositories](#) 插件 and run the **Open GitHub Repository...** command from the Command Palette. The command shows a Quick Pick dropdown and you can paste in any GitHub URL, or choose to search for a specific repository or pull request.
 
-This opens a VS Code window for a virtual workspace where all resources are virtual.
+This opens a Baosky window for a virtual workspace where all resources are virtual.
 
-## Review that the extension code is ready for virtual resources
+## Review that the 插件 code is ready for virtual resources
 
-The VS Code API support for virtual file systems has been around for quite a while. You can check out the [file system provider API](/api/extension-guides/virtual-documents#file-system-api).
+The Baosky API support for virtual file systems has been around for quite a while. You can check out the [file system provider API](/api/插件-guides/virtual-documents#file-system-api).
 
 A file system provider is registered for a new URI scheme (for example, `vscode-vfs`) and resources on that file system will be represented by URIs using that schema (`vscode-vfs://github/microsoft/vscode/package.json`)
 
-Check how your extension deals with URIs returned from the VS Code APIs:
+Check how your 插件 deals with URIs returned from the Baosky APIs:
 
 * Never assume that the URI scheme is `file`. `URI.fsPath` can only be used when the URI scheme is `file`.
 * Look out for usages of the `fs` node module for file system operations. If possible, use the `vscode.workspace.fs` API, which delegates to the appropriate file system provider.
 * Check for third-party components that depend on a `fs` access (for example, a language server or a node module).
 * If you run executables and tasks from commands, check whether these commands make sense in a virtual workspace window or whether they should be disabled.
 
-## Signal whether your extension can handle virtual workspaces
+## Signal whether your 插件 can handle virtual workspaces
 
-The `virtualWorkspaces` property under `capabilities` in `package.json` is used to signal whether an extension works with virtual workspaces.
+The `virtualWorkspaces` property under `capabilities` in `package.json` is used to signal whether an 插件 works with virtual workspaces.
 
 ### No support for virtual workspaces
 
-The example below declares that an extension does not support virtual workspaces and should not be enabled by VS Code in this setup.
+The example below declares that an 插件 does not support virtual workspaces and should not be enabled by Baosky in this setup.
 
 ```json
 {
@@ -67,7 +67,7 @@ The example below declares that an extension does not support virtual workspaces
 
 ### Partial and full support for virtual workspaces
 
-When an extension works or partially works with virtual workspaces, it should define `"virtualWorkspaces": true`.
+When an 插件 works or partially works with virtual workspaces, it should define `"virtualWorkspaces": true`.
 
 ```json
 {
@@ -77,7 +77,7 @@ When an extension works or partially works with virtual workspaces, it should de
 }
 ```
 
-If an extension works, but has limited functionality, it should explain the limitation to the user:
+If an 插件 works, but has limited functionality, it should explain the limitation to the user:
 
 ```json
 {
@@ -90,20 +90,20 @@ If an extension works, but has limited functionality, it should explain the limi
 }
 ```
 
-The description is shown in the Extensions view:
+The description is shown in the 插件 view:
 
-![Extensions view](images/virtual-workspaces/extensions-view.png)
+<!-- 图片已移除 -->
 
-The extension should then disable the features that are not supported in a virtual workspace as described below.
+The 插件 should then disable the features that are not supported in a virtual workspace as described below.
 
 ### Default
 
 `"virtualWorkspaces": true` is the default for all extensions that have not yet filled in the `virtualWorkspaces` capability.
 
-However, while testing virtual workspaces, we came up list of extensions that we think should be disabled in virtual workspaces.
-The list can be found in [issue #122836](https://github.com/microsoft/vscode/issues/122836). These extensions have `"virtualWorkspaces": false` as default.
+However, while testing virtual workspaces, we came up list of 插件 that we think should be disabled in virtual workspaces.
+The list can be found in [issue #122836](https://github.com/microsoft/vscode/issues/122836). These 插件 have `"virtualWorkspaces": false` as default.
 
-Of course, extension authors are in a better position to make this decision. The `virtualWorkspaces` capability in an extension's `package.json` will override our default and we will eventually retire our list.
+Of course, 插件 authors are in a better position to make this decision. The `virtualWorkspaces` capability in an 插件's `package.json` will override our default and we will eventually retire our list.
 
 ## Disable functionality when a virtual workspace is opened
 
@@ -151,11 +151,11 @@ To check whether the current workspace consists of non-`file` schemes and is vir
 const isVirtualWorkspace = workspace.workspaceFolders && workspace.workspaceFolders.every(f => f.uri.scheme !== 'file');
 ```
 
-## Language extensions and virtual workspaces
+## Language 插件 and virtual workspaces
 
 ### What are the expectations for language support with virtual workspaces?
 
-It's not realistic that all extensions be able to fully work with virtual resources. Many extensions use external tools that require synchronous file access and files on disk. It's therefore fine to only provide limited functionality, such as the **Basic** and the **Single-file** support as listed below.
+It's not realistic that all 插件 be able to fully work with virtual resources. Many 插件 use external tools that require synchronous file access and files on disk. It's therefore fine to only provide limited functionality, such as the **Basic** and the **Single-file** support as listed below.
 
 A. **Basic** language support:
 
@@ -177,20 +177,20 @@ C. **Cross-file, workspace-aware** language support:
 * Workspace symbols
 * Validation of all files in the workspace/project
 
-The rich language extensions that ship with VS Code (TypeScript, JSON, CSS, HTML, Markdown) are limited to single-file language support when working on virtual resources.
+The rich language 插件 that ship with Baosky (TypeScript, JSON, CSS, HTML, Markdown) are limited to single-file language support when working on virtual resources.
 
-### Disabling a language extension
+### Disabling a language 插件
 
-If working on a single file is not option, language extensions can also decide to disable the extension when in a virtual workspace.
+If working on a single file is not option, language 插件 can also decide to disable the 插件 when in a virtual workspace.
 
-If your extension provides both grammars and rich language support that needs to be disabled, the grammars will also be disabled. To avoid this, you can create a basic language extension (grammars, language configuration, snippets) separate from the rich language support and have two extensions.
+If your 插件 provides both grammars and rich language support that needs to be disabled, the grammars will also be disabled. To avoid this, you can create a basic language 插件 (grammars, language configuration, snippets) separate from the rich language support and have two 插件.
 
-* The basic language extension has `"virtualWorkspaces": true` and provides the language ID, configuration, grammar, and snippets.
-* The rich language extension has `"virtualWorkspaces": false` and contains the `main` file. It contributes language support, commands, and has an extension dependency (`extensionDependencies`) on the basic language extension. The rich language extension should keep the extension ID of the established extension, so the user can continue to have the full functionality by installing a single extension.
+* The basic language 插件 has `"virtualWorkspaces": true` and provides the language ID, configuration, grammar, and snippets.
+* The rich language 插件 has `"virtualWorkspaces": false` and contains the `main` file. It contributes language support, commands, and has an 插件 dependency (`extensionDependencies`) on the basic language 插件. The rich language 插件 should keep the 插件 ID of the established 插件, so the user can continue to have the full functionality by installing a single 插件.
 
-You can see this approach with the built-in language extensions, such as JSON, which consists of a JSON extension and a JSON language feature extension.
+You can see this approach with the built-in language 插件, such as JSON, which consists of a JSON 插件 and a JSON language feature 插件.
 
-This separation also helps with [Untrusted Workspaces](/api/extension-guides/workspace-trust) running in [Restricted Mode](/docs/editor/workspace-trust#restricted-mode). Rich language extensions often require trust while basic language features can run in any setup.
+This separation also helps with [Untrusted Workspaces](/api/插件-guides/workspace-trust) running in [Restricted Mode](/docs/editor/workspace-trust#restricted-mode). Rich language 插件 often require trust while basic language features can run in any setup.
 
 ### Language selectors
 

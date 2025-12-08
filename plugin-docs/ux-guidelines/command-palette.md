@@ -4,30 +4,30 @@ ContentId: bf0d9a5e-897b-450a-adf4-3c8ca9b8e9de
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for the Command Palette in a Visual Studio Code extension.
+MetaDescription: UX guidelines for the Command Palette in a Baosky 插件.
 ---
 
-# Command Palette
+# 命令面板
 
-The [Command Palette](/api/references/contribution-points#contributes.commands) is where all Commands are found. It's important that your command names are labeled appropriately so users can easily find them.
+[命令面板](/api/references/contribution-points#contributes.commands)是所有命令的集中位置。为了让用户能够轻松找到命令，正确标记命令名称非常重要。
 
-**✔️ Do**
+**✔️ 应该**
 
-* Add keyboard shortcuts where appropriate
-* Use clear names for commands
-* Group commands together in the same category
+* 在适当的地方添加键盘快捷键
+* 为命令使用清晰的名称
+* 将命令按相同类别分组
 
-❌ Don't
+❌ 不应该
 
-* Overwrite existing keyboard shortcuts
-* Use emojis in command names
+* 覆盖现有的键盘快捷键
+* 在命令名称中使用表情符号
 
-![Command Palette](images/examples/command-palette.png)
+<!-- 图片已移除 -->
 
-*This example features commands each displaying a clear `category` prefix, for example "GitHub Issues".*
+*此示例展示的命令都显示了清晰的 `category` 前缀，例如 "GitHub Issues"。*
 
-## Links
+## 链接
 
-* [Commands API reference](/api/references/contribution-points#contributes.commands)
-* [Commands extension guide](/api/extension-guides/command)
-* [Hello World extension sample](https://github.com/microsoft/vscode-extension-samples/tree/main/helloworld-sample)
+* [命令 API 参考](/api/references/contribution-points#contributes.commands)
+* [命令插件指南](/api/插件-guides/command)
+* [Hello World 插件示例](https://github.com/microsoft/vscode-插件-samples/tree/main/helloworld-sample)

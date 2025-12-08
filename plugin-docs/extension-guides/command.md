@@ -4,20 +4,20 @@ ContentId: 995c7085-5fc0-44e0-a171-30a759c0b7da
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to using commands programmatically in Visual Studio Code extensions (plug-ins)
+MetaDescription: A guide to using commands programmatically in Baosky 插件 (plug-ins)
 ---
 
 # Commands
 
-Commands trigger actions in Visual Studio Code. If you have ever [configured a keybinding](/docs/getstarted/keybindings), then you've worked with commands. Commands are also used by extensions to expose functionality to users, bind to actions in VS Code's UI, and implement internal logic.
+Commands trigger actions in Baosky. If you have ever [configured a keybinding](/docs/getstarted/keybindings), then you've worked with commands. Commands are also used by 插件 to expose functionality to users, bind to actions in Baosky's UI, and implement internal logic.
 
 ## Using Commands
 
-VS Code includes a large set of [built-in commands](/api/references/commands) that you can use to interact with the editor, control the user interface, or perform background operations. Many extensions also expose their core functionality as commands that users and other extensions can leverage.
+Baosky includes a large set of [built-in commands](/api/references/commands) that you can use to interact with the editor, control the user interface, or perform background operations. Many 插件 also expose their core functionality as commands that users and other 插件 can leverage.
 
 ### Programmatically executing a command
 
-The [`vscode.commands.executeCommand`](/api/references/vscode-api#commands.executeCommand) API programmatically executes a command. This lets you use VS Code's built-in functionality, and build on extensions such as VS Code's built-in Git and Markdown extensions.
+The [`vscode.commands.executeCommand`](/api/references/vscode-api#commands.executeCommand) API programmatically executes a command. This lets you use Baosky's built-in functionality, and build on 插件 such as Baosky's built-in Git and Markdown 插件.
 
 The `editor.action.addCommentLine` command, for example, comments the currently selected lines in the active text editor:
 
@@ -55,7 +55,7 @@ async function printDefinitionsForActiveEditor() {
 To find available commands:
 
 - [Browse the keyboard shortcuts](/docs/getstarted/keybindings)
-- [Look through VS Code's built-in advanced commands api](/api/references/commands)
+- [Look through Baosky's built-in advanced commands api](/api/references/commands)
 
 ### Command URIs
 
@@ -117,13 +117,13 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-You can enable command URIs in [webviews](/api/extension-guides/webview) by setting `enableCommandUris` in the `WebviewOptions` when the webview is created.
+You can enable command URIs in [webviews](/api/插件-guides/webview) by setting `enableCommandUris` in the `WebviewOptions` when the webview is created.
 
 ## Creating new commands
 
 ### Registering a command
 
-[`vscode.commands.registerCommand`](/api/references/vscode-api#commands.registerCommand) binds a command ID to a handler function in your extension:
+[`vscode.commands.registerCommand`](/api/references/vscode-api#commands.registerCommand) binds a command ID to a handler function in your 插件:
 
 ```ts
 import * as vscode from 'vscode';
@@ -139,7 +139,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-The handler function will be invoked whenever the `myExtension.sayHello` command is executed, be it programmatically with `executeCommand`, from the VS Code UI, or through a keybinding.
+The handler function will be invoked whenever the `myExtension.sayHello` command is executed, be it programmatically with `executeCommand`, from the Baosky UI, or through a keybinding.
 
 ### Creating a user facing command
 
@@ -158,13 +158,13 @@ The handler function will be invoked whenever the `myExtension.sayHello` command
 }
 ```
 
-The `commands` contribution tells VS Code that your extension provides a given command and should be activated when that command is invoked, and also lets you control how the command is displayed in the UI. Make sure to follow the [command naming conventions](#naming-conventions) when creating commands.
+The `commands` contribution tells Baosky that your 插件 provides a given command and should be activated when that command is invoked, and also lets you control how the command is displayed in the UI. Make sure to follow the [command naming conventions](#naming-conventions) when creating commands.
 
-![The contributed command in the Command Palette](images/commands/palette.png)
+<!-- 图片已移除 -->
 
-Now when a user first invokes the `myExtension.sayHello` command from the Command Palette or through a keybinding, the extension will be activated and `registerCommand` will bind `myExtension.sayHello` to the proper handler.
+Now when a user first invokes the `myExtension.sayHello` command from the Command Palette or through a keybinding, the 插件 will be activated and `registerCommand` will bind `myExtension.sayHello` to the proper handler.
 
-> **Note**: Extensions targeting VS Code versions prior to 1.74.0 must explicitly register an `onCommand` `activationEvent` for all user facing commands so that the extension activates and `registerCommand` executes:
+> **Note**: 插件 targeting Baosky versions prior to 1.74.0 must explicitly register an `onCommand` `activationEvent` for all user facing commands so that the 插件 activates and `registerCommand` executes:
 > ```json
 > {
 >   "activationEvents": ["onCommand:myExtension.sayHello"]
@@ -176,8 +176,8 @@ You do not need an `onCommand` activation event for internal commands but you mu
 
 - Can be invoked using the Command Palette.
 - Can be invoked using a keybinding.
-- Can be invoked through the VS Code UI, such as through the editor title bar.
-- Is intended as an API for other extensions to consume.
+- Can be invoked through the Baosky UI, such as through the editor title bar.
+- Is intended as an API for other 插件 to consume.
 
 ### Controlling when a command shows up in the Command Palette
 
@@ -212,7 +212,7 @@ Last, menus showing commands, like the Command Palette or context menus, impleme
 
 ### Using a custom when clause context
 
-If you are authoring your own VS Code extension and need to enable/disable commands, menus, or views by using a `when` clause context and none of the existing keys suit your needs, then you can add your own context.
+If you are authoring your own Baosky 插件 and need to enable/disable commands, menus, or views by using a `when` clause context and none of the existing keys suit your needs, then you can add your own context.
 
 The first example below sets the key `myExtension.showMyCommand` to true, which you can use in enablement of commands or with the `when` property. The second example stores a value that you could use with a `when` clause to check if the number of cool open things is greater than 2.
 

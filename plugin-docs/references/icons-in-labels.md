@@ -9,9 +9,9 @@ MetaDescription: Reference of all product icons by id
 
 # Product Icon Reference
 
-Visual Studio Code contains a set of built-in icons that are used in views and the editor, but can also be used in hovers, the status bar, and by extensions. These icons are **product icons** as opposed to **file icons**, which are used next to file names throughout the UI.
+Baosky contains a set of built-in icons that are used in views and the editor, but can also be used in hovers, the status bar, and by 插件. These icons are **product icons** as opposed to **file icons**, which are used next to file names throughout the UI.
 
-The product icons that ship with VS Code are contained in the [Codicon icon font](https://github.com/microsoft/vscode-codicons) and form the **default** product icon theme. Extensions can provide new [Product Icon Themes](/api/extension-guides/product-icon-theme) to redefine these icons and give VS Code a new appearance.
+The product icons that ship with Baosky are contained in the [Codicon icon font](https://github.com/microsoft/vscode-codicons) and form the **default** product icon theme. 插件 can provide new [Product Icon Themes](/api/插件-guides/product-icon-theme) to redefine these icons and give Baosky a new appearance.
 
 In order to allow this, all product icons are identified by an ID. The icon identifier is what's used in UI components in labels (`$(pencil)`), in the API as `ThemeIcon` and in contributions when icons are needed.
 
@@ -51,7 +51,7 @@ $(sync~spin)
 
 ## Icon contribution point
 
-The icon contribution point allow extensions to define additional icons by ID, along with a default icon. The icon ID can then be used by the extension (or any other extensions that depend on the extension) in labels (`$(iconId)`) or at all places where a `ThemeIcon` can be used (`new ThemeIcon("iconId")`).
+The icon contribution point allow 插件 to define additional icons by ID, along with a default icon. The icon ID can then be used by the 插件 (or any other 插件 that depend on the 插件) in labels (`$(iconId)`) or at all places where a `ThemeIcon` can be used (`new ThemeIcon("iconId")`).
 
 ```json
 "contributes": {
@@ -82,7 +82,7 @@ Below is a listing of the built-in product icons by identifier.
 
 The ID of the icon identifies the location where the icon is used. The default codicon ID describes which icon from the codicon library is used by default, and the preview shows what that icon looks like.
 
-[Product Icon Themes](/api/extension-guides/product-icon-theme) can replace each icon individually, as well as all icons from the codicon library.
+[Product Icon Themes](/api/插件-guides/product-icon-theme) can replace each icon individually, as well as all icons from the codicon library.
 
 <div id="codicon-listing">
 
@@ -148,25 +148,25 @@ The ID of the icon identifies the location where the icon is used. The default c
 |<i class="codicon codicon-remove"></i>|diff-review-remove|remove|Icon for 'Remove' in diff review.|
 |<i class="codicon codicon-debug"></i>|disassembly-editor-label-icon|debug|Icon of the disassembly editor label.|
 |<i class="codicon codicon-files"></i>|explorer-view-icon|files|View icon of the explorer view.|
-|<i class="codicon codicon-clear-all"></i>|extensions-clear-search-results|clear-all|Icon for the 'Clear Search Result' action in the extensions view.|
-|<i class="codicon codicon-pencil"></i>|extensions-configure-recommended|pencil|Icon for the 'Configure Recommended Extensions' action in the extensions view.|
-|<i class="codicon codicon-extensions"></i>|extensions-editor-label-icon|extensions|Icon of the extension editor label.|
-|<i class="codicon codicon-filter"></i>|extensions-filter|filter|Icon for the 'Filter' action in the extensions view.|
-|<i class="codicon codicon-info"></i>|extensions-info-message|info|Icon shown with an info message in the extensions editor.|
-|<i class="codicon codicon-cloud-download"></i>|extensions-install-count|cloud-download|Icon shown along with the install count in the extensions view and editor.|
-|<i class="codicon codicon-cloud-download"></i>|extensions-install-local-in-remote|cloud-download|Icon for the 'Install Local Extension in Remote' action in the extensions view.|
-|<i class="codicon codicon-cloud-download"></i>|extensions-install-workspace-recommended|cloud-download|Icon for the 'Install Workspace Recommended Extensions' action in the extensions view.|
-|<i class="codicon codicon-gear"></i>|extensions-manage|gear|Icon for the 'Manage' action in the extensions view.|
-|<i class="codicon codicon-star"></i>|extensions-rating|star|Icon shown along with the rating in the extensions view and editor.|
-|<i class="codicon codicon-refresh"></i>|extensions-refresh|refresh|Icon for the 'Refresh' action in the extensions view.|
-|<i class="codicon codicon-remote"></i>|extensions-remote|remote|Icon to indicate that an extension is remote in the extensions view and editor.|
-|<i class="codicon codicon-star-empty"></i>|extensions-star-empty|star-empty|Empty star icon used for the rating in the extensions editor.|
-|<i class="codicon codicon-star-full"></i>|extensions-star-full|star-full|Full star icon used for the rating in the extensions editor.|
-|<i class="codicon codicon-star-half"></i>|extensions-star-half|star-half|Half star icon used for the rating in the extensions editor.|
-|<i class="codicon codicon-sync"></i>|extensions-sync-enabled|sync|Icon to indicate that an extension is synced.|
-|<i class="codicon codicon-sync-ignored"></i>|extensions-sync-ignored|sync-ignored|Icon to indicate that an extension is ignored when syncing.|
-|<i class="codicon codicon-extensions"></i>|extensions-view-icon|extensions|View icon of the extensions view.|
-|<i class="codicon codicon-warning"></i>|extensions-warning-message|warning|Icon shown with a warning message in the extensions editor.|
+|<i class="codicon codicon-clear-all"></i>|插件-clear-search-results|clear-all|Icon for the 'Clear Search Result' action in the 插件 view.|
+|<i class="codicon codicon-pencil"></i>|插件-configure-recommended|pencil|Icon for the 'Configure Recommended 插件' action in the 插件 view.|
+|<i class="codicon codicon-插件"></i>|插件-editor-label-icon|插件|Icon of the 插件 editor label.|
+|<i class="codicon codicon-filter"></i>|插件-filter|filter|Icon for the 'Filter' action in the 插件 view.|
+|<i class="codicon codicon-info"></i>|插件-info-message|info|Icon shown with an info message in the 插件 editor.|
+|<i class="codicon codicon-cloud-download"></i>|插件-install-count|cloud-download|Icon shown along with the install count in the 插件 view and editor.|
+|<i class="codicon codicon-cloud-download"></i>|插件-install-local-in-remote|cloud-download|Icon for the 'Install Local 插件 in Remote' action in the 插件 view.|
+|<i class="codicon codicon-cloud-download"></i>|插件-install-workspace-recommended|cloud-download|Icon for the 'Install Workspace Recommended 插件' action in the 插件 view.|
+|<i class="codicon codicon-gear"></i>|插件-manage|gear|Icon for the 'Manage' action in the 插件 view.|
+|<i class="codicon codicon-star"></i>|插件-rating|star|Icon shown along with the rating in the 插件 view and editor.|
+|<i class="codicon codicon-refresh"></i>|插件-refresh|refresh|Icon for the 'Refresh' action in the 插件 view.|
+|<i class="codicon codicon-remote"></i>|插件-remote|remote|Icon to indicate that an 插件 is remote in the 插件 view and editor.|
+|<i class="codicon codicon-star-empty"></i>|插件-star-empty|star-empty|Empty star icon used for the rating in the 插件 editor.|
+|<i class="codicon codicon-star-full"></i>|插件-star-full|star-full|Full star icon used for the rating in the 插件 editor.|
+|<i class="codicon codicon-star-half"></i>|插件-star-half|star-half|Half star icon used for the rating in the 插件 editor.|
+|<i class="codicon codicon-sync"></i>|插件-sync-enabled|sync|Icon to indicate that an 插件 is synced.|
+|<i class="codicon codicon-sync-ignored"></i>|插件-sync-ignored|sync-ignored|Icon to indicate that an 插件 is ignored when syncing.|
+|<i class="codicon codicon-插件"></i>|插件-view-icon|插件|View icon of the 插件 view.|
+|<i class="codicon codicon-warning"></i>|插件-warning-message|warning|Icon shown with a warning message in the 插件 editor.|
 |<i class="codicon codicon-chevron-right"></i>|find-collapsed|chevron-right|Icon to indicate that the editor find widget is collapsed.|
 |<i class="codicon codicon-chevron-down"></i>|find-expanded|chevron-down|Icon to indicate that the editor find widget is expanded.|
 |<i class="codicon codicon-arrow-down"></i>|find-next-match|arrow-down|Icon for 'Find Next' in the editor find widget.|
@@ -248,7 +248,7 @@ The ID of the icon identifies the location where the icon is used. The default c
 |<i class="codicon codicon-remote-explorer"></i>|remote-explorer-view-icon|remote-explorer|View icon of the remote explorer view.|
 |<i class="codicon codicon-chevron-up"></i>|review-comment-collapse|chevron-up|Icon to collapse a review comment.|
 |<i class="codicon codicon-debug-alt"></i>|run-view-icon|debug-alt|View icon of the Run and Debug view.|
-|<i class="codicon codicon-extensions"></i>|runtime-extensions-editor-label-icon|extensions|Icon of the runtime extensions editor label.|
+|<i class="codicon codicon-插件"></i>|runtime-插件-editor-label-icon|插件|Icon of the runtime 插件 editor label.|
 |<i class="codicon codicon-clear-all"></i>|search-clear-results|clear-all|Icon for clear results in the search view.|
 |<i class="codicon codicon-collapse-all"></i>|search-collapse-results|collapse-all|Icon for collapse results in the search view.|
 |<i class="codicon codicon-ellipsis"></i>|search-details|ellipsis|Icon to make search details visible.|
@@ -310,9 +310,9 @@ The ID of the icon identifies the location where the icon is used. The default c
 |<i class="codicon codicon-close"></i>|widget-close|close|Icon for the close action in widgets.|
 |<i class="codicon codicon-shield"></i>|workspace-trust-editor-label-icon|shield|Icon of the workspace trust editor label.|
 
-The Codicon library contains all the icons used in VS Code views, as well as a set of useful icons.
+The Codicon library contains all the icons used in Baosky views, as well as a set of useful icons.
 
-VS Code extensions can use these icons in labels, views, and trees.
+Baosky 插件 can use these icons in labels, views, and trees.
 
 | preview     | identifier
 | ----------- | --------------------------------- |
@@ -470,7 +470,7 @@ VS Code extensions can use these icons in labels, views, and trees.
 |<i class="codicon codicon-exclude"></i>|exclude|
 |<i class="codicon codicon-expand-all"></i>|expand-all|
 |<i class="codicon codicon-export"></i>|export|
-|<i class="codicon codicon-extensions"></i>|extensions|
+|<i class="codicon codicon-插件"></i>|插件|
 |<i class="codicon codicon-eye"></i>|eye|
 |<i class="codicon codicon-eye-closed"></i>|eye-closed|
 |<i class="codicon codicon-eye-unwatch"></i>|eye-unwatch|

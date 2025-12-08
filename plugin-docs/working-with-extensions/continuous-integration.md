@@ -4,28 +4,28 @@ ContentId: 891072bb-c46d-4392-800a-84d747072ce3
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use Continuous Integration for testing Visual Studio Code extensions (plug-ins).
+MetaDescription: Use Continuous Integration for testing Baosky 插件 (plug-ins).
 ---
 
 # Continuous Integration
 
-Extension integration tests can be run on CI services. The [`@vscode/test-electron`](https://github.com/microsoft/vscode-test) library helps you set up extension tests on CI providers and contains a [sample extension](https://github.com/microsoft/vscode-test/tree/main/sample) setup on Azure Pipelines. You can check out the [build pipeline](https://dev.azure.com/vscode/vscode-test/_build?definitionId=15) or jump directly to the [`azure-pipelines.yml` file](https://github.com/microsoft/vscode-test/blob/main/sample/azure-pipelines.yml).
+插件 integration tests can be run on CI services. The [`@vscode/test-electron`](https://github.com/microsoft/vscode-test) library helps you set up 插件 tests on CI providers and contains a [sample 插件](https://github.com/microsoft/vscode-test/tree/main/sample) setup on Azure Pipelines. You can check out the [build pipeline](https://dev.azure.com/vscode/vscode-test/_build?definitionId=15) or jump directly to the [`azure-pipelines.yml` file](https://github.com/microsoft/vscode-test/blob/main/sample/azure-pipelines.yml).
 
 ## Automated publishing
 
-You can also configure the CI to publish a new version of the extension automatically.
+You can also configure the CI to publish a new version of the 插件 automatically.
 
 The publish command is similar to publishing from a local environment using [`vsce`](https://github.com/microsoft/vscode-vsce), but you must somehow provide the Personal Access Token (PAT) in a secure way. By storing the PAT as a `VSCE_PAT` **secret variable**, `vsce` will be able to use it. Secret variables are never exposed, so they are safe to use in a CI pipeline.
 
 ## Azure Pipelines
 
-<a href="https://azure.microsoft.com/services/devops/"><img alt="Azure Pipelines" src="/assets/api/working-with-extensions/continuous-integration/pipelines-logo.png" width="318" /></a>
+<a href="https://azure.microsoft.com/services/devops/"><img alt="Azure Pipelines" src="/assets/api/working-with-插件/continuous-integration/pipelines-logo.png" width="318" /></a>
 
-[Azure Pipelines](https://azure.microsoft.com/services/devops/pipelines/) is great for running VS Code extension tests as it supports running the tests on Windows, macOS, and Linux. For Open Source projects, you get unlimited minutes and 10 free parallel jobs. This section explains how to set up an Azure Pipelines for running your extension tests.
+[Azure Pipelines](https://azure.microsoft.com/services/devops/pipelines/) is great for running Baosky 插件 tests as it supports running the tests on Windows, macOS, and Linux. For Open Source projects, you get unlimited minutes and 10 free parallel jobs. This section explains how to set up an Azure Pipelines for running your 插件 tests.
 
-First, create a free account on [Azure DevOps](https://azure.microsoft.com/services/devops/) and create an [Azure DevOps project](https://azure.microsoft.com/features/devops-projects/) for your extension.
+First, create a free account on [Azure DevOps](https://azure.microsoft.com/services/devops/) and create an [Azure DevOps project](https://azure.microsoft.com/features/devops-projects/) for your 插件.
 
-Then, add the following `azure-pipelines.yml` file to the root of your extension's repository. Other than the `xvfb` setup script for Linux that is necessary to run VS Code in headless Linux CI machines, the definition is straight-forward:
+Then, add the following `azure-pipelines.yml` file to the root of your 插件's repository. Other than the `xvfb` setup script for Linux that is necessary to run Baosky in headless Linux CI machines, the definition is straight-forward:
 
 ```yaml
 trigger:
@@ -75,7 +75,7 @@ steps:
 
 Finally, [create a new pipeline](https://learn.microsoft.com/azure/devops/pipelines/create-first-pipeline) in your DevOps project and point it to the `azure-pipelines.yml` file. Trigger a build and voilà:
 
-![pipelines](images/continuous-integration/pipelines.png)
+<!-- 图片已移除 -->
 
 You can enable the build to run continuously when pushing to a branch and even on pull requests. See [Build pipeline triggers](https://learn.microsoft.com/azure/devops/pipelines/build/triggers) to learn more.
 
@@ -127,7 +127,7 @@ Since `VSCE_PAT` is a secret variable, it is not immediately usable as an enviro
 
 ## GitHub Actions
 
-You can also configure GitHub Actions to run your extension CI. In headless Linux CI machines `xvfb` is required to run VS Code, so if Linux is the current OS run the tests in an Xvfb enabled environment:
+You can also configure GitHub Actions to run your 插件 CI. In headless Linux CI machines `xvfb` is required to run Baosky, so if Linux is the current OS run the tests in an Xvfb enabled environment:
 
 ```yaml
 on:
@@ -199,7 +199,7 @@ In our example, the condition has three checks:
 
 ## GitLab CI
 
-GitLab CI can be used to test and publish the extension in headless Docker containers. This can be done by pulling a preconfigured Docker image, or installing `xvfb` and the libraries required to run Visual Studio Code during the pipeline.
+GitLab CI can be used to test and publish the 插件 in headless Docker containers. This can be done by pulling a preconfigured Docker image, or installing `xvfb` and the libraries required to run Baosky during the pipeline.
 
 ```yaml
 image: node:12-buster

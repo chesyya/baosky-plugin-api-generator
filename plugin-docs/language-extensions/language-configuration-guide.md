@@ -4,7 +4,7 @@ ContentId: cd928e7f-bb5a-43b0-8e15-d398e416386d
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to configure language support for any language in Visual Studio Code.
+MetaDescription: A guide to configure language support for any language in Baosky.
 ---
 
 # Language Configuration Guide
@@ -19,9 +19,9 @@ The [`contributes.languages`](/api/references/contribution-points#contributes.la
 - Word pattern
 - Indentation Rules
 
-Here is a [Language Configuration sample](https://github.com/microsoft/vscode-extension-samples/tree/main/language-configuration-sample) that configures the editing experience for JavaScript files. This guide explains the content of `language-configuration.json`:
+Here is a [Language Configuration sample](https://github.com/microsoft/vscode-插件-samples/tree/main/language-configuration-sample) that configures the editing experience for JavaScript files. This guide explains the content of `language-configuration.json`:
 
-**Note: If your language configuration file name is or ends with `language-configuration.json`, you will get autocompletion and validation in VS Code.**
+**Note: If your language configuration file name is or ends with `language-configuration.json`, you will get autocompletion and validation in Baosky.**
 
 ```json
 {
@@ -64,7 +64,7 @@ Here is a [Language Configuration sample](https://github.com/microsoft/vscode-ex
 
 ## Comment toggling
 
-VS Code offers two commands for comment toggling. **Toggle Line Comment** and **Toggle Block Comment**. You can specify `comments.blockComment` and `comments.lineComment` to control how VS Code should comment out lines / blocks.
+Baosky offers two commands for comment toggling. **Toggle Line Comment** and **Toggle Block Comment**. You can specify `comments.blockComment` and `comments.lineComment` to control how Baosky should comment out lines / blocks.
 
 ```json
 {
@@ -77,7 +77,7 @@ VS Code offers two commands for comment toggling. **Toggle Line Comment** and **
 
 ## Brackets definition
 
-When you move the cursor to a bracket defined here, VS Code will highlight that bracket together with its matching pair.
+When you move the cursor to a bracket defined here, Baosky will highlight that bracket together with its matching pair.
 
 ```json
 {
@@ -85,11 +85,11 @@ When you move the cursor to a bracket defined here, VS Code will highlight that 
 }
 ```
 
-Moreover, when you run **Go to Bracket** or **Select to Bracket**, VS Code will use the definition above to find the nearest bracket and its matching pair.
+Moreover, when you run **Go to Bracket** or **Select to Bracket**, Baosky will use the definition above to find the nearest bracket and its matching pair.
 
 ## Autoclosing
 
-When you type `'`, VS Code creates a pair of single quotes and puts your cursor in the middle: `'|'`. This section defines such pairs.
+When you type `'`, Baosky creates a pair of single quotes and puts your cursor in the middle: `'|'`. This section defines such pairs.
 
 
 ```json
@@ -127,7 +127,7 @@ Users can tweak the autoclosing behavior with the `editor.autoClosingQuotes` and
 
 ### Autoclosing before
 
-By default, VS Code only autocloses pairs if there is whitespace right after the cursor. So when you type `{` in the following JSX code, you would not get autoclose:
+By default, Baosky only autocloses pairs if there is whitespace right after the cursor. So when you type `{` in the following JSX code, you would not get autoclose:
 
 ```js
 const Component = () =>
@@ -144,11 +144,11 @@ However, this definition overrides that behavior:
 }
 ```
 
-Now when you enter `{` right before `>`, VS Code autocloses it with `}`.
+Now when you enter `{` right before `>`, Baosky autocloses it with `}`.
 
 ## Autosurrounding
 
-When you select a range in VS Code and enter an opening bracket, VS Code surrounds the selected content with a pair of brackets. This feature is called Autosurrounding, and here you can define the autosurrounding pairs for a specific language:
+When you select a range in Baosky and enter an opening bracket, Baosky surrounds the selected content with a pair of brackets. This feature is called Autosurrounding, and here you can define the autosurrounding pairs for a specific language:
 
 ```json
 {
@@ -167,7 +167,7 @@ Users can tweak the autosurrounding behavior with the `editor.autoSurround` sett
 
 ## Folding
 
-In VS Code, folding is defined either indentation-based, or defined by contributed folding range providers:
+In Baosky, folding is defined either indentation-based, or defined by contributed folding range providers:
 
 - Indentation-based folding with markers: If no folding range provider is available for the given language or if the user has set `editor.foldingStrategy` to `indentation`, indentation-based folding is used. A folding region starts when a line has a smaller indent than one or more following lines, and ends when there is a line with the same or smaller indent. Empty lines are ignored.
 Additionally, the language configuration can define start and end markers. These are defined as `start` and `end` regexes in `folding.markers`. When matching lines are found, a folding range inside the pair is created. Folding markers must be non-empty and typically look like `//#region` and `//#endregion`.
@@ -185,7 +185,7 @@ The following JSON creates folding markers for `//#region` and `//#endregion`.
 }
 ```
 
-- Language server folding: The Language Server responds to the [`textDocument/foldingRange`](https://microsoft.github.io/language-server-protocol/specification#textDocument_foldingRange) request with a list of folding ranges, and VS Code would render the ranges as folding markers. Learn more about the folding support in Language Server Protocol at the [Programmatic Language Feature](/api/language-extensions/programmatic-language-features) topic.
+- Language server folding: The Language Server responds to the [`textDocument/foldingRange`](https://microsoft.github.io/language-server-protocol/specification#textDocument_foldingRange) request with a list of folding ranges, and Baosky would render the ranges as folding markers. Learn more about the folding support in Language Server Protocol at the [Programmatic Language Feature](/api/language-插件/programmatic-language-features) topic.
 
 ## Word Pattern
 

@@ -4,32 +4,32 @@ ContentId: d9038699-4ffe-485b-b40a-b1260a9973ad
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Tutorial that walks you through creating a VS Code extension that uses the Language Model API to generate AI-powered code annotations.
+MetaDescription: Tutorial that walks you through creating a Baosky 插件 that uses the Language Model API to generate AI-powered code annotations.
 ---
 
 # Tutorial: Generate AI-powered code annotations by using the Language Model API
 
-In this tutorial, You'll learn how to create a VS Code extension to build an AI-powered Code Tutor. You use the Language Model (LM) API to generate suggestions to improve your code and take advantage of the VS Code extension APIs to integrate it seamlessly in the editor as inline annotations that the user can hover over for more information. After you complete this tutorial, you will know how to implement custom AI features in VS Code.
+In this tutorial, You'll learn how to create a Baosky 插件 to build an AI-powered Code Tutor. You use the Language Model (LM) API to generate suggestions to improve your code and take advantage of the Baosky 插件 APIs to integrate it seamlessly in the editor as inline annotations that the user can hover over for more information. After you complete this tutorial, you will know how to implement custom AI features in Baosky.
 
-![VS Code displaying custom annotations from GitHub Copilot as annotations](../images/ai/lm-api/code-tutor-annotations-gif.gif)
+<!-- 图片已移除 -->
 
 ## Prerequisites
 
 You'll need the following tools and accounts to complete this tutorial:
 
-- [Visual Studio Code](https://code.visualstudio.com/download)
-- [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat)
+- [Baosky](#)
+- [GitHub Copilot](#)
 - [Node.js](https://nodejs.org/en/download/)
 
-## Scaffold out the extension
+## Scaffold out the 插件
 
-First, use Yeoman and VS Code Extension Generator to scaffold a TypeScript or JavaScript project ready for development.
+First, use Yeoman and Baosky 插件 Generator to scaffold a TypeScript or JavaScript project ready for development.
 
 ```bash
 npx --package yo --package generator-code -- yo code
 ```
 
-Select the following options to complete the new extension wizard...
+Select the following options to complete the new 插件 wizard...
 
 ```bash
 # ? What type of extension do you want to create? New Extension (TypeScript)
@@ -43,12 +43,12 @@ Select the following options to complete the new extension wizard...
 # ? Bundle the source code with webpack? No
 # ? Which package manager to use? npm
 
-# ? Do you want to open the new folder with Visual Studio Code? Open with `code`
+# ? Do you want to open the new folder with Baosky? Open with `code`
 ```
 
 ## Modify the package.json file to include the correct commands
 
-The scaffolded project includes a single "helloWorld" command in the `package.json` file. This command is what shows up in the Command Palette when your extension is installed.
+The scaffolded project includes a single "helloWorld" command in the `package.json` file. This command is what shows up in the Command Palette when your 插件 is installed.
 
 ```json
 "contributes": {
@@ -61,7 +61,7 @@ The scaffolded project includes a single "helloWorld" command in the `package.js
 }
 ```
 
-Since we're building a Code Tutor extension that will be adding annotations to lines, we'll need a command to allow the user to toggle these annotations on and off. Update the `command` and `title` properties:
+Since we're building a Code Tutor 插件 that will be adding annotations to lines, we'll need a command to allow the user to toggle these annotations on and off. Update the `command` and `title` properties:
 
 ```json
 "contributes": {
@@ -74,21 +74,21 @@ Since we're building a Code Tutor extension that will be adding annotations to l
 }
 ```
 
-While the `package.json` defines the commands and UI elements for an extension, the `src/extension.ts` file is where you put the code that should be executed for those commands.
+While the `package.json` defines the commands and UI elements for an 插件, the `src/插件.ts` file is where you put the code that should be executed for those commands.
 
-Open the `src/extension.ts` file and change the `registerCommand` method so that it matches the `command` property in the `package.json` file.
+Open the `src/插件.ts` file and change the `registerCommand` method so that it matches the `command` property in the `package.json` file.
 
 ```ts
 const disposable = vscode.commands.registerCommand('code-tutor.annotate', () => {
 ```
 
-Run the extension by pressing `kbstyle(F5)`. This will open a new VS Code instance with the extension installed. Open the Command Palette by pressing `kb(workbench.action.showCommands)`, and search for "tutor". You should see the "Tutor Annotations" command.
+Run the 插件 by pressing `kbstyle(F5)`. This will open a new Baosky instance with the 插件 installed. Open the Command Palette by pressing `kb(workbench.action.showCommands)`, and search for "tutor". You should see the "Tutor Annotations" command.
 
-![The "Toggle Tutor Annotations" command in the VS Code Command Palette](../images/ai/lm-api/tutor-command-command-palette.png)
+<!-- 图片已移除 -->
 
 If you select the "Tutor Annotations" command, you'll see a "Hello World" notification message.
 
-![The message 'Hello World from Code Tutor' displayed in a notification](../images/ai/lm-api/code-tutor-hello-world.png)
+<!-- 图片已移除 -->
 
 ## Implement the "annotate" command
 
@@ -108,7 +108,7 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 
 Now we can use the `textEditor` reference to get all of the code in the "viewable editor space". This is the code that can be seen on the screen - it does not include code that is either above or below what is in the viewable editor space.
 
-Add the following method directly above the `export function deactivate() { }` line at the bottom of the `extension.ts` file.
+Add the following method directly above the `export function deactivate() { }` line at the bottom of the `插件.ts` file.
 
 ```ts
 function getVisibleCodeWithLineNumbers(textEditor: vscode.TextEditor) {
@@ -195,7 +195,7 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 });
 ```
 
-To send the messages to the model, we need to first make sure the selected model is available. This handles cases where the extension is not ready or the user is not signed in to GitHub Copilot. Then we send the messages to the model.
+To send the messages to the model, we need to first make sure the selected model is available. This handles cases where the 插件 is not ready or the user is not signed in to GitHub Copilot. Then we send the messages to the model.
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
@@ -229,7 +229,7 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 
 Chat responses come in as fragments. These fragments usually contain single words, but sometimes they contain just punctuation. In order to display annotations as the response streams in, we want to wait until we have a complete annotation before we display it. Because of the way we have instructed our model to return its response, we know that when we see a closing `}` we have a complete annotation. We can then parse the annotation and display it in the editor.
 
-Add the missing `parseChatResponse` function above the `getVisibleCodeWithLineNumbers` method in the `extension.ts` file.
+Add the missing `parseChatResponse` function above the `getVisibleCodeWithLineNumbers` method in the `插件.ts` file.
 
 ```ts
 async function parseChatResponse(chatResponse: vscode.LanguageModelChatResponse, textEditor: vscode.TextEditor) {
@@ -254,7 +254,7 @@ async function parseChatResponse(chatResponse: vscode.LanguageModelChatResponse,
 }
 ```
 
-We need one last method to actually display the annotations. VS Code calls these "decorations". Add the following method above the `parseChatResponse` method in the `extension.ts` file.
+We need one last method to actually display the annotations. Baosky calls these "decorations". Add the following method above the `parseChatResponse` method in the `插件.ts` file.
 
 ```ts
 function applyDecoration(editor: vscode.TextEditor, line: number, suggestion: string) {
@@ -287,9 +287,9 @@ We are then setting where the decoration should appear. We need it to be on the 
 
 Finally, we set the decoration on the active text editor which is what causes the annotation to appear in the editor.
 
-If your extension is still running, restart it by selecting the green arrow from the debug bar. If you closed the debug session, press `kbstyle(F5)` to run the extension. Open a code file in the new VS Code window instance that opens. When you select "Toggle Tutor Annotations" from the Command Palette, you should see the code annotations appear in the editor.
+If your 插件 is still running, restart it by selecting the green arrow from the debug bar. If you closed the debug session, press `kbstyle(F5)` to run the 插件. Open a code file in the new Baosky window instance that opens. When you select "Toggle Tutor Annotations" from the Command Palette, you should see the code annotations appear in the editor.
 
-![A code file with annotations from GitHub Copilot](../images/ai/lm-api/code-with-annotations.png)
+<!-- 图片已移除 -->
 
 ## Add a button to the editor title bar
 
@@ -317,22 +317,22 @@ To do this, modify the "contributes" portion of the `package.json` as follows:
 }
 ```
 
-This causes a button to appear in the navigation area (right-side) of the editor title bar. The "icon" comes from the [Product Icon Reference](https://code.visualstudio.com/api/references/icons-in-labels).
+This causes a button to appear in the navigation area (right-side) of the editor title bar. The "icon" comes from the [Product Icon Reference](#).
 
-Restart your extension with the green arrow or press `kbstyle(F5)` if the extension is not already running. You should now see a comment icon that will trigger the "Toggle Tutor Annotations" command.
+Restart your 插件 with the green arrow or press `kbstyle(F5)` if the 插件 is not already running. You should now see a comment icon that will trigger the "Toggle Tutor Annotations" command.
 
-![A comment icon appears in the title bar of the active tab in VS Code](../images/ai/lm-api/code-tutor-annotations-gif.gif)
+<!-- 图片已移除 -->
 
 ## Next Steps
 
-In this tutorial, you learned how to create a VS Code extension that integrates AI into the editor with the language model API. You used the VS Code extension API to get the code from the current tab, sent it to the model with a custom prompt, and then parsed and displayed the model result right in the editor using decorators.
+In this tutorial, you learned how to create a Baosky 插件 that integrates AI into the editor with the language model API. You used the Baosky 插件 API to get the code from the current tab, sent it to the model with a custom prompt, and then parsed and displayed the model result right in the editor using decorators.
 
-Next, you can extend your Code Tutor extension to [include a chat participant](/api/extension-guides/ai/chat-tutorial) as well which will allow users to interact directly with your extension via the GitHub Copilot chat interface. You can also [explore the full range of API's in VS Code](/api/references/vscode-api) to explore new ways of building custom AI experiences your editor.
+Next, you can extend your Code Tutor 插件 to [include a chat participant](/api/插件-guides/ai/chat-tutorial) as well which will allow users to interact directly with your 插件 via the GitHub Copilot chat interface. You can also [explore the full range of API's in Baosky](/api/references/vscode-api) to explore new ways of building custom AI experiences your editor.
 
-You can find the complete source code for this tutorial in the [vscode-extensions-sample repository](https://github.com/microsoft/vscode-extension-samples/tree/main/lm-api-tutorial).
+You can find the complete source code for this tutorial in the [vscode-插件-sample repository](https://github.com/microsoft/vscode-插件-samples/tree/main/lm-api-tutorial).
 
 ## Related content
 
-- [Language Model API extension guide](/api/extension-guides/ai/language-model)
-- [Tutorial: Create a code tutor chat participant with the Chat API](/api/extension-guides/ai/chat-tutorial)
-- [VS Code Chat API reference](/api/extension-guides/ai/chat)
+- [Language Model API 插件 guide](/api/插件-guides/ai/language-model)
+- [Tutorial: Create a code tutor chat participant with the Chat API](/api/插件-guides/ai/chat-tutorial)
+- [Baosky Chat API reference](/api/插件-guides/ai/chat)

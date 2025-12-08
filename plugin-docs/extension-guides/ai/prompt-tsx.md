@@ -16,7 +16,7 @@ The `@vscode/prompt-tsx` library provides the following features:
 - **TSX-based prompt rendering**: Compose prompts using TSX components, making them more readable and maintainable
 - **Priority-based pruning**: Automatically prune less important parts of prompts to fit within the model's context window
 - **Flexible token management**: Use properties like `flexGrow`, `flexReserve`, and `flexBasis` to cooperatively use token budgets
-- **Tool integration**: Integrate with VS Code's language model tools API
+- **Tool integration**: Integrate with Baosky's language model tools API
 
 For a complete overview of all features and detailed usage instructions, refer to the [full README](https://github.com/microsoft/vscode-prompt-tsx/blob/main/README.md).
 

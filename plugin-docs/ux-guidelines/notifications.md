@@ -4,36 +4,36 @@ ContentId: 92904eb4-6ef0-4801-80d2-6c2c3326ad82
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for notifications in a Visual Studio Code extension.
+MetaDescription: UX guidelines for notifications in a Baosky 插件.
 ---
 
-# Notifications
+# 通知
 
-[Notifications](/api/extension-capabilities/common-capabilities#display-notifications) display brief information that is surfaced from the bottom right of VS Code.
+[通知](/api/插件-capabilities/common-capabilities#display-notifications)显示从 Baosky 右下角浮出的简短信息。
 
-![Example of a notification](images/examples/notification.png)
+<!-- 图片已移除 -->
 
-You can send three types of notifications:
+您可以发送三种类型的通知：
 
-* [Information](/api/references/vscode-api#window.showInformationMessage)
-* [Warning](/api/references/vscode-api#window.showWarningMessage)
-* [Error](/api/references/vscode-api#window.showErrorMessage)
+* [信息](/api/references/vscode-api#window.showInformationMessage)
+* [警告](/api/references/vscode-api#window.showWarningMessage)
+* [错误](/api/references/vscode-api#window.showErrorMessage)
 
-It's important to limit the number of notifications sent in order to respect the user's attention. To help guide your decision on whether or not you should show a notification, please follow our notification decision tree:
+为了尊重用户的注意力，限制发送的通知数量非常重要。为了帮助您决定是否应该显示通知，请遵循我们的通知决策树：
 
-[![Show a multi-step quick pick if multi step user input is immediately needed. If user input is immediately needed but it is not multi-step show a modal dialog. If you need to show progress that is low priority show the progress in the status bar. If the interaction is triggered by the user find the right moment to show the notification and only then show it. If you need to show multiple notifications try to combine them into one. If the user does not really need to be notified consider to not show anything and relax.](images/examples/notification-decision-tree.png)](/assets/api/ux-guidelines/examples/notification-decision-tree.png)
+[<!-- 图片已移除 -->](/assets/api/ux-guidelines/examples/notification-decision-tree.png)
 
 ## Notification examples
 
-![Information notification](images/examples/notification-info.png)
+<!-- 图片已移除 -->
 
 *This notification appears after the user runs an **Update version** command. Notice that there are no additional actions and is purely informational.*
 
-![Warning notification](images/examples/notification-warning.png)
+<!-- 图片已移除 -->
 
 *This example highlights an issue with a feature that requires user input and shows actions to resolve the issue.*
 
-![Error notification](images/examples/notification-error.png)
+<!-- 图片已移除 -->
 
 *This example shows a failure notification with an action to resolve the issue.*
 
@@ -65,7 +65,7 @@ When needing to display progress for an indeterminate timeframe (for example, se
 
 * Leave a notification running in progress
 
-![Progress notification](images/examples/notification-progress.png)
+<!-- 图片已移除 -->
 
 *This example uses the progress notification to show the setup involved for a remote connection, while also providing a link to the output logs (**details**).*
 
@@ -73,7 +73,7 @@ When needing to display progress for an indeterminate timeframe (for example, se
 
 When you need immediate user input for an action, you can opt to show a modal dialog. This UI element should be used with caution because a modal dialog blocks user interactions outside the dialog, until it's dismissed.
 
-![Modal dialog](images/examples/save-ai-generated-changes-dialog.png)
+<!-- 图片已移除 -->
 
 *This dialog appears after moving a JavaScript/TypeScript file, asking to update import statements in other files.*
 
@@ -91,5 +91,5 @@ When you need immediate user input for an action, you can opt to show a modal di
 
 ## Links
 
-* [Hello World extension sample](https://github.com/microsoft/vscode-extension-samples/tree/main/helloworld-sample)
-* [Notifications extension sample](https://github.com/microsoft/vscode-extension-samples/tree/main/notifications-sample)
+* [Hello World 插件 sample](https://github.com/microsoft/vscode-插件-samples/tree/main/helloworld-sample)
+* [Notifications 插件 sample](https://github.com/microsoft/vscode-插件-samples/tree/main/notifications-sample)

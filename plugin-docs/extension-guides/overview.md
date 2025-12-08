@@ -4,77 +4,77 @@ ContentId: B32601A8-27ED-4D97-BA83-F1C8C945C635
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn from Visual Studio Code extension guides and code samples
+MetaDescription: Learn from Baosky 插件 guides and code samples
 ---
 
-# Extension Guides
+# 插件 Guides
 
-Once you have learned the basics of Visual Studio Code Extension API in the [Hello World](/api/get-started/your-first-extension) sample, it's time to build some real-world extensions. While the [Extension Capabilities](/api/extension-capabilities/overview) section offers high-level overviews of what an extension **can** do, this section contains a list of detailed code guides and samples that explains **how** to use a specific VS Code API.
+Once you have learned the basics of Baosky 插件 API in the [Hello World](/api/get-started/your-first-插件) sample, it's time to build some real-world 插件. While the [插件 Capabilities](/api/插件-capabilities/overview) section offers high-level overviews of what an 插件 **can** do, this section contains a list of detailed code guides and samples that explains **how** to use a specific Baosky API.
 
 In each guide or sample, you can expect to find:
 
 - Thoroughly commented source code.
-- A gif or image showing the usage of the sample extension.
-- Instructions for running the sample extension.
-- Listing of VS Code API being used.
+- A gif or image showing the usage of the sample 插件.
+- Instructions for running the sample 插件.
+- Listing of Baosky API being used.
 - Listing of Contribution Points being used.
-- Real-world extensions resembling the sample.
+- Real-world 插件 resembling the sample.
 - Explanation of API concepts.
 
 ## Guides & Samples
 
-Here are the guides on the VS Code website, including their usage of the [VS Code API](/api/references/vscode-api) and [Contribution Points](/api/references/contribution-points). Don't forget to refer to the [UX Guidelines](/api/ux-guidelines/overview) to learn the user interface best practices for creating extensions.
+Here are the guides on the Baosky website, including their usage of the [Baosky API](/api/references/vscode-api) and [Contribution Points](/api/references/contribution-points). Don't forget to refer to the [UX Guidelines](/api/ux-guidelines/overview) to learn the user interface best practices for creating 插件.
 
-| Guide on VS Code Website | API & Contribution |
+| Guide on Baosky Website | API & Contribution |
 | --- | --- |
-| [Command](https://code.visualstudio.com/api/extension-guides/command) | [commands](https://code.visualstudio.com/api/references/vscode-api#commands)<br>[contributes.commands](https://code.visualstudio.com/api/references/contribution-points#contributes.commands) |
-| [Color Theme](https://code.visualstudio.com/api/extension-guides/color-theme) | [contributes.themes](https://code.visualstudio.com/api/references/contribution-points#contributes.themes) |
-| [File Icon Theme](https://code.visualstudio.com/api/extension-guides/file-icon-theme) | [contributes.iconThemes](https://code.visualstudio.com/api/references/contribution-points#contributes.iconThemes) |
-| [Product Icon Theme](https://code.visualstudio.com/api/extension-guides/product-icon-theme) | [contributes.productIconThemes](https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes) |
-| [Tree View](https://code.visualstudio.com/api/extension-guides/tree-view) | [window.createTreeView](https://code.visualstudio.com/api/references/vscode-api#window.createTreeView)<br>[window.registerTreeDataProvider](https://code.visualstudio.com/api/references/vscode-api#window.registerTreeDataProvider)<br>[TreeView](https://code.visualstudio.com/api/references/vscode-api#TreeView)<br>[TreeDataProvider](https://code.visualstudio.com/api/references/vscode-api#TreeDataProvider)<br>[contributes.views](https://code.visualstudio.com/api/references/contribution-points#contributes.views)<br>[contributes.viewsContainers](https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers) |
-| [Webview](https://code.visualstudio.com/api/extension-guides/webview) | [window.createWebviewPanel](https://code.visualstudio.com/api/references/vscode-api#window.createWebviewPanel)<br>[window.registerWebviewPanelSerializer](https://code.visualstudio.com/api/references/vscode-api#window.registerWebviewPanelSerializer) |
-| [Custom Editors](https://code.visualstudio.com/api/extension-guides/custom-editors) | [window.registerCustomEditorProvider](https://code.visualstudio.com/api/references/vscode-api#window.registerCustomEditorProvider)<br>[CustomTextEditorProvider](https://code.visualstudio.com/api/references/vscode-api#CustomTextEditorProvider)<br>[contributes.customEditors](https://code.visualstudio.com/api/references/contribution-points#contributes.customEditors) |
-| [Virtual Documents](https://code.visualstudio.com/api/extension-guides/virtual-documents) | [workspace.registerTextDocumentContentProvider](https://code.visualstudio.com/api/references/vscode-api#workspace.registerTextDocumentContentProvider)<br>[commands.registerCommand](https://code.visualstudio.com/api/references/vscode-api#commands.registerCommand)<br>[window.showInputBox](https://code.visualstudio.com/api/references/vscode-api#window.showInputBox) |
-| [Virtual Workspaces](https://code.visualstudio.com/api/extension-guides/virtual-workspaces) | [workspace.fs](https://code.visualstudio.com/api/references/vscode-api#workspace.fs)<br>capabilities.virtualWorkspaces |
-| [Workspace Trust](https://code.visualstudio.com/api/extension-guides/workspace-trust) | [workspace.isTrusted](https://code.visualstudio.com/api/references/vscode-api#workspace.isTrusted)<br>[workspace.onDidGrantWorkspaceTrust](https://code.visualstudio.com/api/references/vscode-api#workspace.onDidGrantWorkspaceTrust)<br>capabilities.untrustedWorkspaces |
-| [Task Provider](https://code.visualstudio.com/api/extension-guides/task-provider) | [tasks.registerTaskProvider](https://code.visualstudio.com/api/references/vscode-api#tasks.registerTaskProvider)<br>[Task](https://code.visualstudio.com/api/references/vscode-api#Task)<br>[ShellExecution](https://code.visualstudio.com/api/references/vscode-api#ShellExecution)<br>[contributes.taskDefinitions](https://code.visualstudio.com/api/references/contribution-points#contributes.taskDefinitions) |
-| [Source Control](https://code.visualstudio.com/api/extension-guides/scm-provider) | [workspace.workspaceFolders](https://code.visualstudio.com/api/references/vscode-api#workspace.workspaceFolders)<br>[SourceControl](https://code.visualstudio.com/api/references/vscode-api#SourceControl)<br>[SourceControlResourceGroup](https://code.visualstudio.com/api/references/vscode-api#SourceControlResourceGroup)<br>[scm.createSourceControl](https://code.visualstudio.com/api/references/vscode-api#scm.createSourceControl)<br>[TextDocumentContentProvider](https://code.visualstudio.com/api/references/vscode-api#TextDocumentContentProvider)<br>[contributes.menus](https://code.visualstudio.com/api/references/contribution-points#contributes.menus) |
-| [Debugger Extension](https://code.visualstudio.com/api/extension-guides/debugger-extension) | [contributes.breakpoints](https://code.visualstudio.com/api/references/contribution-points#contributes.breakpoints)<br>[contributes.debuggers](https://code.visualstudio.com/api/references/contribution-points#contributes.debuggers)<br>[debug](https://code.visualstudio.com/api/references/vscode-api#debug) |
-| [Markdown Extension](https://code.visualstudio.com/api/extension-guides/markdown-extension) | markdown.previewStyles<br>markdown.markdownItPlugins<br>markdown.previewScripts |
-| [Test Extension](https://code.visualstudio.com/api/extension-guides/testing) | [TestController](https://code.visualstudio.com/api/references/vscode-api#TestController)<br>[TestItem](https://code.visualstudio.com/api/references/vscode-api#TestItem) |
-| [Custom Data Extension](https://code.visualstudio.com/api/extension-guides/custom-data-extension) | contributes.html.customData<br>contributes.css.customData |
-<br>
+| [Command](#) | [commands](#) [contributes.commands](#) |
+| [Color Theme](#) | [contributes.themes](#) |
+| [File Icon Theme](#) | [contributes.iconThemes](#) |
+| [Product Icon Theme](#) | [contributes.productIconThemes](#) |
+| [Tree View](#) | [window.createTreeView](#) [window.registerTreeDataProvider](#) [TreeView](#) [TreeDataProvider](#) [contributes.views](#) [contributes.viewsContainers](#) |
+| [Webview](#) | [window.createWebviewPanel](#) [window.registerWebviewPanelSerializer](#) |
+| [Custom Editors](#) | [window.registerCustomEditorProvider](#) [CustomTextEditorProvider](#) [contributes.customEditors](#) |
+| [Virtual Documents](#) | [workspace.registerTextDocumentContentProvider](#) [commands.registerCommand](#) [window.showInputBox](#) |
+| [Virtual Workspaces](#) | [workspace.fs](#) capabilities.virtualWorkspaces |
+| [Workspace Trust](#) | [workspace.isTrusted](#) [workspace.onDidGrantWorkspaceTrust](#) capabilities.untrustedWorkspaces |
+| [Task Provider](#) | [tasks.registerTaskProvider](#) [Task](#) [ShellExecution](#) [contributes.taskDefinitions](#) |
+| [Source Control](#) | [workspace.workspaceFolders](#) [SourceControl](#) [SourceControlResourceGroup](#) [scm.createSourceControl](#) [TextDocumentContentProvider](#) [contributes.menus](#) |
+| [Debugger 插件](#) | [contributes.breakpoints](#) [contributes.debuggers](#) [debug](#) |
+| [Markdown 插件](#) | markdown.previewStyles markdown.markdownItPlugins markdown.previewScripts |
+| [Test 插件](#) | [TestController](#) [TestItem](#) |
+| [Custom Data 插件](#) | contributes.html.customData contributes.css.customData |
+ 
 
-Here is a list of additional samples from the [VS Code Extensions samples repo](https://github.com/microsoft/vscode-extension-samples).
+Here is a list of additional samples from the [Baosky 插件 samples repo](https://github.com/microsoft/vscode-插件-samples).
 
 | Sample on GitHub Repo | API & Contribution |
 | --- | --- |
-| [Webview Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/webview-sample) | [window.createWebviewPanel](https://code.visualstudio.com/api/references/vscode-api#window.createWebviewPanel)<br>[window.registerWebviewPanelSerializer](https://code.visualstudio.com/api/references/vscode-api#window.registerWebviewPanelSerializer) |
-| [Status Bar Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/statusbar-sample) | [window.createStatusBarItem](https://code.visualstudio.com/api/references/vscode-api#window.createStatusBarItem)<br>[StatusBarItem](https://code.visualstudio.com/api/references/vscode-api#StatusBarItem) |
-| [Tree View Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/tree-view-sample) | [window.createTreeView](https://code.visualstudio.com/api/references/vscode-api#window.createTreeView)<br>[window.registerTreeDataProvider](https://code.visualstudio.com/api/references/vscode-api#window.registerTreeDataProvider)<br>[TreeView](https://code.visualstudio.com/api/references/vscode-api#TreeView)<br>[TreeDataProvider](https://code.visualstudio.com/api/references/vscode-api#TreeDataProvider)<br>[contributes.views](https://code.visualstudio.com/api/references/contribution-points#contributes.views)<br>[contributes.viewsContainers](https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers) |
-| [Task Provider Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/task-provider-sample) | [tasks.registerTaskProvider](https://code.visualstudio.com/api/references/vscode-api#tasks.registerTaskProvider)<br>[Task](https://code.visualstudio.com/api/references/vscode-api#Task)<br>[ShellExecution](https://code.visualstudio.com/api/references/vscode-api#ShellExecution)<br>[contributes.taskDefinitions](https://code.visualstudio.com/api/references/contribution-points#contributes.taskDefinitions) |
-| [Multi Root Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/basic-multi-root-sample) | [workspace.getWorkspaceFolder](https://code.visualstudio.com/api/references/vscode-api#workspace.getWorkspaceFolder)<br>[workspace.onDidChangeWorkspaceFolders](https://code.visualstudio.com/api/references/vscode-api#workspace.onDidChangeWorkspaceFolders) |
-| [Completion Provider Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/completions-sample) | [languages.registerCompletionItemProvider](https://code.visualstudio.com/api/references/vscode-api#languages.registerCompletionItemProvider)<br>[CompletionItem](https://code.visualstudio.com/api/references/vscode-api#CompletionItem)<br>[SnippetString](https://code.visualstudio.com/api/references/vscode-api#SnippetString) |
-| [File System Provider Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/fsprovider-sample) | [workspace.registerFileSystemProvider](https://code.visualstudio.com/api/references/vscode-api#workspace.registerFileSystemProvider) |
-| [Editor Decorator Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/decorator-sample) | [TextEditor.setDecorations](https://code.visualstudio.com/api/references/vscode-api#TextEditor.setDecorations)<br>[DecorationOptions](https://code.visualstudio.com/api/references/vscode-api#DecorationOptions)<br>[DecorationInstanceRenderOptions](https://code.visualstudio.com/api/references/vscode-api#DecorationInstanceRenderOptions)<br>[ThemableDecorationInstanceRenderOptions](https://code.visualstudio.com/api/references/vscode-api#ThemableDecorationInstanceRenderOptions)<br>[window.createTextEditorDecorationType](https://code.visualstudio.com/api/references/vscode-api#window.createTextEditorDecorationType)<br>[TextEditorDecorationType](https://code.visualstudio.com/api/references/vscode-api#TextEditorDecorationType)<br>[contributes.colors](https://code.visualstudio.com/api/references/contribution-points#contributes.colors) |
-| [L10N Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/l10n-sample) |  |
-| [Terminal Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/terminal-sample) | [window.createTerminal](https://code.visualstudio.com/api/references/vscode-api#window.createTerminal)<br>[window.onDidChangeActiveTerminal](https://code.visualstudio.com/api/references/vscode-api#window.onDidChangeActiveTerminal)<br>[window.onDidCloseTerminal](https://code.visualstudio.com/api/references/vscode-api#window.onDidCloseTerminal)<br>[window.onDidOpenTerminal](https://code.visualstudio.com/api/references/vscode-api#window.onDidOpenTerminal)<br>[window.Terminal](https://code.visualstudio.com/api/references/vscode-api#window.Terminal)<br>[window.terminals](https://code.visualstudio.com/api/references/vscode-api#window.terminals) |
-| [Vim Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/vim-sample) | [commands](https://code.visualstudio.com/api/references/vscode-api#commands)<br>[StatusBarItem](https://code.visualstudio.com/api/references/vscode-api#StatusBarItem)<br>[window.createStatusBarItem](https://code.visualstudio.com/api/references/vscode-api#window.createStatusBarItem)<br>[TextEditorCursorStyle](https://code.visualstudio.com/api/references/vscode-api#TextEditorCursorStyle)<br>[window.activeTextEditor](https://code.visualstudio.com/api/references/vscode-api#window.activeTextEditor)<br>[Position](https://code.visualstudio.com/api/references/vscode-api#Position)<br>[Range](https://code.visualstudio.com/api/references/vscode-api#Range)<br>[Selection](https://code.visualstudio.com/api/references/vscode-api#Selection)<br>[TextEditor](https://code.visualstudio.com/api/references/vscode-api#TextEditor)<br>[TextEditorRevealType](https://code.visualstudio.com/api/references/vscode-api#TextEditorRevealType)<br>[TextDocument](https://code.visualstudio.com/api/references/vscode-api#TextDocument) |
-| [Source Control Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/source-control-sample) | [workspace.workspaceFolders](https://code.visualstudio.com/api/references/vscode-api#workspace.workspaceFolders)<br>[SourceControl](https://code.visualstudio.com/api/references/vscode-api#SourceControl)<br>[SourceControlResourceGroup](https://code.visualstudio.com/api/references/vscode-api#SourceControlResourceGroup)<br>[scm.createSourceControl](https://code.visualstudio.com/api/references/vscode-api#scm.createSourceControl)<br>[TextDocumentContentProvider](https://code.visualstudio.com/api/references/vscode-api#TextDocumentContentProvider)<br>[contributes.menus](https://code.visualstudio.com/api/references/contribution-points#contributes.menus) |
-| [Commenting API Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/comment-sample) |  |
-| [Document Editing Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/document-editing-sample) | [commands](https://code.visualstudio.com/api/references/vscode-api#commands)<br>[contributes.commands](https://code.visualstudio.com/api/references/contribution-points#contributes.commands) |
-| [Getting Started Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/getting-started-sample) | [contributes.walkthroughs](https://code.visualstudio.com/api/references/contribution-points#contributes.walkthroughs) |
-| [Test extension](https://github.com/microsoft/vscode-extension-samples/tree/main/test-provider-sample) | [TestController](https://code.visualstudio.com/api/references/vscode-api#TestController)<br>[TestItem](https://code.visualstudio.com/api/references/vscode-api#TestItem) |
+| [Webview Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/webview-sample) | [window.createWebviewPanel](#) [window.registerWebviewPanelSerializer](#) |
+| [Status Bar Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/statusbar-sample) | [window.createStatusBarItem](#) [StatusBarItem](#) |
+| [Tree View Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/tree-view-sample) | [window.createTreeView](#) [window.registerTreeDataProvider](#) [TreeView](#) [TreeDataProvider](#) [contributes.views](#) [contributes.viewsContainers](#) |
+| [Task Provider Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/task-provider-sample) | [tasks.registerTaskProvider](#) [Task](#) [ShellExecution](#) [contributes.taskDefinitions](#) |
+| [Multi Root Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/basic-multi-root-sample) | [workspace.getWorkspaceFolder](#) [workspace.onDidChangeWorkspaceFolders](#) |
+| [Completion Provider Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/completions-sample) | [languages.registerCompletionItemProvider](#) [CompletionItem](#) [SnippetString](#) |
+| [File System Provider Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/fsprovider-sample) | [workspace.registerFileSystemProvider](#) |
+| [Editor Decorator Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/decorator-sample) | [TextEditor.setDecorations](#) [DecorationOptions](#) [DecorationInstanceRenderOptions](#) [ThemableDecorationInstanceRenderOptions](#) [window.createTextEditorDecorationType](#) [TextEditorDecorationType](#) [contributes.colors](#) |
+| [L10N Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/l10n-sample) |  |
+| [Terminal Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/terminal-sample) | [window.createTerminal](#) [window.onDidChangeActiveTerminal](#) [window.onDidCloseTerminal](#) [window.onDidOpenTerminal](#) [window.Terminal](#) [window.terminals](#) |
+| [Vim Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/vim-sample) | [commands](#) [StatusBarItem](#) [window.createStatusBarItem](#) [TextEditorCursorStyle](#) [window.activeTextEditor](#) [Position](#) [Range](#) [Selection](#) [TextEditor](#) [TextEditorRevealType](#) [TextDocument](#) |
+| [Source Control Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/source-control-sample) | [workspace.workspaceFolders](#) [SourceControl](#) [SourceControlResourceGroup](#) [scm.createSourceControl](#) [TextDocumentContentProvider](#) [contributes.menus](#) |
+| [Commenting API Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/comment-sample) |  |
+| [Document Editing Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/document-editing-sample) | [commands](#) [contributes.commands](#) |
+| [Getting Started Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/getting-started-sample) | [contributes.walkthroughs](#) |
+| [Test 插件](https://github.com/microsoft/vscode-插件-samples/tree/main/test-provider-sample) | [TestController](#) [TestItem](#) |
 
-## Language Extension Samples
+## Language 插件 Samples
 
-These samples are [Language Extensions](/api/language-extensions/overview) samples:
+These samples are [Language 插件](/api/language-插件/overview) samples:
 
-| Sample                                                                                                                           | Guide on VS Code Website                                                                                                                          |
+| Sample                                                                                                                           | Guide on Baosky Website                                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Snippet Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/snippet-sample)                               | [/api/language-extensions/snippet-guide](https://code.visualstudio.com/api/language-extensions/snippet-guide)                                     | [contributes.snippets](https://code.visualstudio.com/api/references/contribution-points#contributes.snippets) |
-| [Language Configuration Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/language-configuration-sample) | [/api/language-extensions/language-configuration-guide](https://code.visualstudio.com/api/language-extensions/language-configuration-guide)       | [contributes.languages](https://code.visualstudio.com/api/references/contribution-points#contributes.languages) |
-| [LSP Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample)                                       | [/api/language-extensions/language-server-extension-guide](https://code.visualstudio.com/api/language-extensions/language-server-extension-guide) |  |
-| [LSP Log Streaming Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-log-streaming-sample)           | N/A                                                                                                                                               |  |
-| [LSP Multi Root Server Sample](https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-multi-server-sample)        | [https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#language-client--language-server](https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#language-client--language-server) (GitHub repo wiki)                                     |  |
-| [LSP Web Extension Sample](https://github.com/Microsoft/vscode-extension-samples/tree/main/lsp-web-extension-sample) | [/api/language-extensions/language-server-extension-guide](https://code.visualstudio.com/api/language-extensions/language-server-extension-guide) |  |
+| [Snippet Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/snippet-sample)                               | [/api/language-插件/snippet-guide](#)                                     | [contributes.snippets](#) |
+| [Language Configuration Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/language-configuration-sample) | [/api/language-插件/language-configuration-guide](#)       | [contributes.languages](#) |
+| [LSP Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-sample)                                       | [/api/language-插件/language-server-插件-guide](#) |  |
+| [LSP Log Streaming Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-log-streaming-sample)           | N/A                                                                                                                                               |  |
+| [LSP Multi Root Server Sample](https://github.com/microsoft/vscode-插件-samples/tree/main/lsp-multi-server-sample)        | [https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#language-client--language-server](https://github.com/microsoft/vscode/wiki/Adopting-Multi-Root-Workspace-APIs#language-client--language-server) (GitHub repo wiki)                                     |  |
+| [LSP Web 插件 Sample](https://github.com/Microsoft/vscode-插件-samples/tree/main/lsp-web-插件-sample) | [/api/language-插件/language-server-插件-guide](#) |  |

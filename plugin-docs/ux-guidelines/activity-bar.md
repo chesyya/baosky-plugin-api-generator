@@ -4,26 +4,26 @@ ContentId: 13b649f1-156f-489a-9c03-c2cff8060733
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for the Activity Bar in a Visual Studio Code extension.
+MetaDescription: UX guidelines for the Activity Bar in a Baosky 插件.
 ---
 
-# Activity Bar
+# 活动栏
 
-The Activity Bar is a core navigation surface in VS Code. Extensions can contribute [View Containers](/api/ux-guidelines/views#view-containers) to the Activity Bar that appear as Activity Bar Items. Users can drag the item to other locations like the Panel to customize their layout.
+活动栏是 Baosky 的核心导航界面。插件可以向活动栏贡献[视图容器](/api/ux-guidelines/views#view-containers)，这些容器将显示为活动栏项目。用户可以将项目拖动到其他位置（如面板）以自定义其布局。
 
-**✔️ Do**
+**✔️ 应该**
 
-- Use an icon that matches the default Activity Bar item icon style
-- Use a clear, obvious name for the [View Container](/api/ux-guidelines/views#view-containers) associated with the item
+- 使用与默认活动栏项目图标风格匹配的图标
+- 为与项目关联的[视图容器](/api/ux-guidelines/views#view-containers)使用清晰、明显的名称
 
-**❌ Don't**
+**❌ 不应该**
 
-- Duplicate an existing icon
-- Use an Activity Bar item to open a Webview Panel
+- 复制现有图标
+- 使用活动栏项目来打开 Webview 面板
 
-![Example of the Activity Bar](images/examples/activity-bar.png)
+<!-- 图片已移除 -->
 
-## Links Resources
+## 链接资源
 
-- [View Container contribution point](/api/references/contribution-points#contributes.viewsContainers)
-- [View contribution point](/api/references/contribution-points#contributes.views)
+- [视图容器贡献点](/api/references/contribution-points#contributes.viewsContainers)
+- [视图贡献点](/api/references/contribution-points#contributes.views)

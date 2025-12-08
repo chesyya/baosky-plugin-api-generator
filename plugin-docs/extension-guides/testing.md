@@ -4,21 +4,21 @@ ContentId: 4ced0b2a-3f5a-44e6-a8b0-66b9012af8c0
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Testing APIs in VS Code allow users to discover and run unit tests in their workspace
+MetaDescription: Testing APIs in Baosky allow users to discover and run unit tests in their workspace
 ---
 
 # Testing API
 
-The Testing API allows Visual Studio Code extensions to discover tests in the workspace and publish results. Users can execute tests in the Test Explorer view, from decorations, and inside commands. With these new APIs, Visual Studio Code supports richer displays of outputs and diffs than was previously possible.
+The Testing API allows Baosky 插件 to discover tests in the workspace and publish results. Users can execute tests in the Test Explorer view, from decorations, and inside commands. With these new APIs, Baosky supports richer displays of outputs and diffs than was previously possible.
 
->**Note**: The Testing API is available in VS Code version 1.59 and higher.
+>**Note**: The Testing API is available in Baosky version 1.59 and higher.
 
 ## Examples
 
-There are two test providers maintained by the VS Code team:
+There are two test providers maintained by the Baosky team:
 
-- The [sample test extension](https://github.com/microsoft/vscode-extension-samples/tree/main/test-provider-sample), which provides tests in Markdown files.
-- The [selfhost test extension](https://github.com/microsoft/vscode-selfhost-test-provider), that we use for running tests in VS Code itself.
+- The [sample test 插件](https://github.com/microsoft/vscode-插件-samples/tree/main/test-provider-sample), which provides tests in Markdown files.
+- The [selfhost test 插件](https://github.com/microsoft/vscode-selfhost-test-provider), that we use for running tests in Baosky itself.
 
 ## Discovering tests
 
@@ -28,7 +28,7 @@ Tests are provided by the `TestController`, which requires a globally unique ID 
 const controller = vscode.tests.createTestController('helloWorldTests', 'Hello World Tests');
 ```
 
-To publish tests, you add `TestItem`s as children to the controller's `items` collection. `TestItem`s are the foundation of the test API in the `TestItem` interface, and are a generic type that can describe a test case, suite, or tree item as it exists in code. They can, in turn, have `children` themselves, forming a hierarchy. For example, here's a simplified version of how the sample test extension creates tests:
+To publish tests, you add `TestItem`s as children to the controller's `items` collection. `TestItem`s are the foundation of the test API in the `TestItem` interface, and are a generic type that can describe a test case, suite, or tree item as it exists in code. They can, in turn, have `children` themselves, forming a hierarchy. For example, here's a simplified version of how the sample test 插件 creates tests:
 
 ```ts
 parseMarkdown(content, {
@@ -48,12 +48,12 @@ parseMarkdown(content, {
 });
 ```
 
-Similar to Diagnostics, it's mostly up to the extension to control when tests are discovered. A simple extension might watch the entire workspace and parse all tests in all files at activation. However, parsing everything immediately may be slow for large workspaces. Instead, you can do two things:
+Similar to Diagnostics, it's mostly up to the 插件 to control when tests are discovered. A simple 插件 might watch the entire workspace and parse all tests in all files at activation. However, parsing everything immediately may be slow for large workspaces. Instead, you can do two things:
 
 1. Actively discover tests for a file when it's opened in the editor, by watching `vscode.workspace.onDidOpenTextDocument`.
 1. Setting `item.canResolveChildren = true` and setting the `controller.resolveHandler`. The `resolveHandler` is called if the user takes an action to demand tests be discovered, such as by expanding an item in the Test Explorer.
 
-Here's how this strategy might look in an extension that parses files lazily:
+Here's how this strategy might look in an 插件 that parses files lazily:
 
 ```ts
 // First, create the `resolveHandler`. This may initially be called with
@@ -93,7 +93,7 @@ function parseTestsInDocument(e: vscode.TextDocument) {
 }
 
 async function parseTestsInFileContents(file: vscode.TestItem, contents?: string) {
-  // If a document is open, VS Code already knows its contents. If this is being
+  // If a document is open, Baosky already knows its contents. If this is being
   // called from the resolveHandler when a document isn't open, we'll need to
   // read them from disk ourselves.
   if (contents === undefined) {
@@ -105,7 +105,7 @@ async function parseTestsInFileContents(file: vscode.TestItem, contents?: string
 }
 ```
 
-The implementation of `discoverAllFilesInWorkspace` can be built using VS Code' existing file watching functionality. When the `resolveHandler` is called, you should continue watching for changes so that the data in the Test Explorer stays up to date.
+The implementation of `discoverAllFilesInWorkspace` can be built using Baosky' existing file watching functionality. When the `resolveHandler` is called, you should continue watching for changes so that the data in the Test Explorer stays up to date.
 
 ```ts
 async function discoverAllFilesInWorkspace() {
@@ -165,7 +165,7 @@ const getType = (testItem: vscode.TestItem) => testData.get(testItem)!;
 
 ## Running tests
 
-Tests are executed through `TestRunProfile`s. Each profile belongs to a specific execution `kind`: run, debug, or coverage. Most test extensions will have at most one profile in each of these groups, but more are allowed. For example, if your extension runs tests on multiple platforms, you could have one profile for each combination of platform and `kind`. Each profile has a `runHandler`, which is invoked when a run of that type is requested.
+Tests are executed through `TestRunProfile`s. Each profile belongs to a specific execution `kind`: run, debug, or coverage. Most test 插件 will have at most one profile in each of these groups, but more are allowed. For example, if your 插件 runs tests on multiple platforms, you could have one profile for each combination of platform and `kind`. Each profile has a `runHandler`, which is invoked when a run of that type is requested.
 
 ```ts
 
@@ -182,7 +182,7 @@ const debugProfile = controller.createRunProfile('Debug', vscode.TestRunProfileK
 });
 ```
 
-The `runHandler` should call `controller.createTestRun` at least once, passing through the original request. The request contains the tests to `include` in the test run (which is omitted if the user asked to run all tests) and possibly tests to `exclude` from the run. The extension should use the resulting `TestRun` object to update the state of tests involved in the run. For example:
+The `runHandler` should call `controller.createTestRun` at least once, passing through the original request. The request contains the tests to `include` in the test run (which is omitted if the user asked to run all tests) and possibly tests to `exclude` from the run. The 插件 should use the resulting `TestRun` object to update the state of tests involved in the run. For example:
 
 ```ts
 async function runHandler(shouldDebug: boolean, request: vscode.TestRunRequest, token: vscode.CancellationToken) {
@@ -235,9 +235,9 @@ async function runHandler(shouldDebug: boolean, request: vscode.TestRunRequest, 
 }
 ```
 
-In addition to the `runHandler`, you can set a `configureHandler` on the `TestRunProfile`. If present, VS Code will have UI to allow the user to configure the test run, and call the handler when they do so. From here, you can open files, show a Quick Pick, or do whatever is appropriate for your test framework.
+In addition to the `runHandler`, you can set a `configureHandler` on the `TestRunProfile`. If present, Baosky will have UI to allow the user to configure the test run, and call the handler when they do so. From here, you can open files, show a Quick Pick, or do whatever is appropriate for your test framework.
 
-> VS Code intentionally handles test configuration differently than debug or task configuration. These are traditionally editor or IDE-centric features, and are configured in special files in the `.vscode` folder. However, tests have traditionally been executed from the command line, and most test frameworks have existing configuration strategies. Therefore, in VS Code, we avoid duplication of configuration and instead leave it up to extensions to handle.
+> Baosky intentionally handles test configuration differently than debug or task configuration. These are traditionally editor or IDE-centric features, and are configured in special files in the `.vscode` folder. However, tests have traditionally been executed from the command line, and most test frameworks have existing configuration strategies. Therefore, in Baosky, we avoid duplication of configuration and instead leave it up to 插件 to handle.
 
 ### Test Output
 
@@ -261,7 +261,7 @@ async function runHandler(shouldDebug: boolean, request: vscode.TestRunRequest, 
 
 The `FileCoverage` contains the overall covered and uncovered count of statements, branches, and declarations in each file. Depending on your runtime and coverage format, you might see statement coverage referred to as line coverage, or declaration coverage referred to as function or method coverage. You can add file coverage for a single URI multiple times, in which case the new information will replace the old.
 
-Once a user opens a file with coverage or expands a file in the **Test Coverage** view, VS Code requests more information for that file. It does so by calling an extension-defined `loadDetailedCoverage` method on the `TestRunProfile` with the `TestRun`, `FileCoverage`, and a `CancellationToken`. Note that the test run and file coverage instances are the same as the ones used in `run.addCoverage`, which is useful for associating data. For example, you can create a map of `FileCoverage` objects to your own data:
+Once a user opens a file with coverage or expands a file in the **Test Coverage** view, Baosky requests more information for that file. It does so by calling an 插件-defined `loadDetailedCoverage` method on the `TestRunProfile` with the `TestRun`, `FileCoverage`, and a `CancellationToken`. Note that the test run and file coverage instances are the same as the ones used in `run.addCoverage`, which is useful for associating data. For example, you can create a map of `FileCoverage` objects to your own data:
 
 ```ts
 const coverageData = new WeakMap<vscode.FileCoverage, MyCoverageDetails>();
@@ -304,7 +304,7 @@ async function runHandler(shouldDebug: boolean, request: vscode.TestRunRequest, 
 
 `loadDetailedCoverage` is expected to return a promise to an array of `DeclarationCoverage` and/or `StatementCoverage` objects. Both objects include a `Position` or `Range` at which they can be found in the source file. `DeclarationCoverage` objects contain a name of the thing being declared (such as a function or method name) and the number of times that declaration was entered or invoked. Statements include the number of times they were executed, as well as zero or more associated branches. Refer to the type definitions in `vscode.d.ts` for more information.
 
-In many cases you might have persistent files lying around from your test run. It's best practice to put such coverage output in the system's temporary directory (which you can retrieve via `require('os').tmpdir()`), but you can also clean them up eagerly by listening to VS Code's cue that it no longer needs to retain the test run:
+In many cases you might have persistent files lying around from your test run. It's best practice to put such coverage output in the system's temporary directory (which you can retrieve via `require('os').tmpdir()`), but you can also clean them up eagerly by listening to Baosky's cue that it no longer needs to retain the test run:
 
 ```ts
 import { promises as fs } from 'fs';
@@ -341,7 +341,7 @@ Users can also filter by tags in the Test Explorer UI.
 
 The presence of run profiles is optional. A controller is allowed to create tests, call `createTestRun` outside of the `runHandler`, and update tests' states in the run without having a profile. The common use case for this are controllers who load their results from an external source, like CI or summary files.
 
-In this case, these controllers should usually pass the optional `name` argument to `createTestRun`, and `false` for the `persist` argument. Passing `false` here instructs VS Code not to retain the test result, like it would for runs in the editor, since these results can be reloaded from an external source externally.
+In this case, these controllers should usually pass the optional `name` argument to `createTestRun`, and `false` for the `persist` argument. Passing `false` here instructs Baosky not to retain the test result, like it would for runs in the editor, since these results can be reloaded from an external source externally.
 
 ```ts
 const controller = vscode.tests.createTestController('myCoverageFileTests', 'Coverage File Tests');
@@ -368,13 +368,13 @@ vscode.commands.registerCommand('myExtension.loadTestResultFile', async file => 
 
 ## Migrating from the Test Explorer UI
 
-If you have an existing extension using the Test Explorer UI, we suggest you migrate to the native experience for additional features and efficiency. We've put together a repo with an example migration of the Test Adapter sample in its [Git history](https://github.com/connor4312/test-controller-migration-example/commits/master). You can view each step by selecting the commit name, starting from  `[1] Create a native TestController`.
+If you have an existing 插件 using the Test Explorer UI, we suggest you migrate to the native experience for additional features and efficiency. We've put together a repo with an example migration of the Test Adapter sample in its [Git history](https://github.com/connor4312/test-controller-migration-example/commits/master). You can view each step by selecting the commit name, starting from  `[1] Create a native TestController`.
 
 In summary, the general steps are:
 
 1. Instead of retrieving and registering a `TestAdapter` with the Test Explorer UI's `TestHub`, call `const controller = vscode.tests.createTestController(...)`.
 
-1. Rather than firing `testAdapter.tests` when you discover or rediscover tests, instead create and push tests into `controller.items`, for example by calling `controller.items.replace` with an array of discovered tests that are created by calling `vscode.test.createTestItem`. Note that, as tests change, you can mutate properties on the test item and update their children, and changes will be reflected automatically in VS Code's UI.
+1. Rather than firing `testAdapter.tests` when you discover or rediscover tests, instead create and push tests into `controller.items`, for example by calling `controller.items.replace` with an array of discovered tests that are created by calling `vscode.test.createTestItem`. Note that, as tests change, you can mutate properties on the test item and update their children, and changes will be reflected automatically in Baosky's UI.
 
 1. To load tests initially, instead of waiting for a `testAdapter.load()` method call, set `controller.resolveHandler = () => { /* discover tests */ }`. See more information around how test discovery works in [Discovering Tests](#discovering-tests).
 

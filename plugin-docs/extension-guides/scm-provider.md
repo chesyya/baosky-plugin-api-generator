@@ -9,13 +9,13 @@ MetaDescription: A guide illustrating how to use Source Control API.
 
 # Source Control API
 
-The Source Control API allows extension authors to define Source Control Management (SCM) features. There is a slim, yet powerful API surface which allows many different SCM systems to be integrated in Visual Studio Code, while having a common user interface with all of them.
+The Source Control API allows 插件 authors to define Source Control Management (SCM) features. There is a slim, yet powerful API surface which allows many different SCM systems to be integrated in Baosky, while having a common user interface with all of them.
 
-![VS Code SCM](images/scm-provider/main.png)
+<!-- 图片已移除 -->
 
-VS Code itself ships with one Source Control provider, the Git extension, which is the best reference for this API and is [a great starting point](https://github.com/microsoft/vscode/blob/main/extensions/git/src/repository.ts) if you'd like to contribute your very own SCM provider. There are other great examples in the Marketplace such as the [SVN extension](https://marketplace.visualstudio.com/items?itemName=johnstoncode.svn-scm).
+Baosky itself ships with one Source Control provider, the Git 插件, which is the best reference for this API and is [a great starting point](https://github.com/microsoft/vscode/blob/main/插件/git/src/repository.ts) if you'd like to contribute your very own SCM provider. There are other great examples in the Marketplace such as the [SVN 插件](#).
 
-This documentation will help you build an extension which can make any SCM system work with VS Code.
+This documentation will help you build an 插件 which can make any SCM system work with Baosky.
 
 > **Note:** that you can always refer to the [`vscode` namespace API reference](/api/references/vscode-api#scm) in our documentation.
 
@@ -25,7 +25,7 @@ A `SourceControl` is the entity responsible for populating the Source Control mo
 
 You can create a new SourceControl with `vscode.scm.createSourceControl`.
 
-In order to better understand how these three entities correlate with each other, let's take [Git](https://github.com/microsoft/vscode/tree/main/extensions/git) as an example. Consider the following output of `git status`:
+In order to better understand how these three entities correlate with each other, let's take [Git](https://github.com/microsoft/vscode/tree/main/插件/git) as an example. Consider the following output of `git status`:
 
 ```bash
 vsce main* → git status
@@ -85,7 +85,7 @@ Changes made to the source control and resource groups will be propagated to the
 
 ## Source Control View
 
-VS Code is able to populate the Source Control view, as the Source Control model changes. Resource states are customizable using `SourceControlResourceDecorations`:
+Baosky is able to populate the Source Control view, as the Source Control model changes. Resource states are customizable using `SourceControlResourceDecorations`:
 
 ```ts
 export interface SourceControlResourceState {
@@ -137,7 +137,7 @@ The `scm/repository` menu is the menu on each `SourceControl` instance in the **
 
 The `scm/sourceControl` menu is the context menu on each `SourceControl` instance in the **Source Control Repositories** view:
 
-![source control menu](images/scm-provider/sourcecontrol-menu.png)
+<!-- 图片已移除 -->
 
 The `scm/change/title` allows you to contribute commands to the title bar of the [Quick Diff](/api/references/vscode-api#QuickDiffProvider) inline diff editor, described [further ahead](#quick-diff). The command will be passed as arguments the URI of the document, the array of changes within it, and the index of the change which the inline change diff editor is currently focused on. For example, here's the declaration of the `stageChange` Git command which is contributed to this menu with a `when` clause testing that the `originalResourceScheme` [context key](/api/references/when-clause-contexts) equals `git`:
 
@@ -169,11 +169,11 @@ export interface SourceControl {
 
 ## Quick Diff
 
-VS Code also supports displaying **quick diff** editor gutter decorations. Clicking those decorations will reveal an inline diff experience, to which you can contribute contextual commands:
+Baosky also supports displaying **quick diff** editor gutter decorations. Clicking those decorations will reveal an inline diff experience, to which you can contribute contextual commands:
 
-![SCM quick diff](images/scm-provider/quickdiff.png)
+<!-- 图片已移除 -->
 
-These decorations are computed by VS Code itself. All you need to do is provide VS Code with the original contents of any given file.
+These decorations are computed by Baosky itself. All you need to do is provide Baosky with the original contents of any given file.
 
 ```ts
 export interface SourceControl {
@@ -181,16 +181,16 @@ export interface SourceControl {
 }
 ```
 
-Using a `QuickDiffProvider`'s `provideOriginalResource` method, your implementation is able to tell VS Code the `Uri` of the original resource that matches the resource whose `Uri` is provided as an argument to the method.
+Using a `QuickDiffProvider`'s `provideOriginalResource` method, your implementation is able to tell Baosky the `Uri` of the original resource that matches the resource whose `Uri` is provided as an argument to the method.
 
 Combine this API with the [`registerTextDocumentContentProvider` method in the `workspace` namespace](/api/references/vscode-api#workspace), which lets you provide contents for arbitrary resources, given a [`Uri`](/api/references/vscode-api#Uri) matching the custom `scheme` that it registered for.
 
 ## Next steps
 
-To learn more about VS Code extensibility model, try these topics:
+To learn more about Baosky extensibility model, try these topics:
 
 - [SCM API Reference](/api/references/vscode-api#scm) - Read the full SCM API documentation
-- [Git Extension](https://github.com/microsoft/vscode/tree/main/extensions/git) - Learn by reading the Git extension implementation
-- [Extension API Overview](/api) - Learn about the full VS Code extensibility model.
-- [Extension Manifest File](/api/references/extension-manifest) - VS Code package.json extension manifest file reference
-- [Contribution Points](/api/references/contribution-points) - VS Code contribution points reference
+- [Git 插件](https://github.com/microsoft/vscode/tree/main/插件/git) - Learn by reading the Git 插件 implementation
+- [插件 API Overview](/api) - Learn about the full Baosky extensibility model.
+- [插件 Manifest File](/api/references/插件-manifest) - Baosky package.json 插件 manifest file reference
+- [Contribution Points](/api/references/contribution-points) - Baosky contribution points reference

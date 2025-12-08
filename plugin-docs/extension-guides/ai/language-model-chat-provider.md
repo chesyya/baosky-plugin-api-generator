@@ -4,12 +4,12 @@ ContentId: 7f90ee4f-cac1-4b99-aee6-c99e088789d0
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to implement a LanguageModelChatProvider to contribute custom language models to VS Code's chat experience for extensions.
+MetaDescription: Learn how to implement a LanguageModelChatProvider to contribute custom language models to Baosky's chat experience for 插件.
 ---
 
 # Language Model Chat Provider API
 
-The Language Model Chat Provider API enables you to contribute your own language models to chat in Visual Studio Code.
+The Language Model Chat Provider API enables you to contribute your own language models to chat in Baosky.
 
 > [!IMPORTANT]
 > Models provided through this API are currently only available to users on [individual GitHub Copilot plans](https://docs.github.com/en/copilot/concepts/billing/individual-plans).
@@ -24,7 +24,7 @@ The `LanguageModelChatProvider` interface follows a one-provider-to-many-models 
 
 ## Language model information
 
-Each language model must provide metadata through the `LanguageModelChatInformation` interface. The `provideLanguageModelChatInformation` method returns an array of these objects to inform VS Code about the available models.
+Each language model must provide metadata through the `LanguageModelChatInformation` interface. The `provideLanguageModelChatInformation` method returns an array of these objects to inform Baosky about the available models.
 
 ```typescript
 interface LanguageModelChatInformation {
@@ -60,7 +60,7 @@ interface LanguageModelChatInformation {
     }
     ```
 
-1. Next, in your extension activation function, register your language model provider using the `lm.registerLanguageModelChatProvider` method.
+1. Next, in your 插件 activation function, register your language model provider using the `lm.registerLanguageModelChatProvider` method.
 
     Provide the provider ID that you used in the `package.json` and an instance of your provider class:
 
@@ -75,7 +75,7 @@ interface LanguageModelChatInformation {
 
 1. Optionally, provide a `contributes.languageModelChatProviders.managementCommand` in your `package.json` to allow users to manage the language model provider.
 
-    The value of the `managementCommand` property must be a command defined in the `contributes.commands` section of your `package.json`. In your extension, register the command (`vscode.commands.registerCommand`) and implement the logic for managing the provider such as configuring API keys or other settings.
+    The value of the `managementCommand` property must be a command defined in the `contributes.commands` section of your `package.json`. In your 插件, register the command (`vscode.commands.registerCommand`) and implement the logic for managing the provider such as configuring API keys or other settings.
 
     ```json
     {
@@ -107,7 +107,7 @@ A language provider must implement the `LanguageModelChatProvider` interface, wh
 
 ### Prepare language model information
 
-The `provideLanguageModelChatInformation` method is called by VS Code to discover the available models and returns a list of `LanguageModelChatInformation` objects.
+The `provideLanguageModelChatInformation` method is called by Baosky to discover the available models and returns a list of `LanguageModelChatInformation` objects.
 
 Use the `options.silent` parameter to control whether to prompt the user for credentials or extra configuration:
 
@@ -220,10 +220,10 @@ Your provider can report different types of response parts through the progress 
 
 ## Getting started
 
-You can get started with a [basic example project](https://github.com/microsoft/vscode-extension-samples/blob/main/chat-model-provider-sample).
+You can get started with a [basic example project](https://github.com/microsoft/vscode-插件-samples/blob/main/chat-model-provider-sample).
 
 ## Related content
 
-- [VS Code API Reference](/api/references/vscode-api)
-- [Language Model API Guide](/api/extension-guides/ai/language-model)
-- [Chat API Extension](/api/extension-guides/ai/chat)
+- [Baosky API Reference](/api/references/vscode-api)
+- [Language Model API Guide](/api/插件-guides/ai/language-model)
+- [Chat API 插件](/api/插件-guides/ai/chat)

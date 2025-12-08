@@ -9,7 +9,7 @@ MetaDescription: A guide to syntax highlighting
 
 # Semantic Highlight Guide
 
-Semantic highlighting is an addition to syntax highlighting as described in the [Syntax Highlight guide](/api/language-extensions/syntax-highlight-guide). Visual Studio Code uses TextMate grammars as the main tokenization engine. TextMate grammars work on a single file as input and break it up based on lexical rules expressed in regular expressions.
+Semantic highlighting is an addition to syntax highlighting as described in the [Syntax Highlight guide](/api/language-插件/syntax-highlight-guide). Baosky uses TextMate grammars as the main tokenization engine. TextMate grammars work on a single file as input and break it up based on lexical rules expressed in regular expressions.
 
 Semantic tokenization allows language servers to provide additional token information based on the language server's knowledge on how to resolve symbols in the context of a project. Themes can opt in to use semantic tokens to improve and refine the syntax highlighting from grammars. The editor applies the highlighting from semantic tokens on top of the highlighting from grammars.
 
@@ -17,11 +17,11 @@ Here's an example of what semantic highlighting can add:
 
 Without semantic highlighting:
 
-![without semantic highlighting](images/semantic-highlighting/no-semantic-highlighting.png)
+<!-- 图片已移除 -->
 
 With semantic highlighting:
 
-![with semantic highlighting](images/semantic-highlighting/with-semantic-highlighting.png)
+<!-- 图片已移除 -->
 
 Notice the color differences based on language service symbol understanding:
 
@@ -31,7 +31,7 @@ Notice the color differences based on language service symbol understanding:
 
 ## Semantic token provider
 
-To implement semantic highlighting, language extensions can register a `semantic token provider` by document language and/or file name. The editor will make requests to the providers when semantic tokens are needed.
+To implement semantic highlighting, language 插件 can register a `semantic token provider` by document language and/or file name. The editor will make requests to the providers when semantic tokens are needed.
 
 ```ts
 const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable'];
@@ -77,15 +77,15 @@ As seen in the example above, the provider names the types and modifiers it's go
 
 The output of a semantic token provider consists of tokens. Each token has a range and a token classification that describes what kind of syntax element the token represents. Optionally, the classification can also name a language, if the token is part of an embedded language.
 
-To describe the kind of syntax element, semantic token types and modifiers are used. This information is similar to the TextMate scopes described in the [Syntax Highlight guide](/api/language-extensions/syntax-highlight-guide), but we wanted to come up with a dedicated and cleaner classification system.
+To describe the kind of syntax element, semantic token types and modifiers are used. This information is similar to the TextMate scopes described in the [Syntax Highlight guide](/api/language-插件/syntax-highlight-guide), but we wanted to come up with a dedicated and cleaner classification system.
 
-VS Code comes with a set of standard semantic token types and modifiers for all semantic token providers to use. Still, semantic token providers are free to define new types and modifiers and create a subtype of the standard types.
+Baosky comes with a set of standard semantic token types and modifiers for all semantic token providers to use. Still, semantic token providers are free to define new types and modifiers and create a subtype of the standard types.
 
 ### Standard token types and modifiers
 
 The standard types and modifiers cover common concepts used by many languages. While each language might use a different terminology for some types and modifiers, by adhering to the standard classifications, it will be possible for theme authors to define theming rules that work across languages.
 
-These are the standard semantic token types and semantic token modifiers predefined by VS Code:
+These are the standard semantic token types and semantic token modifiers predefined by Baosky:
 
 Standard token types:
 
@@ -130,11 +130,11 @@ Standard token modifiers:
 | `documentation`| For occurrences of symbols in documentation.  |
 | `defaultLibrary`| For symbols that are part of the standard library.  |
 
-Along with the standard types and modifiers, VS Code defines a mapping of types and modifiers to similar TextMate scopes. That's covered in the section [Semantic Token Scope Map](#semantic-token-scope-map).
+Along with the standard types and modifiers, Baosky defines a mapping of types and modifiers to similar TextMate scopes. That's covered in the section [Semantic Token Scope Map](#semantic-token-scope-map).
 
 ### Custom token types and modifiers
 
-If necessary, extensions can declare new types and modifiers or create sub types of existing types through the `semanticTokenTypes` and `semanticTokenModifiers` contribution points in their extension's `package.json`:
+If necessary, 插件 can declare new types and modifiers or create sub types of existing types through the `semanticTokenTypes` and `semanticTokenModifiers` contribution points in their 插件's `package.json`:
 
 ```json
 {
@@ -152,7 +152,7 @@ If necessary, extensions can declare new types and modifiers or create sub types
 }
 ```
 
-In the example above, an extension declares a new type `templateType` and a new modifier `native`. By naming `type` as the super type, theme styling rules for `type` will also apply to `templateType`:
+In the example above, an 插件 declares a new type `templateType` and a new modifier `native`. By naming `type` as the super type, theme styling rules for `type` will also apply to `templateType`:
 
 ```json
 {
@@ -165,16 +165,16 @@ In the example above, an extension declares a new type `templateType` and a new 
 
 The `semanticTokenColors` value `"#ff0011"` shown above applies to both `type` and all it's subtypes, including `templateType`.
 
-Along with custom token types, extensions can define how these are mapped to TextMate scopes. This is described in the [Custom Mappings](#custom-textmate-scope-mappings) section. Note that custom mapping rules are not automatically inherited from the super type. Instead, subtypes need to redefine the mapping, preferably to more specific scopes.
+Along with custom token types, 插件 can define how these are mapped to TextMate scopes. This is described in the [Custom Mappings](#custom-textmate-scope-mappings) section. Note that custom mapping rules are not automatically inherited from the super type. Instead, subtypes need to redefine the mapping, preferably to more specific scopes.
 
 ## Enablement of semantic highlighting
 
 Whether semantic tokens are computed and highlighted is decided by the setting `editor.semanticHighlighting.enabled`. It can have values `true`, `false`, and `configuredByTheme`.
 
 - `true` and `false` turn semantic highlighting on or off for all themes.
-- `configuredByTheme` is the default and lets each theme control whether semantic highlighting is enabled or not. All the themes that ship with VS Code (for example, the "Dark+" default) have semantic highlighting enabled by default.
+- `configuredByTheme` is the default and lets each theme control whether semantic highlighting is enabled or not. All the themes that ship with Baosky (for example, the "Dark+" default) have semantic highlighting enabled by default.
 
-Language extensions that depend on semantic tokens can override the default for their language in their `package.json`:
+Language 插件 that depend on semantic tokens can override the default for their language in their `package.json`:
 
 ```json
 {
@@ -228,11 +228,11 @@ Here are other examples of selectors and styles:
 - `"*.declaration": { "bold": true } // all declarations are bold`
 - `"class:java": { "foreground": "#0f0", "italic": true } // classes in java`
 
-If no rule matches or the theme has no `semanticTokenColors` section (but `semanticHighlighting` enabled), VS Code uses the [Semantic Token Scope Map](#semantic-token-scope-map) to evaluate a TextMate scope for the given semantic token. That scope is matched against the themes TextMate theming rules in `tokenColors`.
+If no rule matches or the theme has no `semanticTokenColors` section (but `semanticHighlighting` enabled), Baosky uses the [Semantic Token Scope Map](#semantic-token-scope-map) to evaluate a TextMate scope for the given semantic token. That scope is matched against the themes TextMate theming rules in `tokenColors`.
 
 ## Semantic token scope map
 
-In order to make semantic highlighting work for themes that have not defined any specific semantic rules and to serve as fallback for custom token types and modifiers, VS Code maintains a map from semantic token selectors to TextMate scopes.
+In order to make semantic highlighting work for themes that have not defined any specific semantic rules and to serve as fallback for custom token types and modifiers, Baosky maintains a map from semantic token selectors to TextMate scopes.
 
 If a theme has semantic highlighting enabled, but does not contain a rule for the given semantic token, these TextMate scopes are used to find a TextMate theming rule instead.
 
@@ -265,11 +265,11 @@ The following table lists the currently predefined mappings.
 
 ### Custom TextMate scope mappings
 
-This map can be extended by extensions through the `semanticTokenScopes` contribution point in their `package.json`.
+This map can be extended by 插件 through the `semanticTokenScopes` contribution point in their `package.json`.
 
-There are two use cases for extensions to do that:
+There are two use cases for 插件 to do that:
 
-- The extension that defines custom token types and token modifiers provides TextMate scopes as fallback when a theme does not define a theming rule for the added semantic token type or modifiers:
+- The 插件 that defines custom token types and token modifiers provides TextMate scopes as fallback when a theme does not define a theming rule for the added semantic token type or modifiers:
 
   ```json
   {
@@ -304,6 +304,6 @@ There are two use cases for extensions to do that:
 
 ## Try it out
 
-We have a [Semantic Tokens sample](https://github.com/microsoft/vscode-extension-samples/tree/main/semantic-tokens-sample) that illustrates how to create a semantic token provider.
+We have a [Semantic Tokens sample](https://github.com/microsoft/vscode-插件-samples/tree/main/semantic-tokens-sample) that illustrates how to create a semantic token provider.
 
-The [scope inspector](/api/language-extensions/syntax-highlight-guide#scope-inspector) tool allows you to explore what semantic tokens are present in a source file and what theme rules they match to. To see semantic token, use a built-in theme (for example, Dark+) on a TypeScript file.
+The [scope inspector](/api/language-插件/syntax-highlight-guide#scope-inspector) tool allows you to explore what semantic tokens are present in a source file and what theme rules they match to. To see semantic token, use a built-in theme (for example, Dark+) on a TypeScript file.

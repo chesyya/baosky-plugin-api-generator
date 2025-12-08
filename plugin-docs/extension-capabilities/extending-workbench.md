@@ -4,46 +4,46 @@ ContentId: e0d5bd37-f020-4235-ad81-c977baaeb24f
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Explain how to extend Visual Studio Code's workbench area with custom UI components
+MetaDescription: Explain how to extend Baosky's workbench area with custom UI components
 ---
 
-# Extending Workbench
+# 扩展工作台
 
-"Workbench" refers to the overall Visual Studio Code UI that encompasses the following UI components:
+"工作台"是指包含以下 UI 组件的整体 Baosky UI：
 
-- Title Bar
-- Activity Bar
-- Side Bar
-- Panel
-- Editor Group
-- Status Bar
+- 标题栏
+- 活动栏
+- 侧边栏
+- 面板
+- 编辑器组
+- 状态栏
 
-VS Code provides various APIs that allow you to add your own components to the Workbench. For example, in the image below:
+Baosky 提供了各种 API，允许您向工作台添加自己的组件。例如，在下图中：
 
-![workbench-contribution](images/extending-workbench/workbench-contribution.png)
+<!-- 图片已移除 -->
 
-- Activity Bar: The [Azure App Service extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) adds a [View Container](#views-container)
-- Side Bar: The built-in [NPM extension](https://github.com/microsoft/vscode/tree/main/extensions/npm) adds a [Tree View](#tree-view) to the Explorer View
-- Editor Group: The built-in [Markdown extension](https://github.com/microsoft/vscode/tree/main/extensions/markdown-language-features) adds a [Webview](#webview) next to other editors in the Editor Group
-- Status Bar: The [VSCodeVim extension](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) adds a [Status Bar Item](#status-bar-item) in the Status Bar
+- 活动栏：[Azure App Service 插件](#)添加了一个[视图容器](#视图容器)
+- 侧边栏：内置 [NPM 插件](https://github.com/microsoft/vscode/tree/main/插件/npm)向资源管理器视图添加了一个[树视图](#树视图)
+- 编辑器组：内置 [Markdown 插件](https://github.com/microsoft/vscode/tree/main/插件/markdown-language-features)在编辑器组中的其他编辑器旁边添加了一个 [Webview](#webview)
+- 状态栏：[VSCodeVim 插件](#)在状态栏中添加了一个[状态栏项](#状态栏项)
 
-## Views Container
+## 视图容器
 
-With the [`contributes.viewsContainers`](/api/references/contribution-points#contributes.viewsContainers) Contribution Point, you can add new Views Containers that display next to the five built-in Views Containers. Learn more at the [Tree View](/api/extension-guides/tree-view) topic.
+使用 [`contributes.viewsContainers`](/api/references/contribution-points#contributes.viewsContainers) 贡献点，您可以添加显示在五个内置视图容器旁边的新视图容器。在[树视图](/api/插件-guides/tree-view)主题中了解更多信息。
 
-## Tree View
+## 树视图
 
-With the [`contributes.views`](/api/references/contribution-points#contributes.views) Contribution Point, you can add new Views that display in any of the View Containers. Learn more at the [Tree View](/api/extension-guides/tree-view) topic.
+使用 [`contributes.views`](/api/references/contribution-points#contributes.views) 贡献点，您可以添加显示在任何视图容器中的新视图。在[树视图](/api/插件-guides/tree-view)主题中了解更多信息。
 
 ## Webview
 
-Webviews are highly customizable views built with HTML/CSS/JavaScript. They display next to text editors in the Editor Group areas. Read more about Webview in the [Webview guide](/api/extension-guides/webview).
+Webview 是使用 HTML/CSS/JavaScript 构建的高度可自定义的视图。它们显示在编辑器组区域中的文本编辑器旁边。在 [Webview 指南](/api/插件-guides/webview)中阅读有关 Webview 的更多信息。
 
-## Status Bar Item
+## 状态栏项
 
-Extensions can create custom [`StatusBarItem`](/api/references/vscode-api#StatusBarItem) that display in the Status Bar. Status Bar Items can show text and icons and run commands on click events.
+插件可以创建在状态栏中显示的自定义 [`StatusBarItem`](/api/references/vscode-api#StatusBarItem)。状态栏项可以显示文本和图标，并在单击事件时运行命令。
 
-- Show text and icons
-- Run a command on click
+- 显示文本和图标
+- 在单击时运行命令
 
-You can learn more by reviewing the [Status Bar extension sample](https://github.com/microsoft/vscode-extension-samples/tree/main/statusbar-sample).
+您可以通过查看[状态栏插件示例](https://github.com/microsoft/vscode-插件-samples/tree/main/statusbar-sample)了解更多信息。

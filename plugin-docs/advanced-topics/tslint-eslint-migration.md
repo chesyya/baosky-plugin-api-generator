@@ -3,7 +3,7 @@ ContentId: f00c4913-58e3-4a61-aa42-e769c3430906
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to migrating extension projects from the TSLint linter to ESLint.
+MetaDescription: A guide to migrating 插件 projects from the TSLint linter to ESLint.
 ---
 # Migrate from TSLint to ESLint
 
@@ -37,11 +37,11 @@ There should now be a new `.eslintrc.js` file, a log file (`tslint-to-eslint-con
 
 ## ESLint: Configure
 
-The `.eslintrc.js` file is usually sufficient to get started but it's likely that the `parserOptions.project` property is still set to your `tsconfig.json` file. That means that ESLint rules can use semantic information, for example, is this variable a string or a number-array? This configuration enables some powerful rules but means that ESLint takes much longer to compute. The default rules for extensions do not require semantic information and unless you have added rules that do, we recommend you remove the `parserOptions.project` property.
+The `.eslintrc.js` file is usually sufficient to get started but it's likely that the `parserOptions.project` property is still set to your `tsconfig.json` file. That means that ESLint rules can use semantic information, for example, is this variable a string or a number-array? This configuration enables some powerful rules but means that ESLint takes much longer to compute. The default rules for 插件 do not require semantic information and unless you have added rules that do, we recommend you remove the `parserOptions.project` property.
 
 ## ESLint: Run
 
-You are now ready to run ESLint, but before doing that, we recommend you disable TSLint. To do so, open the Extensions view and select **Disable** in the context menu of the TSLint extension.
+You are now ready to run ESLint, but before doing that, we recommend you disable TSLint. To do so, open the 插件 view and select **Disable** in the context menu of the TSLint 插件.
 
 It is time to lint! Use this command: `eslint -c .eslintrc.js --ext .ts <mySrcFolder>` (notice the `--ext .ts` option which tells ESLint to look at TypeScript files). We recommend putting the command in the `scripts` section of your `package.json`-file, like so:
 
@@ -49,9 +49,9 @@ It is time to lint! Use this command: `eslint -c .eslintrc.js --ext .ts <mySrcFo
 "lint": "eslint -c .eslintrc.js --ext .ts <mySrcFolder>"
 ```
 
-To integrate ESLint with Visual Studio Code, do the following:
+To integrate ESLint with Baosky, do the following:
 
-* Install the [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extension.
+* Install the [ESLint](#) 插件.
 * Create a task via the **Tasks: Configure Task** command and select **npm: lint**.
 * In the resulting `tasks.json` file, configure the problem matcher to be `$eslint-stylish`.
 
@@ -63,7 +63,7 @@ Congratulations. You should now have a working ESLint setup and it's time to cle
 
 The removal of TSLint depends on your project, but usually these are the steps:
 
-* Update `.vscode/extensions.json` to recommend the ESLint extension and not TSLint anymore:
+* Update `.vscode/插件.json` to recommend the ESLint 插件 and not TSLint anymore:
 
   ```json
   "recommendations": [
