@@ -1,33 +1,35 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 9b10cda2-4eb0-4989-8f82-23a46b96c1bb
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to using Tree View in Baosky 插件 (plug-in).
+
+MetaDescription: Baosky 插件（plug-in）中使用树视图的指南。
 ---
 
-# Tree View API
+# 树视图 API
 
-The Tree View API allows 插件 to show content in the sidebar in Baosky. This content is structured as a tree and conforms to the style of the [built-in views](/docs/getstarted/userinterface#_views) of Baosky.
+树视图 API 允许插件在 Baosky 的侧边栏中显示内容。此内容结构化为树，并符合 Baosky [内置视图](/docs/getstarted/userinterface#_views) 的样式。
 
-For example, the built-in References Search View 插件 shows reference search results as a separate view.
+例如，内置的引用搜索视图插件将引用搜索结果显示为单独的视图。
 
 <!-- 图片已移除 -->
 
-The **Find All References** results are displayed in a **References: Results** Tree View, which is in the **References** View Container.
+**查找所有引用** 结果显示在 **引用：结果** 树视图中，该视图位于 **引用** 视图容器中。
 
-This guide teaches you how to write an 插件 that contributes Tree Views and View Containers to Baosky.
+本指南教您如何编写向 Baosky 贡献树视图和视图容器的插件。
 
-## Tree View API Basics
+## 树视图 API 基础
 
-To explain the Tree View API, we are going to build a sample 插件 called **Node Dependencies**. This 插件 will use a treeview to display all Node.js dependencies in the current folder. The steps for adding a treeview are to contribute the treeview in your `package.json`, create a `TreeDataProvider`, and register the `TreeDataProvider`. You can find the complete source code of this sample 插件 in the `tree-view-sample` in the [baosky-插件-samples](https://github.com/microsoft/baosky-插件-samples/tree/main/tree-view-sample/README.md) GitHub repository.
+为了解释树视图 API，我们将构建一个名为 **Node Dependencies** 的示例插件。此插件将使用树视图显示当前文件夹中的所有 Node.js 依赖项。添加树视图的步骤是在 `package.json` 中贡献树视图，创建 `TreeDataProvider`，并注册 `TreeDataProvider`。您可以在 [baosky-extension-samples](https://github.com/microsoft/baosky-extension-samples/tree/main/tree-view-sample/README.md) GitHub 存储库的 `tree-view-sample` 中找到此示例插件的完整源代码。
 
-### package.json Contribution
+### package.json 贡献
 
-First you have to let Baosky know that you are contributing a view, using the [contributes.views](/api/references/contribution-points#contributes.views) Contribution Point in `package.json`.
+首先，您必须让 Baosky 知道您正在贡献一个视图，这是使用 `package.json` 中的 [contributes.views](/api/references/contribution-points#contributes.views) 贡献点来完成的。
 
-Here's the `package.json` for the first version of our 插件:
+这是我们插件第一个版本的 `package.json`：
 
 ```json
 {
@@ -65,28 +67,28 @@ Here's the `package.json` for the first version of our 插件:
 }
 ```
 
-> **Note**: If your 插件 targets a Baosky version prior to 1.74, you must explicitly list `onView:nodeDependencies` in `activationEvents`.
+> **注意**：如果您的插件针对的是 1.74 之前的 Baosky 版本，则必须在 `activationEvents` 中显式列出 `onView:nodeDependencies`。
 
-You must specify an identifier and name for the view, and you can contribute to following locations:
+您必须为视图指定标识符和名称，并且您可以贡献到以下位置：
 
-- `explorer`: Explorer view in the Side Bar
-- `debug`: Run and Debug view in the Side Bar
-- `scm`: Source Control view in the Side Bar
-- `test`: Test explorer view in the Side Bar
-- [Custom View Containers](#view-container)
+- `explorer`: 侧边栏中的资源管理器视图
+- `debug`: 侧边栏中的运行和调试视图
+- `scm`: 侧边栏中的源代码管理视图
+- `test`: 侧边栏中的测试资源管理器视图
+- [自定义视图容器](#view-container)
 
-### Tree Data Provider
+### 树数据提供程序
 
-The second step is to provide data to the view you registered so that Baosky can display the data in the view. To do so, you should first implement the [TreeDataProvider](/api/references/baosky-api#TreeDataProvider). Our `TreeDataProvider` will provide node dependencies data, but you can have a data provider that provides other types of data.
+第二步是为您注册的视图提供数据，以便 Baosky 可以在视图中显示数据。为此，您应该首先实现 [TreeDataProvider](/api/references/baosky-api#TreeDataProvider)。我们的 `TreeDataProvider` 将提供节点依赖项数据，但您可以拥有提供其他类型数据的数据提供程序。
 
-There are two necessary methods in this API that you need to implement:
+此 API 中有两个必须实现的方法：
 
-- `getChildren(element?: T): ProviderResult<T[]>` - Implement this to return the children for the given `element` or root (if no element is passed).
-- `getTreeItem(element: T): TreeItem | Thenable<TreeItem>` - Implement this to return the UI representation ([TreeItem](/api/references/baosky-api#TreeItem)) of the element that gets displayed in the view.
+- `getChildren(element?: T): ProviderResult<T[]>` - 实现此方法以返回给定 `element` 的子项或根（如果未传递任何元素）。
+- `getTreeItem(element: T): TreeItem | Thenable<TreeItem>` - 实现此方法以返回在视图中显示的元素的 UI 表示 ([TreeItem](/api/references/baosky-api#TreeItem))。
 
-When the user opens the Tree View, the `getChildren` method will be called without an `element`. From there, your `TreeDataProvider` should return your top-level tree items. In our example, the `collapsibleState` of the top-level tree items is `TreeItemCollapsibleState.Collapsed`, meaning that the top-level tree items will show as collapsed. Setting the `collapsibleState` to `TreeItemCollapsibleState.Expanded` will cause tree items to show as expanded. Leaving the `collapsibleState` as its default of `TreeItemCollapsibleState.None` indicates that the tree item has no children. `getChildren` will not be called for tree items with a `collapsibleState` of `TreeItemCollapsibleState.None`.
+当用户打开树视图时，将调用 `getChildren` 方法而不带 `element`。从那里，您的 `TreeDataProvider` 应该返回您的顶层树项。在我们的示例中，顶层树项的 `collapsibleState` 为 `TreeItemCollapsibleState.Collapsed`，这意味着顶层树项将显示为折叠状态。将 `collapsibleState` 设置为 `TreeItemCollapsibleState.Expanded` 将导致树项显示为展开状态。将 `collapsibleState` 保持为其默认值 `TreeItemCollapsibleState.None` 表示树项没有子项。对于 `collapsibleState` 为 `TreeItemCollapsibleState.None` 的树项，不会调用 `getChildren`。
 
-Here is an example of a `TreeDataProvider` implementation that provides node dependencies data:
+以下是一个提供节点依赖项数据的 `TreeDataProvider` 实现示例：
 
 ```ts
 import * as vscode from 'vscode';
@@ -121,7 +123,7 @@ export class NodeDependenciesProvider implements vscode.TreeDataProvider<Depende
 
     }
 
-    /**
+    / **
      * Given the path to package.json, read all its dependencies and devDependencies.
      */
     private getDepsInPackageJson(packageJsonPath: string): Dependency[] {
@@ -178,13 +180,13 @@ class Dependency extends vscode.TreeItem {
 }
 ```
 
-### Registering the TreeDataProvider
+### 注册 TreeDataProvider
 
-The third step is to register the above data provider to your view.
+第三步是将上述数据提供程序注册到您的视图。
 
-This can be done in the following two ways:
+这可以通过以下两种方式完成：
 
-- `vscode.window.registerTreeDataProvider` - Register the tree data provider by providing the registered view ID and above data provider.
+- `vscode.window.registerTreeDataProvider` - 通过提供已注册的视图 ID 和上述数据提供程序来注册树数据提供程序。
 
     ```typescript
     const rootPath = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
@@ -192,23 +194,23 @@ This can be done in the following two ways:
     vscode.window.registerTreeDataProvider('nodeDependencies', new NodeDependenciesProvider(rootPath));
     ```
 
-- `vscode.window.createTreeView` - Create the Tree View by providing the registered view ID and above data provider. This will give access to the [TreeView](/api/references/baosky-api#TreeView), which you can use for performing other view operations. Use `createTreeView`, if you need the `TreeView` API.
+- `vscode.window.createTreeView` - 通过提供已注册的视图 ID 和上述数据提供程序来创建树视图。这将提供对 [TreeView](/api/references/baosky-api#TreeView) 的访问权限，您可以使用它来执行其他视图操作。如果您需要 `TreeView` API，请使用 `createTreeView`。
 
     ```typescript
     vscode.window.createTreeView('nodeDependencies', { treeDataProvider: new NodeDependenciesProvider(rootPath)});
     ```
 
-Here's the 插件 in action:
+这是运行中的插件：
 
 <!-- 图片已移除 -->
 
-### Updating Tree View content
+### 更新树视图内容
 
-Our node dependencies view is simple, and once the data is shown, it isn't updated. However, it would be useful to have a refresh button in the view and update the node dependencies view with the current contents of the `package.json`. To do this, we can use the `onDidChangeTreeData` event.
+我们的节点依赖项视图很简单，一旦数据显示出来，它就不会更新。但是，在视图中有一个刷新按钮并用 `package.json` 的当前内容更新节点依赖项视图将会很有用。为此，我们可以使用 `onDidChangeTreeData` 事件。
 
-- `onDidChangeTreeData?: Event<T | undefined | null | void>` - Implement this if your tree data can change and you want to update the treeview.
+- `onDidChangeTreeData?: Event<T | undefined | null | void>` - 如果您的树数据可能会更改并且您想要更新树视图，请实现此方法。
 
-Add the following to your `NodeDependenciesProvider`.
+将以下内容添加到您的 `NodeDependenciesProvider`。
 
 ```ts
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined | null | void> = new vscode.EventEmitter<Dependency | undefined | null | void>();
@@ -219,9 +221,9 @@ Add the following to your `NodeDependenciesProvider`.
   }
 ```
 
-Now we have a refresh method, but no one is calling it. We can add a command to call refresh.
+现在我们有一个刷新方法，但没有人调用它。我们可以添加一个命令来调用刷新。
 
-In the `contributes` section of your `package.json`, add:
+在 `package.json` 的 `contributes` 部分中，添加：
 
 ```json
     "commands": [
@@ -236,7 +238,7 @@ In the `contributes` section of your `package.json`, add:
     ]
 ```
 
-And register the command in your 插件 activation:
+并在您的插件激活中注册命令：
 
 ```ts
 import * as vscode from 'vscode';
@@ -251,9 +253,9 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-Now we have a command that will refresh the node dependencies view, but a button on the view would be even better. We already added an `icon` to the command, so it will show up with that icon when we add it to the view.
+现在我们有一个刷新节点依赖项视图的命令，但在视图上有一个按钮会更好。我们已经为命令添加了 `icon`，因此当我们将其添加到视图时，它将显示该图标。
 
-In the `contributes` section of your `package.json`, add:
+在 `package.json` 的 `contributes` 部分中，添加：
 
 ```json
 "menus": {
@@ -267,30 +269,30 @@ In the `contributes` section of your `package.json`, add:
 }
 ```
 
-## Activation
+## 激活
 
-It is important that your 插件 is activated only when user needs the functionality that your 插件 provides. In this case, you should consider activating your 插件 only when the user starts using the view. Baosky automatically does this for you when your 插件 declares a view contribution. Baosky emits an activationEvent `onView:${viewId}` (`onView:nodeDependencies` for the example above) when the user opens the view.
+重要的是，仅当用户需要您的插件提供的功能时才激活您的插件。在这种情况下，您应该考虑仅当用户开始使用视图时才激活您的插件。当您的插件声明视图贡献时，Baosky 会自动为您执行此操作。当用户打开视图时，Baosky 会发出激活事件 `onView:${viewId}`（对于上面的示例为 `onView:nodeDependencies`）。
 
-> **Note**: For Baosky versions prior to 1.74.0, you must explicitly register this activation event in `package.json` for Baosky to activate your 插件 on this view:
+> **注意**：对于 1.74.0 之前的 Baosky 版本，您必须在 `package.json` 中显式注册此激活事件，以便 Baosky 在此视图上激活您的插件：
 >```json
 >"activationEvents": [
 >        "onView:nodeDependencies",
 >],
 >```
 
-## View Container
+## 视图容器
 
-A View Container contains a list of views that are displayed in the Activity Bar or Panel along with the built-in View Containers. Examples of built-in View Containers are Source Control and Explorer.
+视图容器包含显示在活动栏或面板中的视图列表以及内置视图容器。内置视图容器的示例包括源代码管理和资源管理器。
 
 <!-- 图片已移除 -->
 
-To contribute a View Container, you should first register it using [contributes.viewsContainers](/api/references/contribution-points#contributes.viewsContainers) Contribution Point in `package.json`.
+要贡献视图容器，您应该首先使用 `package.json` 中的 [contributes.viewsContainers](/api/references/contribution-points#contributes.viewsContainers) 贡献点对其进行注册。
 
-You have to specify the following required fields:
+您必须指定以下必填字段：
 
-- `id` - The ID of the new view container you're creating.
-- `title` - The name that will show up at the top of the view container.
-- `icon` - An image that will be displayed for the view container when in the Activity Bar.
+- `id` - 您正在创建的新视图容器的 ID。
+- `title` - 将显示在视图容器顶部的名称。
+- `icon` - 在活动栏中时将为视图容器显示的图像。
 
 ```json
 "contributes": {
@@ -306,7 +308,7 @@ You have to specify the following required fields:
 }
 ```
 
-Alternatively, you could contribute this view to the panel by placing it under the `panel` node.
+或者，您可以将此视图放在 `panel` 节点下，将其贡献到面板。
 
 ```json
 "contributes": {
@@ -322,9 +324,9 @@ Alternatively, you could contribute this view to the panel by placing it under t
 }
 ```
 
-## Contributing views to View Containers
+## 将视图贡献给视图容器
 
-Once you've created a View Container, you can use the [contributes.views](/api/references/contribution-points#contributes.views) Contribution Point in `package.json`.
+一旦创建了视图容器，您就可以在 `package.json` 中使用 [contributes.views](/api/references/contribution-points#contributes.views) 贡献点。
 
 ```json
 "contributes": {
@@ -341,24 +343,24 @@ Once you've created a View Container, you can use the [contributes.views](/api/r
 }
 ```
 
-A view can also have an optional `visibility` property which can be set to `visible`, `collapsed`, or `hidden`. This property is only respected by Baosky the first time a workspace is opened with this view. After that, the visibility is set to whatever the user has chosen. If you have a view container with many views, or if your view will not be useful to every user of your 插件, consider setting the view the `collapsed` or `hidden`. A `hidden` view will appear in the view containers "Views" menu:
+视图还可以具有可选的 `visibility` 属性，可以将其设置为 `visible`、`collapsed` 或 `hidden`。仅当第一次使用此视图打开工作区时，Baosky 才会遵守此属性。之后，可见性设置为用户选择的任何内容。如果您的视图容器有许多视图，或者如果您的视图并非对插件的每个用户都有用，请考虑将视图设置为 `collapsed` 或 `hidden`。`hidden` 视图将出现在视图容器的“视图”菜单中：
 
 <!-- 图片已移除 -->
 
-## View Actions
+## 视图操作
 
-Actions are available as inline icons on your individual tree items, in tree item context menus, and at the top of your view in the view title. Actions are commands that you set to show up in these locations by adding contributions to your `package.json`.
+操作可用作单个树项上的内联图标、树项上下文菜单中以及视图标题顶部的图标。操作是您通过向 `package.json` 添加贡献来设置为在这些位置显示的命令。
 
-To contribute to these three places, you can use the following menu contribution points in your package.json:
+要贡献到这三个位置，您可以在 package.json 中使用以下菜单贡献点：
 
-- `view/title` - Location to show actions in the view title. Primary or inline actions use `"group": "navigation"` and rest are secondary actions, which are in `...` menu.
-- `view/item/context` - Location to show actions for the tree item. Inline actions use `"group": "inline"` and rest are secondary actions, which are in `...` menu.
+- `view/title` - 在视图标题中显示操作的位置。主要或内联操作使用 `"group": "navigation"`，其余是辅助操作，位于 `...` 菜单中。
+- `view/item/context` - 显示树项操作的位置。内联操作使用 `"group": "inline"`，其余是辅助操作，位于 `...` 菜单中。
 
-You can control the visibility of these actions using a [when clause](/api/references/when-clause-contexts).
+您可以使用 [when 子句](/api/references/when-clause-contexts) 控制这些操作的可见性。
 
 <!-- 图片已移除 -->
 
-Examples:
+示例：
 
 ```json
 "contributes": {
@@ -415,13 +417,13 @@ Examples:
 }
 ```
 
-By default, actions are ordered alphabetically. To specify a different ordering, add `@` followed by the order you want to the group. For example, `navigation@3` will cause the action to show up 3rd in the `navigation` group.
+默认情况下，操作按字母顺序排列。要指定不同的顺序，请添加 `@` 后跟您想要的组顺序。例如，`navigation@3` 将导致操作在 `navigation` 组中显示为第 3 个。
 
-You can further separate items in the `...` menu by creating different groups. These group names are arbitrary and are ordered alphabetically by group name.
+您可以通过创建不同的组来进一步分隔 `...` 菜单中的项目。这些组名是任意的，并按组名按字母顺序排序。
 
-**Note:** If you want to show an action for specific tree items, you can do so by defining the context of a tree item using `TreeItem.contextValue` and you can specify the context value for key `viewItem` in `when` expression.
+**注意：** 如果您想为特定的树项显示操作，您可以通过使用 `TreeItem.contextValue` 定义树项的上下文来实现，并且您可以在 `when` 表达式中为键 `viewItem` 指定上下文值。
 
-Examples:
+示例：
 
 ```json
 "contributes": {
@@ -436,9 +438,9 @@ Examples:
 }
 ```
 
-## Welcome content
+## 欢迎内容
 
-If your view can be empty, or if you want to add Welcome content to another 插件's empty view, you can contribute `viewsWelcome` content. An empty view is a view that has no `TreeView.message` and an empty tree.
+如果您的视图可以为空，或者如果您想将欢迎内容添加到另一个插件的空视图，您可以贡献 `viewsWelcome` 内容。空视图是指没有 `TreeView.message` 且树为空的视图。
 
 ```json
 "contributes": {
@@ -453,21 +455,21 @@ If your view can be empty, or if you want to add Welcome content to another 插�
 
 <!-- 图片已移除 -->
 
-Links are supported in Welcome content. By convention, a link on a line by itself is a button. Each Welcome content can also contain a `when` clause. For more examples, see the [built-in Git 插件](https://github.com/microsoft/baosky/tree/main/插件/git).
+欢迎内容中支持链接。按照惯例，单独一行的链接是一个按钮。每个欢迎内容还可以包含一个 `when` 子句。有关更多示例，请参阅 [内置 Git 插件](https://github.com/microsoft/baosky/tree/main/extensions/git)。
 
 ## TreeDataProvider
 
-插件 writers should register a [TreeDataProvider](/api/references/baosky-api#TreeDataProvider) programmatically to populate data in the view.
+插件编写者应以编程方式注册 [TreeDataProvider](/api/references/baosky-api#TreeDataProvider) 以在视图中填充数据。
 
 ```typescript
 vscode.window.registerTreeDataProvider('nodeDependencies', new DepNodeProvider());
 ```
 
-See [nodeDependencies.ts](https://github.com/microsoft/baosky-插件-samples/tree/main/tree-view-sample/src/nodeDependencies.ts) in the `tree-view-sample` for the implementation.
+有关实现，请参阅 `tree-view-sample` 中的 [nodeDependencies.ts](https://github.com/microsoft/baosky-extension-samples/tree/main/tree-view-sample/src/nodeDependencies.ts)。
 
 ## TreeView
 
-If you would like to perform some UI operations on the view programmatically, you can use `window.createTreeView` instead of `window.registerTreeDataProvider`. This will give access to the view, which you can use for performing view operations.
+如果您想以编程方式对视图执行某些 UI 操作，可以使用 `window.createTreeView` 而不是 `window.registerTreeDataProvider`。这将提供对视图的访问权限，您可以使用它来执行视图操作。
 
 ```typescript
 vscode.window.createTreeView('ftpExplorer', {
@@ -475,4 +477,4 @@ vscode.window.createTreeView('ftpExplorer', {
 });
 ```
 
-See [ftpExplorer.ts](https://github.com/microsoft/baosky-插件-samples/tree/main/tree-view-sample/src/ftpExplorer.ts) in the `tree-view-sample` for the implementation.
+有关实现，请参阅 `tree-view-sample` 中的 [ftpExplorer.ts](https://github.com/microsoft/baosky-extension-samples/tree/main/tree-view-sample/src/ftpExplorer.ts)。

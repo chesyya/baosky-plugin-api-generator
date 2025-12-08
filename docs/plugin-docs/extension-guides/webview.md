@@ -1,56 +1,58 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: adddd33e-2de6-4146-853b-34d0d7e6c1f1
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use the Webview API to create fully customizable views within Baosky.
+
+MetaDescription: 使用 Webview API 在 Baosky 中创建完全可自定义的视图。
 ---
 
 # Webview API
 
-The webview API allows 插件 to create fully customizable views within Baosky. For example, the built-in Markdown 插件 uses webviews to render Markdown previews. Webviews can also be used to build complex user interfaces beyond what Baosky's native APIs support.
+Webview API 允许插件在 Baosky 中创建完全可自定义的视图。例如，内置的 Markdown 插件使用 webview 来渲染 Markdown 预览。Webview 也可用于构建超出 Baosky 原生 API 支持范围的复杂用户界面。
 
-Think of a webview as an `iframe` within Baosky that your 插件 controls. A webview can render almost any HTML content in this frame, and it communicates with 插件 using message passing. This freedom makes webviews incredibly powerful, and opens up a whole new range of 插件 possibilities.
+可以将 webview 视为 Baosky 中由您的插件控制的 `iframe`。Webview 可以在此框架中渲染几乎任何 HTML 内容，并且它使用消息传递与插件进行通信。这种自由度使得 webview 非常强大，并开启了全新的插件可能性。
 
-Webviews are used in several Baosky APIs:
+Webview 用于多个 Baosky API 中：
 
-- With Webview Panels created using `createWebviewPanel`. In this case, Webview panels are shown in Baosky as distinct editors. This makes them useful for displaying custom UI and custom visualizations.
-- As the view for a [custom editor](/api/插件-guides/custom-editors). Custom editors allow 插件 to provide a custom UI for editing any file in the workspace. The custom editor API also lets your 插件 hook into editor events such as undo and redo, as well as file events such as save.
-- In [Webview views](/api/references/baosky-api#WebviewView) that are rendered in the sidebar or panel areas. See the [webview view sample 插件](https://github.com/microsoft/baosky-插件-samples/tree/main/webview-view-sample) for more details.
+- 使用 `createWebviewPanel` 创建的 Webview 面板。在这种情况下，Webview 面板在 Baosky 中显示为不同的编辑器。这使得它们对于显示自定义 UI 和自定义可视化非常有用。
+- 作为 [自定义编辑器](/api/extension-guides/custom-editors) 的视图。自定义编辑器允许插件为编辑工作区中的任何文件提供自定义 UI。自定义编辑器 API 还允许您的插件挂钩到编辑器事件（如撤消和重做）以及文件事件（如保存）。
+- 在侧边栏或面板区域中渲染的 [Webview 视图](/api/references/baosky-api#WebviewView)。有关更多详细信息，请参阅 [webview 视图示例插件](https://github.com/microsoft/baosky-extension-samples/tree/main/webview-view-sample)。
 
-This page focuses on the basic webview panel API, although almost everything covered here applies to the webviews used in custom editors and webview views as well. Even if you are more interested in those APIs, we recommend reading through this page first to familiarize yourself with the webview basics.
+本页主要关注基本的 webview 面板 API，尽管这里涵盖的几乎所有内容也适用于自定义编辑器和 webview 视图中使用的 webview。即使您对那些 API 更感兴趣，我们也建议您先阅读此页面以熟悉 webview 基础知识。
 
-## Links
+## 链接
 
-- [Webview sample](https://github.com/microsoft/baosky-插件-samples/blob/main/webview-sample/README.md)
-- [Custom Editors documentation](/api/插件-guides/custom-editors)
-- [Webview View sample](https://github.com/microsoft/baosky-插件-samples/tree/main/webview-view-sample)
+- [Webview 示例](https://github.com/microsoft/baosky-extension-samples/blob/main/webview-sample/README.md)
+- [自定义编辑器文档](/api/extension-guides/custom-editors)
+- [Webview 视图示例](https://github.com/microsoft/baosky-extension-samples/tree/main/webview-view-sample)
 
-### Baosky API Usage
+### Baosky API 使用
 
 - [`code`](/api/references/baosky-api#window.createWebviewPanel)
 - [`code`](/api/references/baosky-api#window.registerWebviewPanelSerializer)
 
-## Should I use a webview?
+## 我应该使用 webview 吗？
 
-Webviews are pretty amazing, but they should also be used sparingly and only when Baosky's native API is inadequate. Webviews are resource heavy and run in a separate context from normal 插件. A poorly designed webview can also easily feel out of place within Baosky.
+Webview 非常棒，但也应该谨慎使用，仅当 Baosky 的原生 API 不足时才使用。Webview 资源消耗大，并且在与普通插件分离的上下文中运行。设计不佳的 webview 也很容易在 Baosky 中显得格格不入。
 
-Before using a webview, please consider the following:
+在使用 webview 之前，请考虑以下事项：
 
-- Does this functionality really need to live within Baosky? Would it be better as a separate application or website?
+- 此功能真的需要存在于 Baosky 中吗？作为单独的应用程序或网站会更好吗？
 
-- Is a webview the only way to implement your feature? Can you use the regular Baosky APIs instead?
+- webview 是实现您功能的唯一方法吗？您可以使用常规 Baosky API 代替吗？
 
-- Will your webview add enough user value to justify its high resource cost?
+- 您的 webview 是否会增加足够的用户价值以证明其高昂的资源成本是合理的？
 
-Remember: Just because you can do something with webviews, doesn't mean you should. However, if you are confident that you need to use webviews, then this document is here to help. Let's get started.
+请记住：仅仅因为您可以使用 webview 做某事，并不意味着您应该这样做。但是，如果您确信需要使用 webview，那么本文档可以为您提供帮助。让我们开始吧。
 
-## Webviews API basics
+## Webview API 基础
 
-To explain the webview API, we are going to build a simple 插件 called **Cat Coding**. This 插件 will use a webview to show a gif of a cat writing some code (presumably in Baosky). As we work through the API, we'll continue adding functionality to the 插件, including a counter that keeps track of how many lines of source code our cat has written and notifications that inform the user when the cat introduces a bug.
+为了解释 webview API，我们将构建一个名为 **Cat Coding** 的简单插件。此插件将使用 webview 显示一只猫正在写代码（大概是用 Baosky）的 gif。随着我们通过 API 的学习，我们将继续向插件添加功能，包括一个跟踪猫写的源代码行数的计数器，以及当猫引入错误时通知用户的通知。
 
-Here's the `package.json` for the first version of the **Cat Coding** 插件. You can find the complete code for the example app [here](https://github.com/microsoft/baosky-插件-samples/blob/main/webview-sample/README.md). The first version of our 插件 [contributes a command](/api/references/contribution-points#contributes.commands) called `catCoding.start`. When a user invokes this command, we will show a simple webview with our cat in it. Users will be able to invoke this command from the **Command Palette** as **Cat Coding: Start new cat coding session** or even create a keybinding for it if they are so inclined.
+这是 **Cat Coding** 插件第一个版本的 `package.json`。您可以在 [此处](https://github.com/microsoft/baosky-extension-samples/blob/main/webview-sample/README.md) 找到示例应用程序的完整代码。我们插件的第一个版本 [贡献了一个命令](/api/references/contribution-points#contributes.commands)，名为 `catCoding.start`。当用户调用此命令时，我们将显示一个包含我们的猫的简单 webview。用户将能够从 **命令面板** 中作为 **Cat Coding: Start new cat coding session** 调用此命令，如果他们愿意，甚至可以为其创建键绑定。
 
 ```json
 {
@@ -87,9 +89,9 @@ Here's the `package.json` for the first version of the **Cat Coding** 插件. Yo
 }
 ```
 
-> **Note**: If your 插件 targets a Baosky version prior to 1.74, you must explicitly list `onCommand:catCoding.start` in `activationEvents`.
+> **注意**：如果您的插件针对的是 1.74 之前的 Baosky 版本，则必须在 `activationEvents` 中显式列出 `onCommand:catCoding.start`。
 
-Now let's implement the `catCoding.start` command. In our 插件's main file, we register the `catCoding.start` command and use it to show a basic webview:
+现在让我们实现 `catCoding.start` 命令。在我们插件的主文件中，我们注册 `catCoding.start` 命令并使用它来显示一个基本的 webview：
 
 ```ts
 import * as vscode from 'vscode';
@@ -109,11 +111,11 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-The `vscode.window.createWebviewPanel` function creates and shows a webview in the editor. Here is what you see if you try running the `catCoding.start` command in its current state:
+`vscode.window.createWebviewPanel` 函数在编辑器中创建并显示一个 webview。如果您尝试以当前状态运行 `catCoding.start` 命令，您将看到以下内容：
 
 <!-- 图片已移除 -->
 
-Our command opens a new webview panel with the correct title, but with no content! To add our cat to new panel, we also need to set the HTML content of the webview using `webview.html`:
+我们的命令打开了一个带有正确标题的新 webview 面板，但没有内容！要将我们的猫添加到新面板，我们还需要使用 `webview.html` 设置 webview 的 HTML 内容：
 
 ```ts
 import * as vscode from 'vscode';
@@ -150,17 +152,17 @@ function getWebviewContent() {
 }
 ```
 
-If you run the command again, now the webview looks like this:
+如果您再次运行该命令，现在的 webview 如下所示：
 
 <!-- 图片已移除 -->
 
-Progress!
+进步了！
 
-`webview.html` should always be a complete HTML document. HTML fragments or malformed HTML may cause unexpected behavior.
+`webview.html` 应始终是一个完整的 HTML 文档。HTML 片段或格式错误的 HTML 可能会导致意外行为。
 
-### Updating webview content
+### 更新 webview 内容
 
-`webview.html` can also update a webview's content after it has been created. Let's use this to make **Cat Coding** more dynamic by introducing a rotation of cats:
+`webview.html` 也可以在 webview 创建后更新其内容。让我们使用它来通过引入猫的轮换使 **Cat Coding** 更加动态：
 
 ```ts
 import * as vscode from 'vscode';
@@ -213,17 +215,17 @@ function getWebviewContent(cat: keyof typeof cats) {
 
 <!-- 图片已移除 -->
 
-Setting `webview.html` replaces the entire webview content, similar to reloading an iframe. This is important to remember once you start using scripts in a webview, since it means that setting `webview.html` also resets the script's state.
+设置 `webview.html` 会替换整个 webview 内容，类似于重新加载 iframe。一旦您开始在 webview 中使用脚本，记住这一点很重要，因为这意味着设置 `webview.html` 也会重置脚本的状态。
 
-The example above also uses `webview.title` to change the title of the document displayed in the editor. Setting the title does not cause the webview to be reloaded.
+上面的示例还使用 `webview.title` 来更改编辑器中显示的文档的标题。设置标题不会导致 webview 重新加载。
 
-### Lifecycle
+### 生命周期
 
-Webview panels are owned by the 插件 that creates them. The 插件 must hold onto the webview returned from `createWebviewPanel`. If your 插件 loses this reference, it cannot regain access to that webview again, even though the webview will continue to show in Baosky.
+Webview 面板归创建它们的插件所有。插件必须保留从 `createWebviewPanel` 返回的 webview。如果您的插件丢失了此引用，即使 webview 继续在 Baosky 中显示，它也无法再次获得对该 webview 的访问权限。
 
-As with text editors, a user can also close a webview panel at any time. When a webview panel is closed by the user, the webview itself is destroyed. Attempting to use a destroyed webview throws an exception. This means that the example above using `setInterval` actually has an important bug: if the user closes the panel, `setInterval` will continue to fire, which will try to update `panel.webview.html`, which of course will throw an exception. Cats hate exceptions. Let's fix this!
+与文本编辑器一样，用户也可以随时关闭 webview 面板。当用户关闭 webview 面板时，webview 本身将被销毁。尝试使用已销毁的 webview 会抛出异常。这意味着上面使用 `setInterval` 的示例实际上有一个重要的错误：如果用户关闭面板，`setInterval` 将继续触发，这将尝试更新 `panel.webview.html`，这当然会抛出异常。猫讨厌异常。让我们修复这个问题！
 
-The `onDidDispose` event is fired when a webview is destroyed. We can use this event to cancel further updates and clean up the webview's resources:
+`onDidDispose` 事件在 webview 被销毁时触发。我们可以使用此事件来取消进一步的更新并清理 webview 的资源：
 
 ```ts
 import * as vscode from 'vscode';
@@ -266,7 +268,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-插件 can also programmatically close webviews by calling `dispose()` on them. If, for example, we wanted to restrict our cat's workday to five seconds:
+插件还可以通过调用 `dispose()` 以编程方式关闭 webview。例如，如果我们想将猫的工作日限制为五秒：
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -297,19 +299,19 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-### Visibility and Moving
+### 可见性和移动
 
-When a webview panel is moved into a background tab, it becomes hidden. It is not destroyed however. Baosky will automatically restore the webview's content from `webview.html` when the panel is brought to the foreground again:
-
-<!-- 图片已移除 -->
-
-The `.visible` property tells you if the webview panel is currently visible or not.
-
-插件 can programmatically bring a webview panel to the foreground by calling `reveal()`. This method takes an optional target view column to show the panel in. A webview panel may only show in a single editor column at a time. Calling `reveal()` or dragging a webview panel to a new editor column moves the webview into that new column.
+当 webview 面板移至后台选项卡时，它将变为隐藏状态。然而，它并没有被销毁。当面板再次回到前台时，Baosky 将自动从 `webview.html` 恢复 webview 的内容：
 
 <!-- 图片已移除 -->
 
-Let's update our 插件 to only allow a single webview to exist at a time. If the panel is in the background, then the `catCoding.start` command will bring it to the foreground:
+`.visible` 属性告诉您 webview 面板当前是否可见。
+
+插件可以通过调用 `reveal()` 以编程方式将 webview 面板带到前台。此方法接受一个可选的目标视图列以在其中显示面板。一个 webview 面板一次只能在一个编辑器列中显示。调用 `reveal()` 或将 webview 面板拖到新的编辑器列会将 webview 移动到该新列中。
+
+<!-- 图片已移除 -->
+
+让我们更新我们的插件，使其一次只允许存在一个 webview。如果面板在后台，那么 `catCoding.start` 命令会将其带到前台：
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -349,11 +351,11 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-Here's the new 插件 in action:
+这是新的插件运行效果：
 
 <!-- 图片已移除 -->
 
-Whenever a webview's visibility changes, or when a webview is moved into a new column, the `onDidChangeViewState` event is fired. Our 插件 can use this event to change cats based on which column the webview is showing in:
+每当 webview 的可见性发生变化或 webview 移动到新列时，都会触发 `onDidChangeViewState` 事件。我们的插件可以使用此事件根据 webview 显示在哪一列来更改猫：
 
 ```ts
 const cats = {
@@ -406,35 +408,35 @@ function updateWebviewForCat(panel: vscode.WebviewPanel, catName: keyof typeof c
 
 <!-- 图片已移除 -->
 
-### Inspecting and debugging webviews
+### 检查和调试 webview
 
-The **Developer: Toggle Developer Tools** command opens a [Developer Tools](https://developer.chrome.com/docs/devtools/) window that you can use debug and inspect your webviews.
-
-<!-- 图片已移除 -->
-
-Note that if you are using a version of Baosky older than 1.56, or if you are trying to debug a webview that sets `enableFindWidget`, you must instead use the **Developer: Open Webview Developer Tools** command. This command opens a dedicated Developer Tools page for each webview instead of using a Developer Tools page that is shared by all webviews and the editor itself.
-
-From the Developer Tools, you can start inspecting the contents of your webview using the inspect tool located in the top left corner of the Developer Tools window:
+**开发人员：切换开发人员工具** (Developer: Toggle Developer Tools) 命令打开一个 [开发人员工具](https://developer.chrome.com/docs/devtools/) 窗口，您可以使用它来调试和检查您的 webview。
 
 <!-- 图片已移除 -->
 
-You can also view all of the errors and logs from your webview in the developer tools console:
+请注意，如果您使用的是早于 1.56 的 Baosky 版本，或者您试图调试设置了 `enableFindWidget` 的 webview，则必须改用 **开发人员：打开 Webview 开发人员工具** (Developer: Open Webview Developer Tools) 命令。此命令为每个 webview 打开一个专用的开发人员工具页面，而不是使用由所有 webview 和编辑器本身共享的开发人员工具页面。
+
+在开发人员工具中，您可以使用位于开发人员工具窗口左上角的检查工具开始检查 webview 的内容：
 
 <!-- 图片已移除 -->
 
-To evaluate an expression in the context of your webview, make sure to select the **active frame** environment from the dropdown in the top left corner of the Developer tools console panel:
+您还可以在开发人员工具控制台中查看 webview 中的所有错误和日志：
 
 <!-- 图片已移除 -->
 
-The **active frame** environment is where the webview scripts themselves are executed.
+要在 webview 的上下文中评估表达式，请确保从开发人员工具控制台面板左上角的下拉列表中选择 **active frame** 环境：
 
-In addition, the **Developer: Reload Webview** command reloads all active webviews. This can be helpful if you need to reset a webview's state, or if some webview content on disk has changed and you want the new content to be loaded.
+<!-- 图片已移除 -->
 
-## Loading local content
+**active frame** 环境是 webview 脚本本身执行的地方。
 
-Webviews run in isolated contexts that cannot directly access local resources. This is done for security reasons. This means that in order to load images, stylesheets, and other resources from your 插件, or to load any content from the user's current workspace, you must use the `Webview.asWebviewUri` function to convert a local `file:` URI into a special URI that Baosky can use to load a subset of local resources.
+此外，**开发人员：重新加载 Webview** (Developer: Reload Webview) 命令会重新加载所有活动的 webview。如果您需要重置 webview 的状态，或者磁盘上的某些 webview 内容已更改并且您希望加载新内容，这将很有帮助。
 
-Imagine that we want to start bundling the cat gifs into our 插件 rather than pulling them from Giphy. To do this, we first create a URI to the file on disk and then pass these URIs through the `asWebviewUri` function:
+## 加载本地内容
+
+Webview 在隔离的上下文中运行，无法直接访问本地资源。这是出于安全原因。这意味着为了从您的插件加载图像、样式表和其他资源，或者从用户的当前工作区加载任何内容，您必须使用 `Webview.asWebviewUri` 函数将本地 `file:` URI 转换为 Baosky 可用于加载本地资源子集的特殊 URI。
+
+假设我们要开始将猫的 gif 打包到我们的插件中，而不是从 Giphy 拉取它们。为此，我们首先创建一个指向磁盘上文件的 URI，然后通过 `asWebviewUri` 函数传递这些 URI：
 
 ```ts
 import * as vscode from 'vscode';
@@ -475,28 +477,28 @@ function getWebviewContent(catGifSrc: vscode.Uri) {
 }
 ```
 
-If we debug this code, we'd see that the actual value for `catGifSrc` is something like:
+如果我们调试此代码，我们会看到 `catGifSrc` 的实际值类似于：
 
 ```
 vscode-resource:/Users/toonces/projects/vscode-cat-coding/media/cat.gif
 ```
 
-Baosky understands this special URI and will use it to load our gif from the disk!
+Baosky 了解此特殊 URI，并将使用它从磁盘加载我们的 gif！
 
-By default, webviews can only access resources in the following locations:
+默认情况下，webview 只能访问以下位置的资源：
 
-- Within your 插件's install directory.
-- Within the user's currently active workspace.
+- 您的插件安装目录内。
+- 用户当前活动的工作区内。
 
-Use the `WebviewOptions.localResourceRoots` to allow access to additional local resources.
+使用 `WebviewOptions.localResourceRoots` 允许访问其他本地资源。
 
-You can also always use data URIs to embed resources directly within the webview.
+您也可以始终使用数据 URI 将资源直接嵌入到 webview 中。
 
-### Controlling access to local resources
+### 控制对本地资源的访问
 
-Webviews can control which resources can be loaded from the user's machine with `localResourceRoots` option. `localResourceRoots` defines a set of root URIs from which local content may be loaded.
+Webview 可以使用 `localResourceRoots` 选项控制可以从用户计算机加载哪些资源。`localResourceRoots` 定义了一组根 URI，可以从中加载本地内容。
 
-We can use `localResourceRoots` to restrict **Cat Coding** webviews to only load resources from a `media` directory in our 插件:
+我们可以使用 `localResourceRoots` 来限制 **Cat Coding** webview 仅加载我们插件中 `media` 目录的资源：
 
 ```ts
 import * as vscode from 'vscode';
@@ -523,19 +525,19 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-To disallow all local resources, just set `localResourceRoots` to `[]`.
+要禁止所有本地资源，只需将 `localResourceRoots` 设置为 `[]`。
 
-In general, webviews should be as restrictive as possible in loading local resources. However, keep in mind that `localResourceRoots` does not offer complete security protection on its own. Make sure your webview also follows [security best practices](#security), and add a [content security policy](#content-security-policy) to further restrict the content that can be loaded.
+通常，webview 在加载本地资源时应尽可能严格。但是，请记住，`localResourceRoots` 本身并不能提供完整的安全保护。确保您的 webview 也遵循 [安全最佳实践](#security)，并添加 [内容安全策略](#content-security-policy) 以进一步限制可以加载的内容。
 
-### Theming webview content
+### 设置 webview 内容的主题
 
-Webview can use CSS to change their appearance based on Baosky's current theme. Baosky groups themes into three categories, and adds a special class to the `body` element to indicate the current theme:
+Webview 可以使用 CSS 根据 Baosky 的当前主题更改其外观。Baosky 将主题分为三类，并向 `body` 元素添加一个特殊的类来指示当前主题：
 
-- `vscode-light` - Light themes.
-- `vscode-dark` - Dark themes.
-- `vscode-high-contrast` - High contrast themes.
+- `vscode-light` - 浅色主题。
+- `vscode-dark` - 深色主题。
+- `vscode-high-contrast` - 高对比度主题。
 
-The following CSS changes the text color of the webview based on the user's current theme:
+以下 CSS 根据用户的当前主题更改 webview 的文本颜色：
 
 ```css
 body.vscode-light {
@@ -551,9 +553,9 @@ body.vscode-high-contrast {
 }
 ```
 
-When developing a webview application, make sure that it works for the three types of themes. And always test your webview in high-contrast mode to make sure it will be usable by people with visual disabilities.
+在开发 webview 应用程序时，请确保它适用于这三种类型的主题。并始终在高对比度模式下测试您的 webview，以确保视力障碍人士可以使用它。
 
-Webviews can also access Baosky theme colors using [CSS variables](https://developer.mozilla.org/docs/Web/CSS/Using_CSS_variables). These variable names are prefixed with `vscode` and replace the `.` with `-`. For example `editor.foreground` becomes `var(--vscode-editor-foreground)`:
+Webview 还可以使用 [CSS 变量](https://developer.mozilla.org/docs/Web/CSS/Using_CSS_variables) 访问 Baosky 主题颜色。这些变量名称以 `vscode` 为前缀，并将 `.` 替换为 `-`。例如 `editor.foreground` 变为 `var(--vscode-editor-foreground)`：
 
 ```css
 code {
@@ -561,15 +563,15 @@ code {
 }
 ```
 
-Review the [Theme Color Reference](/api/references/theme-color) for the available theme variables. [An 插件](#) is available which provides IntelliSense suggestions for the variables.
+查看 [主题颜色参考](/api/references/theme-color) 以获取可用的主题变量。有一个可用的 [插件](#)，它为变量提供 IntelliSense 建议。
 
-The following font related variables are also defined:
+还定义了以下与字体相关的变量：
 
-- `--vscode-editor-font-family` - Editor font family (from the `editor.fontFamily` setting).
-- `--vscode-editor-font-weight` - Editor font weight (from the `editor.fontWeight` setting).
-- `--vscode-editor-font-size` - Editor font size (from the `editor.fontSize` setting).
+- `--vscode-editor-font-family` - 编辑器字体系列（来自 `editor.fontFamily` 设置）。
+- `--vscode-editor-font-weight` - 编辑器字体粗细（来自 `editor.fontWeight` 设置）。
+- `--vscode-editor-font-size` - 编辑器字体大小（来自 `editor.fontSize` 设置）。
 
-Finally, for special cases where you need to write CSS that targets a single theme, the body element of webviews has a data attribute called `vscode-theme-id` that stores the ID of the currently active theme. This lets you write theme-specific CSS for webviews:
+最后，对于您需要编写针对单个主题的 CSS 的特殊情况，webview 的 body 元素具有一个名为 `vscode-theme-id` 的数据属性，该属性存储当前活动主题的 ID。这使您可以为 webview 编写特定于主题的 CSS：
 
 ```css
 body[data-vscode-theme-id="One Dark Pro"] {
@@ -577,29 +579,29 @@ body[data-vscode-theme-id="One Dark Pro"] {
 }
 ```
 
-### Supported media formats
+### 支持的媒体格式
 
-Webviews support audio and video, however not every media codec or media file container type is supported.
+Webview 支持音频和视频，但并非支持所有媒体编解码器或媒体文件容器类型。
 
-The following audio formats can be used in Webviews:
+Webview 中可以使用以下音频格式：
 
 - Wav
 - Mp3
 - Ogg
 - Flac
 
-The following video formats can be used in webviews:
+Webview 中可以使用以下视频格式：
 
 - H.264
 - VP8
 
-For video files, make sure that both the video and audio track's media formats are supported. Many `.mp4` files for example use `H.264` for video and `AAC` audio. Baosky will be able to play the video part of the `mp4`, but since `AAC` audio is not supported there won't be any sound. Instead you need to use `mp3` for the audio track.
+对于视频文件，请确保视频和音频轨道的媒体格式均受支持。例如，许多 `.mp4` 文件使用 `H.264` 视频和 `AAC` 音频。Baosky 将能够播放 `mp4` 的视频部分，但由于不支持 `AAC` 音频，因此不会有声音。您需要为音频轨道使用 `mp3`。
 
-### Context menus
+### 上下文菜单
 
-Advanced webviews can customize the context menu that shows when a user right-clicks inside of a webview. This is done using a [contribution point](/api/references/contribution-points) similarly to Baosky's normal context menus, so custom menus fit right in with the rest of the editor. Webviews can also show custom context menus for different sections of the webview.
+高级 webview 可以自定义用户在 webview 内部右键单击时显示的上下文菜单。这是使用类似于 Baosky 常规上下文菜单的 [贡献点](/api/references/contribution-points) 完成的，因此自定义菜单非常适合编辑器的其余部分。Webview 还可以为 webview 的不同部分显示自定义上下文菜单。
 
-To add a new context menu item to your webview, first add a new entry in `menus` under the new `webview/context` section. Each contribution takes a `command` (which is also where the item's title comes from) and a `when` clause. The [when clause](/api/references/when-clause-contexts) should include `webviewId == 'YOUR_WEBVIEW_VIEW_TYPE'` to make sure the context menus only apply to your 插件's webviews:
+要将新的上下文菜单项添加到您的 webview，首先在新的 `webview/context` 部分下的 `menus` 中添加一个新条目。每个贡献都需要一个 `command`（这也是项目标题的来源）和一个 `when` 子句。[when 子句](/api/references/when-clause-contexts) 应包含 `webviewId == 'YOUR_WEBVIEW_VIEW_TYPE'`，以确保上下文菜单仅适用于您的插件的 webview：
 
 ```json
 "contributes": {
@@ -631,9 +633,9 @@ To add a new context menu item to your webview, first add a new entry in `menus`
 }
 ```
 
-Inside of the webview, you can also set the contexts for specific areas of the HTML using the `data-vscode-context` [data attribute](https://developer.mozilla.org/docs/Learn/HTML/Howto/Use_data_attributes) (or in JavaScript with `dataset.vscodeContext`). The `data-vscode-context` value is a JSON object that specifies the contexts to set when the user right-clicks on the element. The final context is determined by going from the document root to the element that was clicked.
+在 webview 内部，您还可以使用 `data-vscode-context` [数据属性](https://developer.mozilla.org/docs/Learn/HTML/Howto/Use_data_attributes)（或在 JavaScript 中使用 `dataset.vscodeContext`）设置 HTML 特定区域的上下文。`data-vscode-context` 值是一个 JSON 对象，指定用户右键单击元素时要设置的上下文。最终上下文是通过从文档根目录到被点击的元素确定的。
 
-Consider this HTML for example:
+考虑这个 HTML 示例：
 
 ```html
 <div class="main" data-vscode-context='{"webviewSection": "main", "mouseCount": 4}'>
@@ -643,17 +645,17 @@ Consider this HTML for example:
 </div>
 ```
 
-If the user right-clicks on the `textarea`, the following contexts will be set:
+如果用户右键单击 `textarea`，将设置以下上下文：
 
-* `webviewSection == 'editor'` - This overrides `webviewSection` from the parent element.
-* `mouseCount == 4` - This is inherited from the parent element.
-* `preventDefaultContextMenuItems == true` - This is a special context that hides the copy and paste entries that Baosky normally adds to webview context menus.
+* `webviewSection == 'editor'` - 这会覆盖父元素的 `webviewSection`。
+* `mouseCount == 4` - 这是从父元素继承的。
+* `preventDefaultContextMenuItems == true` - 这是一个特殊的上下文，用于隐藏 Baosky 通常添加到 webview 上下文菜单中的复制和粘贴条目。
 
-If the user right-clicks inside of the `<textarea>`, they will see:
+如果用户在 `<textarea>` 内部右键单击，他们将看到：
 
 <!-- 图片已移除 -->
 
-Sometimes it can be useful to show a menu on left/primary click. For example, to show a menu on a split button. You can do this by dispatching the `contextmenu` event in an `onClick` event:
+有时在左键/主键单击时显示菜单很有用。例如，在拆分按钮上显示菜单。您可以通过在 `onClick` 事件中分派 `contextmenu` 事件来执行此操作：
 
 ```html
 <button data-vscode-context='{"preventDefaultContextMenuItems": true }' onClick='((e) => {
@@ -666,11 +668,11 @@ Sometimes it can be useful to show a menu on left/primary click. For example, to
 <!-- 图片已移除 -->
 
 
-## Scripts and message passing
+## 脚本和消息传递
 
-Webviews are just like iframes, which means that they can also run scripts. JavaScript is disabled in webviews by default, but it can easily re-enable by passing in the `enableScripts: true` option.
+Webview 就像 iframe 一样，这意味着它们也可以运行脚本。默认情况下，webview 中禁用 JavaScript，但可以通过传入 `enableScripts: true` 选项轻松重新启用。
 
-Let's use a script to add a counter tracking the lines of source code our cat has written. Running a basic script is pretty simple, but note that this example is only for demonstration purposes. In practice, your webview should always disable inline scripts using a [content security policy](#content-security-policy):
+让我们使用一个脚本来添加一个计数器，跟踪我们的猫编写的源代码行数。运行基本脚本非常简单，但请注意，此示例仅用于演示目的。在实践中，您的 webview 应始终使用 [内容安全策略](#content-security-policy) 禁用内联脚本：
 
 ```ts
 import * as path from 'path';
@@ -721,15 +723,15 @@ function getWebviewContent() {
 
 <!-- 图片已移除 -->
 
-Wow! That's one productive cat.
+哇！真是一只多产的猫。
 
-Webview scripts can do just about anything that a script on a normal webpage can. Keep in mind though that webviews exist in their own context, so scripts in a webview do not have access to the Baosky API. That's where message passing comes in!
+Webview 脚本几乎可以做普通网页上脚本可以做的任何事情。但请记住，webview 存在于其自己的上下文中，因此 webview 中的脚本无法访问 Baosky API。这就是消息传递的用武之地！
 
-### Passing messages from an 插件 to a webview
+### 从插件向 webview 传递消息
 
-An 插件 can send data to its webviews using `webview.postMessage()`. This method sends any JSON serializable data to the webview. The message is received inside the webview through the standard `message` event.
+插件可以使用 `webview.postMessage()` 向其 webview 发送数据。此方法将任何 JSON 可序列化数据发送到 webview。消息在 webview 内部通过标准 `message` 事件接收。
 
-To demonstrate this, let's add a new command to **Cat Coding** that instructs the currently coding cat to refactor their code (thereby reducing the total number of lines). The new `catCoding.doRefactor` command use `postMessage` to send the instruction to the current webview, and `window.addEventListener('message', event => { ... })` inside the webview itself to handle the message:
+为了演示这一点，让我们向 **Cat Coding** 添加一个新命令，指示当前正在编码的猫重构其代码（从而减少总行数）。新的 `catCoding.doRefactor` 命令使用 `postMessage` 将指令发送到当前 webview，并在 webview 本身内部使用 `window.addEventListener('message', event => { ... })` 来处理消息：
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -815,11 +817,11 @@ function getWebviewContent() {
 
 <!-- 图片已移除 -->
 
-### Passing messages from a webview to an 插件
+### 从 webview 向插件传递消息
 
-Webviews can also pass messages back to their 插件. This is accomplished using a `postMessage` function on a special Baosky API object inside the webview. To access the Baosky API object, call `acquireVsCodeApi` inside the webview. This function can only be invoked once per session. You must hang onto the instance of the Baosky API returned by this method, and hand it out to any other functions that need to use it.
+Webview 也可以将消息传回其插件。这是通过在 webview 内部的特殊 Baosky API 对象上使用 `postMessage` 函数来实现的。要访问 Baosky API 对象，请在 webview 内部调用 `acquireVsCodeApi`。此函数每个会话只能调用一次。您必须保留此方法返回的 Baosky API 实例，并将其分发给任何其他需要使用它的函数。
 
-We can use the Baosky API and `postMessage` in our **Cat Coding** webview to alert the 插件 when our cat introduces a bug in their code:
+我们可以在 **Cat Coding** webview 中使用 Baosky API 和 `postMessage`，以便当我们的猫在其代码中引入错误时向插件发出警报：
 
 ```js
 export function activate(context: vscode.ExtensionContext) {
@@ -890,15 +892,15 @@ function getWebviewContent() {
 
 <!-- 图片已移除 -->
 
-For security reasons, you must keep the Baosky API object private and make sure it is never leaked into the global scope.
+出于安全原因，您必须将 Baosky API 对象保密，并确保其永远不会泄露到全局范围。
 
-### Using Web Workers
+### 使用 Web Workers
 
-[Web Workers](https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Using_web_workers) are supported inside of webviews but there are a few important restrictions to be aware of.
+[Web Workers](https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Using_web_workers) 在 webview 内部受支持，但有一些重要的限制需要注意。
 
-First off, workers can only be loaded using either a `data:` or `blob:` URI. You cannot directly load a worker from your 插件's folder.
+首先，worker 只能使用 `data:` 或 `blob:` URI 加载。您不能直接从您的插件文件夹加载 worker。
 
-If you do need to load worker code from a JavaScript file in your 插件, try using `fetch`:
+如果您确实需要从插件中的 JavaScript 文件加载 worker 代码，请尝试使用 `fetch`：
 
 ```js
 const workerSource = 'absolute/path/to/worker.js';
@@ -911,9 +913,9 @@ fetch(workerSource)
   });
 ```
 
-Worker scripts also do not support importing source code using `importScripts` or `import(...)`. If your worker loads code dynamically, try using a bundler such as [webpack](https://webpack.js.org) to package the worker script into a single file.
+Worker 脚本也不支持使用 `importScripts` 或 `import(...)` 导入源代码。如果您的 worker 动态加载代码，请尝试使用像 [webpack](https://webpack.js.org) 这样的打包器将 worker 脚本打包成单个文件。
 
-With `webpack`, you can use `LimitChunkCountPlugin` to force the compiled worker JavaScript to be a single file:
+使用 `webpack`，您可以使用 `LimitChunkCountPlugin` 强制将编译后的 worker JavaScript 变成单个文件：
 
 ```js
 const path = require('path');
@@ -934,19 +936,19 @@ module.exports = {
 };
 ```
 
-## Security
+## 安全性
 
-As with any webpage, when creating a webview, you must follow some basic security best practices.
+与任何网页一样，创建 webview 时，您必须遵循一些基本的安全最佳实践。
 
-### Limit capabilities
+### 限制功能
 
-A webview should have the minimum set of capabilities that it needs. For example, if your webview does not need to run scripts, do not set the `enableScripts: true`. If your webview does not need to load resources from the user's workspace, set `localResourceRoots` to `[vscode.Uri.file(extensionContext.extensionPath)]` or even `[]` to disallow access to all local resources.
+Webview 应具有其所需的最小功能集。例如，如果您的 webview 不需要运行脚本，请不要设置 `enableScripts: true`。如果您的 webview 不需要从用户的工作区加载资源，请将 `localResourceRoots` 设置为 `[vscode.Uri.file(extensionContext.extensionPath)]` 甚至 `[]` 以禁止访问所有本地资源。
 
-### Content security policy
+### 内容安全策略
 
-[Content security policies](https://developers.google.com/web/fundamentals/security/csp/) further restrict the content that can be loaded and executed in webviews. For example, a content security policy can make sure that only a list of allowed scripts can be run in the webview, or even tell the webview to only load images over `https`.
+[内容安全策略](https://developers.google.com/web/fundamentals/security/csp/) 进一步限制了可以在 webview 中加载和执行的内容。例如，内容安全策略可以确保只有允许的脚本列表才能在 webview 中运行，甚至告诉 webview 仅通过 `https` 加载图像。
 
-To add a content security policy, put a `<meta http-equiv="Content-Security-Policy">` directive at the top of the webview's `<head>`
+要添加内容安全策略，请在 webview 的 `<head>` 顶部放置 `<meta http-equiv="Content-Security-Policy">` 指令
 
 ```ts
 function getWebviewContent() {
@@ -968,7 +970,7 @@ function getWebviewContent() {
 }
 ```
 
-The policy `default-src 'none';` disallows all content. We can then turn back on the minimal amount of content that our 插件 needs to function. Here's a content security policy that allows loading local scripts and stylesheets, and loading images over `https`:
+策略 `default-src 'none';` 禁止所有内容。然后，我们可以重新打开我们的插件运行所需的最小量内容。这是一个允许加载本地脚本和样式表，并通过 `https` 加载图像的内容安全策略：
 
 ```html
 <meta
@@ -977,37 +979,37 @@ The policy `default-src 'none';` disallows all content. We can then turn back on
 />
 ```
 
-The `${webview.cspSource}` value is a placeholder for a value that comes from the webview object itself. See the [webview sample](https://github.com/microsoft/baosky-插件-samples/blob/main/webview-sample) for a complete example of how to use this value.
+`${webview.cspSource}` 值是一个占位符，用于来自 webview 对象本身的值。有关如何使用此值的完整示例，请参阅 [webview 示例](https://github.com/microsoft/baosky-extension-samples/blob/main/webview-sample)。
 
-This content security policy also implicitly disables inline scripts and styles. It is a best practice to extract all inline styles and scripts to external files so that they can be properly loaded without relaxing the content security policy.
+此内容安全策略还隐式禁用了内联脚本和样式。最佳做法是将所有内联样式和脚本提取到外部文件中，以便可以在不放宽内容安全策略的情况下正确加载它们。
 
-### Only load content over https
+### 仅通过 https 加载内容
 
-If your webview allows loading external resources, it is strongly recommended that you only allow these resources to be loaded over `https` and not over http. The example content security policy above already does this by only allowing images to be loaded over `https:`.
+如果您的 webview 允许加载外部资源，强烈建议您仅允许通过 `https` 加载这些资源，而不是通过 http。上面的示例内容安全策略已经通过仅允许通过 `https:` 加载图像来做到这一点。
 
-### Sanitize all user input
+### 清理所有用户输入
 
-Just as you would for a normal webpage, when constructing the HTML for a webview, you must sanitize all user input. Failing to properly sanitize input can allow content injections, which may open your users up to a security risk.
+就像普通网页一样，在为 webview 构造 HTML 时，必须清理所有用户输入。未能正确清理输入可能会允许内容注入，这可能会使用户面临安全风险。
 
-Example values that must be sanitized:
+必须清理的示例值：
 
-- File contents.
-- File and folder paths.
-- User and workspace settings.
+- 文件内容。
+- 文件和文件夹路径。
+- 用户和工作区设置。
 
-Consider using a helper library to construct your HTML strings, or at least ensure that all content from the user's workspace is properly sanitized.
+考虑使用辅助库来构造 HTML 字符串，或者至少确保来自用户工作区的所有内容都已正确清理。
 
-Never rely on sanitization alone for security. Make sure to follow the other security best practices, such as having a [content security policy](#content-security-policy) to minimize the impact of any potential content injections.
+永远不要仅仅依靠清理来保证安全。确保遵循其他安全最佳实践，例如拥有 [内容安全策略](#content-security-policy) 以尽量减少任何潜在内容注入的影响。
 
-## Persistence
+## 持久性
 
-In the standard webview [lifecycle](#lifecycle), webviews are created by `createWebviewPanel` and destroyed when the user closes them or when `.dispose()` is called. The contents of webviews however are created when the webview becomes visible and destroyed when the webview is moved into the background. Any state inside the webview will be lost when the webview is moved to a background tab.
+在标准 webview [生命周期](#lifecycle) 中，webview 由 `createWebviewPanel` 创建，并在用户关闭它们或调用 `.dispose()` 时销毁。然而，webview 的内容是在 webview 变为可见时创建的，并在 webview 移至后台时销毁。当 webview 移至后台选项卡时，webview 内的任何状态都将丢失。
 
-The best way to solve this is to make your webview stateless. Use [message passing](#passing-messages-from-a-webview-to-an-插件) to save off the webview's state and then restore the state when the webview becomes visible again.
+解决此问题的最佳方法是使您的 webview 无状态。使用 [消息传递](#passing-messages-from-a-webview-to-an-extension) 保存 webview 的状态，然后在 webview 再次变为可见时恢复状态。
 
-### getState and setState
+### getState 和 setState
 
-Scripts running inside a webview can use the `getState` and `setState` methods to save off and restore a JSON serializable state object. This state is persisted even after the webview content itself is destroyed when a webview panel becomes hidden. The state is destroyed when the webview panel is destroyed.
+在 webview 内部运行的脚本可以使用 `getState` 和 `setState` 方法来保存和恢复 JSON 可序列化状态对象。即使当 webview 面板隐藏导致 webview 内容本身被销毁后，此状态也会保留。当 webview 面板被销毁时，状态将被销毁。
 
 ```js
 // Inside a webview script
@@ -1027,13 +1029,13 @@ setInterval(() => {
 }, 100);
 ```
 
-`getState` and `setState` are the preferred way to persist state, as they have much lower performance overhead than `retainContextWhenHidden`.
+`getState` 和 `setState` 是持久化状态的首选方法，因为它们的性能开销比 `retainContextWhenHidden` 低得多。
 
-### Serialization
+### 序列化
 
-By implementing a `WebviewPanelSerializer`, your webviews can be automatically restored when Baosky restarts. Serialization builds on `getState` and `setState`, and is only enabled if your 插件 registers a `WebviewPanelSerializer` for your webviews.
+通过实现 `WebviewPanelSerializer`，您的 webview 可以在 Baosky 重新启动时自动恢复。序列化建立在 `getState` 和 `setState` 之上，并且仅当您的插件为您的 webview 注册了 `WebviewPanelSerializer` 时才启用。
 
-To make our coding cats persist across Baosky restarts, first add a `onWebviewPanel` activation event to the 插件's `package.json`:
+为了使我们的编码猫在 Baosky 重新启动后仍然存在，首先将 `onWebviewPanel` 激活事件添加到插件的 `package.json`：
 
 ```json
 "activationEvents": [
@@ -1042,9 +1044,9 @@ To make our coding cats persist across Baosky restarts, first add a `onWebviewPa
 ]
 ```
 
-This activation event ensures that our 插件 will be activated whenever Baosky needs to restore a webview with the viewType: `catCoding`.
+此激活事件确保每当 Baosky 需要恢复具有 viewType：`catCoding` 的 webview 时，我们的插件都会被激活。
 
-Then, in our 插件's `activate` method, call `registerWebviewPanelSerializer` to register a new `WebviewPanelSerializer`. The `WebviewPanelSerializer` is responsible for restoring the contents of the webview from its persisted state. This state is the JSON blob that the webview contents set using `setState`.
+然后，在插件的 `activate` 方法中，调用 `registerWebviewPanelSerializer` 注册一个新的 `WebviewPanelSerializer`。`WebviewPanelSerializer` 负责从持久化状态恢复 webview 的内容。此状态是 webview 内容使用 `setState` 设置的 JSON blob。
 
 ```ts
 export function activate(context: vscode.ExtensionContext) {
@@ -1068,13 +1070,13 @@ class CatCodingSerializer implements vscode.WebviewPanelSerializer {
 }
 ```
 
-Now if you restart Baosky with a cat coding panel open, the panel will be automatically restored in the same editor position.
+现在，如果您在打开猫编码面板的情况下重新启动 Baosky，该面板将自动恢复到相同的编辑器位置。
 
 ### retainContextWhenHidden
 
-For webviews with very complex UI or state that cannot be quickly saved and restored, you can instead use the `retainContextWhenHidden` option. This option makes a webview keep its content around but in a hidden state, even when the webview itself is no longer in the foreground.
+对于具有非常复杂的 UI 或无法快速保存和恢复的状态的 webview，您可以改用 `retainContextWhenHidden` 选项。此选项使 webview 保持其内容，但处于隐藏状态，即使 webview 本身不再处于前台也是如此。
 
-Although **Cat Coding** can hardly be said to have complex state, let's try enabling `retainContextWhenHidden` to see how the option changes a webview's behavior:
+虽然 **Cat Coding** 很难说具有复杂状态，但让我们尝试启用 `retainContextWhenHidden` 以查看该选项如何改变 webview 的行为：
 
 ```ts
 import * as vscode from 'vscode';
@@ -1123,17 +1125,17 @@ function getWebviewContent() {
 
 <!-- 图片已移除 -->
 
-Notice how the counter does not reset now when the webview is hidden and then restored. No extra code required! With `retainContextWhenHidden`, the webview acts similarly to a background tab in a web browser. Scripts and other dynamic content keep running even when the tab is not active or visible. You can also send messages to a hidden webview when `retainContextWhenHidden` is enabled.
+请注意，现在当 webview 隐藏然后恢复时，计数器不会重置。无需额外的代码！使用 `retainContextWhenHidden`，webview 的行为类似于 Web 浏览器中的后台选项卡。脚本和其他动态内容即使在选项卡不活动或不可见时也会继续运行。当启用 `retainContextWhenHidden` 时，您还可以向隐藏的 webview 发送消息。
 
-Although `retainContextWhenHidden` may be appealing, keep in mind that this has high memory overhead and should only be used when other persistence techniques will not work.
+尽管 `retainContextWhenHidden` 可能很吸引人，但请记住，这具有很高的内存开销，并且仅应在其他持久性技术不起作用时使用。
 
-## Accessibility
+## 辅助功能
 
-The class `vscode-using-screen-reader` will be added to your webview's main body in contexts where the user is operating Baosky with a screen reader. Additionally, the class `vscode-reduce-motion` will be added to the document's main body element in cases where the user has expressed a preference to reduce the amount of motion in the window. By observing these classes and adjusting your rendering accordingly, your webview content can better reflect the user's preferences.
+`vscode-using-screen-reader` 类将在用户使用屏幕阅读器操作 Baosky 的上下文中添加到 webview 的主体中。此外，在用户表示偏好减少窗口中的运动量的情况下，`vscode-reduce-motion` 类将添加到文档的主体元素中。通过观察这些类并相应地调整您的渲染，您的 webview 内容可以更好地反映用户的偏好。
 
-## Next steps
+## 下一步
 
-If you'd like to learn more about Baosky extensibility, try these topics:
+如果您想了解有关 Baosky 可扩展性的更多信息，请尝试以下主题：
 
-- [插件 API](/api) - Learn about the full Baosky 插件 API.
-- [插件 Capabilities](/api/插件-capabilities/overview) - Take a look at other ways to extend Baosky.
+- [插件 API](/api) - 了解完整的 Baosky 插件 API。
+- [插件功能](/api/extension-capabilities/overview) - 查看扩展 Baosky 的其他方法。

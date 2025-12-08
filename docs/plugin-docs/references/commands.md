@@ -1,531 +1,532 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: A010AEDF-EF37-406E-96F5-E129408FFDE1
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Baosky built-in commands reference.
+
+MetaDescription: Baosky 内置命令参考。
 ---
 
-# Built-in Commands
+# 内置命令手册
 
-This document lists a subset of Baosky commands that you might use with `vscode.commands.executeCommand` API.
+本文档精选了一些 Baosky 命令，您可以通过 `vscode.commands.executeCommand` API 来调用它们。
 
-Read the [Commands guide](/api/插件-guides/command) for how to use the commands API.
+关于如何使用命令 API，请参阅 [命令指南](/api/extension-guides/command)。
 
-The following is a sample of how to open a new folder in Baosky:
+以下示例展示了如何在 Baosky 中打开一个新文件夹：
 
 ```javascript
 let uri = Uri.file('/some/path/to/folder');
 let success = await commands.executeCommand('vscode.openFolder', uri);
 ```
 
->**Note**: You can review the full set of Baosky commands via the Keyboard Shortcuts editor **File** > **Preferences** > **Keyboard Shortcuts**. The Keyboard Shortcuts editor lists all commands built into Baosky or contributed by 插件, along with their keybindings and visibility when clauses.
+> **注意**：您可以通过键盘快捷方式编辑器（**文件** > **首选项** > **键盘快捷方式**）查看 Baosky 的所有命令。该编辑器列出了 Baosky 内置的以及由插件贡献的所有命令，同时还显示了它们的快捷键绑定和可见性 `when` 子句。
 
-## Commands
+## 命令列表
 
-`vscode.executeDataToNotebook` - Invoke notebook serializer
+`vscode.executeDataToNotebook` - 调用笔记本序列化器
 
-* _notebookType_ - A notebook type
-* _data_ - Bytes to convert to data
-* _(returns)_ - Notebook Data
+* _notebookType_ - 笔记本类型
+* _data_ - 需要转换的字节数据
+* _(返回值)_ - 笔记本数据 (Notebook Data)
 
-`vscode.executeNotebookToData` - Invoke notebook serializer
+`vscode.executeNotebookToData` - 调用笔记本序列化器
 
-* _notebookType_ - A notebook type
-* _NotebookData_ - Notebook data to convert to bytes
-* _(returns)_ - Bytes
+* _notebookType_ - 笔记本类型
+* _NotebookData_ - 需要转换为字节的笔记本数据
+* _(返回值)_ - 字节数据 (Bytes)
 
-`notebook.selectKernel` - Trigger kernel picker for specified notebook editor widget
+`notebook.selectKernel` - 为指定的笔记本编辑器小部件触发内核选择器
 
-* _options_ - Select kernel options
-* _(returns)_ - no result
+* _options_ - 选择内核的选项
+* _(返回值)_ - 无返回值
 
-`interactive.open` - Open interactive window and return notebook editor and input URI
+`interactive.open` - 打开交互式窗口并返回笔记本编辑器及输入 URI
 
-* _showOptions_ - Show Options
-* _resource_ - Interactive resource Uri
-* _controllerId_ - Notebook controller Id
-* _title_ - Interactive editor title
-* _(returns)_ - Notebook and input URI
+* _showOptions_ - 显示选项
+* _resource_ - 交互式资源 Uri
+* _controllerId_ - 笔记本控制器 Id
+* _title_ - 交互式编辑器标题
+* _(返回值)_ - 笔记本和输入 URI
 
-`vscode.editorChat.start` - Invoke a new editor chat session
+`vscode.editorChat.start` - 启动新的编辑器聊天会话
 
-* _Run arguments_ -
-* _(returns)_ - no result
+* _Run arguments_ - 运行参数
+* _(返回值)_ - 无返回值
 
-`vscode.executeDocumentHighlights` - Execute document highlight provider.
+`vscode.executeDocumentHighlights` - 执行文档高亮提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of DocumentHighlight-instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 DocumentHighlight 实例数组。
 
-`vscode.executeDocumentSymbolProvider` - Execute document symbol provider.
+`vscode.executeDocumentSymbolProvider` - 执行文档符号提供程序。
 
-* _uri_ - Uri of a text document
-* _(returns)_ - A promise that resolves to an array of SymbolInformation and DocumentSymbol instances.
+* _uri_ - 文本文档的 Uri
+* _(返回值)_ - 一个 Promise，解析为 SymbolInformation 和 DocumentSymbol 实例数组。
 
-`vscode.executeFormatDocumentProvider` - Execute document format provider.
+`vscode.executeFormatDocumentProvider` - 执行文档格式化提供程序。
 
-* _uri_ - Uri of a text document
-* _options_ - Formatting options
-* _(returns)_ - A promise that resolves to an array of TextEdits.
+* _uri_ - 文本文档的 Uri
+* _options_ - 格式化选项
+* _(返回值)_ - 一个 Promise，解析为 TextEdits 数组。
 
-`vscode.executeFormatRangeProvider` - Execute range format provider.
+`vscode.executeFormatRangeProvider` - 执行范围格式化提供程序。
 
-* _uri_ - Uri of a text document
-* _range_ - A range in a text document
-* _options_ - Formatting options
-* _(returns)_ - A promise that resolves to an array of TextEdits.
+* _uri_ - 文本文档的 Uri
+* _range_ - 文本文档中的范围
+* _options_ - 格式化选项
+* _(返回值)_ - 一个 Promise，解析为 TextEdits 数组。
 
-`vscode.executeFormatOnTypeProvider` - Execute format on type provider.
+`vscode.executeFormatOnTypeProvider` - 执行输入时格式化提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _ch_ - Trigger character
-* _options_ - Formatting options
-* _(returns)_ - A promise that resolves to an array of TextEdits.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _ch_ - 触发字符
+* _options_ - 格式化选项
+* _(返回值)_ - 一个 Promise，解析为 TextEdits 数组。
 
-`vscode.executeDefinitionProvider` - Execute all definition providers.
+`vscode.executeDefinitionProvider` - 执行所有定义提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Location or LocationLink instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Location 或 LocationLink 实例数组。
 
-`vscode.executeTypeDefinitionProvider` - Execute all type definition providers.
+`vscode.executeTypeDefinitionProvider` - 执行所有类型定义提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Location or LocationLink instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Location 或 LocationLink 实例数组。
 
-`vscode.executeDeclarationProvider` - Execute all declaration providers.
+`vscode.executeDeclarationProvider` - 执行所有声明提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Location or LocationLink instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Location 或 LocationLink 实例数组。
 
-`vscode.executeImplementationProvider` - Execute all implementation providers.
+`vscode.executeImplementationProvider` - 执行所有实现提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Location or LocationLink instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Location 或 LocationLink 实例数组。
 
-`vscode.executeReferenceProvider` - Execute all reference providers.
+`vscode.executeReferenceProvider` - 执行所有引用提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Location-instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Location 实例数组。
 
-`vscode.executeHoverProvider` - Execute all hover providers.
+`vscode.executeHoverProvider` - 执行所有悬停提示提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of Hover-instances.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 Hover 实例数组。
 
-`vscode.executeSelectionRangeProvider` - Execute selection range provider.
+`vscode.executeSelectionRangeProvider` - 执行选择范围提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of ranges.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 ranges 数组。
 
-`vscode.executeWorkspaceSymbolProvider` - Execute all workspace symbol providers.
+`vscode.executeWorkspaceSymbolProvider` - 执行所有工作区符号提供程序。
 
-* _query_ - Search string
-* _(returns)_ - A promise that resolves to an array of SymbolInformation-instances.
+* _query_ - 搜索字符串
+* _(返回值)_ - 一个 Promise，解析为 SymbolInformation 实例数组。
 
-`vscode.prepareCallHierarchy` - Prepare call hierarchy at a position inside a document
+`vscode.prepareCallHierarchy` - 在文档内的某个位置准备调用层次结构
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of CallHierarchyItem-instances
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 CallHierarchyItem 实例数组
 
-`vscode.provideIncomingCalls` - Compute incoming calls for an item
+`vscode.provideIncomingCalls` - 计算某一项的传入调用
 
-* _item_ - A call hierarchy item
-* _(returns)_ - A promise that resolves to an array of CallHierarchyIncomingCall-instances
+* _item_ - 调用层次结构项
+* _(返回值)_ - 一个 Promise，解析为 CallHierarchyIncomingCall 实例数组
 
-`vscode.provideOutgoingCalls` - Compute outgoing calls for an item
+`vscode.provideOutgoingCalls` - 计算某一项的传出调用
 
-* _item_ - A call hierarchy item
-* _(returns)_ - A promise that resolves to an array of CallHierarchyOutgoingCall-instances
+* _item_ - 调用层次结构项
+* _(返回值)_ - 一个 Promise，解析为 CallHierarchyOutgoingCall 实例数组
 
-`vscode.prepareRename` - Execute the prepareRename of rename provider.
+`vscode.prepareRename` - 执行重命名提供程序的准备重命名操作。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to a range and placeholder text.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为范围和占位符文本。
 
-`vscode.executeDocumentRenameProvider` - Execute rename provider.
+`vscode.executeDocumentRenameProvider` - 执行重命名提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _newName_ - The new symbol name
-* _(returns)_ - A promise that resolves to a WorkspaceEdit.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _newName_ - 新的符号名称
+* _(返回值)_ - 一个 Promise，解析为 WorkspaceEdit。
 
-`vscode.executeLinkProvider` - Execute document link provider.
+`vscode.executeLinkProvider` - 执行文档链接提供程序。
 
-* _uri_ - Uri of a text document
-* _linkResolveCount_ - (optional) Number of links that should be resolved, only when links are unresolved.
-* _(returns)_ - A promise that resolves to an array of DocumentLink-instances.
+* _uri_ - 文本文档的 Uri
+* _linkResolveCount_ - (可选) 需要解析的链接数量，仅当链接未解析时使用。
+* _(返回值)_ - 一个 Promise，解析为 DocumentLink 实例数组。
 
-`vscode.provideDocumentSemanticTokensLegend` - Provide semantic tokens legend for a document
+`vscode.provideDocumentSemanticTokensLegend` - 为文档提供语义标记图例
 
-* _uri_ - Uri of a text document
-* _(returns)_ - A promise that resolves to SemanticTokensLegend.
+* _uri_ - 文本文档的 Uri
+* _(返回值)_ - 一个 Promise，解析为 SemanticTokensLegend。
 
-`vscode.provideDocumentSemanticTokens` - Provide semantic tokens for a document
+`vscode.provideDocumentSemanticTokens` - 为文档提供语义标记
 
-* _uri_ - Uri of a text document
-* _(returns)_ - A promise that resolves to SemanticTokens.
+* _uri_ - 文本文档的 Uri
+* _(返回值)_ - 一个 Promise，解析为 SemanticTokens。
 
-`vscode.provideDocumentRangeSemanticTokensLegend` - Provide semantic tokens legend for a document range
+`vscode.provideDocumentRangeSemanticTokensLegend` - 为文档范围提供语义标记图例
 
-* _uri_ - Uri of a text document
-* _range_ - (optional) A range in a text document
-* _(returns)_ - A promise that resolves to SemanticTokensLegend.
+* _uri_ - 文本文档的 Uri
+* _range_ - (可选) 文本文档中的范围
+* _(返回值)_ - 一个 Promise，解析为 SemanticTokensLegend。
 
-`vscode.provideDocumentRangeSemanticTokens` - Provide semantic tokens for a document range
+`vscode.provideDocumentRangeSemanticTokens` - 为文档范围提供语义标记
 
-* _uri_ - Uri of a text document
-* _range_ - A range in a text document
-* _(returns)_ - A promise that resolves to SemanticTokens.
+* _uri_ - 文本文档的 Uri
+* _range_ - 文本文档中的范围
+* _(返回值)_ - 一个 Promise，解析为 SemanticTokens。
 
-`vscode.executeCompletionItemProvider` - Execute completion item provider.
+`vscode.executeCompletionItemProvider` - 执行补全项提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _triggerCharacter_ - (optional) Trigger completion when the user types the character, like `,` or `(`
-* _itemResolveCount_ - (optional) Number of completions to resolve (too large numbers slow down completions)
-* _(returns)_ - A promise that resolves to a CompletionList-instance.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _triggerCharacter_ - (可选) 触发补全的字符，例如 `,` 或 `(`
+* _itemResolveCount_ - (可选) 要解析的补全项数量（数量过大会降低补全速度）
+* _(返回值)_ - 一个 Promise，解析为 CompletionList 实例。
 
-`vscode.executeSignatureHelpProvider` - Execute signature help provider.
+`vscode.executeSignatureHelpProvider` - 执行签名帮助提供程序。
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _triggerCharacter_ - (optional) Trigger signature help when the user types the character, like `,` or `(`
-* _(returns)_ - A promise that resolves to SignatureHelp.
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _triggerCharacter_ - (可选) 触发签名帮助的字符，例如 `,` 或 `(`
+* _(返回值)_ - 一个 Promise，解析为 SignatureHelp。
 
-`vscode.executeCodeLensProvider` - Execute code lens provider.
+`vscode.executeCodeLensProvider` - 执行 Code Lens 提供程序。
 
-* _uri_ - Uri of a text document
-* _itemResolveCount_ - (optional) Number of lenses that should be resolved and returned. Will only return resolved lenses, will impact performance
-* _(returns)_ - A promise that resolves to an array of CodeLens-instances.
+* _uri_ - 文本文档的 Uri
+* _itemResolveCount_ - (可选) 应解析并返回的 lens 数量。仅返回已解析的 lens，会影响性能
+* _(返回值)_ - 一个 Promise，解析为 CodeLens 实例数组。
 
-`vscode.executeCodeActionProvider` - Execute code action provider.
+`vscode.executeCodeActionProvider` - 执行代码操作提供程序。
 
-* _uri_ - Uri of a text document
-* _rangeOrSelection_ - Range in a text document. Some refactoring provider requires Selection object.
-* _kind_ - (optional) Code action kind to return code actions for
-* _itemResolveCount_ - (optional) Number of code actions to resolve (too large numbers slow down code actions)
-* _(returns)_ - A promise that resolves to an array of Command-instances.
+* _uri_ - 文本文档的 Uri
+* _rangeOrSelection_ - 文本文档中的范围。某些重构提供程序需要 Selection 对象。
+* _kind_ - (可选) 要返回的代码操作类型
+* _itemResolveCount_ - (可选) 要解析的代码操作数量（数量过大会降低代码操作速度）
+* _(返回值)_ - 一个 Promise，解析为 Command 实例数组。
 
-`vscode.executeDocumentColorProvider` - Execute document color provider.
+`vscode.executeDocumentColorProvider` - 执行文档颜色提供程序。
 
-* _uri_ - Uri of a text document
-* _(returns)_ - A promise that resolves to an array of ColorInformation objects.
+* _uri_ - 文本文档的 Uri
+* _(返回值)_ - 一个 Promise，解析为 ColorInformation 对象数组。
 
-`vscode.executeColorPresentationProvider` - Execute color presentation provider.
+`vscode.executeColorPresentationProvider` - 执行颜色呈现提供程序。
 
-* _color_ - The color to show and insert
-* _context_ - Context object with uri and range
-* _(returns)_ - A promise that resolves to an array of ColorPresentation objects.
+* _color_ - 要显示和插入的颜色
+* _context_ - 包含 uri 和 range 的上下文对象
+* _(返回值)_ - 一个 Promise，解析为 ColorPresentation 对象数组。
 
-`vscode.executeInlayHintProvider` - Execute inlay hints provider
+`vscode.executeInlayHintProvider` - 执行内联提示提供程序
 
-* _uri_ - Uri of a text document
-* _range_ - A range in a text document
-* _(returns)_ - A promise that resolves to an array of Inlay objects
+* _uri_ - 文本文档的 Uri
+* _range_ - 文本文档中的范围
+* _(返回值)_ - 一个 Promise，解析为 Inlay 对象数组
 
-`vscode.executeFoldingRangeProvider` - Execute folding range provider
+`vscode.executeFoldingRangeProvider` - 执行折叠范围提供程序
 
-* _uri_ - Uri of a text document
-* _(returns)_ - A promise that resolves to an array of FoldingRange objects
+* _uri_ - 文本文档的 Uri
+* _(返回值)_ - 一个 Promise，解析为 FoldingRange 对象数组
 
-`vscode.resolveNotebookContentProviders` - Resolve Notebook Content Providers
+`vscode.resolveNotebookContentProviders` - 解析笔记本内容提供程序
 
-* _(returns)_ - A promise that resolves to an array of NotebookContentProvider static info objects.
+* _(返回值)_ - 一个 Promise，解析为 NotebookContentProvider 静态信息对象数组。
 
-`vscode.executeInlineValueProvider` - Execute inline value provider
+`vscode.executeInlineValueProvider` - 执行内联值提供程序
 
-* _uri_ - Uri of a text document
-* _range_ - A range in a text document
-* _context_ - An InlineValueContext
-* _(returns)_ - A promise that resolves to an array of InlineValue objects
+* _uri_ - 文本文档的 Uri
+* _range_ - 文本文档中的范围
+* _context_ - InlineValueContext 上下文
+* _(返回值)_ - 一个 Promise，解析为 InlineValue 对象数组
 
-`vscode.open` - Opens the provided resource in the editor. Can be a text or binary file, or an http(s) URL. If you need more control over the options for opening a text file, use `vscode.window.showTextDocument` instead.
+`vscode.open` - 在编辑器中打开提供的资源。可以是文本或二进制文件，或者是 http(s) URL。如果您需要更多控制打开文本文件的选项，请改用 `vscode.window.showTextDocument`。
 
-* _uri_ - Uri of a text or binary file, or an http(s) URL
-* _columnOrOptions_ - (optional) Either the column in which to open, or editor options, see `vscode.TextDocumentShowOptions`
-* _label_ - Editor label (optional)
-* _(returns)_ - no result
+* _uri_ - 文本或二进制文件，或 http(s) URL 的 Uri
+* _columnOrOptions_ - (可选) 打开的列，或编辑器选项，参见 `vscode.TextDocumentShowOptions`
+* _label_ - 编辑器标签 (可选)
+* _(返回值)_ - 无返回值
 
-`vscode.openWith` - Opens the provided resource with a specific editor.
+`vscode.openWith` - 使用特定编辑器打开提供的资源。
 
-* _resource_ - Resource to open
-* _viewId_ - Custom editor view id or 'default' to use Baosky's default editor
-* _columnOrOptions_ - (optional) Either the column in which to open or editor options, see baosky.TextDocumentShowOptions
-* _(returns)_ - no result
+* _resource_ - 要打开的资源
+* _viewId_ - 自定义编辑器视图 id 或 'default' 以使用 Baosky 的默认编辑器
+* _columnOrOptions_ - (可选) 打开的列或编辑器选项，参见 baosky.TextDocumentShowOptions
+* _(返回值)_ - 无返回值
 
-`vscode.diff` - Opens the provided resources in the diff editor to compare their contents.
+`vscode.diff` - 在差异编辑器中打开提供的资源以比较其内容。
 
-* _left_ - Left-hand side resource of the diff editor
-* _right_ - Right-hand side resource of the diff editor
-* _title_ - Human readable title for the diff editor
-* _options_ - (optional) Either the column in which to open, or editor options (see baosky.TextDocumentShowOptions)
+* _left_ - 差异编辑器的左侧资源
+* _right_ - 差异编辑器的右侧资源
+* _title_ - 差异编辑器的可读标题
+* _options_ - (可选) 打开的列，或编辑器选项 (参见 baosky.TextDocumentShowOptions)
 
-`vscode.changes` - Opens a list of resources in the changes editor to compare their contents.
+`vscode.changes` - 在变更编辑器中打开资源列表以比较其内容。
 
-* _title_ - Human readable title for the changes editor
-* _resourceList_ - List of resources to compare
+* _title_ - 变更编辑器的可读标题
+* _resourceList_ - 要比较的资源列表
 
-`vscode.prepareTypeHierarchy` - Prepare type hierarchy at a position inside a document
+`vscode.prepareTypeHierarchy` - 在文档内的某个位置准备类型层次结构
 
-* _uri_ - Uri of a text document
-* _position_ - A position in a text document
-* _(returns)_ - A promise that resolves to an array of TypeHierarchyItem-instances
+* _uri_ - 文本文档的 Uri
+* _position_ - 文本文档中的位置
+* _(返回值)_ - 一个 Promise，解析为 TypeHierarchyItem 实例数组
 
-`vscode.provideSupertypes` - Compute supertypes for an item
+`vscode.provideSupertypes` - 计算某一项的超类型
 
-* _item_ - A type hierarchy item
-* _(returns)_ - A promise that resolves to an array of TypeHierarchyItem-instances
+* _item_ - 类型层次结构项
+* _(返回值)_ - 一个 Promise，解析为 TypeHierarchyItem 实例数组
 
-`vscode.provideSubtypes` - Compute subtypes for an item
+`vscode.provideSubtypes` - 计算某一项的子类型
 
-* _item_ - A type hierarchy item
-* _(returns)_ - A promise that resolves to an array of TypeHierarchyItem-instances
+* _item_ - 类型层次结构项
+* _(返回值)_ - 一个 Promise，解析为 TypeHierarchyItem 实例数组
 
-`vscode.revealTestInExplorer` - Reveals a test instance in the explorer
+`vscode.revealTestInExplorer` - 在资源管理器中显示测试实例
 
-* _testItem_ - A Baosky TestItem.
-* _(returns)_ - no result
+* _testItem_ - Baosky TestItem。
+* _(返回值)_ - 无返回值
 
-`setContext` - Set a custom context key value that can be used in when clauses.
+`setContext` - 设置自定义上下文键值，可用于 when 子句。
 
-* _name_ - The context key name
-* _value_ - The context key value
-* _(returns)_ - no result
+* _name_ - 上下文键名称
+* _value_ - 上下文键值
+* _(返回值)_ - 无返回值
 
-`cursorMove` - Move cursor to a logical position in the view
+`cursorMove` - 将光标移动到视图中的逻辑位置
 
-* _Cursor move argument object_ - Property-value pairs that can be passed through this argument:
-  * 'to': A mandatory logical position value providing where to move the cursor.
+* _光标移动参数对象_ - 可以通过此参数传递的属性-值对：
+  * 'to': 强制性的逻辑位置值，指定光标移动的目的地。
     ```
     'left', 'right', 'up', 'down', 'prevBlankLine', 'nextBlankLine',
     'wrappedLineStart', 'wrappedLineEnd', 'wrappedLineColumnCenter'
     'wrappedLineFirstNonWhitespaceCharacter', 'wrappedLineLastNonWhitespaceCharacter'
     'viewPortTop', 'viewPortCenter', 'viewPortBottom', 'viewPortIfOutside'
     ```
-  * 'by': Unit to move. Default is computed based on 'to' value.
+  * 'by': 移动单位。默认基于 'to' 值计算。
     ```
     'line', 'wrappedLine', 'character', 'halfLine'
     ```
-  * 'value': Number of units to move. Default is '1'.
-  * 'select': If 'true' makes the selection. Default is 'false'.
+  * 'value': 移动的单位数量。默认为 '1'。
+  * 'select': 如果为 'true'，则进行选择。默认为 'false'。
 
-`editorScroll` - Scroll editor in the given direction
+`editorScroll` - 在给定方向上滚动编辑器
 
-* _Editor scroll argument object_ - Property-value pairs that can be passed through this argument:
-  * 'to': A mandatory direction value.
+* _编辑器滚动参数对象_ - 可以通过此参数传递的属性-值对：
+  * 'to': 强制性的方向值。
     ```
     'up', 'down'
     ```
-  * 'by': Unit to move. Default is computed based on 'to' value.
+  * 'by': 移动单位。默认基于 'to' 值计算。
     ```
     'line', 'wrappedLine', 'page', 'halfPage', 'editor'
     ```
-  * 'value': Number of units to move. Default is '1'.
-  * 'revealCursor': If 'true' reveals the cursor if it is outside view port.
+  * 'value': 移动的单位数量。默认为 '1'。
+  * 'revealCursor': 如果为 'true'，则在光标位于视口外时显示光标。
 
-`revealLine` - Reveal the given line at the given logical position
+`revealLine` - 在给定的逻辑位置显示给定的行
 
-* _Reveal line argument object_ - Property-value pairs that can be passed through this argument:
-  * 'lineNumber': A mandatory line number value.
-  * 'at': Logical position at which line has to be revealed.
+* _显示行参数对象_ - 可以通过此参数传递的属性-值对：
+  * 'lineNumber': 强制性的行号值。
+  * 'at': 行被显示的逻辑位置。
     ```
     'top', 'center', 'bottom'
     ```
 
-`editor.unfold` - Unfold the content in the editor
+`editor.unfold` - 展开编辑器中的内容
 
-* _Unfold editor argument_ - Property-value pairs that can be passed through this argument:
-  * 'levels': Number of levels to unfold. If not set, defaults to 1.
-  * 'direction': If 'up', unfold given number of levels up otherwise unfolds down.
-  * 'selectionLines': Array of the start lines (0-based) of the editor selections to apply the unfold action to. If not
-  set, the active selection(s) will be used.
+* _展开编辑器参数_ - 可以通过此参数传递的属性-值对：
+  * 'levels': 要展开的层级数。如果未设置，默认为 1。
+  * 'direction': 如果为 'up'，则向上展开给定数量的层级，否则向下展开。
+  * 'selectionLines': 应用展开操作的编辑器选择的起始行（从 0 开始）数组。如果未设置，将使用当前活动的选择。
 
-`editor.fold` - Fold the content in the editor
+`editor.fold` - 折叠编辑器中的内容
 
-* _Fold editor argument_ - Property-value pairs that can be passed through this argument:
-  * 'levels': Number of levels to fold.
-  * 'direction': If 'up', folds given number of levels up otherwise folds down.
-  * 'selectionLines': Array of the start lines (0-based) of the editor selections to apply the fold action to. If not set, the active selection(s) will be used.
-  If no levels or direction is set, folds the region at the locations or if already collapsed, the first uncollapsed parent instead.
+* _折叠编辑器参数_ - 可以通过此参数传递的属性-值对：
+  * 'levels': 要折叠的层级数。
+  * 'direction': 如果为 'up'，则向上折叠给定数量的层级，否则向下折叠。
+  * 'selectionLines': 应用折叠操作的编辑器选择的起始行（从 0 开始）数组。如果未设置，将使用当前活动的选择。
+  如果未设置 levels 或 direction，则在位置处折叠区域，或者如果已经折叠，则折叠第一个未折叠的父级。
 
-`editor.toggleFold` - Folds or unfolds the content in the editor depending on its current state
+`editor.toggleFold` - 根据当前状态折叠或展开编辑器中的内容
 
-`editor.actions.findWithArgs` - Open a new In-Editor Find Widget with specific options.
+`editor.actions.findWithArgs` - 打开具有特定选项的新编辑器内查找小部件。
 
-* searchString - String to prefill the find input
-* replaceString - String to prefill the replace input
-* isRegex - enable regex
-* preserveCase - try to keep the same case when replacing
-* findInSelection - restrict the find location to the current selection
-* matchWholeWord
-* isCaseSensitive
+* searchString - 用于预填充查找输入的字符串
+* replaceString - 用于预填充替换输入的字符串
+* isRegex - 启用正则表达式
+* preserveCase - 替换时尝试保留相同的大小写
+* findInSelection - 限制查找位置为当前选择
+* matchWholeWord - 全字匹配
+* isCaseSensitive - 区分大小写
 
-`editor.action.goToLocations` - Go to locations from a position in a file
+`editor.action.goToLocations` - 从文件中的位置跳转到位置
 
-* _uri_ - The text document in which to start
-* _position_ - The position at which to start
-* _locations_ - An array of locations.
-* _multiple_ - Define what to do when having multiple results, either `peek`, `gotoAndPeek`, or `goto
-* _noResultsMessage_ - Human readable message that shows when locations is empty.
+* _uri_ - 起始文本文档
+* _position_ - 起始位置
+* _locations_ - 位置数组。
+* _multiple_ - 定义有多个结果时要做什么，可以是 `peek`, `gotoAndPeek`, 或 `goto`
+* _noResultsMessage_ - 当位置为空时显示的可读消息。
 
-`editor.action.peekLocations` - Peek locations from a position in a file
+`editor.action.peekLocations` - 从文件中的位置快速查看位置
 
-* _uri_ - The text document in which to start
-* _position_ - The position at which to start
-* _locations_ - An array of locations.
-* _multiple_ - Define what to do when having multiple results, either `peek`, `gotoAndPeek`, or `goto
+* _uri_ - 起始文本文档
+* _position_ - 起始位置
+* _locations_ - 位置数组。
+* _multiple_ - 定义有多个结果时要做什么，可以是 `peek`, `gotoAndPeek`, 或 `goto`
 
-`workbench.action.quickOpen` - Quick access
+`workbench.action.quickOpen` - 快速访问
 
-* _prefix_ -
+* _prefix_ - 前缀
 
-`notebook.cell.toggleOutputs` - Toggle Outputs
+`notebook.cell.toggleOutputs` - 切换输出
 
-* _options_ - The cell range options
+* _options_ - 单元格范围选项
 
-`notebook.fold` - Fold Cell
+`notebook.fold` - 折叠单元格
 
-* _index_ - The cell index
+* _index_ - 单元格索引
 
-`notebook.unfold` - Unfold Cell
+`notebook.unfold` - 展开单元格
 
-* _index_ - The cell index
+* _index_ - 单元格索引
 
-`notebook.selectKernel` - Notebook Kernel Args
+`notebook.selectKernel` - 笔记本内核参数
 
-* _kernelInfo_ - The kernel info
+* _kernelInfo_ - 内核信息
 
-`notebook.cell.changeLanguage` - Change Cell Language
+`notebook.cell.changeLanguage` - 更改单元格语言
 
-* _range_ - The cell range
-* _language_ - The target cell language
+* _range_ - 单元格范围
+* _language_ - 目标单元格语言
 
-`notebook.execute` - Run All
+`notebook.execute` - 全部运行
 
-* _uri_ - The document uri
+* _uri_ - 文档 uri
 
-`notebook.cell.execute` - Execute Cell
+`notebook.cell.execute` - 执行单元格
 
-* _options_ - The cell range options
+* _options_ - 单元格范围选项
 
-`notebook.cell.executeAndFocusContainer` - Execute Cell and Focus Container
+`notebook.cell.executeAndFocusContainer` - 执行单元格并聚焦容器
 
-* _options_ - The cell range options
+* _options_ - 单元格范围选项
 
-`notebook.cell.cancelExecution` - Stop Cell Execution
+`notebook.cell.cancelExecution` - 停止单元格执行
 
-* _options_ - The cell range options
+* _options_ - 单元格范围选项
 
-`workbench.action.findInFiles` - Open a workspace search
+`workbench.action.findInFiles` - 打开工作区搜索
 
-* _A set of options for the search_ -
+* _A set of options for the search_ - 搜索的一组选项
 
-`_interactive.open` - Open Interactive Window
+`_interactive.open` - 打开交互式窗口
 
-* _showOptions_ - Show Options
-* _resource_ - Interactive resource Uri
-* _controllerId_ - Notebook controller Id
-* _title_ - Notebook editor title
+* _showOptions_ - 显示选项
+* _resource_ - 交互式资源 Uri
+* _controllerId_ - 笔记本控制器 Id
+* _title_ - 笔记本编辑器标题
 
-`interactive.execute` - Execute the Contents of the Input Box
+`interactive.execute` - 执行输入框的内容
 
-* _resource_ - Interactive resource Uri
+* _resource_ - 交互式资源 Uri
 
-`search.action.openNewEditor` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
+`search.action.openNewEditor` - 打开一个新的搜索编辑器。传递的参数可以包括像 `${relativeFileDirname}` 这样的变量。
 
-* _Open new Search Editor args_ -
+* _Open new Search Editor args_ - 打开新搜索编辑器参数
 
-`search.action.openEditor` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
+`search.action.openEditor` - 打开一个新的搜索编辑器。传递的参数可以包括像 `${relativeFileDirname}` 这样的变量。
 
-* _Open new Search Editor args_ -
+* _Open new Search Editor args_ - 打开新搜索编辑器参数
 
-`search.action.openNewEditorToSide` - Open a new search editor. Arguments passed can include variables like `${relativeFileDirname}`.
+`search.action.openNewEditorToSide` - 打开一个新的搜索编辑器。传递的参数可以包括像 `${relativeFileDirname}` 这样的变量。
 
-* _Open new Search Editor args_ -
+* _Open new Search Editor args_ - 打开新搜索编辑器参数
 
-`vscode.openFolder` - Open a folder or workspace in the current window or new window depending on the newWindow argument. Note that opening in the same window will shutdown the current 插件 host process and start a new one on the given folder/workspace unless the newWindow parameter is set to true.
+`vscode.openFolder` - 在当前窗口或新窗口中打开文件夹或工作区，具体取决于 newWindow 参数。请注意，除非 newWindow 参数设置为 true，否则在同一窗口中打开将关闭当前的插件主机进程并在给定的文件夹/工作区上启动一个新的进程。
 
-* _uri_ - (optional) Uri of the folder or workspace file to open. If not provided, a native dialog will ask the user for the folder
-* _options_ - (optional) Options. Object with the following properties: `forceNewWindow`: Whether to open the folder/workspace in a new window or the same. Defaults to opening in the same window. `forceReuseWindow`: Whether to force opening the folder/workspace in the same window.  Defaults to false. `noRecentEntry`: Whether the opened URI will appear in the 'Open Recent' list. Defaults to false. Note, for backward compatibility, options can also be of type boolean, representing the `forceNewWindow` setting.
+* _uri_ - (可选) 要打开的文件夹或工作区文件的 Uri。如果未提供，本机对话框将询问用户文件夹
+* _options_ - (可选) 选项。具有以下属性的对象：`forceNewWindow`: 是否在新窗口或同一窗口中打开文件夹/工作区。默认为在同一窗口中打开。`forceReuseWindow`: 是否强制在同一窗口中打开文件夹/工作区。默认为 false。`noRecentEntry`: 打开的 URI 是否出现在“最近打开”列表中。默认为 false。注意，为了向后兼容，选项也可以是布尔类型，代表 `forceNewWindow` 设置。
 
-`vscode.newWindow` - Opens an new window depending on the newWindow argument.
+`vscode.newWindow` - 打开一个新窗口，具体取决于 newWindow 参数。
 
-* _options_ - (optional) Options. Object with the following properties: `reuseWindow`: Whether to open a new window or the same. Defaults to opening in a new window.
+* _options_ - (可选) 选项。具有以下属性的对象：`reuseWindow`: 是否打开新窗口或同一窗口。默认为打开新窗口。
 
-`vscode.removeFromRecentlyOpened` - Removes an entry with the given path from the recently opened list.
+`vscode.removeFromRecentlyOpened` - 从最近打开的列表中删除具有给定路径的条目。
 
-* _path_ - URI or URI string to remove from recently opened.
+* _path_ - 要从最近打开中删除的 URI 或 URI 字符串。
 
-`moveActiveEditor` - Move the active editor by tabs or groups
+`moveActiveEditor` - 按选项卡或组移动活动编辑器
 
-* _Active editor move argument_ - Argument Properties:
-  * 'to': String value providing where to move.
-  * 'by': String value providing the unit for move (by tab or by group).
-  * 'value': Number value providing how many positions or an absolute position to move.
+* _活动编辑器移动参数_ - 参数属性：
+  * 'to': 提供移动目的地的字符串值。
+  * 'by': 提供移动单位的字符串值（按选项卡或按组）。
+  * 'value': 提供要移动多少位置或绝对位置的数值。
 
-`copyActiveEditor` - Copy the active editor by groups
+`copyActiveEditor` - 按组复制活动编辑器
 
-* _Active editor copy argument_ - Argument Properties:
-  * 'to': String value providing where to copy.
-  * 'value': Number value providing how many positions or an absolute position to copy.
+* _活动编辑器复制参数_ - 参数属性：
+  * 'to': 提供复制目的地的字符串值。
+  * 'value': 提供要复制多少位置或绝对位置的数值。
 
-`vscode.getEditorLayout` - Get Editor Layout
+`vscode.getEditorLayout` - 获取编辑器布局
 
-* _(returns)_ - An editor layout object, in the same format as baosky.setEditorLayout
+* _(返回值)_ - 一个编辑器布局对象，格式与 baosky.setEditorLayout 相同
 
-`workbench.action.files.newUntitledFile` - New Untitled Text File
+`workbench.action.files.newUntitledFile` - 新建无标题文本文件
 
-* _New Untitled Text File arguments_ - The editor view type or language ID if known
+* _New Untitled Text File arguments_ - 编辑器视图类型或语言 ID（如果已知）
 
-`workbench.extensions.installExtension` - Install the given 插件
+`workbench.extensions.installExtension` - 安装给定的插件
 
-* _extensionIdOrVSIXUri_ - 插件 id or VSIX resource uri
-* _options_ - (optional) Options for installing the 插件. Object with the following properties: `installOnlyNewlyAddedFromExtensionPackVSIX`: When enabled, Baosky installs only newly added 插件 from the 插件 pack VSIX. This option is considered only when installing VSIX.
+* _extensionIdOrVSIXUri_ - 插件 id 或 VSIX 资源 uri
+* _options_ - (可选) 安装插件的选项。具有以下属性的对象：`installOnlyNewlyAddedFromExtensionPackVSIX`: 启用时，Baosky 仅安装插件包 VSIX 中新添加的插件。此选项仅在安装 VSIX 时考虑。
 
-`workbench.extensions.uninstallExtension` - Uninstall the given 插件
+`workbench.extensions.uninstallExtension` - 卸载给定的插件
 
-* _Id of the 插件 to uninstall_ -
+* _Id of the extension to uninstall_ - 要卸载的插件 ID
 
-`workbench.extensions.search` - Search for a specific 插件
+`workbench.extensions.search` - 搜索特定插件
 
-* _Query to use in search_ -
+* _Query to use in search_ - 搜索中使用的查询
 
-`workbench.action.tasks.runTask` - Run Task
+`workbench.action.tasks.runTask` - 运行任务
 
-* _args_ - Filters the tasks shown in the Quick Pick
+* _args_ - 过滤快速选择中显示的任务
 
-`workbench.action.openIssueReporter` - Open the issue reporter and optionally prefill part of the form.
+`workbench.action.openIssueReporter` - 打开问题报告器并可选择预填充部分表单。
 
-* _options_ - Data to use to prefill the issue reporter with.
+* _options_ - 用于预填充问题报告器的数据。
 
-`vscode.openIssueReporter` - Open the issue reporter and optionally prefill part of the form.
+`vscode.openIssueReporter` - 打开问题报告器并可选择预填充部分表单。
 
-* _options_ - Data to use to prefill the issue reporter with.
+* _options_ - 用于预填充问题报告器的数据。
 
 `workbench.action.openLogFile` - workbench.action.openLogFile
 
-* _logFile_ -
+* _logFile_ - 日志文件
 
-`workbench.action.openWalkthrough` - Open the walkthrough.
+`workbench.action.openWalkthrough` - 打开入门指引 (Walkthrough)。
 
-* _walkthroughID_ - ID of the walkthrough to open.
-* _toSide_ - Opens the walkthrough in a new editor group to the side.
+* _walkthroughID_ - 要打开的入门指引 ID。
+* _toSide_ - 在侧面的新编辑器组中打开入门指引。
 
-## Simple commands
+## 简单命令
 
-Simple commands that do not require parameters can be found in the Keyboard Shortcuts list in the default `keybindings.json` file. The unbound commands are listed in a comment block at the bottom of the file.
+那些不需要参数的简单命令，您可以在默认的 `keybindings.json` 文件中的键盘快捷方式列表中找到。未绑定的命令列在文件底部的注释块中。
 
-To review the default `keybindings.json`, run **Preferences: Open Default Keyboard Shortcuts (JSON)** from the Command Palette (`kb(workbench.action.showCommands)`).
+要查看默认的 `keybindings.json`，请从命令面板 (`kb(workbench.action.showCommands)`) 运行 **首选项：打开默认键盘快捷方式 (JSON)**。

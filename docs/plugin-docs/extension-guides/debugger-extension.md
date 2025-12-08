@@ -1,103 +1,105 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 49EF49AD-8BE6-4D46-ADC8-D678BDC04E85
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to provide debugger 插件 (plug-ins) for Baosky through a Debug Adapter.
+
+MetaDescription: 了解如何通过调试适配器为 Baosky 提供调试器插件（插件）。
 ---
 
-# Debugger 插件
+# 调试器插件
 
-Baosky's debugging architecture allows 插件 authors to easily integrate existing debuggers into Baosky, while having a common user interface with all of them.
+Baosky 的调试架构允许插件作者轻松地将现有调试器集成到 Baosky 中，同时与所有这些调试器具有通用的用户界面。
 
-Baosky ships with one built-in debugger 插件, the [Node.js](https://nodejs.org) debugger 插件, which is an excellent showcase for the many debugger features supported by Baosky:
-
-<!-- 图片已移除 -->
-
-This screenshot shows the following debugging features:
-
-1. Debug configuration management.
-2. Debug actions for starting/stopping and stepping.
-3. Source-, function-, conditional-, inline breakpoints, and log points.
-4. Stack traces, including multi-thread and multi-process support.
-5. Navigating through complex data structures in views and hovers.
-6. Variable values shown in hovers or inlined in the source.
-7. Managing watch expressions.
-8. Debug console for interactive evaluation with autocomplete.
-
-This documentation will help you create a debugger 插件 which can make any debugger work with Baosky.
-
-## Debugging Architecture of Baosky
-
-Baosky implements a generic (language-agnostic) debugger UI based on an abstract protocol that we've introduced to communicate with debugger backends.
-Because debuggers typically do not implement this protocol, some intermediary is needed to "adapt" the debugger to the protocol.
-This intermediary is typically a standalone process that communicates with the debugger.
+Baosky 附带一个内置调试器插件，即 [Node.js](https://nodejs.org) 调试器插件，这是 Baosky 支持的许多调试器功能的绝佳展示：
 
 <!-- 图片已移除 -->
 
-We call this intermediary the **Debug Adapter** (or **DA** for short) and the abstract protocol that is used between the DA and Baosky is the **Debug Adapter Protocol** (**DAP** for short).
-Since the Debug Adapter Protocol is independent from Baosky, it has its own [web site](https://microsoft.github.io/debug-adapter-protocol/) where you can find an [introduction and overview](https://microsoft.github.io/debug-adapter-protocol/overview), the detailed [specification](https://microsoft.github.io/debug-adapter-protocol/specification), and some lists with [known implementations and supporting tools](https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/).
-The history of and motivation behind DAP is explained in this [blog post](#).
+此屏幕截图显示了以下调试功能：
 
-Since debug adapters are independent from Baosky and can be used in [other developments tools](https://microsoft.github.io/debug-adapter-protocol/implementors/tools/), they do not match Baosky's extensibility architecture which is based on 插件 and contribution points.
+1.调试配置管理。
+2. 调试启动/停止和单步操作。
+3. 源断点、函数断点、条件断点、内联断点和日志点。
+4. 堆栈跟踪，包括多线程和多进程支持。
+5. 在视图和悬停中浏览复杂的数据结构。
+6. 悬停中显示的变量值或源代码中内嵌的变量值。
+7. 管理监视表达式。
+8. 调试控制台，用于具有自动完成功能的交互式评估。
 
-For this reason Baosky provides a contribution point, `debuggers`, where a debug adapter can be contributed under a specific debug type (e.g. `node` for the Node.js debugger). Baosky launches the registered DA whenever the user starts a debug session of that type.
+本文档将帮助您创建一个调试器插件，它可以使任何调试器与 Baosky 一起工作。
 
-So in its most minimal form, a debugger 插件 is just a declarative contribution of a debug adapter implementation and the 插件 is basically a packaging container for the debug adapter without any additional code.
+## Baosky 调试架构
 
-<!-- 图片已移除 -->
-
-A more realistic debugger 插件 contributes many or all of the following declarative items to Baosky:
-
-- List of languages supported by the debugger. Baosky enables the UI to set breakpoints for those languages.
-- JSON schema for the debug configuration attributes introduced by the debugger. Baosky uses this schema to verify the configuration in the launch.json editor and provides IntelliSense. Please note that the JSON schema constructs `$ref` and `definition` are not supported.
-- Default debug configurations for the initial launch.json created by Baosky.
-- Debug configuration snippets that a user can add to a launch.json file.
-- Declaration of variables that can be used in debug configurations.
-
-You can find more information in [`code`](/api/references/contribution-points#contributes.breakpoints) and [`code`](/api/references/contribution-points#contributes.debuggers) references.
-
-In addition to the purely declarative contributions from above, the Debug 插件 API enables this code-based functionality:
-
-- Dynamically generated default debug configurations for the initial launch.json created by Baosky.
-- Determine the debug adapter to use dynamically.
-- Verify or modify debug configurations before they are passed to the debug adapter.
-- Communicate with the debug adapter.
-- Send messages to the debug console.
-
-In the rest of this document we show how to develop a debugger 插件.
-
-## The Mock Debug 插件
-
-Since creating a debug adapter from scratch is a bit heavy for this tutorial, we will start with a simple DA which we have created as an educational "debug adapter starter kit". It is called _Mock Debug_ because it does not talk to a real debugger, but mocks one. Mock Debug simulates a debugger and supports step, continue, breakpoints, exceptions, and variable access, but it is not connected to any real debugger.
-
-Before delving into the development setup for mock-debug, let's first install a [pre-built version](#)
-from the Baosky Marketplace and play with it:
-
-- Switch to the 插件 viewlet and type "mock" to search for the Mock Debug 插件,
-- "Install" and "Reload" the 插件.
-
-To try Mock Debug:
-
-- Create a new empty folder `mock test` and open it in Baosky.
-- Create a file `readme.md` and enter several lines of arbitrary text.
-- Switch to the Run and Debug view (`kb(workbench.view.debug)`) and select the **create a launch.json file** link.
-- Baosky will let you select an "debugger" in order to create a default launch configuration. Pick "Mock Debug".
-- Press the green **Start** button and then `kbstyle(Enter)` to confirm the suggested file `readme.md`.
-
-A debug session starts and you can "step" through the readme file, set and hit breakpoints, and run into exceptions (if the word `exception` appears in a line).
+Baosky 基于我们引入的与调试器后端通信的抽象协议实现通用（与语言无关）调试器 UI。
+由于调试器通常不实现此协议，因此需要一些中介来使调试器“适应”该协议。
+该中介通常是与调试器通信的独立进程。
 
 <!-- 图片已移除 -->
 
-Before using Mock Debug as a starting point for your own development, we recommend to uninstall the pre-built version first:
+我们将此中介称为 ** 调试适配器 ** （或简称 ** DA ** ），DA 和 Baosky 之间使用的抽象协议是 ** 调试适配器协议 ** （简称 ** DAP ** ）。
+由于调试适配器协议独立于 Baosky，它有自己的 [web site](https://microsoft.github.io/调试-adapter-protocol/)，您可以在其中找到 [introduction and 概述](https://microsoft.github.io/调试-adapter-protocol/overview)、详细的 [specification](https://microsoft.github.io/调试-adapter-protocol/specification) 以及一些带有 [known implementations and supporting tools](https://microsoft.github.io/调试-adapter-protocol/implementors/adapters/) 的列表。
+此 [blog post](#) 解释了 DAP 的历史和背后的动机。
 
-- Switch to the 插件 viewlet and click on the gear icon of the Mock Debug 插件.
-- Run the "Uninstall" action and then "Reload" the window.
+由于调试适配器独立于 Baosky 并且可以在 [other developments tools](https://microsoft.github.io/调试-adapter-protocol/implementors/tools/) 中使用，因此它们与 Baosky 基于插件和贡献点的可扩展性架构不匹配。
 
-## Development Setup for Mock Debug
+因此 Baosky 提供了一个贡献点 `debuggers`，其中可以在特定调试类型下提供调试适配器（例如 `node` 用于 Node.js 调试器）。每当用户启动该类型的调试会话时，Baosky 都会启动已注册的 DA。
 
-Now let's get the source for Mock Debug and start development on it within Baosky:
+因此，在其最基本的形式中，调试器插件只是调试适配器实现的声明性贡献，并且插件基本上是调试适配器的打包容器，无需任何附加代码。
+
+<!-- 图片已移除 -->
+
+更现实的调试器插件将以下许多或全部声明性项目贡献给 Baosky：
+
+- 调试器支持的语言列表。 Baosky 使 UI 能够为这些语言设置断点。
+- 调试器引入的调试配置属性的 JSON 架构。 Baosky 使用此架构来验证 launch.json 编辑器中的配置并提供 IntelliSense。请注意，不支持 JSON 架构构造 `$ref` 和 `definition`。
+- Baosky 创建的初始 launch.json 的默认调试配置。
+- 调试用户可以添加到 launch.json 文件的配置片段。
+- 可在调试配置中使用的变量声明。
+
+您可以在 [`code`](/api/references/contribution-points#contributes.breakpoints) 和 [`code`](/api/references/contribution-points#contributes.debuggers) 参考文献中找到更多信息。
+
+除了上面的纯声明性贡献之外，调试插件 API 还支持此基于代码的功能：
+
+- 为 Baosky 创建的初始 launch.json 动态生成默认调试配置。
+- 确定要动态使用的调试适配器。
+- 在将调试配置传递到调试适配器之前验证或修改它们。
+- 与调试适配器通信。
+- Send messages 要 the debug console.
+
+在本文档的其余部分中，我们将展示如何开发调试器插件。
+
+## 模拟调试插件
+
+由于从头开始创建调试适配器对于本教程来说有点繁重，因此我们将从一个简单的 DA 开始，我们已将其创建为教育性“调试适配器入门套件”。它被称为“模拟调试”，因为它不与真正的调试器对话，而是模拟调试器。 Mock 调试 模拟一个调试器，支持单步、继续、断点、异常和变量访问，但它没有连接到任何真实的调试器。
+
+在深入研究模拟调试的开发设置之前，我们首先安装 [pre-built version](#)
+从 Baosky 市场并使用它：
+
+- 切换到插件视图并输入“mock”以搜索 Mock 调试 插件，
+- “安装”和“重新加载”插件。
+
+尝试模拟调试：
+
+- 创建一个新的空文件夹`mock test`并在Baosky中打开它。
+- 创建文件 `readme.md` 并输入多行任意文本。
+- 切换到“运行和调试”视图 (`kb(工作台.view.调试)`) 并选择 ** 创建 launch.json 文件 ** 链接。
+- Baosky 将让您选择一个“调试器”以创建默认启动配置。选择“模拟调试”。
+- 按绿色 ** 开始 ** 按钮，然后按 `kbstyle(Enter)` 确认建议的文件 `readme.md`。
+
+调试会话启动，您可以“单步执行”自述文件，设置并命中断点，并遇到异常（如果单词 `exception` 出现在一行中）。
+
+<!-- 图片已移除 -->
+
+在使用 Mock 调试 作为您自己开发的起点之前，我们建议先卸载预构建的版本：
+
+- 切换到插件视图并单击模拟调试插件的齿轮图标。
+- 运行“卸载”操作，然后“重新加载”窗口。
+
+## 模拟调试的开发设置
+
+现在让我们获取 Mock 调试 的源代码并在 Baosky 中开始对其进行开发：
 
 ```bash
 git clone https://github.com/microsoft/vscode-mock-debug.git
@@ -107,38 +109,38 @@ yarn
 
 Open the project folder `vscode-mock-debug` in Baosky.
 
-What's in the package?
+包裹里有什么？
 
-- `package.json` is the manifest for the mock-debug 插件:
-  - It lists the contributions of the mock-debug 插件.
-  - The `compile` and `watch` scripts are used to transpile the TypeScript source into the `out` folder and watch for subsequent source modifications.
-  - The dependencies `vscode-debugprotocol`, `vscode-debugadapter`, and `vscode-debugadapter-testsupport` are NPM modules that simplify the development of node-based debug adapters.
-- `src/mockRuntime.ts` is a _mock_ runtime with a simple debug API.
-- The code that _adapts_ the runtime to the Debug Adapter Protocol lives in `src/mockDebug.ts`. Here you find the handlers for the various requests of the DAP.
-- Since the implementation of debugger 插件 lives in the debug adapter, there is no need to have 插件 code at all (i.e. code that runs in the 插件 host process). However, Mock Debug has a small `src/插件.ts` because it illustrates what can be done in the 插件 code of a debugger 插件.
+- `package.json` 是模拟调试插件的清单：
+- 它列出了模拟调试插件的贡献。
+- `compile` 和 `watch` 脚本用于将 TypeScript 源文件转译到 `out` 文件夹中，并监视后续源文件的修改。
+- 依赖项 `vscode-debugprotocol`、`vscode-debugadapter` 和 `vscode-debugadapter-testsupport` 是 NPM 模块，可简化基于节点的调试适配器的开发。
+- `src/mockRuntime.ts` 是一个带有简单调试 API 的 _mock_ 运行时。
+- 让运行时适应调试适配器协议的代码位于 `src/mockDebug.ts` 中。在这里您可以找到 DAP 各种请求的处理程序。
+- 由于调试器插件的实现位于调试适配器中，因此根本不需要插件代码（即在插件主机进程中运行的代码）。然而，Mock 调试 有一个小的 `src/插件.ts` 因为它说明了在调试器插件的插件代码中可以做什么。
 
-Now build and launch the Mock Debug 插件 by selecting the **插件** launch configuration and hitting `F5`.
-Initially, this will do a full transpile of the TypeScript sources into the `out` folder.
-After the full build, a _watcher task_ is started that transpiles any changes you make.
+现在，通过选择 ** 插件 ** 启动配置并点击 `F5` 来构建并启动模拟调试插件。
+最初，这会将 TypeScript 源完全转译到 `out` 文件夹中。
+完整构建后，将启动一个_watcher 任务_来转译您所做的任何更改。
 
-After transpiling the source, a new Baosky window labelled "[插件 Development Host]" appears with the Mock Debug 插件 now running in debug mode. From that window open your `mock test` project with the `readme.md` file, start a debug session with 'F5', and then step through it:
-
-<!-- 图片已移除 -->
-
-Since you are running the 插件 in debug mode, you could now set and hit breakpoints in `src/插件.ts` but as I've mentioned above, there is not much interesting code executing in the 插件. The interesting code runs in the debug adapter which is a separate process.
-
-In order to debug the debug adapter itself, we have to run it in debug mode. This is most easily achieved by running the debug adapter in _server mode_ and configure Baosky to connect to it. In your Baosky baosky-mock-debug project select the launch configuration **Server** from the dropdown menu and press the green start button.
-
-Since we already had an active debug session for the 插件 the Baosky debugger UI now enters _multi session_ mode which is indicated by seeing the names of the two debug sessions **插件** and **Server** showing up in the CALL STACK view:
+转译源代码后，会出现一个标有“[插件开发主机]”的新 Baosky 窗口，其中 Mock 调试 插件现在在调试模式下运行。从该窗口中使用 `readme.md` 文件打开 `mock test` 项目，使用“F5”启动调试会话，然后单步执行：
 
 <!-- 图片已移除 -->
 
-Now we are able to debug both the 插件 and the DA simultaneously.
-A faster way to arrive here is by using the **插件 + Server** launch configuration which launches both sessions automatically.
+由于您在调试模式下运行插件，因此您现在可以在 `src/插件.ts` 中设置并命中断点，但正如我上面提到的，插件中执行的代码并不多。有趣的代码在调试适配器中运行，这是一个单独的进程。
 
-An alternative, even simpler approach for debugging the 插件 and the DA can be found [below](#alternative-approach-to-develop-a-debugger-插件).
+为了调试调试适配器本身，我们必须在调试模式下运行它。通过在_服务器模式_下运行调试适配器并配置 Baosky 以连接到它，可以最轻松地实现这一点。在您的 Baosky baosky-mock-调试 项目中，从下拉菜单中选择启动配置 ** Server ** 并按绿色启动按钮。
 
-Set a breakpoint at the beginning of method `launchRequest(...)` in file `src/mockDebug.ts` and as a last step configure the mock debugger to connect to the DA server by adding a `debugServer` attribute for port `4711` to your mock test launch config:
+由于我们已经为插件建立了一个活动的调试会话，Baosky 调试器 UI 现在进入 _multi session_ 模式，这可以通过查看 CALL STACK 视图中显示的两个调试会话 ** 插件 ** 和 ** Server ** 的名称来指示：
+
+<!-- 图片已移除 -->
+
+现在我们可以同时调试插件和 DA。
+到达这里的更快方法是使用 ** 插件 + Server ** 启动配置，它会自动启动两个会话。
+
+另一种更简单的调试插件和 DA 的方法可以在 [below](#alternative-approach-to-develop-a-调试器-插件) 中找到。
+
+在文件 `src/mockDebug.ts` 中方法 `launchRequest(...)` 的开头设置一个断点，最后一步通过将端口 `4711` 的 `debugServer` 属性添加到模拟测试启动配置来配置模拟调试器以连接到 DA 服务器：
 
 ```json
 {
@@ -156,20 +158,20 @@ Set a breakpoint at the beginning of method `launchRequest(...)` in file `src/mo
 }
 ```
 
-If you now launch this debug configuration, Baosky does not start the mock debug adapter as a separate process, but directly connects to local port 4711 of the already running server, and you should hit the breakpoint in `launchRequest`.
+如果您现在启动此调试配置，Baosky 不会将模拟调试适配器作为单独的进程启动，而是直接连接到已运行服务器的本地端口 4711，并且您应该在 `launchRequest` 中命中断点。
 
-With this setup, you can now easily edit, transpile, and debug Mock Debug.
+With this setup, 您可以 now easily edit, transpile, and debug Mock Debug.
 
-But now the real work begins: you will have to replace the mock implementation of the debug adapter in `src/mockDebug.ts` and `src/mockRuntime.ts` by some code that talks to a "real" debugger or runtime. This involves understanding and implementing the Debug Adapter Protocol. More details
-about this can be found [here](https://microsoft.github.io/debug-adapter-protocol/overview#How_it_works).
+但现在真正的工作开始了：您必须用一些与“真实”调试器或运行时对话的代码替换 `src/mockDebug.ts` 和 `src/mockRuntime.ts` 中调试适配器的模拟实现。这涉及理解和实现调试适配器协议。更多详情
+关于此内容可以找到[here](https://microsoft.github.io/调试-adapter-protocol/overview#How_it_works)。
 
-## Anatomy of the package.json of a Debugger 插件
+## 调试器 package.json 插件的剖析
 
-Besides providing a debugger-specific implementation of the debug adapter a debugger 插件 needs a `package.json` that contributes to the various debug-related contribution points.
+除了提供调试适配器的特定于调试器的实现之外，调试器插件还需要一个 `package.json` 来贡献各种与调试相关的贡献点。
 
-So let's have a closer look at the `package.json` of Mock Debug.
+那么让我们仔细看看 Mock 调试 的 `package.json` 。
 
-Like every Baosky 插件, the `package.json` declares the fundamental properties **name**, **publisher**, and **version** of the 插件. Use the **categories** field to make the 插件 easier to find in the Baosky 插件 Marketplace.
+与每个 Baosky 插件一样，`package.json` 声明插件的基本属性 ** name ** 、 ** publisher ** 和 ** version ** 。使用 ** categories ** 字段可以更轻松地在 Baosky 插件市场中找到插件。
 
 ```json
 {
@@ -251,20 +253,20 @@ Like every Baosky 插件, the `package.json` declares the fundamental properties
 }
 ```
 
-Now take a look at the **contributes** section which contains the contributions specific to debug 插件.
+现在看一下 ** contributes ** 部分，其中包含特定于调试插件的贡献。
 
-First, we use the **breakpoints** contribution point to list the languages for which setting breakpoints will be enabled. Without this, it would not be possible to set breakpoints in Markdown files.
+首先，我们使用 ** breakpoints ** 贡献点来列出将启用设置断点的语言。如果没有这个，就不可能在 Markdown 文件中设置断点。
 
-Next is the **debuggers** section. Here, one debugger is introduced under a debug **type** `mock`. The user can reference this type in launch configurations. The optional attribute **label** can be used to give the debug type a nice name when showing it in the UI.
+接下来是 ** 调试器 ** 部分。这里，在调试 ** 类型 ** `mock` 下引入了一个调试器。用户可以在启动配置中引用此类型。可选属性 ** label ** 可用于在 UI 中显示调试类型时为其指定一个好听的名称。
 
-Since the debug 插件 uses a debug adapter, a relative path to its code is given as the **program** attribute.
-In order to make the 插件 self-contained the application must live inside the 插件 folder. By convention, we keep this application inside a folder named `out` or `bin`, but you are free to use a different name.
+由于调试插件使用调试适配器，因此其代码的相对路径作为 ** program ** 属性给出。
+为了使插件独立，应用程序必须位于插件文件夹内。按照惯例，我们将此应用程序保存在名为 `out` 或 `bin` 的文件夹中，但您可以随意使用其他名称。
 
-Since Baosky runs on different platforms, we have to make sure that the DA program supports the different platforms as well. For this we have the following options:
+由于Baosky运行在不同的平台上，我们必须确保DA程序也支持不同的平台。为此，我们有以下选择：
 
-1. If the program is implemented in a platform independent way, e.g. as program that runs on a runtime that is available on all supported platforms, you can specify this runtime via the **runtime** attribute. As of today, Baosky supports `node` and `mono` runtimes. Our Mock debug adapter from above uses this approach.
+1. 如果程序以平台无关的方式实现，例如作为在所有支持的平台上可用的运行时上运行的程序，您可以通过 ** runtime ** 属性指定此运行时。截至今天，Baosky 支持 `node` 和 `mono` 运行时。上面的模拟调试适配器就使用了这种方法。
 
-1. If your DA implementation needs different executables on different platforms, the **program** attribute can be qualified for specific platforms like this:
+1. 如果您的 DA 实现需要在不同平台上使用不同的可执行文件，则可以针对特定平台限定 ** program ** 属性，如下所示：
 
    ```json
    "debuggers": [{
@@ -281,7 +283,7 @@ Since Baosky runs on different platforms, we have to make sure that the DA progr
    }]
    ```
 
-1. A combination of both approaches is possible too. The following example is from the Mono DA which is implemented as a mono application that needs a runtime on macOS and Linux but not on Windows:
+1. 两种方法的结合也是可能的。以下示例来自 Mono DA，它作为单声道应用程序实现，需要在 macOS 和 Linux 上运行，但不需要在 Windows 上运行：
 
    ```json
    "debuggers": [{
@@ -296,20 +298,20 @@ Since Baosky runs on different platforms, we have to make sure that the DA progr
    }]
    ```
 
-**configurationAttributes** declares the schema for the `launch.json` attributes that are available for this debugger. This schema is used for validating the `launch.json` and supporting IntelliSense and hover help when editing the launch configuration.
+** configurationAttributes ** 声明可用于此调试器的 `launch.json` 属性的架构。此架构用于在编辑启动配置时验证 `launch.json` 并支持 IntelliSense 和悬停帮助。
 
-The **initialConfigurations** define the initial content of the default `launch.json` for this debugger. This information is used when a project does not have a `launch.json` and a user starts a debug session or selects the **create a launch.json file** link in the Run and Debug view. In this case Baosky lets the user pick a debug environment and then creates the corresponding `launch.json`:
+** initialConfigurations ** 定义此调试器的默认 `launch.json` 的初始内容。当项目没有 `launch.json` 并且用户启动调试会话或在“运行和调试”视图中选择 ** 创建 launch.json 文件 ** 链接时，将使用此信息。在本例中，Baosky 让用户选择一个调试环境，然后创建相应的 `launch.json`：
 
 <!-- 图片已移除 -->
 
-Instead of defining the initial content of the `launch.json` statically in the `package.json`, it is possible to compute the initial configurations dynamically by implementing a `DebugConfigurationProvider` (for details see the section [Using a DebugConfigurationProvider below](#using-a-debugconfigurationprovider)).
+可以通过实现 `DebugConfigurationProvider` 来动态计算初始配置，而不是在 `package.json` 中静态定义 `launch.json` 的初始内容（有关详细信息，请参阅 [Using a DebugConfigurationProvider below](#using-a-debugconfigurationprovider) 部分）。
 
-**configurationSnippets** define launch configuration snippets that get surfaced in IntelliSense when editing the `launch.json`. As a convention, prefix the `label` attribute of a snippet by the debug environment name so that it can be clearly identified when presented in a list of many snippet proposals.
+** configurationSnippets ** 定义编辑 `launch.json` 时在 IntelliSense 中显示的启动配置片段。作为惯例，请在代码片段的 `label` 属性前加上调试环境名称前缀，以便在出现在许多代码片段提案的列表中时可以清楚地识别它。
 
-The **variables** contribution binds "variables" to "commands". These variables can be used in the launch configuration using the `\${command:xyz}` syntax and the variables are substituted by the value returned from the bound command when a debug session is started.
+** 变量 ** 贡献将“变量”绑定到“命令”。这些变量可以使用 `\${命令:xyz}` 语法在启动配置中使用，并且在启动调试会话时，这些变量将被从绑定命令返回的值替换。
 
-The implementation of a command lives in the 插件 and it can range from a simple expression with no UI, to sophisticated functionality based on the UI features available in the 插件 API.
-Mock Debug binds a variable `AskForProgramName` to the command `插件.mock-debug.getProgramName`. The [implementation](https://github.com/microsoft/baosky-mock-debug/blob/606454ff3bd669867a38d9b2dc7b348d324a3f6b/src/插件.ts#L21-L26) of this command in `src/插件.ts` uses the `showInputBox` to let the user enter a program name:
+命令的实现存在于插件中，它的范围可以从没有 UI 的简单表达式，到基于插件 API 中可用的 UI 功能的复杂功能。
+模拟调试将变量 `AskForProgramName` 绑定到命令 `插件.mock-调试.getProgramName`。 `src/插件.ts` 中该命令的 [implementation](https://github.com/microsoft/baosky-mock-调试/blob/606454ff3bd669867a38d9b2dc7b348d324a3f6b/src/插件.ts#L21-L26) 使用 `showInputBox` 让用户输入程序名称：
 
 ```ts
 vscode.commands.registerCommand('extension.mock-debug.getProgramName', config => {
@@ -320,19 +322,19 @@ vscode.commands.registerCommand('extension.mock-debug.getProgramName', config =>
 });
 ```
 
-The variable can now be used in any string typed value of a launch configuration as `\${command:AskForProgramName}`.
+该变量现在可以在启动配置的任何字符串类型值中使用，如 `\${命令:AskForProgramName}`。
 
-## Using a DebugConfigurationProvider
+## 使用 DebugConfigurationProvider
 
-If the static nature of debug contributions in the `package.json` is not sufficient, a `DebugConfigurationProvider` can be used to dynamically control the following aspects of a debug 插件:
+如果 `package.json` 中调试贡献的静态性质不够，则可以使用 `DebugConfigurationProvider` 来动态控制调试插件的以下方面：
 
-- The initial debug configurations for a newly created launch.json can be generated dynamically, e.g. based on some contextual information available in the workspace.
-- A launch configuration can be _resolved_ (or modified) before it is used to start a new debug session. This allows for filling in default values based on information available in the workspace. Two _resolve_ methods exist: `resolveDebugConfiguration` is called before variables are substituted in the launch configuration, `resolveDebugConfigurationWithSubstitutedVariables` is called after all variables have been substituted. The former must be used if the validation logic inserts additional variables into the debug configuration. The latter must be used if the validation logic needs access to the final values of all debug configuration attributes.
+- 新创建的 launch.json 的初始调试配置可以动态生成，例如基于工作区中可用的一些上下文信息。
+- 启动配置在用于启动新的调试会话之前可以_解析_（或修改）。这允许根据工作区中可用的信息填充默认值。存在两种 _resolve_ 方法： `resolveDebugConfiguration` 在启动配置中替换变量之前调用， `resolveDebugConfigurationWithSubstitutedVariables` 在所有变量替换后调用。如果验证逻辑将其他变量插入调试配置中，则必须使用前者。如果验证逻辑需要访问所有调试配置属性的最终值，则必须使用后者。
 
-The `MockConfigurationProvider` in `src/插件.ts` implements `resolveDebugConfiguration` to detect the case where a debug session is started when no launch.json exists, but a Markdown file is open in the active editor. This is a typical scenario where the user has a file open in the editor and just wants to debug it without creating a launch.json.
+`src/插件.ts` 中的 `MockConfigurationProvider` 实现 `resolveDebugConfiguration` 来检测当不存在 launch.json 但在活动编辑器中打开 Markdown 文件时启动调试会话的情况。这是一个典型的场景，用户在编辑器中打开了一个文件，只想调试它而不创建 launch.json。
 
-A debug configuration provider is registered for a specific debug type via `vscode.debug.registerDebugConfigurationProvider`, typically in the 插件's `activate` function.
-To ensure that the `DebugConfigurationProvider` is registered early enough, the 插件 must be activated as soon as the debug functionality is used. This can be easily achieved by configuring 插件 activation for the `onDebug` event in the `package.json`:
+调试配置提供程序通过 `vscode.调试.registerDebugConfigurationProvider` 注册用于特定调试类型，通常在插件的 `activate` 函数中。
+为了确保 `DebugConfigurationProvider` 足够早地注册，必须在使用调试功能后立即激活插件。这可以通过在 `package.json` 中为 `onDebug` 事件配置插件激活来轻松实现：
 
 ```json
 "activationEvents": [
@@ -341,36 +343,36 @@ To ensure that the `DebugConfigurationProvider` is registered early enough, the 
 ],
 ```
 
-This catch-all `onDebug` is triggered as soon as any debug functionality is used. This works fine as long as the 插件 has cheap startup costs (i.e. does not spend a lot of time in its startup sequence). If a debug 插件 has an expensive startup (for instance because of starting a language server), the `onDebug` activation event could negatively affect other debug 插件, because it is triggered rather early and does not take a specific debug type into account.
+一旦使用任何调试功能，就会触发这个包罗万象的 `onDebug`。只要插件的启动成本低廉（即在启动顺序上不花费大量时间），这种方法就可以正常工作。如果调试插件的启动成本很高（例如，由于启动语言服务器），则 `onDebug` 激活事件可能会对其他调试插件产生负面影响，因为它触发得相当早，并且不考虑特定的调试类型。
 
-A better approach for expensive debug 插件 is to use more fine-grained activation events:
+对于昂贵的调试插件来说，更好的方法是使用更细粒度的激活事件：
 
-- `onDebugInitialConfigurations` is fired just before the `provideDebugConfigurations` method of the `DebugConfigurationProvider` is called.
-- `onDebugResolve:type` is fired just before the `resolveDebugConfiguration` or `resolveDebugConfigurationWithSubstitutedVariables` methods of the `DebugConfigurationProvider` for the specified type is called.
+- `onDebugInitialConfigurations` 在调用 `DebugConfigurationProvider` 的 `provideDebugConfigurations` 方法之前触发。
+- `onDebugResolve:type` 在调用指定类型的 `DebugConfigurationProvider` 的 `resolveDebugConfiguration` 或 `resolveDebugConfigurationWithSubstitutedVariables` 方法之前触发。
 
-**Rule of thumb:** If activation of a debug 插件 is cheap, use `onDebug`. If it is expensive, use `onDebugInitialConfigurations` and/or `onDebugResolve` depending on whether the `DebugConfigurationProvider` implements the corresponding methods `provideDebugConfigurations` and/or `resolveDebugConfiguration`.
+** 经验法则： ** 如果激活调试插件很便宜，请使用 `onDebug`。如果成本昂贵，请使用 `onDebugInitialConfigurations` 和/或 `onDebugResolve`，具体取决于 `DebugConfigurationProvider` 是否实现相应的方法 `provideDebugConfigurations` 和/或 `resolveDebugConfiguration`。
 
-## Publishing your debugger 插件
+## 发布你的调试器插件
 
-Once you have created your debugger 插件 you can publish it to the Marketplace:
+创建调试器插件后，您可以将其发布到市场：
 
-- Update the attributes in the `package.json` to reflect the naming and purpose of your debugger 插件.
-- Upload to the Marketplace as described in [Publishing 插件](/api/working-with-插件/publishing-插件).
+- 更新 `package.json` 中的属性以反映调试器插件的命名和用途。
+- 按照 [Publishing 插件](/api/working-with-插件/publishing-插件) 中的说明上传到市场。
 
-## Alternative approach to develop a debugger 插件
+## 开发调试器插件的替代方法
 
-As we have seen, developing a debugger 插件 typically involves debugging both the 插件 and the debug adapter in two parallel sessions. As explained above Baosky supports this nicely but development could be easier if both the 插件 and the debug adapter would be one program that could be debugged in one debug session.
+正如我们所看到的，开发调试器插件通常涉及在两个并行会话中调试插件和调试适配器。如上所述，Baosky 很好地支持了这一点，但如果插件和调试适配器都是一个可以在一个调试会话中调试的程序，那么开发可能会更容易。
 
-This approach is in fact easily doable as long as your debug adapter is implemented in TypeScript/JavaScript. The basic idea is to run the debug adapter directly inside the 插件 and to make Baosky to connect to it instead of launching a new external debug adapter per session.
+事实上，只要您的调试适配器是在 TypeScript/JavaScript 中实现的，这种方法就很容易实现。基本思想是直接在插件内部运行调试适配器，并使 Baosky 连接到它，而不是在每个会话中启动新的外部调试适配器。
 
-For this Baosky provides 插件 API to control how a debug adapter is created and run. A `DebugAdapterDescriptorFactory` has a method `createDebugAdapterDescriptor` that is called by Baosky when a debug session starts and a debug adapter is needed. This method must return a descriptor object (`DebugAdapterDescriptor`) that describes how the debug adapter is run.
+为此，Baosky 提供了插件 API 来控制调试适配器的创建和运行方式。 `DebugAdapterDescriptorFactory` 有一个方法 `createDebugAdapterDescriptor`，当调试会话启动并且需要调试适配器时，该方法由 Baosky 调用。此方法必须返回一个描述调试适配器如何运行的描述符对象 (`DebugAdapterDescriptor`)。
 
-Today Baosky supports three different ways for running a debug adapter and consequently offers three different descriptor types:
+如今 Baosky 支持三种不同的方式来运行调试适配器，因此提供三种不同的描述符类型：
 
-- `DebugAdapterExecutable`: this object describes a debug adapter as an external executable with a path and optional arguments and runtime. The executable must implement the Debug Adapter Protocol and communicate via stdin/stdout. This is Baosky's default mode of operation and Baosky uses this descriptor automatically with the corresponding values from the package.json if no `DebugAdapterDescriptorFactory` is explicitly registered.
-- `DebugAdapterServer`: this object describes a debug adapter running as a server that communicates via a specific local or remote port. A debug adapter implementation based on the [`code`](https://www.npmjs.com/package/baosky-debugadapter) npm module supports this server mode automatically.
+- `DebugAdapterExecutable`：此对象将调试适配器描述为具有路径、可选参数和运行时的外部可执行文件。可执行文件必须实现调试适配器协议并通过 stdin/stdout 进行通信。这是 Baosky 的默认操作模式，如果没有显式注册 `DebugAdapterDescriptorFactory` ，Baosky 会自动使用此描述符以及 package.json 中的相应值。
+- `DebugAdapterServer`：此对象描述作为服务器运行的调试适配器，通过特定的本地或远程端口进行通信。基于 [`code`](https://www.npmjs.com/package/baosky-debugadapter) npm 模块的调试适配器实现自动支持此服务器模式。
 - `DebugAdapterInlineImplementation`: this object describes a debug adapter as a JavaScript or Typescript object that implements the `vscode.DebugAdapter` interface. A debug adapter implementation based on version 1.38-pre.4 or later of the [`code`](https://www.npmjs.com/package/baosky-debugadapter) npm module implements the interface automatically.
 
-Mock Debug shows examples for the [three types of DebugAdapterDescriptorFactories](https://github.com/microsoft/baosky-mock-debug/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L91-L150)  and how they are [registered for the 'mock' debug type](https://github.com/microsoft/baosky-mock-debug/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L50). The run mode to use can be selected by [setting the global variable `code`](https://github.com/microsoft/baosky-mock-debug/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L16) to one of the possible values `external`, `server`, or `inline`.
+模拟调试显示 [three types of DebugAdapterDescriptorFactories](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L91-L150) 的示例以及它们如何 [registered for the 'mock' 调试 type](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L50)。可以通过 [setting the global variable `code`](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L16) 将要使用的运行模式选择为可能值 `external`、`server` 或 `inline` 之一。
 
-For development, the `inline` and `server` modes are particularly useful because they allow for debugging 插件 and debug adapter within a single process.
+对于开发来说， `inline` 和 `server` 模式特别有用，因为它们允许在单个进程中调试插件和调试适配器。

@@ -1,30 +1,32 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 7f90ee4f-cac1-4b99-aee6-c99e088789d0
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to implement a LanguageModelChatProvider to contribute custom language models to Baosky's chat experience for 插件.
+
+MetaDescription: 了解如何实现 LanguageModelChatProvider 以将自定义语言模型贡献给 Baosky 的插件聊天体验。
 ---
 
-# Language Model Chat Provider API
+# 语言模型聊天提供程序 API
 
-The Language Model Chat Provider API enables you to contribute your own language models to chat in Baosky.
+语言模型聊天提供程序 API 使您能够贡献自己的语言模型以在 Baosky 中聊天。
 
-> [!IMPORTANT]
-> Models provided through this API are currently only available to users on [individual GitHub Copilot plans](https://docs.github.com/en/copilot/concepts/billing/individual-plans).
+> [!重要]
+> 通过此 API 提供的模型目前仅对 [individual GitHub Copilot plans](https://docs.github.com/en/copilot/concepts/billing/individual-plans) 上的用户可用。
 
-## Overview
+＃＃ 概述
 
-The `LanguageModelChatProvider` interface follows a one-provider-to-many-models relationship, enabling providers to offer multiple models. Each provider is responsible for:
+`LanguageModelChatProvider` 接口遵循一个提供者对多模型的关系，使提供者能够提供多个模型。每个提供商负责：
 
-- Discovering and preparing available language models
-- Handling chat requests for its models
-- Providing token counting functionality
+- 发现并准备可用的语言模型
+- 处理其模型的聊天请求
+- 提供代币计数功能
 
-## Language model information
+## 语言模型信息
 
-Each language model must provide metadata through the `LanguageModelChatInformation` interface. The `provideLanguageModelChatInformation` method returns an array of these objects to inform Baosky about the available models.
+每个语言模型必须通过 `LanguageModelChatInformation` 接口提供元数据。 `provideLanguageModelChatInformation` 方法返回这些对象的数组，以通知 Baosky 有关可用模型的信息。
 
 ```typescript
 interface LanguageModelChatInformation {
@@ -43,9 +45,9 @@ interface LanguageModelChatInformation {
 }
 ```
 
-## Register the provider
+## 注册提供者
 
-1. The first step is to register the provider in your `package.json`, in the `contributes.languageModelChatProviders` section. Provide a unique `vendor` ID and a `displayName`.
+1. 第一步是在 `package.json` 的 `contributes.languageModelChatProviders` 部分中注册提供程序。仅提供 `vendor` ID 和 `displayName`。
 
     ```json
     {
@@ -60,9 +62,9 @@ interface LanguageModelChatInformation {
     }
     ```
 
-1. Next, in your 插件 activation function, register your language model provider using the `lm.registerLanguageModelChatProvider` method.
+1. 接下来，在您的插件激活函数中，使用 `lm.registerLanguageModelChatProvider` 方法注册您的语言模型提供程序。
 
-    Provide the provider ID that you used in the `package.json` and an instance of your provider class:
+提供您在 `package.json` 中使用的提供程序 ID 和提供程序类的实例：
 
     ```typescript
     import * as vscode from 'vscode';
@@ -73,9 +75,9 @@ interface LanguageModelChatInformation {
     }
     ```
 
-1. Optionally, provide a `contributes.languageModelChatProviders.managementCommand` in your `package.json` to allow users to manage the language model provider.
+1.（可选）在`package.json`中提供`contributes.languageModelChatProviders.managementCommand`以允许用户管理语言模型提供程序。
 
-    The value of the `managementCommand` property must be a command defined in the `contributes.commands` section of your `package.json`. In your 插件, register the command (`vscode.commands.registerCommand`) and implement the logic for managing the provider such as configuring API keys or other settings.
+`managementCommand` 属性的值必须是在 `package.json` 的 `contributes.commands` 部分中定义的命令。在您的插件中，注册命令 (`vscode.commands.registerCommand`) 并实现管理提供程序的逻辑，例如配置 API 键或其他设置。
 
     ```json
     {
@@ -97,19 +99,19 @@ interface LanguageModelChatInformation {
     }
     ```
 
-## Implement the provider
+## 实现提供者
 
-A language provider must implement the `LanguageModelChatProvider` interface, which has three main methods:
+语言提供者必须实现 `LanguageModelChatProvider` 接口，该接口具有三个主要方法：
 
-- `provideLanguageModelChatInformation`: returns the list of available models
-- `provideLanguageModelChatResponse`: handles chat requests and streams responses
-- `provideTokenCount`: implements token counting functionality
+- `provideLanguageModelChatInformation`：返回可用模型的列表
+- `provideLanguageModelChatResponse`：处理聊天请求并流响应
+- `provideTokenCount`：实现令牌计数功能
 
-### Prepare language model information
+### 准备语言模型信息
 
-The `provideLanguageModelChatInformation` method is called by Baosky to discover the available models and returns a list of `LanguageModelChatInformation` objects.
+Baosky 调用 `provideLanguageModelChatInformation` 方法来发现可用模型并返回 `LanguageModelChatInformation` 对象的列表。
 
-Use the `options.silent` parameter to control whether to prompt the user for credentials or extra configuration:
+使用 `options.silent` 参数控制是否提示用户输入凭据或额外配置：
 
 ```typescript
 async provideLanguageModelChatInformation(
@@ -141,11 +143,11 @@ async provideLanguageModelChatInformation(
 }
 ```
 
-### Handle chat requests
+### 处理聊天请求
 
-The `provideLanguageModelChatResponse` method handles actual chat requests. The provider receives an array of messages in the `LanguageModelChatRequestMessage` format and you can optionally convert them to the format required by your language model API (see [Message format and conversion](#message-format-and-conversion)).
+`provideLanguageModelChatResponse` 处理实际的聊天请求的方法。提供程序接收 `LanguageModelChatRequestMessage` 格式的消息队列，您可以选择将它们转换为语言模型 API 所需的格式（请参阅 [Message format and conversion](#message-format-and-conversion)）。
 
-Use the `progress` parameter to stream response chunks. The response can include text parts, tool calls, and tool results (see [Response parts](#response-parts)).
+使用 `progress` 参数来传输响应块。响应可以包括文本部分、工具调用和工具结果（请参阅[Response parts](#response-parts)）。
 
 ```typescript
 async provideLanguageModelChatResponse(
@@ -167,9 +169,9 @@ async provideLanguageModelChatResponse(
 }
 ```
 
-### Provide token count
+### 提供令牌数量
 
-The `provideTokenCount` method is responsible for estimating the number of tokens in a given text input:
+`provideTokenCount` 方法负责估计给定文本输入中的标记数量：
 
 ```typescript
 async provideTokenCount(
@@ -184,9 +186,9 @@ async provideTokenCount(
 }
 ```
 
-## Message format and conversion
+## 消息格式及转换
 
-Your provider receives messages in the `LanguageModelChatRequestMessage` format, which you'll typically need to convert to your service's API format. The message content can be a mix of text parts, tool calls, and tool results.
+您的提供商接收 `LanguageModelChatRequestMessage` 格式的消息，您通常需要将其转换为服务的 API 格式。消息内容可以是文本部分、工具调用和工具结果的混合。
 
 ```typescript
 interface LanguageModelChatRequestMessage {
@@ -196,7 +198,7 @@ interface LanguageModelChatRequestMessage {
 }
 ```
 
-Optionally, convert these messages appropriately for your language model API:
+（可选）根据您的语言模型 API 适当转换这些消息：
 
 ```typescript
 private convertMessages(messages: readonly LanguageModelChatRequestMessage[]) {
@@ -210,20 +212,20 @@ private convertMessages(messages: readonly LanguageModelChatRequestMessage[]) {
 }
 ```
 
-## Response parts
+## 响应部分
 
-Your provider can report different types of response parts through the progress callback via the `LanguageModelResponsePart` type, which can be one of:
+您的提供程序可以通过 `LanguageModelResponsePart` 类型的进度回调报告不同类型的响应部分，该类型可以是以下之一：
 
-- `LanguageModelTextPart` - Text content
-- `LanguageModelToolCallPart` - Tool/function calls
-- `LanguageModelToolResultPart` - Tool result content
+- `LanguageModelTextPart` - 文本内容
+- `LanguageModelToolCallPart` - 工具/函数调用
+- `LanguageModelToolResultPart` - 工具结果内容
 
-## Getting started
+＃＃ 入门
 
-You can get started with a [basic example project](https://github.com/microsoft/baosky-插件-samples/blob/main/chat-model-provider-sample).
+您可以从 [basic example project](https://github.com/microsoft/baosky-插件-samples/blob/main/chat-model-provider-sample) 开始。
 
-## Related content
+## 相关内容
 
-- [Baosky API Reference](/api/references/baosky-api)
+- [Baosky API 参考](/api/references/baosky-api)
 - [Language Model API Guide](/api/插件-guides/ai/language-model)
 - [Chat API 插件](/api/插件-guides/ai/chat)

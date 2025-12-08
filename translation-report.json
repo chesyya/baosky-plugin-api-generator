@@ -1,0 +1,690 @@
+{
+  "summary": {
+    "total": 68,
+    "completed": 38,
+    "partial": 1,
+    "needed": 29
+  },
+  "files": [
+    {
+      "path": "extension-guides/ai/prompt-tsx.md",
+      "lines": 274,
+      "chineseChars": 1339,
+      "englishWords": 47,
+      "totalChars": 1386,
+      "chineseRatio": "96.6",
+      "englishRatio": "3.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/file-icon-theme.md",
+      "lines": 216,
+      "chineseChars": 1816,
+      "englishWords": 73,
+      "totalChars": 1889,
+      "chineseRatio": "96.1",
+      "englishRatio": "3.9",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/product-icon-theme.md",
+      "lines": 116,
+      "chineseChars": 894,
+      "englishWords": 40,
+      "totalChars": 934,
+      "chineseRatio": "95.7",
+      "englishRatio": "4.3",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/chat-tutorial.md",
+      "lines": 357,
+      "chineseChars": 1864,
+      "englishWords": 85,
+      "totalChars": 1949,
+      "chineseRatio": "95.6",
+      "englishRatio": "4.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/custom-editors.md",
+      "lines": 313,
+      "chineseChars": 5485,
+      "englishWords": 311,
+      "totalChars": 5796,
+      "chineseRatio": "94.6",
+      "englishRatio": "5.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/debugger-extension.md",
+      "lines": 379,
+      "chineseChars": 4110,
+      "englishWords": 255,
+      "totalChars": 4365,
+      "chineseRatio": "94.2",
+      "englishRatio": "5.8",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-capabilities/theming.md",
+      "lines": 46,
+      "chineseChars": 481,
+      "englishWords": 33,
+      "totalChars": 514,
+      "chineseRatio": "93.6",
+      "englishRatio": "6.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/command.md",
+      "lines": 236,
+      "chineseChars": 1388,
+      "englishWords": 97,
+      "totalChars": 1485,
+      "chineseRatio": "93.5",
+      "englishRatio": "6.5",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "working-with-extensions/bundling-extension.md",
+      "lines": 373,
+      "chineseChars": 2172,
+      "englishWords": 151,
+      "totalChars": 2323,
+      "chineseRatio": "93.5",
+      "englishRatio": "6.5",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "advanced-topics/python-extension-template.md",
+      "lines": 90,
+      "chineseChars": 1042,
+      "englishWords": 75,
+      "totalChars": 1117,
+      "chineseRatio": "93.3",
+      "englishRatio": "6.7",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/language-model-chat-provider.md",
+      "lines": 232,
+      "chineseChars": 680,
+      "englishWords": 52,
+      "totalChars": 732,
+      "chineseRatio": "92.9",
+      "englishRatio": "7.1",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/color-theme.md",
+      "lines": 141,
+      "chineseChars": 1226,
+      "englishWords": 96,
+      "totalChars": 1322,
+      "chineseRatio": "92.7",
+      "englishRatio": "7.3",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "advanced-topics/tslint-eslint-migration.md",
+      "lines": 78,
+      "chineseChars": 603,
+      "englishWords": 52,
+      "totalChars": 655,
+      "chineseRatio": "92.1",
+      "englishRatio": "7.9",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "ux-guidelines/context-menus.md",
+      "lines": 33,
+      "chineseChars": 196,
+      "englishWords": 17,
+      "totalChars": 213,
+      "chineseRatio": "92.0",
+      "englishRatio": "8.0",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/language-model-tutorial.md",
+      "lines": 342,
+      "chineseChars": 1842,
+      "englishWords": 166,
+      "totalChars": 2008,
+      "chineseRatio": "91.7",
+      "englishRatio": "8.3",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/language-model.md",
+      "lines": 226,
+      "chineseChars": 2203,
+      "englishWords": 200,
+      "totalChars": 2403,
+      "chineseRatio": "91.7",
+      "englishRatio": "8.3",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/ai-extensibility-overview.md",
+      "lines": 144,
+      "chineseChars": 1678,
+      "englishWords": 153,
+      "totalChars": 1831,
+      "chineseRatio": "91.6",
+      "englishRatio": "8.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "advanced-topics/remote-extensions.md",
+      "lines": 615,
+      "chineseChars": 6969,
+      "englishWords": 651,
+      "totalChars": 7620,
+      "chineseRatio": "91.5",
+      "englishRatio": "8.5",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "advanced-topics/extension-host.md",
+      "lines": 69,
+      "chineseChars": 1054,
+      "englishWords": 100,
+      "totalChars": 1154,
+      "chineseRatio": "91.3",
+      "englishRatio": "8.7",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "advanced-topics/using-proposed-api.md",
+      "lines": 69,
+      "chineseChars": 671,
+      "englishWords": 64,
+      "totalChars": 735,
+      "chineseRatio": "91.3",
+      "englishRatio": "8.7",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/tools.md",
+      "lines": 292,
+      "chineseChars": 2421,
+      "englishWords": 250,
+      "totalChars": 2671,
+      "chineseRatio": "90.6",
+      "englishRatio": "9.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-capabilities/overview.md",
+      "lines": 134,
+      "chineseChars": 1621,
+      "englishWords": 184,
+      "totalChars": 1805,
+      "chineseRatio": "89.8",
+      "englishRatio": "10.2",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "get-started/wrapping-up.md",
+      "lines": 64,
+      "chineseChars": 576,
+      "englishWords": 69,
+      "totalChars": 645,
+      "chineseRatio": "89.3",
+      "englishRatio": "10.7",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "ux-guidelines/command-palette.md",
+      "lines": 36,
+      "chineseChars": 150,
+      "englishWords": 20,
+      "totalChars": 170,
+      "chineseRatio": "88.2",
+      "englishRatio": "11.8",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "intro.md",
+      "lines": 71,
+      "chineseChars": 865,
+      "englishWords": 118,
+      "totalChars": 983,
+      "chineseRatio": "88.0",
+      "englishRatio": "12.0",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "get-started/your-first-extension.md",
+      "lines": 98,
+      "chineseChars": 659,
+      "englishWords": 99,
+      "totalChars": 758,
+      "chineseRatio": "86.9",
+      "englishRatio": "13.1",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "references/activation-events.md",
+      "lines": 380,
+      "chineseChars": 1690,
+      "englishWords": 261,
+      "totalChars": 1951,
+      "chineseRatio": "86.6",
+      "englishRatio": "13.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "ux-guidelines/editor-actions.md",
+      "lines": 39,
+      "chineseChars": 173,
+      "englishWords": 27,
+      "totalChars": 200,
+      "chineseRatio": "86.5",
+      "englishRatio": "13.5",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "get-started/extension-anatomy.md",
+      "lines": 137,
+      "chineseChars": 645,
+      "englishWords": 105,
+      "totalChars": 750,
+      "chineseRatio": "86.0",
+      "englishRatio": "14.0",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "ux-guidelines/overview.md",
+      "lines": 125,
+      "chineseChars": 1135,
+      "englishWords": 187,
+      "totalChars": 1322,
+      "chineseRatio": "85.9",
+      "englishRatio": "14.1",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "ux-guidelines/activity-bar.md",
+      "lines": 32,
+      "chineseChars": 147,
+      "englishWords": 26,
+      "totalChars": 173,
+      "chineseRatio": "85.0",
+      "englishRatio": "15.0",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-capabilities/common-capabilities.md",
+      "lines": 103,
+      "chineseChars": 862,
+      "englishWords": 161,
+      "totalChars": 1023,
+      "chineseRatio": "84.3",
+      "englishRatio": "15.7",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/mcp.md",
+      "lines": 438,
+      "chineseChars": 3262,
+      "englishWords": 620,
+      "totalChars": 3882,
+      "chineseRatio": "84.0",
+      "englishRatio": "16.0",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/custom-data-extension.md",
+      "lines": 39,
+      "chineseChars": 107,
+      "englishWords": 21,
+      "totalChars": 128,
+      "chineseRatio": "83.6",
+      "englishRatio": "16.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/ai/chat.md",
+      "lines": 596,
+      "chineseChars": 2942,
+      "englishWords": 595,
+      "totalChars": 3537,
+      "chineseRatio": "83.2",
+      "englishRatio": "16.8",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-capabilities/extending-workbench.md",
+      "lines": 52,
+      "chineseChars": 347,
+      "englishWords": 72,
+      "totalChars": 419,
+      "chineseRatio": "82.8",
+      "englishRatio": "17.2",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/markdown-extension.md",
+      "lines": 90,
+      "chineseChars": 413,
+      "englishWords": 87,
+      "totalChars": 500,
+      "chineseRatio": "82.6",
+      "englishRatio": "17.4",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/scm-provider.md",
+      "lines": 199,
+      "chineseChars": 849,
+      "englishWords": 518,
+      "totalChars": 1367,
+      "chineseRatio": "62.1",
+      "englishRatio": "37.9",
+      "status": "✅ 已完成"
+    },
+    {
+      "path": "extension-guides/overview.md",
+      "lines": 83,
+      "chineseChars": 313,
+      "englishWords": 318,
+      "totalChars": 631,
+      "chineseRatio": "49.6",
+      "englishRatio": "50.4",
+      "status": "⚠️  部分翻译"
+    },
+    {
+      "path": "working-with-extensions/continuous-integration.md",
+      "lines": 247,
+      "chineseChars": 207,
+      "englishWords": 546,
+      "totalChars": 753,
+      "chineseRatio": "27.5",
+      "englishRatio": "72.5",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/settings.md",
+      "lines": 36,
+      "chineseChars": 28,
+      "englishWords": 106,
+      "totalChars": 134,
+      "chineseRatio": "20.9",
+      "englishRatio": "79.1",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "working-with-extensions/publishing-extension.md",
+      "lines": 547,
+      "chineseChars": 767,
+      "englishWords": 3030,
+      "totalChars": 3797,
+      "chineseRatio": "20.2",
+      "englishRatio": "79.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/extension-manifest.md",
+      "lines": 320,
+      "chineseChars": 293,
+      "englishWords": 1415,
+      "totalChars": 1708,
+      "chineseRatio": "17.2",
+      "englishRatio": "82.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "working-with-extensions/testing-extension.md",
+      "lines": 370,
+      "chineseChars": 152,
+      "englishWords": 766,
+      "totalChars": 918,
+      "chineseRatio": "16.6",
+      "englishRatio": "83.4",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/web-extensions.md",
+      "lines": 744,
+      "chineseChars": 565,
+      "englishWords": 2956,
+      "totalChars": 3521,
+      "chineseRatio": "16.0",
+      "englishRatio": "84.0",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/webviews.md",
+      "lines": 63,
+      "chineseChars": 49,
+      "englishWords": 266,
+      "totalChars": 315,
+      "chineseRatio": "15.6",
+      "englishRatio": "84.4",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/sidebars.md",
+      "lines": 63,
+      "chineseChars": 61,
+      "englishWords": 348,
+      "totalChars": 409,
+      "chineseRatio": "14.9",
+      "englishRatio": "85.1",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/status-bar.md",
+      "lines": 63,
+      "chineseChars": 51,
+      "englishWords": 309,
+      "totalChars": 360,
+      "chineseRatio": "14.2",
+      "englishRatio": "85.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/views.md",
+      "lines": 114,
+      "chineseChars": 106,
+      "englishWords": 640,
+      "totalChars": 746,
+      "chineseRatio": "14.2",
+      "englishRatio": "85.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/notifications.md",
+      "lines": 98,
+      "chineseChars": 69,
+      "englishWords": 428,
+      "totalChars": 497,
+      "chineseRatio": "13.9",
+      "englishRatio": "86.1",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/panel.md",
+      "lines": 55,
+      "chineseChars": 41,
+      "englishWords": 273,
+      "totalChars": 314,
+      "chineseRatio": "13.1",
+      "englishRatio": "86.9",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/virtual-workspaces.md",
+      "lines": 212,
+      "chineseChars": 183,
+      "englishWords": 1226,
+      "totalChars": 1409,
+      "chineseRatio": "13.0",
+      "englishRatio": "87.0",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/tree-view.md",
+      "lines": 481,
+      "chineseChars": 178,
+      "englishWords": 1282,
+      "totalChars": 1460,
+      "chineseRatio": "12.2",
+      "englishRatio": "87.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/notebook.md",
+      "lines": 590,
+      "chineseChars": 256,
+      "englishWords": 1905,
+      "totalChars": 2161,
+      "chineseRatio": "11.8",
+      "englishRatio": "88.2",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/workspace-trust.md",
+      "lines": 117,
+      "chineseChars": 169,
+      "englishWords": 1263,
+      "totalChars": 1432,
+      "chineseRatio": "11.8",
+      "englishRatio": "88.2",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/telemetry.md",
+      "lines": 54,
+      "chineseChars": 54,
+      "englishWords": 412,
+      "totalChars": 466,
+      "chineseRatio": "11.6",
+      "englishRatio": "88.4",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/quick-picks.md",
+      "lines": 68,
+      "chineseChars": 47,
+      "englishWords": 366,
+      "totalChars": 413,
+      "chineseRatio": "11.4",
+      "englishRatio": "88.6",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/webview.md",
+      "lines": 1142,
+      "chineseChars": 398,
+      "englishWords": 3484,
+      "totalChars": 3882,
+      "chineseRatio": "10.3",
+      "englishRatio": "89.7",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/contribution-points.md",
+      "lines": 1574,
+      "chineseChars": 594,
+      "englishWords": 5494,
+      "totalChars": 6088,
+      "chineseRatio": "9.8",
+      "englishRatio": "90.2",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "ux-guidelines/walkthroughs.md",
+      "lines": 34,
+      "chineseChars": 12,
+      "englishWords": 110,
+      "totalChars": 122,
+      "chineseRatio": "9.8",
+      "englishRatio": "90.2",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/document-selector.md",
+      "lines": 101,
+      "chineseChars": 41,
+      "englishWords": 406,
+      "totalChars": 447,
+      "chineseRatio": "9.2",
+      "englishRatio": "90.8",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/testing.md",
+      "lines": 392,
+      "chineseChars": 137,
+      "englishWords": 1472,
+      "totalChars": 1609,
+      "chineseRatio": "8.5",
+      "englishRatio": "91.5",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/task-provider.md",
+      "lines": 134,
+      "chineseChars": 60,
+      "englishWords": 862,
+      "totalChars": 922,
+      "chineseRatio": "6.5",
+      "englishRatio": "93.5",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/when-clause-contexts.md",
+      "lines": 346,
+      "chineseChars": 134,
+      "englishWords": 2003,
+      "totalChars": 2137,
+      "chineseRatio": "6.3",
+      "englishRatio": "93.7",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/commands.md",
+      "lines": 534,
+      "chineseChars": 137,
+      "englishWords": 2240,
+      "totalChars": 2377,
+      "chineseRatio": "5.8",
+      "englishRatio": "94.2",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "extension-guides/virtual-documents.md",
+      "lines": 135,
+      "chineseChars": 37,
+      "englishWords": 703,
+      "totalChars": 740,
+      "chineseRatio": "5.0",
+      "englishRatio": "95.0",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/theme-color.md",
+      "lines": 1333,
+      "chineseChars": 372,
+      "englishWords": 10201,
+      "totalChars": 10573,
+      "chineseRatio": "3.5",
+      "englishRatio": "96.5",
+      "status": "❌ 需要翻译"
+    },
+    {
+      "path": "references/icons-in-labels.md",
+      "lines": 841,
+      "chineseChars": 183,
+      "englishWords": 8904,
+      "totalChars": 9087,
+      "chineseRatio": "2.0",
+      "englishRatio": "98.0",
+      "status": "❌ 需要翻译"
+    }
+  ]
+}

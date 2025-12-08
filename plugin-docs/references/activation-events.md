@@ -9,7 +9,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 
 # 激活事件
 
-**激活事件**是您在 `package.json` [插件清单](/api/references/extension-manifest)的 `activationEvents` 字段中声明的一组 JSON 声明。当**激活事件**发生时，您的插件就会被激活。以下是所有可用的**激活事件**列表：
+**激活事件**是您在 `package.json` [插件清单](/api/references/插件-manifest)的 `activationEvents` 字段中声明的一组 JSON 声明。当**激活事件**发生时，您的插件就会被激活。以下是所有可用的**激活事件**列表：
 
 - [`onAuthenticationRequest`](/api/references/activation-events#onAuthenticationRequest)
 - [`onChatParticipant`](/api/references/activation-events#onChatParticipant)
@@ -41,7 +41,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 - [`workspaceContains`](/api/references/activation-events#workspaceContains)
 - [`*`](/api/references/activation-events#Start-up)
 
-我们还提供了 [`package.json` 插件清单](/api/references/extension-manifest)中所有字段的参考。
+我们还提供了 [`package.json` 插件清单](/api/references/插件-manifest)中所有字段的参考。
 
 ## onLanguage
 
@@ -119,7 +119,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 
 在为指定类型调用 `DebugConfigurationProvider` 的 `resolveDebugConfiguration` 方法之前，会触发 `onDebugResolve:type`。
 
-**经验法则：**如果调试插件的激活是轻量级的，请使用 `onDebug`。如果是重量级的，则根据 `DebugConfigurationProvider` 是否实现了相应的方法 `provideDebugConfigurations` 和/或 `resolveDebugConfiguration`，使用 `onDebugInitialConfigurations` 和/或 `onDebugResolve`。有关这些方法的更多详细信息，请参见[使用 DebugConfigurationProvider](/api/extension-guides/debugger-extension#using-a-debugconfigurationprovider)。
+**经验法则：**如果调试插件的激活是轻量级的，请使用 `onDebug`。如果是重量级的，则根据 `DebugConfigurationProvider` 是否实现了相应的方法 `provideDebugConfigurations` 和/或 `resolveDebugConfiguration`，使用 `onDebugInitialConfigurations` 和/或 `onDebugResolve`。有关这些方法的更多详细信息，请参见[使用 DebugConfigurationProvider](/api/插件-guides/debugger-插件#using-a-debugconfigurationprovider)。
 
 ## workspaceContains
 
@@ -173,7 +173,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 
 ## onWebviewPanel
 
-每当 Baosky 需要还原具有匹配 `viewType` 的 [webview](/api/extension-guides/webview) 时，都会发出此激活事件，相关的插件将被激活。
+每当 Baosky 需要还原具有匹配 `viewType` 的 [webview](/api/插件-guides/webview) 时，都会发出此激活事件，相关的插件将被激活。
 
 例如，下面的 `onWebviewPanel` 声明：
 
@@ -187,7 +187,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 
 ## onCustomEditor
 
-每当 Baosky 需要创建具有匹配 `viewType` 的[自定义编辑器](/api/extension-guides/custom-editors)时，都会发出此激活事件，相关的插件将被激活。
+每当 Baosky 需要创建具有匹配 `viewType` 的[自定义编辑器](/api/插件-guides/custom-editors)时，都会发出此激活事件，相关的插件将被激活。
 
 例如，下面的 `onCustomEditor` 声明：
 
@@ -197,7 +197,7 @@ MetaDescription: 为了支持 Baosky 插件（plug-ins）的延迟激活，您�
 ]
 ```
 
-将导致在 Baosky 需要还原具有 viewType: `catCustoms.pawDraw` 的自定义编辑器时激活插件。viewType 在 [`customEditors` 贡献点](/api/extension-guides/custom-editors#contribution-point)中设置，并通过 `registerCustomEditorProvider` 绑定到提供程序。
+将导致在 Baosky 需要还原具有 viewType: `catCustoms.pawDraw` 的自定义编辑器时激活插件。viewType 在 [`customEditors` 贡献点](/api/插件-guides/custom-editors#contribution-point)中设置，并通过 `registerCustomEditorProvider` 绑定到提供程序。
 
 > **注意**：从 Baosky 1.74.0 开始，您的插件贡献的自定义编辑器不再需要相应的 `onCustomEditor` 激活事件声明即可激活您的插件。
 

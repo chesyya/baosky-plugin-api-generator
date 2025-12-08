@@ -1,111 +1,113 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 1e37b895-d0b3-45b8-a071-107bd665248e
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for views in a Baosky 插件.
+
+MetaDescription: Baosky 插件中视图的 UX 指南。
 ---
 
-# Views
+# 视图 (Views)
 
-[Views](/api/references/contribution-points#contributes.views) are containers of content that can appear in the Sidebar or Panel. Views can contain Tree Views, Welcome Views, or Webview Views and can also display View Actions. Views can also be rearranged by the user or moved to another View Container (for example, from the Primary Sidebar to the Secondary Sidebar). Limit the number of Views created as other 插件 can contribute in the same View Container.
+[视图](/api/references/contribution-points#contributes.views) 是可以出现在侧边栏或面板中的内容容器。视图可以包含树视图、欢迎视图或 Webview 视图，还可以显示视图操作。视图也可以由用户重新排列或移动到另一个视图容器（例如，从主侧边栏移动到辅助侧边栏）。限制创建的视图数量，因为其他插件可以在同一视图容器中贡献。
 
-**✔️ Do**
+**✔️ 建议**
 
-* Use existing icons when possible
-* Use file icons for language files
-* Use a Tree View for displaying data
-* Add an icon to every View (in case it is moved to the Activity Bar or Secondary Sidebar—both of which use icons to represent the View)
-* Keep the number of Views to a minimum
-* Keep the length of names to a minimum
-* Limit the use of custom Webview Views
+* 尽可能使用现有图标。
+* 为语言文件使用文件图标。
+* 使用树视图显示数据。
+* 为每个视图添加图标（以防它被移动到活动栏或辅助侧边栏——这两者都使用图标来表示视图）。
+* 将视图数量保持在最低限度。
+* 将名称长度保持在最低限度。
+* 限制自定义 Webview 视图的使用。
 
-**❌ Don't**
+**❌ 不建议**
 
-* Repeat existing functionality
-* Use tree items as single action items (for example, firing a Command on click)
-* Use custom Webview Views if not necessary
-* Use a Activity Bar Item (View Container) to open a Webview in the Editor
-
-<!-- 图片已移除 -->
-
-*This example uses a Tree View to display a flat list of Tree View Items.*
-
-## View Locations
-
-Views can be placed in [existing View Containers](/api/references/contribution-points#contributes.views), such as the File Explorer, Source Control (SCM) and Debug View Containers. They can also be added to a custom [View Container](/api/ux-guidelines/views#view-containers) via the Activity Bar. In addition, Views can be added to any View Container in the Panel. They can also be dragged to the Secondary Sidebar.
+* 重复现有功能。
+* 将树项目用作单操作项目（例如，单击时触发命令）。
+* 如果没有必要，使用自定义 Webview 视图。
+* 使用活动栏项目（视图容器）在编辑器中打开 Webview。
 
 <!-- 图片已移除 -->
 
-## View Containers
+*此示例使用树视图显示树视图项目的平面列表。*
 
-View Containers, as the name implies, are the "parent" container in which Views are rendered. 插件 can contribute custom View Containers to the [Activity Bar](/api/ux-guidelines/activity-bar)/[Primary Sidebar](/api/ux-guidelines/sidebars) or to the Panel. Users can drag an entire View Container from the Activity Bar to the Panel (or vice versa) and can also move individual Views.
+## 视图位置
 
-<!-- 图片已移除 -->
-
-*This is an example of a View Container placed in the Activity Bar/Primary Sidebar*
+视图可以放置在 [现有视图容器](/api/references/contribution-points#contributes.views) 中，例如文件资源管理器、源代码管理 (SCM) 和调试视图容器。它们也可以通过活动栏添加到自定义 [视图容器](/api/ux-guidelines/views#view-containers)。此外，视图可以添加到面板中的任何视图容器。它们也可以被拖到辅助侧边栏。
 
 <!-- 图片已移除 -->
 
-*This is an example of a View Container placed in the Panel*
+## 视图容器
 
-## Tree Views
-
-Tree Views are a powerful and flexible format to display content in a View. 插件 can add everything from simple flat lists to deeply nested trees.
-
-* Use descriptive labels to give context to items (if applicable)
-* Use product icons to distinguish between item types (if applicable)
-
-**❌ Don't**
-
-* Use Tree View Items as buttons to fire Commands
-* Avoid deep nesting unless necessary. A few levels of folders/items is a good balance for most situations.
-* Add more than three actions to an item
+视图容器，顾名思义，是渲染视图的“父”容器。插件可以将自定义视图容器贡献给 [活动栏](/api/ux-guidelines/activity-bar)/[主侧边栏](/api/ux-guidelines/sidebars) 或面板。用户可以将整个视图容器从活动栏拖到面板（反之亦然），也可以移动单个视图。
 
 <!-- 图片已移除 -->
 
-## Welcome Views
-
-When a view is empty, you can [add content to guide users](/api/references/contribution-points#contributes.viewsWelcome) on how to use your 插件 or get started. Links and icons are supported in Welcome views.
-
-**✔️ Do**
-
-* Use Welcome views only when necessary
-* Use links instead of buttons when possible
-* Use buttons only for primary actions
-* Use clear link text to indicate the link destination
-* Limit the length of the content
-* Limit the number of Welcome views
-* Limit the number of buttons in views
-
-**❌ Don't**
-
-* Use buttons if not necessary
-* Use Welcome views for promotions
-* Use generic "read more" as link text
+*这是放置在活动栏/主侧边栏中的视图容器示例*
 
 <!-- 图片已移除 -->
 
-*This example shows one primary action for the 插件 with an additional link to documentation.*
+*这是放置在面板中的视图容器示例*
 
-## Views With Progress
+## 树视图
 
-You can also [show progress in a view](/api/references/baosky-api#ProgressLocation) by referencing the view's ID.
+树视图是在视图中显示内容的一种强大而灵活的格式。插件可以添加从简单的平面列表到深层嵌套树的所有内容。
+
+* 使用描述性标签为项目提供上下文（如果适用）。
+* 使用产品图标区分项目类型（如果适用）。
+
+**❌ 不建议**
+
+* 使用树视图项目作为按钮来触发命令。
+* 避免深层嵌套，除非必要。几层文件夹/项目对于大多数情况来说是一个很好的平衡。
+* 向一个项目添加超过三个操作。
 
 <!-- 图片已移除 -->
 
-## View Actions
+## 欢迎视图
 
-Views can expose [View Actions](/api/插件-guides/tree-view#view-actions) on the View Toolbar. Be careful not to add too many actions to avoid noise and confusion. Using the built-in product icons helps an 插件 fit in alongside the native UI. However, an SVG icon can be supplied if a custom icon is needed.
+当视图为空时，您可以 [添加内容以引导用户](/api/references/contribution-points#contributes.viewsWelcome) 如何使用您的插件或入门。欢迎视图中支持链接和图标。
+
+**✔️ 建议**
+
+* 仅在必要时使用欢迎视图。
+* 尽可能使用链接而不是按钮。
+* 仅对主要操作使用按钮。
+* 使用清晰的链接文本指示链接目标。
+* 限制内容的长度。
+* 限制欢迎视图的数量。
+* 限制视图中按钮的数量。
+
+**❌ 不建议**
+
+* 如果没有必要，使用按钮。
+* 将欢迎视图用于促销。
+* 使用通用的“阅读更多”作为链接文本。
 
 <!-- 图片已移除 -->
 
-## Links
+*此示例显示了插件的一个主要操作，以及指向文档的附加链接。*
 
-* [View Container API reference](/api/references/contribution-points#contributes.viewsContainers)
-* [View API reference](/api/references/contribution-points#contributes.views)
-* [View Actions 插件 guide](/api/插件-guides/tree-view#view-actions)
-* [Tree View 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/tree-view-sample)
-* [Welcome View 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/welcome-view-content-sample)
-* [Webview View 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/webview-view-sample)
+## 带进度的视图
+
+您还可以通过引用视图的 ID 在视图中 [显示进度](/api/references/baosky-api#ProgressLocation)。
+
+<!-- 图片已移除 -->
+
+## 视图操作
+
+视图可以在视图工具栏上公开 [视图操作](/api/extension-guides/tree-view#view-actions)。请注意不要添加太多操作，以避免噪音和混淆。使用内置产品图标有助于插件与本机 UI 融为一体。但是，如果需要自定义图标，可以提供 SVG 图标。
+
+<!-- 图片已移除 -->
+
+## 链接
+
+* [视图容器 API 参考](/api/references/contribution-points#contributes.viewsContainers)
+* [视图 API 参考](/api/references/contribution-points#contributes.views)
+* [视图操作插件指南](/api/extension-guides/tree-view#view-actions)
+* [树视图插件示例](https://github.com/microsoft/baosky-extension-samples/tree/main/tree-view-sample)
+* [欢迎视图插件示例](https://github.com/microsoft/baosky-extension-samples/tree/main/welcome-view-content-sample)
+* [Webview 视图插件示例](https://github.com/microsoft/baosky-extension-samples/tree/main/webview-view-sample)

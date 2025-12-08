@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: bf0d9a5e-897b-450a-adf4-3c8ca9b8e9de
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: UX guidelines for the Command Palette in a Baosky 插件.
 ---
 
@@ -11,7 +13,7 @@ MetaDescription: UX guidelines for the Command Palette in a Baosky 插件.
 
 [命令面板](/api/references/contribution-points#contributes.commands)是找到所有命令的地方。重要的是你的命令名称要标记得当，以便用户可以轻松找到它们。
 
-**✔️ 应该**
+** ✔️ 应该 **
 
 * 在适当的地方添加键盘快捷键
 * 为命令使用清晰的名称

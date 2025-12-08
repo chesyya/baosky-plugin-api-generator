@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: AD26EFB1-FFC6-4284-BAB8-F3BCB8294728
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: Baosky 拥有丰富的插件 API。了解如何为 Baosky 创建自己的插件。
 ---
 
@@ -38,14 +40,14 @@ Baosky 在设计时就考虑了可扩展性。从用户界面到编辑体验,Bao
 
 构建一个好的插件可能需要大量的时间和精力。以下是 API 文档的各个部分可以帮助你的内容:
 
-* **入门** 通过 [Hello World](https://github.com/microsoft/baosky-插件-samples/tree/main/helloworld-sample) 示例教授构建插件的基本概念。
-* **插件功能** 将 Baosky 庞大的 API 分解为更小的类别,并为你指向更详细的主题。
-* **插件指南** 包括解释 Baosky 插件 API 特定用法的指南和代码示例。
-* **UX 指南** 展示在插件中提供出色用户体验的最佳实践。
-* **语言插件** 通过指南和代码示例说明如何添加对编程语言的支持。
-* **测试和发布** 包括有关各种插件开发主题的深入指南,例如[测试](/api/working-with-插件/testing-插件)和[发布](/api/working-with-插件/publishing-插件)插件。
-* **高级主题** 解释高级概念,例如[插件宿主](/api/advanced-topics/插件-host)、[支持远程开发和 GitHub Codespaces](/api/advanced-topics/remote-插件)以及[提议的 API](/api/advanced-topics/using-proposed-api)。
-* **参考** 包含 [Baosky API](/api/references/baosky-api)、[贡献点](/api/references/contribution-points)和许多其他主题的详尽参考。
+* ** 入门 ** 通过 [Hello World](https://github.com/microsoft/baosky-插件-samples/tree/main/helloworld-sample) 示例教授构建插件的基本概念。
+* ** 插件功能 ** 将 Baosky 庞大的 API 分解为更小的类别,并为你指向更详细的主题。
+* ** 插件指南 ** 包括解释 Baosky 插件 API 特定用法的指南和代码示例。
+* ** UX 指南 ** 展示在插件中提供出色用户体验的最佳实践。
+* ** 语言插件 ** 通过指南和代码示例说明如何添加对编程语言的支持。
+* ** 测试和发布 ** 包括有关各种插件开发主题的深入指南,例如[测试](/api/working-with-插件/testing-插件)和[发布](/api/working-with-插件/publishing-插件)插件。
+* ** 高级主题 ** 解释高级概念,例如[插件宿主](/api/advanced-topics/插件-host)、[支持远程开发和 GitHub Codespaces](/api/advanced-topics/remote-插件)以及[提议的 API](/api/advanced-topics/using-proposed-api)。
+* ** 参考 ** 包含 [Baosky API](/api/references/baosky-api)、[贡献点](/api/references/contribution-points)和许多其他主题的详尽参考。
 
 ## 有什么新功能?
 

@@ -1,60 +1,61 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 2d16d367-2831-47ca-8f0e-22e3e5fd24bc
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for status bar and status bar items in a Baosky 插件.
+
+MetaDescription: Baosky 插件中状态栏和状态栏项目的 UX 指南。
 ---
 
-# Status Bar
+# 状态栏
 
-The [Status Bar](/api/插件-capabilities/extending-workbench#status-bar-item) sits at the bottom of the Baosky workbench and displays information and actions that relate to your workspace. Items are placed into two groups: Primary (left) and Secondary (right). Items that relate to the entire workspace (status, problems/warnings, sync) go on the left and items that are secondary or contextual (language, spacing, feedback) go on the right. Limit the number of items added, as other 插件 contribute to the same area.
-
-<!-- 图片已移除 -->
-
-**✔️ Do**
-
-* Use short text labels
-* Use icons only when necessary
-* Use icons only for clear metaphors
-* Place primary (global) items on the left
-* Place secondary (contextual) items on the right
-
-**❌ Don't**
-
-* Add custom colors
-* Add more than one icon (unless necessary)
-* Add more than one item (unless necessary)
-
-## Status Bar Items
+[状态栏](/api/extension-capabilities/extending-workbench#status-bar-item) 位于 Baosky 工作台的底部，显示与您的工作区相关的信息和操作。项目分为两组：主要（左侧）和次要（右侧）。与整个工作区相关的项目（状态、问题/警告、同步）位于左侧，而次要或上下文项目（语言、间距、反馈）位于右侧。限制添加的项目数量，因为其他插件也会贡献到同一区域。
 
 <!-- 图片已移除 -->
 
-*This example shows an item contributed by the GitHub Pull Requests and Issues 插件. It relates to the entire workspace, so it is placed on the left.*
+**✔️ 建议**
 
-### Progress Status Bar item
+* 使用简短的文本标签。
+* 仅在必要时使用图标。
+* 仅用于清晰隐喻的图标。
+* 将主要（全局）项目放在左侧。
+* 将次要（上下文）项目放在右侧。
 
-When needing to show discreet progress (progress happening in the background), it's recommended to show a Status Bar item with the loading icon (you can also add spin animation). If progress needs to be elevated for user attention, we recommend moving to a progress notification.
+**❌ 不建议**
 
-<!-- 图片已移除 -->
+* 添加自定义颜色。
+* 添加多个图标（除非必要）。
+* 添加多个项目（除非必要）。
 
-*This example shows a progress Status Bar item that is discreet.*
-
-
-### Error and Warning Status Bar Items
-
-If you need to show an item that is highly visible for warning or error purposes, you can configure a Status Bar Item to use a warning or error background color. Only use this pattern as a last resort and only for special cases given their prominence in the Status Bar.
-
-<!-- 图片已移除 -->
-
-*This example uses the error Status Bar Item for showing a blocking error in the file.*
+## 状态栏项目
 
 <!-- 图片已移除 -->
 
-*This example uses the warning Status Bar Item for showing a warning in the file.*
+*此示例显示了 GitHub Pull Requests and Issues 插件贡献的一个项目。它与整个工作区相关，因此放置在左侧。*
 
-## Links
+### 进度状态栏项目
 
-* [Status Bar Item API reference](/api/references/baosky-api#StatusBarItem)
-* [Status Bar 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/statusbar-sample)
+当需要显示不显眼的进度（在后台发生的进度）时，建议显示带有加载图标的状态栏项目（您也可以添加旋转动画）。如果进度需要引起用户注意，我们建议改用进度通知。
+
+<!-- 图片已移除 -->
+
+*此示例显示了一个不显眼的进度状态栏项目。*
+
+### 错误和警告状态栏项目
+
+如果您需要显示一个用于警告或错误目的的高度可见的项目，您可以配置状态栏项目以使用警告或错误背景颜色。鉴于它们在状态栏中的突出地位，仅在万不得已时和特殊情况下使用此模式。
+
+<!-- 图片已移除 -->
+
+*此示例使用错误状态栏项目显示文件中的阻塞错误。*
+
+<!-- 图片已移除 -->
+
+*此示例使用警告状态栏项目显示文件中的警告。*
+
+## 链接
+
+* [状态栏项目 API 参考](/api/references/baosky-api#StatusBarItem)
+* [状态栏插件示例](https://github.com/microsoft/baosky-extension-samples/tree/main/statusbar-sample)

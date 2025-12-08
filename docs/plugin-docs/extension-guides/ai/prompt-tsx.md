@@ -1,46 +1,48 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 05d1e8f8-9bc0-45a4-a8c5-348005fd7ca8
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide for how to build language model prompts using the prompt-tsx library
+
+MetaDescription: 有关如何使用提示-tsx 库构建语言模型提示的指南
 ---
 
-# Craft language model prompts
+# 制作语言模型提示
 
-You can build language model prompts by using string concatenation, but it's hard to compose features and make sure your prompts stay within the context window of language models. To overcome these limitations, you can use the [`code`](https://github.com/microsoft/baosky-prompt-tsx) library.
+您可以使用字符串连接来构建语言模型提示，但很难组合功能并确保您的提示位于语言模型的上下文窗口内。要克服这些限制，您可以使用 [`code`](https://github.com/microsoft/baosky-prompt-tsx) 库。
 
-The `@vscode/prompt-tsx` library provides the following features:
+`@vscode/prompt-tsx` 库提供以下功能：
 
-- **TSX-based prompt rendering**: Compose prompts using TSX components, making them more readable and maintainable
-- **Priority-based pruning**: Automatically prune less important parts of prompts to fit within the model's context window
-- **Flexible token management**: Use properties like `flexGrow`, `flexReserve`, and `flexBasis` to cooperatively use token budgets
-- **Tool integration**: Integrate with Baosky's language model tools API
+- ** 基于 TSX 的提示渲染 ** ：使用 TSX 组件编写提示，使其更具可读性和可维护性
+- ** 基于优先级的修剪 ** ：自动修剪提示中不太重要的部分以适合模型的上下文窗口
+- ** 灵活的代币管理 ** ：使用 `flexGrow`、`flexReserve` 和 `flexBasis` 等属性来协作使用代币预算
+- ** 工具集成 ** ：与Baosky的语言模型工具API集成
 
-For a complete overview of all features and detailed usage instructions, refer to the [full README](https://github.com/microsoft/baosky-prompt-tsx/blob/main/README.md).
+有关所有功能的完整概述和详细的使用说明，请参阅[full README](https://github.com/microsoft/baosky-prompt-tsx/blob/main/README.md)。
 
-This article describes practical examples of prompt design with the library. The complete code for these examples can be found in the [prompt-tsx repository](https://github.com/microsoft/baosky-prompt-tsx/tree/main/examples).
+本文介绍了使用该库进行提示设计的实际示例。这些示例的完整代码可以在 [prompt-tsx repository](https://github.com/microsoft/baosky-prompt-tsx/tree/main/examples) 中找到。
 
-## Manage priorities in the conversation history
+## 管理对话历史记录中的优先级
 
-Including conversation history in your prompt is important as it enables the user to ask follow-up questions to previous messages. However, you want to make sure its priority is treated appropriately because history can grow large over time. We've found that the pattern which makes the most sense is usually to prioritize, in order:
+在提示中包含对话历史记录非常重要，因为它使用户能够针对之前的消息提出后续问题。但是，您希望确保其优先级得到适当处理，因为历史记录会随着时间的推移而变得越来越大。我们发现最有意义的模式通常是按优先级排列：
 
-1. The base prompt instructions
-2. The current user query
-3. The last couple of turns of chat history
-4. Any supporting data
-5. As much of the remaining history as you can fit
+1. 基本提示说明
+2.当前用户查询
+3.最近几轮聊天记录
+4. 任何支持数据
+5. 尽可能多地记录剩余的历史
 
-For this reason, split the history into two parts in the prompt, where recent prompt turns are prioritized over general contextual information.
+因此，将提示中的历史记录分为两部分，其中最近的提示轮次优先于一般上下文信息。
 
-In this library, each TSX node in the tree has a priority that is conceptually similar to a zIndex where a higher number means a higher priority.
+在此库中，树中的每个 TSX 节点都有一个优先级，该优先级在概念上类似于 zIndex，其中数字越大意味着优先级越高。
 
-### Step 1: Define the HistoryMessages component
+### 第 1 步：定义 HistoryMessages 组件
 
-To list history messages, define a `HistoryMessages` component. This example provides a good starting point, but you might have to expand it if you deal with more complex data types.
+要列出历史消息，请定义 `HistoryMessages` 组件。此示例提供了一个很好的起点，但如果您处理更复杂的数据类型，您可能需要扩展它。
 
-This example uses the `PrioritizedList` helper component, which automatically assigns ascending or descending priorities to each of its children.
+此示例使用 `PrioritizedList` 帮助器组件，该组件自动为其每个子组件分配升序或降序优先级。
 
 ```tsx
 import {
@@ -79,9 +81,9 @@ export class HistoryMessages extends PromptElement<IHistoryMessagesProps> {
 }
 ```
 
-### Step 2: Define the Prompt component
+### 步骤 2：定义提示组件
 
-Next, define a `MyPrompt` component that includes the base instructions, user query, and history messages with their appropriate priorities. Priority values are local among siblings. Remember that you might want to trim older messages in the history before touching anything else in the prompt, so you need to split up two `<HistoryMessages>` elements:
+接下来，定义一个 `MyPrompt` 组件，其中包括基本指令、用户查询和历史消息及其适当的优先级。优先级值在兄弟姐妹中是本地的。请记住，您可能希望在触摸提示中的其他任何内容之前修剪历史记录中的较旧消息，因此您需要拆分两个 `<HistoryMessages>` 元素：
 
 ```tsx
 import {
@@ -119,11 +121,11 @@ export class MyPrompt extends PromptElement<IMyPromptProps> {
 }
 ```
 
-Now, all older history messages are pruned before the library tries to prune other elements of the prompt.
+Now, all older history messages are pruned before the library tries 要 prune other elements of the prompt.
 
-### Step 3: Define the History component
+### 步骤 3：定义历史记录组件
 
-To make consumption a little easier, define a `History` component that wraps the history messages and uses the `passPriority` attribute to act as a pass-through container. With `passPriority`, its children are treated as if they are direct children of the containing element for prioritization purposes.
+为了使使用更容易，定义一个 `History` 组件来包装历史消息并使用 `passPriority` 属性充当传递容器。使用 `passPriority` 时，出于优先级目的，其子元素将被视为包含元素的直接子元素。
 
 ```tsx
 import { PromptElement, BasePromptElementProps } from '@vscode/prompt-tsx';
@@ -147,45 +149,45 @@ export class History extends PromptElement<IHistoryProps> {
 }
 ```
 
-Now, you can use and reuse this single element to include chat history:
+现在，您可以使用并重用此单个元素来包含聊天历史记录：
 
 ```tsx
 <History history={this.props.history} passPriority older={0} newer={80}/>
 ```
 
-## Grow file contents to fit
+## 增长文件内容以适应
 
-In this example, you want to include the contents of all files the user is currently looking at in their prompt. These files could be large, to the point where including all of them would lead to their text being pruned! This example shows how to use the `flexGrow` property to cooperatively size the file contents to fit within the token budget.
+在此示例中，您希望在提示中包含用户当前正在查看的所有文件的内容。这些文件可能很大，以至于包含所有这些文件会导致其文本被修剪！此示例演示如何使用 `flexGrow` 属性来协作调整文件内容的大小以适应令牌预算。
 
 ### Step 1: Define base instructions and user query
 
-First, you define a `UserMessage` component that includes the base instructions.
+首先，定义一个包含基本指令的 `UserMessage` 组件。
 
 ```tsx
 <UserMessage priority={100}>Here are your base instructions.</UserMessage>
 ```
 
-You then include the user query by using the `UserMessage` component. This component has a high priority to ensure it is included right after the base instructions.
+然后，您可以使用 `UserMessage` 组件包含用户查询。该组件具有高优先级，以确保它包含在基本指令之后。
 
 ```tsx
 <UserMessage priority={90}>{this.props.userQuery}</UserMessage>
 ```
 
-### Step 2: Include the File Contents
+### 第 2 步：包含文件内容
 
-You can now include the file contents by using the `FileContext` component. You assign it a [`code`](https://github.com/microsoft/baosky-prompt-tsx?tab=readme-ov-file#flex-behavior) value of `1` to ensure it is rendered after the base instructions, user query, and history.
+您现在可以使用 `FileContext` 组件包含文件内容。您为其分配 [`code`](https://github.com/microsoft/baosky-prompt-tsx?tab=readme-ov-file#flex-behavior) 值 `1`，以确保它在基本指令、用户查询和历史记录之后呈现。
 
 ```tsx
 <FileContext priority={70} flexGrow={1} files={this.props.files} />
 ```
 
-With a `flexGrow` value, the element gets any _unused_ token budget in its `PromptSizing` object that's passed into its `render()` and `prepare()` calls. You can read more about the behavior of flex elements in the [prompt-tsx documentation](https://github.com/microsoft/baosky-prompt-tsx?tab=readme-ov-file#flex-behavior).
+使用 `flexGrow` 值，该元素会在其 `PromptSizing` 对象中获取任何 _unused_ 令牌预算，该预算会传递到其 `render()` 和 `prepare()` 调用中。您可以在 [prompt-tsx documentation](https://github.com/microsoft/baosky-prompt-tsx?tab=readme-ov-file#flex-behavior) 中阅读有关 Flex 元素行为的更多信息。
 
-### Step 3: Include the history
+### 第 3 步：包含历史记录
 
-Next, include the history messages using the `History` component that you created previously. This is a little trickier, since you do want some history to be shown, but also want the file contents to take up most the prompt.
+接下来，使用您之前创建的 `History` 组件包含历史消息。这有点棘手，因为您确实希望显示一些历史记录，但也希望文件内容占据大部分提示。
 
-Therefore, assign the `History` component a `flexGrow` value of `2` to ensure it is rendered after all other elements, including `<FileContext />`. But, also set a `flexReserve` value of `"/5"` to reserve 1/5th of the total budget for history.
+因此，为 `History` 组件分配 `flexGrow` 值 `2`，以确保它在所有其他元素（包括 `<FileContext />`）之后渲染。但是，还要设置 `"/5"` 的 `flexReserve` 值，为历史保留总预算的 1/5。
 
 ```tsx
 <History
@@ -198,9 +200,9 @@ Therefore, assign the `History` component a `flexGrow` value of `2` to ensure it
 />
 ```
 
-### Step 3: Combine all elements of the prompt
+### 步骤 3：组合提示的所有元素
 
-Now, combine all the elements into the `MyPrompt` component.
+现在，将所有元素组合到 `MyPrompt` 组件中。
 
 ```tsx
 import {
@@ -242,11 +244,11 @@ export class MyPrompt extends PromptElement<IMyPromptProps> {
 }
 ```
 
-### Step 4: Define the FileContext component
+### 步骤 4：定义 FileContext 组件
 
-Finally, define a `FileContext` component that includes the contents of the files the user is currently looking at. Because you used `flexGrow`, you can implement logic that gets as many of the lines around the 'interesting' line for each file by using the information in `PromptSizing`.
+最后，定义一个 `FileContext` 组件，其中包含用户当前正在查看的文件的内容。由于您使用了 `flexGrow`，因此您可以使用 `PromptSizing` 中的信息来实现获取每个文件的“有趣”行周围尽可能多的行的逻辑。
 
-For brevity, the implementation logic for `getExpandedFiles` is omitted. You can check it out in the [prompt-tsx repo](https://github.com/microsoft/baosky-prompt-tsx/blob/5501d54a5b9a7608582e8419cd968a82ca317cc9/examples/file-contents.tsx#L103).
+为了简洁起见，省略了 `getExpandedFiles` 的实现逻辑。您可以在 [prompt-tsx repo](https://github.com/microsoft/baosky-prompt-tsx/blob/5501d54a5b9a7608582e8419cd968a82ca317cc9/examples/file-contents.tsx#L103) 中查看。
 
 ```tsx
 import { PromptElement, BasePromptElementProps, PromptSizing, PromptPiece } from '@vscode/prompt-tsx';
@@ -264,8 +266,8 @@ class FileContext extends PromptElement<{ files: IFilesToInclude[] } & BasePromp
 }
 ```
 
-## Summary
+＃＃ 概括
 
-In these examples, you created a `MyPrompt` component that includes base instructions, user query, history messages, and file contents with different priorities. You used `flexGrow` to cooperatively size the file contents to fit within the token budget.
+在这些示例中，您创建了一个 `MyPrompt` 组件，其中包括基本指令、用户查询、历史消息和具有不同优先级的文件内容。您使用 `flexGrow` 来协作调整文件内容的大小以适应令牌预算。
 
-By following this pattern, you can ensure that the most important parts of your prompt are always included, while less important parts are pruned as needed to fit within the model's context window. For the complete implementation details of the `getExpandedFiles` method and the `FileContextTracker` class, refer to the [prompt-tsx repo](https://github.com/microsoft/baosky-prompt-tsx/tree/main/examples).
+通过遵循此模式，您可以确保始终包含提示中最重要的部分，同时根据需要修剪不太重要的部分以适合模型的上下文窗口。有关 `getExpandedFiles` 方法和 `FileContextTracker` 类的完整实现细节，请参阅 [prompt-tsx repo](https://github.com/microsoft/baosky-prompt-tsx/tree/main/examples)。

@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 26f0c0d6-1ea8-4cc1-bd10-9fa744056e7c
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: Bundling Baosky 插件 (plug-ins) with webpack.
 ---
 
@@ -60,7 +62,7 @@ async function main() {
 	}
 }
 
-/**
+/ **
  * @type {import('esbuild').Plugin}
  */
 const esbuildProblemMatcherPlugin = {
@@ -117,7 +119,7 @@ esbuild 可以直接处理 TypeScript 文件。但是，esbuild 只是剥离所�
 
 `npm-run-all` 是一个 node 模块，它并行运行名称与给定前缀匹配的脚本。对我们来说，它运行 `watch:esbuild` 和 `watch:tsc` 脚本。你需要将 `npm-run-all` 添加到 `package.json` 中的 `devDependencies` 部分。
 
-`compile` 和 `watch` 脚本用于开发，它们生成带有源映射的打包文件。`package` 脚本由 `vscode:prepublish` 脚本使用，后者由 `vsce`（Baosky 打包和发布工具）使用，并在发布插件之前运行。向 esbuild 脚本传递 `--production` 标志会导致它压缩代码并创建一个小打包，但也会使调试变得困难，因此在开发过程中使用其他标志。要运行上述脚本，打开终端并输入 `npm run watch` 或从命令面板（`kb(workbench.action.showCommands)`）中选择 **Tasks: Run Task**。
+`compile` 和 `watch` 脚本用于开发，它们生成带有源映射的打包文件。`package` 脚本由 `vscode:prepublish` 脚本使用，后者由 `vsce`（Baosky 打包和发布工具）使用，并在发布插件之前运行。向 esbuild 脚本传递 `--production` 标志会导致它压缩代码并创建一个小打包，但也会使调试变得困难，因此在开发过程中使用其他标志。要运行上述脚本，打开终端并输入 `npm run watch` 或从命令面板（`kb(workbench.action.showCommands)`）中选择 ** Tasks: Run Task ** 。
 
 如果你按以下方式配置 `.vscode/tasks.json`，你将为每个 watch 任务获得一个单独的终端。
 ```json
@@ -210,7 +212,7 @@ npm i --save-dev ts-loader
 const path = require('path');
 const webpack = require('webpack');
 
-/**@type {import('webpack').Configuration}*/
+/ ** @type {import('webpack').Configuration}*/
 const config = {
     target: 'webworker', // vscode extensions run in webworker context for Baosky web 📖 -> https://webpack.js.org/configuration/target/#target
 
@@ -277,7 +279,7 @@ module.exports = config;
 },
 ```
 
-`compile` 和 `watch` 脚本用于开发，它们生成打包文件。`vscode:prepublish` 由 `vsce`（Baosky 打包和发布工具）使用，并在发布插件之前运行。区别在于[模式](https://webpack.js.org/concepts/mode/)，它控制优化级别。使用 `production` 会产生最小的打包，但也需要更长的时间，因此使用 `development`。要运行上述脚本，打开终端并输入 `npm run compile` 或从命令面板（`kb(workbench.action.showCommands)`）中选择 **Tasks: Run Task**。
+`compile` 和 `watch` 脚本用于开发，它们生成打包文件。`vscode:prepublish` 由 `vsce`（Baosky 打包和发布工具）使用，并在发布插件之前运行。区别在于[模式](https://webpack.js.org/concepts/mode/)，它控制优化级别。使用 `production` 会产生最小的打包，但也需要更长的时间，因此使用 `development`。要运行上述脚本，打开终端并输入 `npm run compile` 或从命令面板（`kb(workbench.action.showCommands)`）中选择 ** Tasks: Run Task ** 。
 
 ## 运行插件
 
@@ -311,7 +313,7 @@ module.exports = config;
         "--extensionTestsPath=${workspaceFolder}/out/test"
     ],
     "outFiles": [
-        "${workspaceFolder}/out/test/**/*.js"
+        "${workspaceFolder}/out/test/ ** /*.js"
     ],
     "preLaunchTask": "npm: compile-tests"
 }
@@ -356,7 +358,7 @@ esbuild.js
 
 ### webpack 关键依赖项
 
-运行 webpack 时，你可能会遇到类似 **Critical dependencies: the request of a dependency is an expression** 的警告。必须认真对待此类警告，你的打包可能无法工作。该消息意味着 webpack 无法静态确定如何打包某些依赖项。这通常是由动态 `require` 语句引起的，例如 `require(someDynamicVariable)`。
+运行 webpack 时，你可能会遇到类似 ** Critical dependencies: the request of a dependency is an expression ** 的警告。必须认真对待此类警告，你的打包可能无法工作。该消息意味着 webpack 无法静态确定如何打包某些依赖项。这通常是由动态 `require` 语句引起的，例如 `require(someDynamicVariable)`。
 
 要解决此警告，你应该：
 

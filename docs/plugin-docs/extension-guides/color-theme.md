@@ -1,10 +1,12 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 113b458a-3692-4ccf-a181-048bd572a120
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to creating Color Theme in Baosky
+
+MetaDescription: 在Baosky中创建颜色主题的指南
 ---
 
 # 颜色主题
@@ -72,25 +74,25 @@ Baosky 用户界面中可见的颜色分为两类：
 
 主题可以为语义令牌定义主题规则，如[语法高亮指南](/api/language-插件/syntax-highlight-guide#semantic-theming)中所述。
 
-## Create a new Color Theme
+## 创建一个新的颜色主题
 
-Once you have tweaked your theme colors using `workbench.colorCustomizations` and `editor.tokenColorCustomizations`, it's time to create the actual theme.
+使用 `工作台.colorCustomizations` 和 `editor.tokenColorCustomizations` 调整主题颜色后，就可以创建实际的主题了。
 
-1. Generate a theme file using the **Developer: Generate Color Theme from Current Settings** command from the **Command Palette**
-2. Use Baosky's [Yeoman](https://yeoman.io) 插件 generator to generate a new theme 插件:
+1. 使用 ** 命令面板 ** 中的 ** 开发人员：从当前设置生成颜色主题 ** 命令生成主题文件
+2. 使用Baosky的[Yeoman](https://yeoman.io)插件生成器生成新的主题插件：
 
    ```bash
    npm install -g yo generator-code
    yo code
    ```
 
-3. If you customized a theme as described above, select 'Start fresh'.
+3. 如果您如上所述自定义了主题，请选择“重新开始”。
 
    <!-- 图片已移除 -->
 
-4. Copy the theme file generated from your settings to the new 插件.
+4. 将根据您的设置生成的主题文件复制到新的插件中。
 
-You can also use an existing TextMate theme by telling the 插件 generator to import a TextMate theme file (.tmTheme) and package it for use in Baosky. Alternatively, if you have already downloaded the theme, replace the `tokenColors` section with a link to the `.tmTheme` file to use.
+您还可以通过告诉插件生成器导入 TextMate 主题文件 (.tmTheme) 并将其打包以在 Baosky 中使用来使用现有的 TextMate 主题。或者，如果您已经下载了主题，请将 `tokenColors` 部分替换为要使用的 `.tmTheme` 文件的链接。
 
 ```json
 {
@@ -107,32 +109,32 @@ You can also use an existing TextMate theme by telling the 插件 generator to i
 }
 ```
 
-> **Tip:** Give your color definition file the `-color-theme.json` suffix and you will get hovers, code completion, color decorators, and color pickers when editing.
+> ** 提示： ** 为您的颜色定义文件添加 `-color-主题.json` 后缀，您将在编辑时获得悬停、代码完成、颜色装饰器和颜色选择器。
 
-> **Tip:** [ColorSublime](https://colorsublime.github.io) has hundreds of existing TextMate themes to choose from. Pick a theme you like and copy the Download link to use in the Yeoman generator or into your 插件. It will be in a format like `"https://raw.githubusercontent.com/Colorsublime/Colorsublime-Themes/master/themes/(name).tmTheme"`
+> ** 提示： ** [ColorSublime](https://colorsublime.github.io) 有数百个现有 TextMate 主题可供选择。选择您喜欢的主题，然后复制下载链接以在 Yeoman 生成器中使用或插入您的插件中。其格式类似于 `"https://raw.githubusercontent.com/Colorsublime/Colorsublime-Themes/master/themes/(name).tmTheme"`
 
-## Test a new Color Theme
+## 测试新的颜色主题
 
-To try out the new theme, press F5 to launch an 插件 Development Host window.
+要 try out the new theme, press F5 要 launch an 插件 Development Host window.
 
-There, open the Color Theme picker with **File** > **Preferences** > **Theme** > **Color Theme** and you can see your theme in the dropdown list. Arrow up and down to see a live preview of your theme.
+在那里，通过 ** 文件 ** > ** 首选项 ** > ** 主题 ** > ** 颜色主题 ** 打开颜色主题选择器，您可以在下拉列表中看到您的主题。向上和向下箭头可查看主题的实时预览。
 
 <!-- 图片已移除 -->
 
-Changes to the theme file are applied live in the `插件 Development Host` window.
+对主题文件的更改将实时应用在 `插件 Development Host` 窗口中。
 
-## Publishing a Theme to the 插件 Marketplace
+## 将主题发布到插件市场
 
-If you'd like to share your new theme with the community, you can publish it to the [插件 Marketplace](/docs/configure/插件/插件-marketplace). Use the [vsce publishing tool](/api/working-with-插件/publishing-插件) to package your theme and publish it to the Baosky Marketplace.
+如果您想与社区分享您的新主题，可以将其发布到 [插件 市场](/docs/configure/插件/插件-市场)。使用[vsce publishing tool](/api/working-with-插件/publishing-插件)打包您的主题并将其发布到Baosky 市场。
 
-> **Tip:** To make it easy for users to find your theme, include the word "theme" in the 插件 description and set the `Category` to `Themes` in your `package.json`.
+> ** 提示： ** 为了让用户轻松找到您的主题，请在插件描述中包含“主题”一词，并将 `package.json` 中的 `Category` 设置为 `Themes`。
 
-We also have recommendations on how to make your 插件 look great on the Baosky Marketplace, see [Marketplace Presentation Tips](/api/references/插件-manifest#marketplace-presentation-tips).
+我们还提供了有关如何使您的插件在 Baosky 市场 上看起来很棒的建议，请参阅 [市场 Presentation Tips](/api/references/插件-清单#市场-presentation-tips)。
 
-## Adding a new Color ID
+## 添加新的颜色 ID
 
-Color IDs can also be contributed by 插件 through the [color contribution point](/api/references/contribution-points#contributes.colors). These colors also appear when using code complete in the `workbench.colorCustomizations` settings and the color theme definition file. Users can see what colors an 插件 defines in the [插件 contributions](/docs/configure/插件/插件-marketplace#_extension-details) tab.
+颜色 ID 也可以由插件通过 [color contribution point](/api/references/contribution-points#contributes.colors) 提供。当使用 `工作台.colorCustomizations` 设置和颜色主题定义文件中的完整代码时，也会出现这些颜色。用户可以在 [插件 contributions](/docs/configure/插件/插件-市场#_extension-details) 选项卡中查看插件定义的颜色。
 
-## Further reading
+## 进一步阅读
 
-- [CSS Tricks - Creating a Baosky theme](https://css-tricks.com/creating-a-vs-code-theme/)
+- [CSS Tricks - Creating a Baosky 主题](https://css-tricks.com/creating-a-vs-code-主题/)

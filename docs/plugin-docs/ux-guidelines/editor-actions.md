@@ -1,17 +1,19 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: ce5c9fff-df86-454a-b4e8-4ae05c8158e2
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: UX guidelines for editor actions in a Baosky 插件.
 ---
 
 # 编辑器操作
 
-[编辑器操作](/api/references/contribution-points#contributes.commands)可以出现在编辑器工具栏中。你可以添加图标作为快速操作，或在溢出菜单（**...**）下添加菜单项。
+[编辑器操作](/api/references/contribution-points#contributes.commands)可以出现在编辑器工具栏中。你可以添加图标作为快速操作，或在溢出菜单（ ** ... ** ）下添加菜单项。
 
-**✔️ 应该**
+** ✔️ 应该 **
 
 * 仅在上下文适当时显示
 * 使用图标库中的图标

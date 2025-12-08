@@ -1,23 +1,25 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 31f461b7-c216-414a-b701-78c205fde8a8
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide for updating Baosky 插件 to support Workspace Trust
+
+MetaDescription: Baosky 插件更新指南，以支持工作区信任
 ---
 
-# Workspace Trust 插件 Guide
+# 工作区信任插件指南
 
-## What is Workspace Trust?
+## 什么是工作区信任？
 
-[Workspace Trust](/docs/editor/workspace-trust) is a feature driven by the security risks associated with unintended code execution when a user opens a workspace in Baosky. For example, consider that a language 插件, in order to provide functionality, may execute code from the currently loaded workspace. In this scenario, the user should trust that the contents of the workspace are not malicious. Workspace Trust centralizes this decision within Baosky and supports a [Restricted Mode](/docs/editor/workspace-trust#_restricted-mode) to protect against automatic code execution so that 插件 authors do not have to handle this infrastructure themselves. Baosky offers static declaration and API support to onboard 插件 quickly without the need to duplicate code across 插件.
+[工作区信任](/docs/editor/workspace-trust) 是一项由用户在 Baosky 中打开工作区时意外代码执行相关的安全风险驱动的功能。例如，考虑到语言插件为了提供功能，可能会执行当前加载的工作区中的代码。在这种情况下，用户应该信任工作区的内容不是恶意的。工作区信任在 Baosky 中集中了这一决策，并支持 [受限模式](/docs/editor/workspace-trust#_restricted-mode) 来防止自动代码执行，这样插件作者就不必自己处理这些基础设施。Baosky 提供了静态声明和 API 支持，以便快速加载插件，而无需在插件之间复制代码。
 
-## Onboarding
+## 入门
 
-### Static declarations
+### 静态声明
 
-In your 插件's `package.json`, Baosky supports the following new `capabilities` property `untrustedWorkspaces`:
+在您的插件的 `package.json` 中，Baosky 支持以下新的 `capabilities` 属性 `untrustedWorkspaces`：
 
 ```typescript
 capabilities:
@@ -27,88 +29,88 @@ capabilities:
     { supported: 'limited', description: string, restrictedConfigurations?: string[] }
 ```
 
-For the `supported` property, the following values are accepted:
+对于 `supported` 属性，接受以下值：
 
-* `true` - The 插件 is fully supported in Restricted Mode as it does not need Workspace Trust to perform any functionality. It will be enabled exactly as before.
-* `false` - The 插件 is not supported in Restricted Mode as it cannot function without Workspace Trust. It will remain disabled until Workspace Trust is granted.
-* `'limited'` - Some features of the 插件 are supported in Restricted Mode. Trust-sensitive features should be disabled until Workspace Trust is granted. The 插件 can use the Baosky API to hide or disable these features. Workspace settings can be gated by trust automatically using the `restrictedConfigurations` property.
+* `true` - 插件在受限模式下完全受支持，因为它不需要工作区信任来执行任何功能。它将像以前一样启用。
+* `false` - 插件在受限模式下不受支持，因为没有工作区信任它无法运行。它将保持禁用状态，直到授予工作区信任。
+* `'limited'` - 插件的某些功能在受限模式下受支持。在授予工作区信任之前，应禁用信任敏感的功能。插件可以使用 Baosky API 来隐藏或禁用这些功能。工作区设置可以使用 `restrictedConfigurations` 属性自动通过信任进行控制。
 
-For the `description` property, a description of why trust is needed must be provided to help the user understand what features will be disabled or what they should review before granting or denying Workspace Trust. If `supported` is set to `true`, this property is ignored.
+对于 `description` 属性，必须提供关于为何需要信任的描述，以帮助用户了解在授予或拒绝工作区信任之前哪些功能将被禁用或他们应该审查什么。如果 `supported` 设置为 `true`，则忽略此属性。
 
-The value for the `description` property should be added to `package.nls.json` and then referenced in the `package.json` file for localization support.
+`description` 属性的值应添加到 `package.nls.json` 中，然后在 `package.json` 文件中引用以支持本地化。
 
-The `restrictedConfigurations` property takes an array of configuration setting IDs. For the settings listed, the 插件 will not be given workspace-defined values when in Restricted Mode for an untrusted workspace.
+`restrictedConfigurations` 属性接受配置设置 ID 的数组。对于列出的设置，在受限模式下针对不受信任的工作区时，插件将不会获得工作区定义的值。
 
-## How to support Restricted Mode?
+## 如何支持受限模式？
 
-To help 插件 authors understand what is in scope for Workspace Trust and what types of features are safe in Restricted Mode, here are a list of questions to consider.
+为了帮助插件作者了解工作区信任的范围以及哪些类型的功能在受限模式下是安全的，这里有一些需要考虑的问题列表。
 
-### Does my 插件 have a main entry point?
+### 我的插件有主入口点吗？
 
-If an 插件 does not have a `main` entry point (for example themes and language grammars), the 插件 does not require Workspace Trust. 插件 authors do not need to take any action for such 插件 as they will continue to function independent whether the workspace is trusted or not.
+如果插件没有 `main` 入口点（例如主题和语言语法），则该插件不需要工作区信任。插件作者无需对此类插件采取任何操作，因为无论工作区是否受信任，它们都将继续运行。
 
-### Does my 插件 rely on files in the opened workspace to provide features?
+### 我的插件是否依赖打开的工作区中的文件来提供功能？
 
-This can mean things like settings that can be set by the workspace or actual code in the workspace. If the 插件 never uses any of the contents of the workspace, it probably doesn't require trust. Otherwise, take a look at the other questions.
+这可能意味着可以由工作区设置的设置或工作区中的实际代码。如果插件从不使用工作区的任何内容，它可能不需要信任。否则，请查看其他问题。
 
-### Does my 插件 treat any contents of the workspace as code?
+### 我的插件是否将工作区的任何内容视为代码？
 
-The most common example of this is using a project's workspace dependencies, such as the Node.js modules stored in the local workspace. A malicious workspace might check in a compromised version of the module. Thus, this is a security risk for the user and 插件. In addition, an 插件 may rely on JavaScript or other configuration files that control the 插件 or other modules' behavior. There are many other examples, such as executing an opened code file to determine its output for error reporting.
+最常见的例子是使用项目的依赖项，例如存储在本地工作区中的 Node.js 模块。恶意工作区可能会签入模块的受损版本。因此，这对用户和插件都是安全风险。此外，插件可能依赖于控制插件或其他模块行为的 JavaScript 或其他配置文件。还有许多其他示例，例如执行打开的代码文件以确定其输出以进行错误报告。
 
-### Does my 插件 use settings that determine code execution that can be defined in the workspace?
+### 我的插件是否使用可以在工作区中定义的决定代码执行的设置？
 
-Your 插件 might use settings values as flags to a CLI that your 插件 executes. If these settings are overridden by a malicious workspace, they could be used as an attack vector against your 插件. On the other hand, if the settings' values are only used to detect certain conditions, then it may not be a security risk and does not require Workspace Trust. For example, an 插件 might check whether the value of a preferred shell setting is `bash` or `pwsh` to determine what documentation to show. The [Configurations (settings)](#configurations-settings) section below has guidance on settings to help you find the optimal configuration for your 插件.
+您的插件可能会将设置值作为标志用于插件执行的 CLI。如果这些设置被恶意工作区覆盖，它们可以用作针对您的插件的攻击向量。另一方面，如果设置的值仅用于检测某些条件，那么它可能不是安全风险，并且不需要工作区信任。例如，插件可能会检查首选 shell 设置的值是 `bash` 还是 `pwsh`，以确定要显示的文档。下面的 [配置（设置）](#configurations-settings) 部分提供了有关设置的指南，以帮助您找到插件的最佳配置。
 
-This is not an exhaustive list of cases that might require Workspace Trust. As we review more 插件, we will update this list. Use this list to think of similar behavior your 插件 might be doing when considering Workspace Trust.
+这并不是可能需要工作区信任的所有情况的详尽列表。随着我们要审查更多插件，我们将更新此列表。在考虑工作区信任时，请使用此列表来思考您的插件可能正在执行的类似行为。
 
-### What if I don't make changes to my 插件?
+### 如果我不更改我的插件会怎样？
 
-As mentioned above, an 插件 that does not contribute anything to their `package.json` will be treated as not supporting Workspace Trust. It will be disabled when a workspace is in Restricted Mode and the user will be notified that some 插件 are not working due to Workspace Trust. This measure is the most security-conscious approach for the user. Even though this is the default, it is a best practice to set the appropriate value indicating that as an 插件 author, you have made the effort to protect the user and your 插件 from malicious workspace content.
+如上所述，对其 `package.json` 没有任何贡献的插件将被视为不支持工作区信任。当工作区处于受限模式时，它将被禁用，并且用户将收到通知，指出由于工作区信任，某些插件无法工作。这种措施是对用户最具有安全意识的方法。即使这是默认设置，最佳实践也是设置适当的值，表明作为插件作者，您已努力保护用户和您的插件免受恶意工作区内容的侵害。
 
-## Workspace Trust API
+## 工作区信任 API
 
-As described above, the first step to using the API is adding the static declarations to your `package.json`. The easiest method of onboarding would be to use a `false` value for the `supported` property. Once again, this is the default behavior even if you do nothing, but it's a good signal to the user that you have made a deliberate choice. In this case, your 插件 does not need to do anything else. It will not be activated until trust is given and then your 插件 will know that it is executing with the consent of the user. However, if your 插件 only requires trust for part of its functionality, this is likely not the best option.
+如上所述，使用 API 的第一步是将静态声明添加到您的 `package.json`。最简单的入门方法是对 `supported` 属性使用 `false` 值。再一次，即使您什么都不做，这也是默认行为，但这是一个向用户发出的良好信号，表明您做出了深思熟虑的选择。在这种情况下，您的插件不需要做任何其他事情。直到给予信任，它才会被激活，然后您的插件将知道它是在用户同意的情况下执行的。但是，如果您的插件仅部分功能需要信任，这可能不是最佳选择。
 
-For 插件 that wish to gate their features on Workspace Trust, they should use the `'limited'` value for the `supported` property, and Baosky provides the following API:
+对于希望基于工作区信任控制其功能的插件，它们应该对 `supported` 属性使用 `'limited'` 值，并且 Baosky 提供以下 API：
 
 ```typescript
 export namespace workspace {
-  /**
+  / **
     * When true, the user has explicitly trusted the contents of the workspace.
     */
   export const isTrusted: boolean;
 
-  /**
+  / **
     * Event that fires when the current workspace has been trusted.
     */
   export const onDidGrantWorkspaceTrust: Event<void>;
 }
 ```
 
-Use the `isTrusted` property to determine if the current workspace is trusted and the `onDidGrantWorkspaceTrust` event to listen for when trust has been granted to the workspace. You can use this API to block specific code paths and perform any necessary registrations once the workspace has been trusted.
+使用 `isTrusted` 属性来确定当前工作区是否受信任，并使用 `onDidGrantWorkspaceTrust` 事件来监听何时授予工作区信任。一旦工作区受到信任，您就可以使用此 API 阻止特定的代码路径并执行任何必要的注册。
 
-Baosky also exposes a context key `isWorkspaceTrusted` for use in `when` clauses as described below.
+Baosky 还公开了一个上下文键 `isWorkspaceTrusted`，用于在 `when` 子句中使用，如下所述。
 
-## Contribution points
+## 贡献点
 
-### Commands, views, or other UI
+### 命令、视图或其他 UI
 
-When the user has not trusted the workspace, they will be operating in Restricted Mode with limited functionality geared towards browsing code. Any features that you disable in Restricted Mode should be hidden from the user. This can be done via [when clause contexts](/api/references/when-clause-contexts) and the context key `isWorkspaceTrusted`. A command can still be called even if it is not presented in the UI, so you should block execution or not register a command based on the API above in your 插件 code.
+当用户未信任工作区时，他们将在受限模式下操作，功能有限，主要面向浏览代码。您在受限模式下禁用的任何功能都应对用户隐藏。这可以通过 [when 子句上下文](/api/references/when-clause-contexts) 和上下文键 `isWorkspaceTrusted` 来完成。即使命令未在 UI 中显示，仍然可以调用该命令，因此您应该阻止执行或根据插件代码中的上述 API 不注册命令。
 
-### Configurations (settings)
+### 配置（设置）
 
-First, you should review your settings to determine if they need to take trust into account. As described above, a workspace may define a value for a setting that your 插件 consumes that is malicious to the use. If you identify settings that are vulnerable, you should use `'limited'` for the `supported` property and list the setting ID in the `restrictedConfigurations` array.
+首先，您应该检查您的设置以确定它们是否需要考虑信任。如上所述，工作区可能会为您插件使用的设置定义一个对使用来说是恶意的值。如果您发现易受攻击的设置，则应对 `supported` 属性使用 `'limited'`，并在 `restrictedConfigurations` 数组中列出设置 ID。
 
-When you add a setting ID to the `restrictedConfigurations` array, Baosky will only return the user-defined value of the setting in Restricted Mode. Your 插件 then doesn't need to make any additional code changes to handle the setting. When trust is granted, a configuration change event will fire in addition to the Workspace Trust event.
+当您将设置 ID 添加到 `restrictedConfigurations` 数组时，Baosky 将仅返回受限模式下用户定义的设置值。您的插件随后无需进行任何其他代码更改来处理设置。当授予信任时，除了工作区信任事件之外，还会触发配置更改事件。
 
-### Debug 插件
+### 调试插件
 
-Baosky will prevent debugging in Restricted Mode. For this reason, debugging 插件 generally do not need to require trust and should select `true` for the `supported` property. However, if your 插件 provides additional functionality, commands, or settings that are not part of the built-in debugging flow, you should use `'limited'` and follow the above guidance.
+Baosky 将阻止在受限模式下进行调试。因此，调试插件通常不需要要求信任，并且应该为 `supported` 属性选择 `true`。但是，如果您的插件提供不属于内置调试流程的附加功能、命令或设置，则应使用 `'limited'` 并遵循上述指南。
 
-### Task providers
+### 任务提供程序
 
-Similar to debugging, Baosky prevents running tasks in Restricted Mode. If your 插件 provides additional functionality, commands, or settings that are not part of the built-in tasks flow, you should use `'limited'` and follow the above guidance. Otherwise, you can specify `supported: true`.
+与调试类似，Baosky 阻止在受限模式下运行任务。如果您的插件提供不属于内置任务流程的附加功能、命令或设置，则应使用 `'limited'` 并遵循上述指南。否则，您可以指定 `supported: true`。
 
-## Testing Workspace Trust
+## 测试工作区信任
 
-See the [Workspace Trust user guide](/docs/editor/workspace-trust) for details on enabling and configuring Workspace Trust.
+有关启用和配置工作区信任的详细信息，请参阅 [工作区信任用户指南](/docs/editor/workspace-trust)。

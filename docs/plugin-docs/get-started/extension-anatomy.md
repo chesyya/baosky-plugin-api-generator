@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 8027f6fb-6c9e-4106-8ef1-f9b0ba1b7085
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: 解释 Baosky 插件的结构
 ---
 
@@ -13,18 +15,18 @@ MetaDescription: 解释 Baosky 插件的结构
 
 `Hello World` 插件做了 3 件事:
 
-- 注册 [`code`](/api/references/activation-events#onCommand) [**激活事件**](/api/references/activation-events): `onCommand:helloworld.helloWorld`,这样当用户运行 `Hello World` 命令时,插件就会被激活。
-  > **注意:** 从 [Baosky 1.74.0](#) 开始,在 `package.json` 的 `commands` 部分声明的命令在调用时会自动激活插件,无需在 `activationEvents` 中显式添加 `onCommand` 条目。
-- 使用 [`code`](/api/references/contribution-points#contributes.commands) [**贡献点**](/api/references/contribution-points)使 `Hello World` 命令在命令面板中可用,并将其绑定到命令 ID `helloworld.helloWorld`。
-- 使用 [`code`](/api/references/baosky-api#commands.registerCommand) [**Baosky API**](/api/references/baosky-api) 将函数绑定到注册的命令 ID `helloworld.helloWorld`。
+- 注册 [`code`](/api/references/activation-events#onCommand) [ ** 激活事件 ** ](/api/references/activation-events): `onCommand:helloworld.helloWorld`,这样当用户运行 `Hello World` 命令时,插件就会被激活。
+  > ** 注意: ** 从 [Baosky 1.74.0](#) 开始,在 `package.json` 的 `commands` 部分声明的命令在调用时会自动激活插件,无需在 `activationEvents` 中显式添加 `onCommand` 条目。
+- 使用 [`code`](/api/references/contribution-points#contributes.commands) [ ** 贡献点 ** ](/api/references/contribution-points)使 `Hello World` 命令在命令面板中可用,并将其绑定到命令 ID `helloworld.helloWorld`。
+- 使用 [`code`](/api/references/baosky-api#commands.registerCommand) [ ** Baosky API ** ](/api/references/baosky-api) 将函数绑定到注册的命令 ID `helloworld.helloWorld`。
 
 理解这三个概念对于在 Baosky 中编写插件至关重要:
 
-- [**激活事件**](/api/references/activation-events): 使插件被激活的事件。
-- [**贡献点**](/api/references/contribution-points): 在 `package.json` [插件清单](#插件-manifest)中进行的静态声明,用于扩展 Baosky。
-- [**Baosky API**](/api/references/baosky-api): 可以在插件代码中调用的一组 JavaScript API。
+- [ ** 激活事件 ** ](/api/references/activation-events): 使插件被激活的事件。
+- [ ** 贡献点 ** ](/api/references/contribution-points): 在 `package.json` [插件清单](#插件-manifest)中进行的静态声明,用于扩展 Baosky。
+- [ ** Baosky API ** ](/api/references/baosky-api): 可以在插件代码中调用的一组 JavaScript API。
 
-一般来说,你的插件会结合使用贡献点和 Baosky API 来扩展 Baosky 的功能。[插件功能概述](/api/插件-capabilities/overview)主题可以帮助你为插件找到正确的贡献点和 Baosky API。
+一般来说,你的插件会结合使用贡献点和 Baosky API 来扩展 Baosky 的功能。[插件功能概述](/api/插件-capabilities/概述)主题可以帮助你为插件找到正确的贡献点和 Baosky API。
 
 让我们仔细看看 `Hello World` 示例的源代码,看看这些概念是如何应用的。
 
@@ -96,11 +98,11 @@ MetaDescription: 解释 Baosky 插件的结构
 }
 ```
 
-> **注意**: 如果你的插件目标是 1.74 之前的 Baosky 版本,则必须在 `activationEvents` 中显式列出 `onCommand:helloworld.helloWorld`。
+> ** 注意 ** : 如果你的插件目标是 1.74 之前的 Baosky 版本,则必须在 `activationEvents` 中显式列出 `onCommand:helloworld.helloWorld`。
 
 ## 插件入口文件
 
-插件入口文件导出两个函数:`activate` 和 `deactivate`。当注册的**激活事件**发生时,`activate` 会被执行。`deactivate` 让你有机会在插件被停用之前进行清理。对于许多插件,可能不需要显式清理,可以删除 `deactivate` 方法。但是,如果插件需要在 Baosky 关闭或插件被禁用或卸载时执行操作,这就是执行此操作的方法。
+插件入口文件导出两个函数:`activate` 和 `deactivate`。当注册的 ** 激活事件 ** 发生时,`activate` 会被执行。`deactivate` 让你有机会在插件被停用之前进行清理。对于许多插件,可能不需要显式清理,可以删除 `deactivate` 方法。但是,如果插件需要在 Baosky 关闭或插件被禁用或卸载时执行操作,这就是执行此操作的方法。
 
 Baosky 插件 API 在 [@types/baosky](https://www.npmjs.com/package/@types/baosky) 类型定义中声明。`vscode` 类型定义的版本由 `package.json` 中 `engines.vscode` 字段的值控制。`vscode` 类型为你的代码提供 IntelliSense、转到定义和其他 TypeScript 语言功能。
 

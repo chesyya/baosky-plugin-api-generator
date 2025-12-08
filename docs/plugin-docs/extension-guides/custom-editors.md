@@ -1,61 +1,63 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 6eb86aa4-0f4c-4168-b34a-6ec6b204e960
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use the Custom Editor API to create customizable editors within Baosky.
+
+MetaDescription: 使用自定义编辑器 API 在 Baosky 中创建可自定义的编辑器。
 ---
 
-# Custom Editor API
+# 自定义编辑器 API
 
-Custom editors allow 插件 to create fully customizable read/write editors that are used in place of Baosky's standard text editor for specific types of resources. They have a wide variety of use cases, such as:
+自定义编辑器允许插件创建完全可定制的读/写编辑器，用于代替 Baosky 的标准文本编辑器来处理特定类型的资源。它们有各种各样的用例，例如：
 
 - Previewing assets, such as shaders or 3D models, directly in Baosky.
-- Creating WYSIWYG editors for languages such as Markdown or XAML.
-- Offering alternative visual renderings for data files such as CSV or JSON or XML.
-- Building fully customizable editing experiences for binary or text files.
+- 为 Markdown 或 XAML 等语言创建所见即所得编辑器。
+- 为数据文件（例如 CSV 或 JSON 或 XML）提供替代视觉呈现。
+- 为二进制或文本文件构建完全可定制的编辑体验。
 
-This document provides an overview of the custom editor API and the basics of implementing a custom editor. We'll take a look at the two types of custom editors and how they differ, as well as which one is right for your use case. Then for each of these custom editor types, we'll cover the basics of building a well behaved custom editor.
+本文档概述了自定义编辑器 API 以及实现自定义编辑器的基础知识。我们将了解两种类型的自定义编辑器及其区别，以及哪一种适合您的用例。然后，对于每种自定义编辑器类型，我们将介绍构建行为良好的自定义编辑器的基础知识。
 
-Although custom editors are a powerful new 插件 point, implementing a basic custom editor is not actually that difficult! Still, if you are working on your first Baosky 插件, you may want to consider holding off on diving into custom editors until you are more familiar with the basics of the Baosky API. Custom editors build on a lot of Baosky concepts—such as [webviews](/api/插件-guides/webview) and text documents—so it may be a bit overwhelming if you are learning all of these new ideas at the same time.
+Although custom editors are a powerful new 插件 point, implementing a basic custom editor is not actually that difficult! Still, if you are working on your first Baosky 插件, you may want 要 consider holding off on diving into custom editors until you are more familiar with the basics of the Baosky API. Custom editors build on a lot of Baosky concepts—such as [webviews](/api/插件-guides/webview) and text documents—so it may be a bit overwhelming if you are learning all of these new ideas at the same time.
 
-But if you're feeling ready and are thinking about all the cool custom editors you are going to build, then let's get started! Be sure to download the [custom editor 插件 sample][sample] so you can follow along with the documentation and see how the custom editor API comes together.
+但是，如果您已经准备好并正在考虑要构建的所有很酷的自定义编辑器，那么让我们开始吧！请务必下载 [自定义编辑器插件示例][示例]，以便您可以按照文档进行操作并了解自定义编辑器 API 如何组合在一起。
 
-## Links
+## 链接
 
-- [Custom Editor sample][sample]
+- [自定义编辑器示例][示例]
 
-### Baosky API Usage
+### Baosky API 用法
 
 - [`code`](/api/references/baosky-api#window.registerCustomEditorProvider)
 - [`code`](/api/references/baosky-api#CustomTextEditorProvider)
 
-## Custom Editor API basics
+## 自定义编辑器 API 基础知识
 
-A custom editor is an alternative view that is shown in place of Baosky's standard text editor for specific resources. There are two parts to a custom editor: the view that users interact with and the document model that your 插件 uses to interact with the underlying resource.
+自定义编辑器是替代视图，用于替代特定资源的 Baosky 标准文本编辑器。自定义编辑器有两个部分：用户交互的视图和插件用于与底层资源交互的文档模型。
 
-The view side of a custom editor is implemented using a [webview](/api/插件-guides/webview). This lets you build the user interface of your custom editor using standard HTML, CSS, and JavaScript. Webviews cannot access the Baosky API directly but they can talk with 插件 by passing messages back and forth. Check out our [webview documentation](/api/插件-guides/webview) for more information on webviews and best practices for working with them.
+自定义编辑器的视图端是使用 [webview](/api/插件-guides/webview) 实现的。这使您可以使用标准 HTML、CSS 和 JavaScript 构建自定义编辑器的用户界面。 Webviews 无法直接访问 Baosky API，但它们可以通过来回传递消息来与插件对话。请查看我们的[webview documentation](/api/插件-guides/webview)，了解有关网络视图以及使用它们的最佳实践的更多信息。
 
-The other part of a custom editor is the document model. This model is how your 插件 understands the resource (file) it is working with. A `CustomTextEditorProvider` uses Baosky's standard [TextDocument](/api/references/baosky-api#TextDocument) as its document model and all changes to the file are expressed using Baosky's standard text editing APIs. `CustomReadonlyEditorProvider` and `CustomEditorProvider` on the other hand let you provide your own document model, which lets them be used for non-text file formats.
+自定义编辑器的另一部分是文档模型。这个模型是你的插件如何理解它正在使用的资源（文件）的。 `CustomTextEditorProvider` 使用 Baosky 的标准 [TextDocument](/api/references/baosky-api#TextDocument) 作为其文档模型，并且对文件的所有更改都使用 Baosky 的标准文本编辑 API 来表达。另一方面，`CustomReadonlyEditorProvider` 和 `CustomEditorProvider` 允许您提供自己的文档模型，这使它们可用于非文本文件格式。
 
-Custom editors have a single document model per resource but there may be multiple editor instances (views) of this document. For example, imagine that you open a file that has a `CustomTextEditorProvider` and then run the **View: Split editor** command. In this case, there is still just a single `TextDocument` since there is still just a single copy of the resource in the workspace,  but there are now two webviews for that resource.
+自定义编辑器的每个资源都有一个文档模型，但该文档可能有多个编辑器实例（视图）。例如，假设您打开一个具有 `CustomTextEditorProvider` 的文件，然后运行 ​​*View: Split editor ** 命令。在这种情况下，仍然只有一个 `TextDocument` ，因为工作区中仍然只有一个资源副本，但现在该资源有两个 Web 视图。
 
-### `CustomEditor` vs `CustomTextEditor`
+### `CustomEditor` 与 `CustomTextEditor`
 
-There are two classes of custom editors: custom text editors and custom editors. The main difference between these is how they define their document model.
+自定义编辑器有两类：自定义文本编辑器和自定义编辑器。它们之间的主要区别在于它们如何定义文档模型。
 
-A `CustomTextEditorProvider` uses Baosky's standard [`code`](#) as its data model. You can use a `CustomTextEditor` for any text based file types. `CustomTextEditor`s are considerably easier to implement because Baosky already knows how to work with text files and can therefore implement operations such as save and backing up files for hot exit.
+`CustomTextEditorProvider` 使用 Baosky 的标准 [`code`](#) 作为其数据模型。您可以将 `CustomTextEditor` 用于任何基于文本的文件类型。 `CustomTextEditor` 更容易实现，因为 Baosky 已经知道如何处理文本文件，因此可以实现诸如保存和备份文件以进行热退出等操作。
 
-With a `CustomEditorProvider` on the other hand, your 插件 brings its own document model. This means that you can use a `CustomEditor` for binary formats such as images, but it also means that your 插件 is responsible for a lot more, including implementing save and backing. You can skip over much of this complexity if your custom editor is readonly, such as custom editors for previews.
+另一方面，使用 `CustomEditorProvider` ，您的插件会带来自己的文档模型。这意味着您可以将 `CustomEditor` 用于图像等二进制格式，但这也意味着您的插件负责更多功能，包括实现保存和支持。如果您的自定义编辑器是只读的，例如用于预览的自定义编辑器，您可以跳过大部分复杂性。
 
-When trying to decide which type of custom editor to use, the decision is usually simple: if you are working with a text based file format use `CustomTextEditorProvider`, for binary file formats use `CustomEditorProvider`.
+当尝试决定使用哪种类型的自定义编辑器时，决定通常很简单：如果您正在使用基于文本的文件格式，请使用 `CustomTextEditorProvider`，对于二进制文件格式，请使用 `CustomEditorProvider`。
 
-### Contribution point
+###贡献点
 
-The `customEditors` [contribution point](/api/references/contribution-points) is how your 插件 tells Baosky about the custom editors that it provides. For example, Baosky needs to know what types of files your custom editor works with as well as how to identify your custom editor in any UI.
+`customEditors` [contribution point](/api/references/contribution-points) 是插件告诉 Baosky 它提供的自定义编辑器的方式。例如，Baosky 需要知道您的自定义编辑器可以使用哪些类型的文件，以及如何在任何 UI 中识别您的自定义编辑器。
 
-Here's a basic `customEditor` contribution for the [custom editor 插件 sample][sample]:
+以下是 [自定义编辑器插件示例][示例] 的基本 `customEditor` 贡献：
 
 ```json
 "contributes": {
@@ -74,188 +76,188 @@ Here's a basic `customEditor` contribution for the [custom editor 插件 sample]
 }
 ```
 
-`customEditors` is an array, so your 插件 can contribute multiple custom editors. Let's break down the custom editor entry itself:
+`customEditors` 是一个数组，因此您的插件可以贡献多个自定义编辑器。让我们分解一下自定义编辑器条目本身：
 
-- `viewType` - Unique identifier for your custom editor.
+- `viewType` - 自定义编辑器的唯一标识符。
 
-    This is how Baosky ties a custom editor contribution in the `package.json` to your custom editor implementation in code. This must be unique across all 插件, so instead of a generic `viewType` such as `"preview"` make sure to use one that is unique to your 插件, for example `"viewType": "myAmazingExtension.svgPreview"`
+这就是 Baosky 将 `package.json` 中的自定义编辑器贡献与代码中的自定义编辑器实现联系起来的方式。这在所有插件中必须是唯一的，因此不要使用通用的 `viewType` （例如 `"preview"`），而是确保使用您的插件所特有的，例如 `"viewType": "myAmazingExtension.svgPreview"`
 
-- `displayName` - Name that identifies the custom editor in Baosky's UI.
+- `displayName` - 标识 Baosky UI 中自定义编辑器的名称。
 
-    The display name is shown to the user in Baosky UI such as the **View: Reopen with** dropdown.
+显示名称在 Baosky UI 中向用户显示，例如 ** View: Reopen with ** 下拉列表。
 
-- `selector` - Specifies which files a custom editor is active for.
+- `selector` - 指定自定义编辑器对哪些文件处于活动状态。
 
-    The `selector` is an array of one or more [glob patterns](/docs/editor/glob-patterns). These glob patterns are matched against file names to determine if the custom editor can be used for them. A `filenamePattern` such as `*.png` will enable the custom editor for all PNG files.
+`selector` 是一个包含一个或多个 [glob patterns](/docs/editor/glob-patterns) 的数组。这些 glob 模式与文件名进行匹配，以确定自定义编辑器是否可用于它们。 `filenamePattern`（例如 `*.png`）将为所有 PNG 文件启用自定义编辑器。
 
-    You can also create more specific patterns that match on file or directory names, for example `**/translations/*.json`.
+您还可以创建与文件或目录名称匹配的更具体的模式，例如 ` ** /translations/*.json`。
 
-- `priority` - (optional) Specifies when the custom editor is used.
+- `priority` -（可选）指定何时使用自定义编辑器。
 
     `priority` controls when a custom editor is used when a resource is open. Possible values are:
 
-    - `"default"` - Try to use the custom editor for every file that matches the custom editor's `selector`. If there are multiple custom editors for a given file, the user will have to select which custom editor they want to use.
-    - `"option"` - Do not use the custom editor by default but allow users to switch to it or configure it as their default.
+- `"default"` - 尝试对与自定义​​编辑器的 `selector` 匹配的每个文件使用自定义编辑器。如果给定文件有多个自定义编辑器，则用户必须选择他们想要使用的自定义编辑器。
+- `"option"` - 默认情况下不使用自定义编辑器，但允许用户切换到它或将其配置为默认值。
 
-### Custom editor activation
+### 自定义编辑器激活
 
-When a user opens one of your custom editors, Baosky fires an `onCustomEditor:VIEW_TYPE` activation event. During activation, your 插件 must call `registerCustomEditorProvider` to register a custom editor with the expected `viewType`.
+当用户打开您的自定义编辑器之一时，Baosky 会触发 `onCustomEditor:VIEW_TYPE` 激活事件。在激活期间，您的插件必须调用 `registerCustomEditorProvider` 以使用预期的 `viewType` 注册自定义编辑器。
 
-It's important to note that `onCustomEditor` is only called when Baosky needs to create an instance of your custom editor. If Baosky is merely showing the user some information about an available custom editor—such as with the **View: Reopen with** command—your 插件 will not be activated.
+需要注意的是，只有当 Baosky 需要创建自定义编辑器的实例时，才会调用 `onCustomEditor` 。如果 Baosky 只是向用户显示有关可用自定义编辑器的一些信息（例如使用 ** View: Reopen with ** 命令），则您的插件将不会被激活。
 
-## Custom Text Editor
+## 自定义文本编辑器
 
-Custom text editors let you create custom editors for text files. This can be anything from plain unstructured text to [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) to JSON or XML. Custom text editors use Baosky's standard [TextDocument](/api/references/baosky-api#TextDocument) as their document model.
+自定义文本编辑器允许您为文本文件创建自定义编辑器。这可以是从纯非结构化文本到 [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) 到 JSON 或 XML 的任何内容。自定义文本编辑器使用 Baosky 的标准 [TextDocument](/api/references/baosky-api#TextDocument) 作为其文档模型。
 
-The [custom editor 插件 sample][sample] includes a simple example custom text editor for cat scratch files (which are just JSON files that end with a `.cscratch` file 插件). Let's take a look at some of the important bits of implementing a custom text editor.
+[自定义编辑器插件示例][示例] 包括一个用于猫草文件的简单示例自定义文本编辑器（只是以 `.cscratch` 文件插件结尾的 JSON 文件）。让我们看一下实现自定义文本编辑器的一些重要部分。
 
-### Custom Text Editor lifecycle
+### 自定义文本编辑器生命周期
 
-Baosky handles the lifecycle of both the view component of custom text editors (the webviews) and the model component (`TextDocument`). Baosky calls out to your 插件 when it needs to create a new custom editor instance and cleans up the editor instances and document model when the user closes their tabs.
+Baosky 处理自定义文本编辑器的视图组件（webviews）和模型组件（`TextDocument`）的生命周期。当需要创建新的自定义编辑器实例时，Baosky 会调用您的插件，并在用户关闭选项卡时清理编辑器实例和文档模型。
 
-To understand how this all works in practice, let's work through what happens from an 插件's point of view when a user opens a custom text editor and then when a user closes a custom text editor.
+为了了解这一切在实践中是如何工作的，让我们从插件的角度来了解当用户打开自定义文本编辑器以及当用户关闭自定义文本编辑器时会发生什么。
 
-**Opening a custom text editor**
+** 打开自定义文本编辑器 **
 
-Using the [custom editor 插件 sample][sample], here's what happens when the user first opens a `.cscratch` file:
+使用 [自定义编辑器插件示例][示例]，以下是用户首次打开 `.cscratch` 文件时发生的情况：
 
-1. Baosky fires an `onCustomEditor:catCustoms.catScratch` activation event.
+1. Baosky 触发 `onCustomEditor:catCustoms.catScratch` 激活事件。
 
-    This activates our 插件 if it has not already been activated. During activation, our 插件 must ensure the 插件 registers a `CustomTextEditorProvider` for `catCustoms.catScratch` by calling `registerCustomEditorProvider`.
+如果我们的插件尚未激活，这将激活它。在激活期间，我们的插件必须确保插件通过调用 `registerCustomEditorProvider` 为 `catCustoms.catScratch` 注册 `CustomTextEditorProvider`。
 
-1. Baosky then invokes `resolveCustomTextEditor` on the registered `CustomTextEditorProvider` for `catCustoms.catScratch`.
+1. Baosky 然后在已注册的 `CustomTextEditorProvider` 上为 `catCustoms.catScratch` 调用 `resolveCustomTextEditor`。
 
-    This method takes the `TextDocument` for the resource that is being opened and a `WebviewPanel`. The 插件 must fill in the initial HTML contents for this webview panel.
+此方法采用正在打开的资源的 `TextDocument` 和 `WebviewPanel`。插件必须填写此 webview 面板的初始 HTML 内容。
 
-Once `resolveCustomTextEditor` returns, our custom editor is displayed to the user. What is drawn inside the webview is entirely up to our 插件.
+一旦 `resolveCustomTextEditor` 返回，我们的自定义编辑器就会显示给用户。 webview 中绘制的内容完全取决于我们的插件。
 
-This same flow happens every time a custom editor is opened, even when you split a custom editor. Every instance of a custom editor has its own `WebviewPanel`, although multiple custom text editors will share the same `TextDocument` if they are for the same resource. Remember: think of the `TextDocument` as being the model for the resource while the webview panels are views of that model.
+每次打开自定义编辑器时都会发生相同的流程，即使您拆分了自定义编辑器也是如此。自定义编辑器的每个实例都有自己的 `WebviewPanel`，尽管多个自定义文本编辑器将共享相同的 `TextDocument`（如果它们用于相同的资源）。请记住：将 `TextDocument` 视为资源的模型，而 web 视图面板是该模型的视图。
 
-**Closing custom text editors**
+** 关闭自定义文本编辑器 **
 
-When a user closes a custom text editor, Baosky fires the `WebviewPanel.onDidDispose` event on the `WebviewPanel`. At this point, your 插件 should clean up any resources associated with that editor (event subscriptions, file watchers, etc.)
+当用户关闭自定义文本编辑器时，Baosky 会在 `WebviewPanel` 上触发 `WebviewPanel.onDidDispose` 事件。此时，您的插件应该清理与该编辑器关联的所有资源（事件订阅、文件观察器等）
 
-When the last custom editor for a given resource is closed, the `TextDocument` for that resource will also be disposed provided there are no other editors using it and no other 插件 are holding onto it. You can check the `TextDocument.isClosed` property to see if the `TextDocument` has been closed. Once a `TextDocument` is closed, opening the same resource using a custom editor will cause a new `TextDocument` to be opened.
+当给定资源的最后一个自定义编辑器关闭时，如果没有其他编辑器使用它并且没有其他插件保留它，则该资源的 `TextDocument` 也将被释放。您可以检查 `TextDocument.isClosed` 属性以查看 `TextDocument` 是否已关闭。关闭 `TextDocument` 后，使用自定义编辑器打开相同的资源将导致打开新的 `TextDocument`。
 
-### Synchronizing changes with the TextDocument
+### 与 TextDocument 同步更改
 
-Since custom text editors use a `TextDocument` as their document model, they are responsible for updating the `TextDocument` whenever an edit occurs in a custom editor as well as updating themselves whenever the `TextDocument` changes.
+由于自定义文本编辑器使用 `TextDocument` 作为其文档模型，因此它们负责在自定义编辑器中发生编辑时更新 `TextDocument` ，并在 `TextDocument` 更改时更新自身。
 
-**From webview to `TextDocument`**
+** 从网页视图到`TextDocument` **
 
-Edits in custom text editors can take many different forms—clicking a button, changing some text, dragging some items around. Whenever a user edits the file itself inside the custom text editor, the 插件 must update the `TextDocument`. Here's how the cat scratch 插件 implements this:
+自定义文本编辑器中的编辑可以采取多种不同的形式——单击按钮、更改一些文本、拖动一些项目。每当用户在自定义文本编辑器中编辑文件本身时，插件必须更新 `TextDocument`。以下是猫抓痕插件的实现方式：
 
-1. User clicks the **Add scratch** button in the webview. This [posts a message](/api/插件-guides/webview#scripts-and-message-passing) from the webview back to the 插件.
+1. 用户单击 Web 视图中的 ** 添加暂存 ** 按钮。这个 [posts a message](/api/插件-guides/webview#scripts-and-message-passing) 从 webview 回到插件。
 
-1. The 插件 receives the message. It then updates its internal model of the document (which in the cat scratch example just consists of adding a new entry to the JSON).
+1.插件接收消息。然后，它更新文档的内部模型（在猫抓示例中仅包含向 JSON 添加新条目）。
 
-1. The 插件 creates a `WorkspaceEdit` that writes the updated JSON to the document. This edit is applied using `vscode.workspace.applyEdit`.
+1.插件创建一个 `WorkspaceEdit` ，将更新后的 JSON 写入文档。此编辑是使用 `vscode.工作区.applyEdit` 应用的。
 
-Try to keep your workspace edit to the minimal change required to update the document. Also keep in mind that if you are working with a language such as JSON, your 插件 should try to observe the user's existing formatting conventions (spaces vs tabs, indent size, etc.).
+尝试将工作区编辑保持在更新文档所需的最小更改范围内。另请记住，如果您使用的是 JSON 这样的语言，您的插件应尝试遵守用户现有的格式约定（空格与制表符、缩进大小等）。
 
-**From `TextDocument` to webviews**
+** 从 `TextDocument` 到网页视图 **
 
-When a `TextDocument` changes, your 插件 also needs to make sure its webviews reflect the documents new state. TextDocuments can be changed by user actions such as undo, redo, or revert file; by other 插件 using a `WorkspaceEdit`; or by a user who opens the file in Baosky's default text editor. Here's how the cat scratch 插件 implements this:
+当 `TextDocument` 更改时，您的插件还需要确保其 Web 视图反映文档的新状态。文本文档可以通过用户操作进行更改，例如撤消、重做或恢复文件；通过使用 `WorkspaceEdit` 的其他插件；或者由在 Baosky 的默认文本编辑器中打开文件的用户执行。以下是猫抓痕插件的实现方式：
 
-1. In the 插件, we subscribe to the `vscode.workspace.onDidChangeTextDocument` event. This event is fired for every change to the `TextDocument` (including changes that our custom editor makes!)
+1. 在插件中，我们订阅 `vscode.工作区.onDidChangeTextDocument` 事件。对 `TextDocument` 的每次更改都会触发此事件（包括我们的自定义编辑器所做的更改！）
 
-1. When a change comes in for a document that we have an editor for, we post a message to the webview with its new document state. This webview then updates itself to render the updated document.
+1. 当我们有编辑器的文档发生更改时，我们会向 webview 发布一条消息及其新文档状态。然后，该 Web 视图会更新自身以呈现更新后的文档。
 
-It's important to remember that any file edits that a custom editor triggers will cause `onDidChangeTextDocument` to fire. Make sure your 插件 does not get into an update loop where the user makes an edit in the webview, which fires `onDidChangeTextDocument`, which causes the webview to update, which causes the webview to trigger another update on your 插件, which fires `onDidChangeTextDocument`, and so on.
+请务必记住，自定义编辑器触发的任何文件编辑都会导致 `onDidChangeTextDocument` 触发。确保您的插件不会进入更新循环，即用户在 webview 中进行编辑，从而触发 `onDidChangeTextDocument`，从而导致 webview 更新，从而导致 webview 触发插件上的另一个更新，从而触发 `onDidChangeTextDocument`，依此类推。
 
-Also remember that if you are working with a structured language such as JSON or XML, the document may not always be in a valid state. Your 插件 must either be able to gracefully handle errors or display an error message to the user so that they understand what is wrong and how to fix it.
+另请记住，如果您使用结构化语言（例如 JSON 或 XML），则文档可能并不总是处于有效状态。您的插件必须能够优雅地处理错误或向用户显示错误消息，以便他们了解问题所在以及如何修复它。
 
-Finally, if updating your webviews is expensive, consider [debouncing](https://davidwalsh.name/javascript-debounce-function) the updates to your webview.
+最后，如果更新您的网络视图的成本很高，请考虑[debouncing](https://davidwalsh.name/javascript-debounce-function)更新您的网络视图。
 
-## Custom Editor
+## 自定义编辑器
 
-`CustomEditorProvider` and `CustomReadonlyEditorProvider` let you create custom editors for binary file formats. This API gives you full control over how the file is displayed to users, how edits are made to it, and lets your 插件 hook into `save` and other file operations. Again, if you are building an editor for a text based file format, strongly consider using a [`code`](#custom-text-editor) instead as they are far simpler to implement.
+`CustomEditorProvider` 和 `CustomReadonlyEditorProvider` 允许您为二进制文件格式创建自定义编辑器。这个 API 使您可以完全控制如何向用户显示文件、如何对其进行编辑，并让您的插件挂钩到 `save` 和其他文件操作。同样，如果您正在为基于文本的文件格式构建编辑器，请强烈考虑使用 [`code`](#custom-text-editor) 来代替，因为它们实现起来要简单得多。
 
-The [custom editor 插件 sample][sample] includes a simple example custom binary editor for paw draw files (which are just jpeg files that end with a `.pawdraw` file 插件). Let's take a look at what goes into building a custom editor for binary files.
+[自定义编辑器插件示例][示例] 包括一个用于 paw 绘制文件的简单示例自定义二进制编辑器（这些文件只是以 `.pawdraw` 文件插件结尾的 jpeg 文件）。让我们看一下为二进制文件构建自定义编辑器的过程。
 
-### CustomDocument
+### 自定义文档
 
-With custom editors, your 插件 is responsible for implementing its own document model with the `CustomDocument` interface. This leaves your 插件 free to store whatever data it needs on a `CustomDocument` in order to interact with your custom editor, but it also means that your 插件 must implement basic document operations such as saving and backing up file data for hot exit.
+使用自定义编辑器，您的插件负责使用 `CustomDocument` 接口实现自己的文档模型。这使得您的插件可以自由地在 `CustomDocument` 上存储所需的任何数据，以便与自定义编辑器交互，但这也意味着您的插件必须实现基本的文档操作，例如保存和备份文件数据以进行热退出。
 
-There is one `CustomDocument` per opened file. Users can open multiple editors for a single resource—such as by splitting the current custom editor—but all those editors will be backed by the same `CustomDocument`.
+每个打开的文件都有一个 `CustomDocument`。用户可以为单个资源打开多个编辑器（例如通过拆分当前自定义编辑器），但所有这些编辑器都将由相同的 `CustomDocument` 支持。
 
-### Custom Editor lifecycle
+### 自定义编辑器生命周期
 
-**supportsMultipleEditorsPerDocument**
+** 支持每个文档多个编辑器 **
 
-By default, Baosky only allows there to be one editor for each custom document. This limitation makes it easier to correctly implement a custom editor as you do not have to worry about synchronizing multiple custom editor instances with each other.
+默认情况下，Baosky 只允许每个自定义文档有一个编辑器。此限制使正确实现自定义编辑器变得更加容易，因为您不必担心多个自定义编辑器实例彼此同步。
 
-If your 插件 can support it however, we recommend setting `supportsMultipleEditorsPerDocument: true` when registering your custom editor so that multiple editor instances can be opened for the same document. This will make your custom editors behave more like Baosky's normal text editors.
+但是，如果您的插件可以支持它，我们建议在注册自定义编辑器时设置 `supportsMultipleEditorsPerDocument: true` ，以便可以为同一文档打开多个编辑器实例。这将使您的自定义编辑器的行为更像 Baosky 的普通文本编辑器。
 
-**Opening Custom Editors**
-When the user opens a file that matches the `customEditor` contribution point, Baosky fires an `onCustomEditor` [activation event](/api/references/activation-events) and then invokes the provider registered for the provided view type. A `CustomEditorProvider` has two roles: providing the document for the custom editor and then providing the editor itself. Here's an ordered list of what happens for the `catCustoms.pawDraw` editor from the [custom editor 插件 sample][sample]:
+** 打开自定义编辑器 **
+当用户打开与 `customEditor` 贡献点匹配的文件时，Baosky 会触发 `onCustomEditor` [activation event](/api/references/activation-events)，然后调用为所提供的视图类型注册的提供程序。 `CustomEditorProvider` 有两个作用：为自定义编辑器提供文档，然后提供编辑器本身。以下是[自定义编辑器插件示例][示例]中 `catCustoms.pawDraw` 编辑器发生的情况的有序列表：
 
-1. Baosky fires an `onCustomEditor:catCustoms.pawDraw` activation event.
+1. Baosky 触发 `onCustomEditor:catCustoms.pawDraw` 激活事件。
 
-    This activates our 插件 if it has not already been activated. We must also make sure our 插件 registers a `CustomReadonlyEditorProvider` or `CustomEditorProvider` for `catCustoms.pawDraw` during activation.
+如果我们的插件尚未激活，这将激活它。我们还必须确保我们的插件在激活期间为 `catCustoms.pawDraw` 注册 `CustomReadonlyEditorProvider` 或 `CustomEditorProvider` 。
 
-1. Baosky calls `openCustomDocument` on our `CustomReadonlyEditorProvider` or `CustomEditorProvider` registered for `catCustoms.pawDraw` editors.
+1. Baosky 在为 `catCustoms.pawDraw` 编辑器注册的 `CustomReadonlyEditorProvider` 或 `CustomEditorProvider` 上调用 `openCustomDocument`。
 
-    Here our 插件 is given a resource uri and must return a new `CustomDocument` for that resource. This is the point at which our 插件 should create its document internal model for that resource. This may involve reading and parsing the initial resource state from disk or initializing our new `CustomDocument`.
+这里我们的插件被赋予了一个资源 uri，并且必须为该资源返回一个新的 `CustomDocument` 。这是我们的插件应该为该资源创建其文档内部模型的点。这可能涉及从磁盘读取和解析初始资源状态或初始化我们的新 `CustomDocument`。
 
-    Our 插件 can define this model by creating a new class that implements `CustomDocument`. Remember that this initialization stage is entirely up to 插件; Baosky does not care about any additional information 插件 store on a `CustomDocument`.
+我们的插件可以通过创建一个实现 `CustomDocument` 的新类来定义此模型。请记住，这个初始化阶段完全取决于插件； Baosky 不关心 `CustomDocument` 上存储的任何附加信息插件。
 
-1. Baosky calls `resolveCustomEditor` with the `CustomDocument` from step 2 and a new `WebviewPanel`.
+1. Baosky 使用步骤 2 中的 `CustomDocument` 和新的 `WebviewPanel` 调用 `resolveCustomEditor`。
 
-    Here our 插件 must fill in the initial html for the custom editor. If we need, we can also hold onto a reference to the `WebviewPanel` so that we can reference it later, for example inside commands.
+这里我们的插件必须填写自定义编辑器的初始 html。如果需要，我们还可以保留对 `WebviewPanel` 的引用，以便稍后可以引用它，例如在命令内。
 
-Once `resolveCustomEditor` returns, our custom editor is displayed to the user.
+一旦 `resolveCustomEditor` 返回，我们的自定义编辑器就会显示给用户。
 
-If the user opens the same resource in another editor group using our custom editor—for example by splitting the first editor—the 插件's job is simplified. In this case, Baosky just calls `resolveCustomEditor` with the same `CustomDocument` we created when the first editor was opened.
+如果用户使用我们的自定义编辑器在另一个编辑器组中打开相同的资源（例如通过拆分第一个编辑器），插件的工作就会得到简化。在这种情况下，Baosky 只是使用我们在打开第一个编辑器时创建的相同 `CustomDocument` 来调用 `resolveCustomEditor` 。
 
-**Closing Custom Editors**
+** 关闭自定义编辑器 **
 
-Say we have two instance of our custom editors open for the same resource. When the user closes these editors, Baosky signals our 插件 so that it can clean up any resources associated with the editor.
+假设我们为同一资源打开了两个自定义编辑器实例。当用户关闭这些编辑器时，Baosky 会向我们的插件发出信号，以便它可以清理与编辑器关联的任何资源。
 
-When the first editor instance is closed, Baosky fires the `WebviewPanel.onDidDispose` event on the `WebviewPanel` from the closed editor. At this point, our 插件 must clean up any resources associated with that specific editor instance.
+当第一个编辑器实例关闭时，Baosky 从关闭的编辑器中触发 `WebviewPanel` 上的 `WebviewPanel.onDidDispose` 事件。此时，我们的插件必须清理与该特定编辑器实例关联的所有资源。
 
-When the second editor is closed, Baosky again fires `WebviewPanel.onDidDispose`. However now we've also closed all the editors associated with the `CustomDocument`. When there are no more editors for a `CustomDocument`, Baosky calls the `CustomDocument.dispose` on it. Our 插件's implementation of `dispose` must clean up any resources associated with the document.
+当第二个编辑器关闭时，Baosky 再次触发 `WebviewPanel.onDidDispose`。但是现在我们还关闭了与 `CustomDocument` 相关的所有编辑器。当 `CustomDocument` 不再有编辑器时，Baosky 会调用 `CustomDocument.dispose` 。我们的插件的 `dispose` 实现必须清理与文档关联的所有资源。
 
-If the user then reopens the same resource using our custom editor, we will go back through the whole `openCustomDocument`, `resolveCustomEditor` flow with a new `CustomDocument`.
+如果用户随后使用我们的自定义编辑器重新打开相同的资源，我们将使用新的 `CustomDocument` 返回整个 `openCustomDocument`、`resolveCustomEditor` 流程。
 
-### Readonly Custom editors
+### 只读自定义编辑器
 
-Many of the following sections only apply to custom editors that support editing and, while it may sound paradoxical, many custom editors don't require editing capabilities at all. Consider a image preview for example. Or a visual rendering of a memory dump. Both can be implemented using custom editors but neither need to be editable. That's where `CustomReadonlyEditorProvider` comes in.
+以下许多部分仅适用于支持编辑的自定义编辑器，虽然听起来可能很矛盾，但许多自定义编辑器根本不需要编辑功能。例如，考虑图像预览。或者内存转储的视觉呈现。两者都可以使用自定义编辑器来实现，但都不需要可编辑。这就是 `CustomReadonlyEditorProvider` 发挥作用的地方。
 
-A `CustomReadonlyEditorProvider` lets you create custom editors that do not support editing. They can still be interactive but don't support operations such as undo and save. It is also much simpler to implement a readonly custom editor compared to a fully editable one.
+`CustomReadonlyEditorProvider` 允许您创建不支持编辑的自定义编辑器。它们仍然可以交互，但不支持撤消和保存等操作。与完全可编辑的编辑器相比，实现只读自定义编辑器也要简单得多。
 
-### Editable Custom Editor Basics
+### 可编辑自定义编辑器基础知识
 
-Editable custom editors let you hook in to standard Baosky operations such as undo and redo, save, and hot exit. This makes editable custom editors very powerful, but also means that properly implementing one is much more complex than implementing an editable custom text editor or a readonly custom editor.
+可编辑的自定义编辑器可让您连接到标准 Baosky 操作，例如撤消和重做、保存和热退出。这使得可编辑自定义编辑器非常强大，但也意味着正确实现编辑器比实现可编辑自定义文本编辑器或只读自定义编辑器复杂得多。
 
-Editable custom editors are implemented by `CustomEditorProvider`. This interface extends `CustomReadonlyEditorProvider`, so you'll have to implement basic operations such as `openCustomDocument` and `resolveCustomEditor`, along with a set of editing specific operations. Let's take a look at the editing specific parts of `CustomEditorProvider`.
+可编辑的自定义编辑器由 `CustomEditorProvider` 实现。该接口扩展了 `CustomReadonlyEditorProvider`，因此您必须实现 `openCustomDocument` 和 `resolveCustomEditor` 等基本操作，以及一组特定于编辑的操作。我们来看看`CustomEditorProvider`的编辑具体部分。
 
-**Edits**
+** 编辑 **
 
-Changes to a editable custom document are expressed through edits. An edit can be anything from a text change, to an image rotation, to reordering a list. Baosky leaves the specifics of what an edit does entirely up to your 插件, but Baosky does need to know when an edit takes places. Editing is how Baosky marks documents as dirty, which in turn enables auto save and back ups.
+对可编辑自定义文档的更改通过编辑来表达。编辑可以是任何内容，从文本更改、图像旋转到列表重新排序。 Baosky 将编辑的具体操作完全取决于您的插件，但 Baosky 确实需要知道编辑何时发生。编辑是 Baosky 将文档标记为脏的方式，从而启用自动保存和备份。
 
-Whenever a user makes an edit in any of the webviews for your custom editor, your 插件 must fire a `onDidChangeCustomDocument` event from its `CustomEditorProvider`. The `onDidChangeCustomDocument` event can fire two event types depending on your custom editor implementation: `CustomDocumentContentChangeEvent` and `CustomDocumentEditEvent`.
+每当用户在自定义编辑器的任何 Web 视图中进行编辑时，您的插件都必须从其 `CustomEditorProvider` 触发 `onDidChangeCustomDocument` 事件。 `onDidChangeCustomDocument` 事件可以触发两种事件类型，具体取决于您的自定义编辑器实现：`CustomDocumentContentChangeEvent` 和 `CustomDocumentEditEvent`。
 
-**CustomDocumentContentChangeEvent**
+** CustomDocumentContentChangeEvent **
 
-A `CustomDocumentContentChangeEvent` is a bare-bones edit. Its only function is to tell Baosky that a document has been edited.
+`CustomDocumentContentChangeEvent` 是一个简单的编辑。它唯一的功能是告诉Baosky文档已被编辑。
 
-When an 插件 fires a `CustomDocumentContentChangeEvent` from `onDidChangeCustomDocument`, Baosky will mark the associated document as being dirty. At this point, the only way for the document to become non-dirty is for the user to either save or revert it. Custom editors that use `CustomDocumentContentChangeEvent` do not support undo/redo.
+当插件从 `onDidChangeCustomDocument` 触发 `CustomDocumentContentChangeEvent` 时，Baosky 会将关联文档标记为脏文档。此时，使文档变得不脏的唯一方法是用户保存或恢复它。使用 `CustomDocumentContentChangeEvent` 的自定义编辑器不支持撤消/重做。
 
-**CustomDocumentEditEvent**
+** 自定义文档编辑事件 **
 
-A `CustomDocumentEditEvent` is a more complex edit that allows for undo/redo. You should always try to implement your custom editor using `CustomDocumentEditEvent` and only fallback to using `CustomDocumentContentChangeEvent` if implementing undo/redo is not possible.
+`CustomDocumentEditEvent` 是一个更复杂的编辑，允许撤消/重做。您应该始终尝试使用 `CustomDocumentEditEvent` 来实现自定义编辑器，并且只有在无法实现撤消/重做时才回退到使用 `CustomDocumentContentChangeEvent` 。
 
-A `CustomDocumentEditEvent` has the following fields:
+`CustomDocumentEditEvent` 具有以下字段：
 
-- `document` — The `CustomDocument` the edit was for.
-- `label` — Optional text that describes what type of edit was made (for example: "Crop", "Insert", ...)
-- `undo` — Function invoked by Baosky when the edit needs to be undone.
-- `redo` — Function invoked by Baosky when the edits needs to be redone.
+- `document` — 编辑所针对的 `CustomDocument`。
+- `label` — 描述编辑类型的可选文本（例如：“裁剪”、“插入”...）
+- `undo` — Function invoked by Baosky when the edit needs 要 be undone.
+- `redo` — 当需要重做编辑时由 Baosky 调用的函数。
 
-When an 插件 fires a `CustomDocumentEditEvent` from `onDidChangeCustomDocument`, Baosky marks the associated document as being dirty. To make the document no longer dirty, a user can then either save or revert the document, or undo/redo back to the document's last saved state.
+当插件从 `onDidChangeCustomDocument` 触发 `CustomDocumentEditEvent` 时，Baosky 将关联文档标记为脏文档。为了使文档不再脏，用户可以保存或恢复文档，或者撤消/重做回到文档上次保存的状态。
 
-The `undo` and `redo` methods on an editor are called by Baosky when that specific edit needs to be undone or reapplied. Baosky maintains an internal stack of edits, so if your 插件 fires `onDidChangeCustomDocument` with three edits, let's call them `a`, `b`, `c`:
+当需要撤消或重新应用特定编辑时，编辑器上的 `undo` 和 `redo` 方法由 Baosky 调用。 Baosky 维护一个内部编辑堆栈，因此如果您的插件通过三个编辑触发 `onDidChangeCustomDocument`，我们称它们为 `a`、`b`、`c`：
 
 ```ts
 onDidChangeCustomDocument(a);
@@ -263,7 +265,7 @@ onDidChangeCustomDocument(b);
 onDidChangeCustomDocument(c);
 ```
 
-The following sequence of user actions results in these calls:
+以下用户操作序列会导致这些调用：
 
 ```
 undo — c.undo()
@@ -273,38 +275,38 @@ redo — c.redo()
 redo — no op, no more edits
 ```
 
-To implement undo/redo, your 插件 must update its associated custom document's internal state, as well as updating all associated webviews for the document so that they reflect the document's new state. Keep in mind that there may be multiple webviews for a single resource. These must always show the same document data. Multiple instances of an image editor for example must always show the same pixel data but may allow each editor instance to have its own zoom level and UI state.
+要实现撤消/重做，您的插件必须更新其关联的自定义文档的内部状态，并更新文档的所有关联的 Web 视图，以便它们反映文档的新状态。请记住，单个资源可能有多个 Web 视图。这些必须始终显示相同的文档数据。例如，图像编辑器的多个实例必须始终显示相同的像素数据，但可以允许每个编辑器实例拥有自己的缩放级别和 UI 状态。
 
-### Saving
+### 保存
 
-When a user saves a custom editor, your 插件 is responsible for writing the saved resource in its current state to disk. How your custom editor does this depends largely on your 插件's `CustomDocument` type and how your 插件 tracks edits internally.
+当用户保存自定义编辑器时，您的插件负责将当前状态下保存的资源写入磁盘。您的自定义编辑器如何执行此操作很大程度上取决于您的插件的 `CustomDocument` 类型以及您的插件如何在内部跟踪编辑。
 
-The first step to saving is getting the data stream to write to disk. Common approaches to this include:
+保存的第一步是将数据流写入磁盘。常见的方法包括：
 
-- Track the resource's state so that it can be quickly serialized.
+- 跟踪资源的状态，以便可以快速序列化。
 
-    A basic image editor for example may maintain a buffer of pixel data.
+例如，基本图像编辑器可以维护像素数据的缓冲区。
 
-- Replay edit since the last save to generate the new file.
+- 自上次保存以来重播编辑以生成新文件。
 
-    A more efficient image editor for example might track the edits since the last save, such as `crop`, `rotate`, `scale`. On save, it would then apply these edits to file's last saved state to generate the new file.
+例如，更高效的图像编辑器可能会跟踪自上次保存以来的编辑，例如 `crop`、`rotate`、`scale`。保存时，它会将这些编辑应用到文件上次保存的状态以生成新文件。
 
-- Ask a `WebviewPanel` for the custom editor for file data to save.
+- 向 `WebviewPanel` 询问要保存的文件数据的自定义编辑器。
 
-    Keep in mind though that custom editors can be saved even when they are not visible. For this reason, it is recommended that your 插件's implementation of `save` does not depend on a `WebviewPanel`. If this is not possible, you can use the `WebviewPanelOptions.retainContextWhenHidden` setting so that the webview stays alive even when it is hidden. `retainContextWhenHidden` does have significant memory overhead so be conservative about using it.
+请记住，即使自定义编辑器不可见，也可以保存它们。因此，建议您的插件的 `save` 实现不依赖于 `WebviewPanel`。如果这是不可能的，您可以使用 `WebviewPanelOptions.retainContextWhenHidden` 设置，以便 web 视图即使在隐藏时也保持活动状态。 `retainContextWhenHidden` 确实有很大的内存开销，所以使用它时要保守。
 
-After getting the data for the resource, you generally should use the [workspace FS API](#) to write it to disk. The FS APIs take a `UInt8Array` of data and can write out both binary and text based files. For binary file data, simply put the binary data into the `UInt8Array`. For text file data, use `Buffer` to convert a string into a `UInt8Array`:
+获取资源数据后，通常应该使用 [工作区 FS API](#) 将其写入磁盘。 FS API 接受 `UInt8Array` 数据，并且可以写出基于二进制和文本的文件。对于二进制文件数据，只需将二进制数据放入`UInt8Array`即可。对于文本文件数据，使用 `Buffer` 将字符串转换为 `UInt8Array`：
 
 ```ts
 const writeData = Buffer.from("my text data", 'utf8');
 vscode.workspace.fs.writeFile(fileUri, writeData);
 ```
 
-## Next steps
+## 后续步骤
 
-If you'd like to learn more about Baosky extensibility, try these topics:
+如果您想了解有关 Baosky 可扩展性的更多信息，请尝试以下主题：
 
-- [插件 API](/api) - Learn about the full Baosky 插件 API.
-- [插件 Capabilities](/api/插件-capabilities/overview) - Take a look at other ways to extend Baosky.
+- [插件 API](/api) - 了解完整的 Baosky 插件 API。
+- [插件 Capabilities](/api/插件-capabilities/overview) - 查看扩展 Baosky 的其他方法。
 
-[sample]: https://github.com/microsoft/baosky-插件-samples/tree/main/custom-editor-sample
+[示例]：https://github.com/microsoft/baosky-插件-samples/tree/main/custom-editor-sample

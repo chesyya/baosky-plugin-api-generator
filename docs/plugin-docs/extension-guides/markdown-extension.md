@@ -1,19 +1,21 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 1664249a-ba7a-4a53-b3f0-9d757cff7d27
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to extend Baosky's built-in Markdown preview.
+
+MetaDescription: 了解如何扩展 Baosky 的内置 Markdown 预览。
 ---
 
 # Markdown 插件
 
-Markdown 插件 allow you to extend and enhance Baosky's built-in Markdown preview. This includes changing the look of the preview or adding support for new Markdown syntax.
+Markdown 插件允许您扩展和增强 Baosky 的内置 Markdown 预览。这包括更改预览的外观或添加对新 Markdown 语法的支持。
 
-## Changing the look of the Markdown preview with CSS
+## 使用 CSS 更改 Markdown 预览的外观
 
-插件 can contribute CSS to change the look or layout of the Markdown preview. Stylesheets are registered using the `markdown.previewStyles` [Contribution Point](/api/references/contribution-points) in the 插件's `package.json`:
+插件可以贡献 CSS 来更改 Markdown 预览的外观或布局。样式表是使用插件的 `package.json` 中的 `markdown.previewStyles` [Contribution Point](/api/references/contribution-points) 注册的：
 
 ```json
 "contributes": {
@@ -23,17 +25,17 @@ Markdown 插件 allow you to extend and enhance Baosky's built-in Markdown previ
 }
 ```
 
-`"markdown.previewStyles"` is a list of files relative to the 插件's root folder.
+`"markdown.previewStyles"` 是相对于插件根文件夹的文件列表。
 
-Contributed styles are added after the built-in Markdown preview styles but before a user's `"markdown.styles"`.
+贡献的样式添加在内置 Markdown 预览样式之后、用户的 `"markdown.styles"` 之前。
 
-The [Markdown Preview GitHub Styling](#) 插件 is a good example that demonstrates using a stylesheet to make the Markdown preview look like GitHub's rendered Markdown. You can review the 插件's source code on [GitHub](https://github.com/mjbvz/baosky-github-markdown-preview-style).
+[Markdown Preview GitHub Styling](#) 插件是一个很好的示例，它演示了如何使用样式表使 Markdown 预览看起来像 GitHub 渲染的 Markdown。您可以在 [GitHub](https://github.com/mjbvz/baosky-github-markdown-preview-style) 上查看插件的源代码。
 
-## Adding support for new syntax with markdown-it plugins
+## 使用 markdown-it 插件添加对新语法的支持
 
-The Baosky Markdown preview supports the [CommonMark specification](https://spec.commonmark.org). 插件 can add support for additional Markdown syntax by contributing a [markdown-it plugin.](https://github.com/markdown-it/markdown-it#syntax-插件)
+Baosky Markdown 预览支持 [CommonMark specification](https://spec.commonmark.org)。 插件可以通过贡献 [markdown-it plugin.](https://github.com/markdown-it/markdown-it#syntax-插件) 添加对附加 Markdown 语法的支持
 
-To contribute a markdown-it plugin, first add a `"markdown.markdownItPlugins"` contribution in your 插件's `package.json`:
+要贡献 markdown-it 插件，请首先在插件的 `package.json` 中添加 `"markdown.markdownItPlugins"` 贡献：
 
 ```json
 "contributes": {
@@ -41,7 +43,7 @@ To contribute a markdown-it plugin, first add a `"markdown.markdownItPlugins"` c
 }
 ```
 
-Then, in the 插件's main `activation` function, return an object with a function named `extendMarkdownIt`. This function takes the current markdown-it instance and must return a new markdown-it instance:
+然后，在插件的主 `activation` 函数中，返回一个具有名为 `extendMarkdownIt` 的函数的对象。此函数采用当前的 markdown-it 实例，并且必须返回一个新的 markdown-it 实例：
 
 ```ts
 import * as vscode from 'vscode';
@@ -55,22 +57,22 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-To contribute multiple markdown-it plugins, return multiple `use` statements chained together:
+要 contribute multiple markdown-it plugins, return multiple `use` statements chained together:
 
 ```ts
 return md.use(require('markdown-it-emoji')).use(require('markdown-it-hashtag'));
 ```
 
-插件 that contribute markdown-it plugins are activated lazily, when a Markdown preview is shown for the first time.
+当第一次显示 Markdown 预览时，贡献 markdown-it 插件的插件会被延迟激活。
 
-The [markdown-emoji](#) 插件 demonstrates using a markdown-it plugin to add emoji support to the markdown preview. You can review the Emoji 插件's source code on [GitHub](https://github.com/mjbvz/baosky-markdown-emoji).
+[markdown-emoji](#) 插件演示了如何使用 markdown-it 插件将表情符号支持添加到 markdown 预览中。您可以在 [GitHub](https://github.com/mjbvz/baosky-markdown-emoji) 上查看表情符号插件的源代码。
 
-You may also want to review:
+您可能还想查看：
 
-- [Guidelines](https://github.com/markdown-it/markdown-it/blob/master/docs/development.md) for markdown-it plugin developers
+- [Guidelines](https://github.com/markdown-it/markdown-it/blob/master/docs/development.md) 适用于 markdown-it 插件开发人员
 - [Existing markdown-it plugins](https://www.npmjs.com/browse/keyword/markdown-it-plugin)
 
-## Adding advanced functionality with scripts
+## 使用脚本添加高级功能
 
 For advanced functionality, 插件 may contribute scripts that are executed inside of the Markdown preview.
 
@@ -82,6 +84,6 @@ For advanced functionality, 插件 may contribute scripts that are executed insi
 }
 ```
 
-Contributed scripts are loaded asynchronously and reloaded on every content change.
+贡献的脚本是异步加载的，并在每次内容更改时重新加载。
 
-The [Markdown Preview Mermaid Support](#) 插件 demonstrates using scripts to add [Mermaid](https://mermaid.js.org) diagrams and flowchart support to the markdown preview. You can review the Mermaid 插件's source code on [GitHub](https://github.com/mjbvz/baosky-markdown-mermaid).
+[Markdown Preview Mermaid Support](#) 插件演示了如何使用脚本将 [Mermaid](https://mermaid.js.org) 图表和流程图支持添加到 Markdown 预览中。您可以在 [GitHub](https://github.com/mjbvz/baosky-markdown-mermaid) 上查看美人鱼插件的源代码。

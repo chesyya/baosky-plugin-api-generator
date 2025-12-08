@@ -1,52 +1,54 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 06ce3b57-9fd5-428a-98aa-d730edbd2728
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for the Panel Bar in a Baosky 插件.
+
+MetaDescription: Baosky 插件中面板栏的 UX 指南。
 ---
 
-# Panel
+# 面板
 
-The Panel functions as another main area to display [View Containers](/api/references/contribution-points#contributes.viewsContainers).
+面板是另一个主要区域，用于显示 [视图容器](/api/references/contribution-points#contributes.viewsContainers)。
 
-**✔️ Do**
+**✔️ 建议**
 
-- Render Views in the Panel that benefit from more horizontal space
-- Use for Views that provide supporting functionality
+- 在面板中渲染受益于更多水平空间的视图。
+- 用于提供辅助功能的视图。
 
-**❌ Don't**
+**❌ 不建议**
 
-- Use for Views that are meant to be always visible since users often minimize the Panel
-- Render custom Webview content that fails to resize/reflow properly when dragged to other View Containers (like the Primary or Secondary Sidebars).
-
-<!-- 图片已移除 -->
-
-## Panel Toolbar
-
-The Panel Toolbar can expose options scoped to the currently selected View. For example the Terminal view exposes [View Actions](/api/插件-guides/tree-view#view-actions) to add a new terminal, split the view layout, and more. Switching to the Problems view exposes a different set of actions. Similar to the [Sidebar Toolbar](/api/ux-guidelines/sidebars#sidebar-toolbar), the toolbar will only render if there is just a single View. If more than one View is used, each View will render its own toolbar.
-
-**✔️ Do**
-
-- Use an existing [product icon](/api/references/icons-in-labels#icon-listing) if available
-- Provide clear, useful tooltips
-
-**❌ Don't**
-
-- Don't add an excessive number of icon buttons. Consider using a [Context Menu](/api/references/contribution-points#contributes.menus) if more options are needed for a specific button.
-- Don't duplicate the default Panel icons (collapse/expand, close, etc.)
+- 用于旨在始终可见的视图，因为用户经常最小化面板。
+- 渲染自定义 Webview 内容，这些内容在拖动到其他视图容器（如主侧边栏或辅助侧边栏）时无法正确调整大小/重排。
 
 <!-- 图片已移除 -->
 
-*In this example, the single View rendered in the Panel renders its View Actions in the main Panel Toolbar.*
+## 面板工具栏
+
+面板工具栏可以公开适用于当前选定视图的选项。例如，终端视图公开 [视图操作](/api/extension-guides/tree-view#view-actions) 以添加新终端、拆分视图布局等。切换到“问题”视图会公开一组不同的操作。类似于 [侧边栏工具栏](/api/ux-guidelines/sidebars#sidebar-toolbar)，如果只有一个视图，工具栏才会渲染。如果使用多个视图，每个视图将渲染其自己的工具栏。
+
+**✔️ 建议**
+
+- 如果可用，使用现有的 [产品图标](/api/references/icons-in-labels#icon-listing)。
+- 提供清晰、有用的工具提示。
+
+**❌ 不建议**
+
+- 不要添加过多数量的图标按钮。如果特定按钮需要更多选项，请考虑使用 [上下文菜单](/api/references/contribution-points#contributes.menus)。
+- 不要复制默认的面板图标（折叠/展开、关闭等）。
 
 <!-- 图片已移除 -->
 
-*In this example, multiple Views are used, so each View exposes its own specific View Actions.*
+*在此示例中，面板中渲染的单个视图在主面板工具栏中渲染其视图操作。*
 
-## Links
+<!-- 图片已移除 -->
 
-- [View Container contribution point](/api/references/contribution-points#contributes.viewsContainers)
-- [View contribution point](/api/references/contribution-points#contributes.views)
-- [View Actions 插件 guide](/api/插件-guides/tree-view#view-actions)
+*在此示例中，使用了多个视图，因此每个视图公开其自己的特定视图操作。*
+
+## 链接
+
+- [视图容器贡献点](/api/references/contribution-points#contributes.viewsContainers)
+- [视图贡献点](/api/references/contribution-points#contributes.views)
+- [视图操作插件指南](/api/extension-guides/tree-view#view-actions)

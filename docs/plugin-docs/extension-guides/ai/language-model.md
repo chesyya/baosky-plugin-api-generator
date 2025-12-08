@@ -1,60 +1,62 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 9bdc3d4e-e6ba-43d3-bd09-2e127cb63ce7
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to adding AI-powered features to a Baosky 插件 by using language models and natural language understanding.
+
+MetaDescription: 使用语言模型和自然语言理解向 Baosky 插件添加人工智能功能的指南。
 ---
 
-# Language Model API
+# 语言模型 API
 
-The Language Model API enables you to [use the Language Model](/api/references/baosky-api#lm) and integrate AI-powered features and natural language processing in your Baosky 插件.
+语言模型 API 使您能够 [use the Language Model](/api/references/baosky-api#lm) 并将 AI 驱动的功能和自然语言处理集成到您的 Baosky 插件中。
 
-You can use the Language Model API in different types of 插件. A typical use for this API is in [chat 插件](/api/插件-guides/ai/chat), where you use a language model to interpret the user's request and help provide an answer. However, the use of the Language Model API is not limited to this scenario. You might use a language model in a [language](/api/language-插件/overview) or [debugger](/api/插件-guides/debugger-插件) 插件, or as part of a [command](/api/插件-guides/command) or [task](/api/插件-guides/task-provider) in a custom 插件. For example, the Rust 插件 might use the Language Model to offer default names to improve its rename experience.
+您可以在不同类型的插件中使用语言模型 API。此 API 的典型用途是在 [chat 插件](/api/插件-guides/ai/chat) 中，您可以在其中使用语言模型来解释用户的请求并帮助提供答案。然而，语言模型API的使用并不限于此场景。您可以在 [language](/api/language-插件/overview) 或 [调试器](/api/插件-guides/调试器-插件) 插件中使用语言模型，或者作为自定义插件中 [命令](/api/插件-guides/命令) 或 [task](/api/插件-guides/task-provider) 的一部分。例如，Rust 插件可能会使用语言模型来提供默认名称以改善其重命名体验。
 
-The process for using the Language Model API consists of the following steps:
+使用语言模型 API 的过程包括以下步骤：
 
-1. Build the language model prompt
-1. Send the language model request
-1. Interpret the response
+1. 构建语言模型提示
+1.发送语言模型请求
+1. 解释响应
 
-The following sections provide more details on how to implement these steps in your 插件.
+以下部分提供了有关如何在插件中实施这些步骤的更多详细信息。
 
-To get started, you can explore the [chat 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-sample).
+首先，您可以探索 [chat 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-sample)。
 
-## Build the language model prompt
+## 构建语言模型提示
 
-To interact with a language model, 插件 should first craft their prompt, and then send a request to the language model. You can use prompts to provide instructions to the language model on the broad task that you're using the model for. Prompts can also define the context in which user messages are interpreted.
+要与语言模型交互，插件应首先制作提示，然后向语言模型发送请求。您可以使用提示向语言模型提供有关您使用模型执行的广泛任务的说明。提示还可以定义解释用户消息的上下文。
 
-The Language Model API supports two types of messages when building the language model prompt:
+构建语言模型提示时，语言模型 API 支持两种类型的消息：
 
-- **User** - used for providing instructions and the user's request
-- **Assistant** - used for adding the history of previous language model responses as context to the prompt
+- ** 用户 ** - 用于提供说明和用户的请求
+- ** 助手 ** - 用于添加先前语言模型响应的历史记录作为提示的上下文
 
-> **Note**: Currently, the Language Model API doesn't support the use of system messages.
+> ** 注意 ** ：目前，语言模型 API 不支持使用系统消息。
 
-You can use two approaches for building the language model prompt:
+您可以使用两种方法来构建语言模型提示：
 
-- `LanguageModelChatMessage` - create the prompt by providing one or more messages as strings. You might use this approach if you're just getting started with the Language Model API.
-- [`code`](https://www.npmjs.com/package/@baosky/prompt-tsx) - declare the prompt by using the TSX syntax.
+- `LanguageModelChatMessage` - 通过提供一条或多条消息作为字符串来创建提示。如果您刚刚开始使用语言模型 API，则可以使用此方法。
+- [`code`](https://www.npmjs.com/package/@baosky/prompt-tsx) - 使用 TSX 语法声明提示。
 
-You can use the `prompt-tsx` library if you want more control over how the language model prompt is composed. For example, the library can help with dynamically adapting the length of the prompt to each language model's context window size. Learn more about [`code`](https://www.npmjs.com/package/@baosky/prompt-tsx) or explore the [chat 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-sample) to get started.
+如果您想更好地控制语言模型提示的组成方式，可以使用 `prompt-tsx` 库。例如，该库可以帮助动态调整提示的长度以适应每种语言模型的上下文窗口大小。了解有关 [`code`](https://www.npmjs.com/package/@baosky/prompt-tsx) 的更多信息或探索 [chat 插件 sample](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-sample) 以开始使用。
 
-To learn more about the concepts of prompt engineering, we suggest reading OpenAI's excellent [Prompt engineering guidelines](https://platform.openai.com/docs/guides/prompt-engineering).
+要了解有关即时工程概念的更多信息，我们建议阅读 OpenAI 的优秀[Prompt engineering guidelines](https://platform.openai.com/docs/guides/prompt-engineering)。
 
->**Tip:** take advantage of the rich Baosky 插件 API to get the most relevant context and include it in your prompt. For example, to include the contents of the active file in the editor.
+> ** 提示： ** 利用丰富的 Baosky 插件 API 来获取最相关的上下文并将其包含在您的提示中。例如，在编辑器中包含活动文件的内容。
 
-### Use the `LanguageModelChatMessage` class
+### 使用 `LanguageModelChatMessage` 类
 
-The Language Model API provides the `LanguageModelChatMessage` class to represent and create chat messages. You can use the `LanguageModelChatMessage.User` or `LanguageModelChatMessage.Assistant` methods to create user or assistant messages respectively.
+语言模型 API 提供 `LanguageModelChatMessage` 类来表示和创建聊天消息。您可以使用 `LanguageModelChatMessage.User` 或 `LanguageModelChatMessage.Assistant` 方法分别创建用户或助理消息。
 
-In the following example, the first message provides context for the prompt:
+在以下示例中，第一条消息提供提示的上下文：
 
-- The persona used by the model in its replies (in this case, a cat)
-- The rules the model should follow when generating responses (in this case, explaining computer science concepts in a funny manner by using cat metaphors)
+- 模型在回复中使用的角色（在本例中为猫）
+- 模型在生成响应时应遵循的规则（在本例中，通过使用猫比喻以有趣的方式解释计算机科学概念）
 
-The second message then provides the specific request or instruction coming from the user. It determines the specific task to be accomplished, given the context provided by the first message.
+然后第二消息提供来自用户的特定请求或指令。它根据第一条消息提供的上下文确定要完成的具体任务。
 
 ```typescript
 const craftedPrompt = [
@@ -63,17 +65,17 @@ const craftedPrompt = [
 ];
 ```
 
-## Send the language model request
+## 发送语言模型请求
 
-Once you've built the prompt for the language model, you first select the language model you want to use with the [`code`](/api/references/baosky-api#lm.selectChatModels) method. This method returns an array of language models that match the specified criteria. If you are implementing a chat participant, we recommend that you instead use the model that is passed as part of the `request` object in your chat request handler. This ensures that your 插件 respects the model that the user chose in the chat model dropdown. Then, you send the request to the language model by using the [`code`](/api/references/baosky-api#LanguageModelChat) method.
+构建语言模型的提示后，首先选择要与 [`code`](/api/references/baosky-api#lm.selectChatModels) 方法一起使用的语言模型。此方法返回与指定条件匹配的语言模型数组。如果您要实现聊天参与者，我们建议您改用作为聊天请求处理程序中 `request` 对象的一部分传递的模型。这可确保您的插件遵循用户在聊天模型下拉列表中选择的模型。然后，使用 [`code`](/api/references/baosky-api#LanguageModelChat) 方法将请求发送到语言模型。
 
-To select the language model, you can specify the following properties: `vendor`, `id`, `family`, or `version`. Use these properties to either broadly match all models of a given vendor or family, or select one specific model by its ID. Learn more about these properties in the [API reference](/api/references/baosky-api#LanguageModelChat).
+要选择语言模型，您可以指定以下属性：`vendor`、`id`、`family` 或 `version`。使用这些属性可以广泛匹配给定供应商或系列的所有型号，或者通过 ID 选择一个特定型号。在 [API 参考](/api/references/baosky-api#LanguageModelChat) 中了解有关这些属性的更多信息。
 
-> **Note**: Currently, `gpt-4o`, `gpt-4o-mini`, `o1`, `o1-mini`, `claude-3.5-sonnet` are supported for the language model family. If you are unsure what model to use, we recommend `gpt-4o` for it's performance and quality. For interactions directly in the editor, we recommend `gpt-4o-mini` for it's performance.
+> ** 注意 ** ：目前，语言模型系列支持 `gpt-4o`、`gpt-4o-mini`、`o1`、`o1-mini`、`claude-3.5-sonnet`。如果您不确定要使用哪个模型，我们建议使用 `gpt-4o` ，因为它的性能和质量。对于直接在编辑器中进行交互，我们建议使用 `gpt-4o-mini` 因为它的性能。
 
-If there are no models that match the specified criteria, the `selectChatModels` method returns an empty array. Your 插件 must appropriately handle this case.
+如果没有与指定条件匹配的模型，则 `selectChatModels` 方法返回一个空数组。您的插件必须适当地处理这种情况。
 
-The following example shows how to select all `Copilot` models, regardless of the family or version:
+以下示例显示如何选择所有 `Copilot` 型号，无论其系列或版本如何：
 
 ```typescript
 const models = await vscode.lm.selectChatModels({
@@ -86,13 +88,13 @@ if (models.length === 0) {
 }
 ```
 
-> **Important**: Copilot's language models require consent from the user before an 插件 can use them. Consent is implemented as an authentication dialog. Because of that, `selectChatModels` should be called as part of a user-initiated action, such as a command.
+> ** 重要 ** ：Copilot 的语言模型需要先获得用户的同意，然后插件才能使用它们。同意是作为身份验证对话框实现的。因此，`selectChatModels` 应作为用户启动操作（例如命令）的一部分进行调用。
 
-After you select a model, you can send a request to the language model by invoking the [`code`](/api/references/baosky-api#LanguageModelChat) method on the model instance. You pass the [prompt](#build-the-language-model-prompt) you crafted earlier, along with any additional options, and a cancellation token.
+选择模型后，您可以通过调用模型实例上的 [`code`](/api/references/baosky-api#LanguageModelChat) 方法向语言模型发送请求。您传递之前创建的 [prompt](#build-the-language-model-prompt) 以及任何其他选项和取消令牌。
 
-When you make a request to the Language Model API, the request might fail. For example, because the model doesn't exist, or the user didn't give consent to use the Language Model API, or because quota limits are exceeded. Use `LanguageModelError` to distinguish between different types of errors.
+当您向语言模型 API 发出请求时，请求可能会失败。例如，因为模型不存在，或者用户未同意使用语言模型 API，或者因为超出了配额限制。使用 `LanguageModelError` 来区分不同类型的错误。
 
-The following code snippet shows how to make a language model request:
+以下 code snippet shows how 要 make a language model request:
 
 ```typescript
 try {
@@ -115,15 +117,15 @@ try {
 }
 ```
 
-## Interpret the response
+## 解释响应
 
-After you've sent the request, you have to process the response from the language model API. Depending on your usage scenario, you can pass the response directly on to the user, or you can interpret the response and perform extra logic.
+发送请求后，您必须处理来自语言模型 API 的响应。根据您的使用场景，您可以将响应直接传递给用户，也可以解释响应并执行额外的逻辑。
 
-The response ([`code`](/api/references/baosky-api#LanguageModelChatResponse)) from the Language Model API is streaming-based, which enables you to provide a smooth user experience. For example, by reporting results and progress continuously when you use the API in combination with the [Chat API](/api/插件-guides/ai/chat).
+来自语言模型 API 的响应 ([`code`](/api/references/baosky-api#LanguageModelChatResponse)) 是基于流的，这使您能够提供流畅的用户体验。例如，当您将 API 与 [Chat API](/api/插件-guides/ai/chat) 结合使用时，可以持续报告结果和进度。
 
-Errors might occur while processing the streaming response, such as network connection issues. Make sure to add appropriate error handling in your code to handle these errors.
+处理流响应时可能会出现错误，例如网络连接问题。确保在代码中添加适当的错误处理来处理这些错误。
 
-The following code snippet shows how an 插件 can register a command, which uses the language model to change all variable names in the active editor with funny cat names. Notice that the 插件 streams the code back to the editor for a smooth user experience.
+以下 code snippet shows how an 插件 can register a command, which uses the language model 要 change all variable names in the active editor with funny cat names. Notice that the 插件 streams the code back 要 the editor for a smooth user experience.
 
 ```typescript
  vscode.commands.registerTextEditorCommand('cat.namesInEditor', async (textEditor: vscode.TextEditor) => {
@@ -178,46 +180,46 @@ The following code snippet shows how an 插件 can register a command, which use
 });
 ```
 
-## Considerations
+## 注意事项
 
-### Model availability
+### 型号可用性
 
-We don't expect specific models to stay supported forever. When you reference a language model in your 插件, make sure to take a "defensive" approach when sending requests to that language model. This means that you should gracefully handle cases where you don't have access to a particular model.
+我们不期望特定模型永远得到支持。当您在插件中引用语言模型时，请确保在向该语言模型发送请求时采取“防御”方法。这意味着您应该妥善处理无法访问特定模型的情况。
 
-### Choosing the appropriate model
+### 选择合适的型号
 
-插件 authors can choose which model is the most appropriate for their 插件. We recommend using `gpt-4o` for its performance and quality. To get a full list of available models, you can use this code snippet:
+插件作者可以选择最适合其插件的模型。我们建议使用 `gpt-4o` 因其性能和质量。要获取可用模型的完整列表，您可以使用以下代码片段：
 
 ```typescript
 const allModels = await vscode.lm.selectChatModels(MODEL_SELECTOR);
 ```
 
-> [!NOTE]
-> The recommended GPT-4o model has a limit of `64K` tokens. The returned model object from the `selectChatModels` call has a `maxInputTokens` attribute that shows the token limit. These limits will be expanded as we learn more about how 插件 are using the language models.
+> [!注意]
+> 推荐的 GPT-4o 模型有 `64K` 令牌的限制。 `selectChatModels` 调用返回的模型对象具有显示令牌限制的 `maxInputTokens` 属性。随着我们更多地了解插件如何使用语言模型，这些限制将会扩大。
 
-### Rate limiting
+### 速率限制
 
-插件 should responsibly use the language model and be aware of rate limiting. Baosky is transparent to the user regarding how 插件 are using language models and how many requests each 插件 is sending and how that influences their respective quotas.
+插件应该负责任地使用语言模型并注意速率限制。 Baosky 对用户来说是透明的，了解插件如何使用语言模型、每个插件发送的请求数量以及这如何影响各自的配额。
 
-插件 should not use the Language Model API for integration tests due to rate-limitations. Internally, Baosky uses a dedicated non-production language model for simulation testing, and we are currently thinking how to provide a scalable language model testing solution for 插件.
+由于速率限制，插件不应使用语言模型 API 进行集成测试。在内部，Baosky 使用专用的非生产语言模型进行模拟测试，目前我们正在思考如何为插件提供可扩展的语言模型测试解决方案。
 
-## Testing your 插件
+## 测试你的插件
 
-The responses that the Language Model API provides are nondeterministic, which means that you might get a different response for an identical request. This behavior can be challenging for testing your 插件.
+语言模型 API 提供的响应是不确定的，这意味着对于相同的请求，您可能会得到不同的响应。这种行为对于测试您的插件来说可能具有挑战性。
 
-The part of the 插件 for building prompts and interpreting language model responses is deterministic, and can thus be unit tested without using an actual language model. However, interacting and getting responses from the language model itself, is nondeterministic and can’t be easily tested. Consider designing your 插件 code in a modular way to enable you to unit test the specific parts that can be tested.
+用于构建提示和解释语言模型响应的插件部分是确定性的，因此可以在不使用实际语言模型的情况下进行单元测试。然而，交互并从语言模型本身获取响应是不确定的，并且不能轻易测试。考虑以模块化方式设计您的插件代码，以便您能够对可以测试的特定部分进行单元测试。
 
-## Publishing your 插件
+## 发布你的插件
 
-Once you have created your AI 插件, you can publish your 插件 to the Visual Studio Marketplace:
+创建 AI 插件后，您可以将插件发布到 Visual Studio 市场：
 
-- Before publishing to the VS Marketplace we recommend that you read the [Microsoft AI tools and practices guidelines](https://www.microsoft.com/en-us/ai/tools-practices). These guidelines provide best practices for the responsible development and use of AI technologies.
-- By publishing to the VS Marketplace, your 插件 is adhering to the [GitHub Copilot extensibility acceptable development and use policy](https://docs.github.com/en/early-access/copilot/github-copilot-extensibility-platform-partnership-plugin-acceptable-development-and-use-policy).
-- If your 插件 already contributes functionality other than using the Language Model API, we recommend that you do not introduce an 插件 dependency on GitHub Copilot in the [插件 manifest](/api/references/插件-manifest). This ensures that 插件 users that do not use GitHub Copilot can use the non language model functionality without having to install GitHub Copilot. Make sure to have appropriate error handling when accessing language models for this case.
-- Upload to the Marketplace as described in [Publishing 插件](#).
+- 在发布到 VS 市场 之前，我们建议您阅读 [Microsoft AI tools and practices guidelines](https://www.microsoft.com/en-us/ai/tools-practices)。这些指南为负责任地开发和使用人工智能技术提供了最佳实践。
+- 通过发布到 VS 市场，您的插件将遵守 [GitHub Copilot extensibility acceptable development and use policy](https://docs.github.com/en/early-access/copilot/github-copilot-extensibility-platform-partnership-plugin-acceptable-development-and-use-policy)。
+- 如果您的插件已经提供了除使用语言模型 API 之外的功能，我们建议您不要在 [插件 清单](/api/references/插件-清单) 中引入对 GitHub Copilot 的插件依赖项。这可确保不使用 GitHub Copilot 的插件用户可以使用非语言模型功能，而无需安装 GitHub Copilot。确保在访问这种情况的语言模型时进行适当的错误处理。
+- 按照 [Publishing 插件](#) 中的说明上传到市场。
 
-## Related content
+## 相关内容
 
-- [Language Models API Reference](/api/references/baosky-api#lm)
-- [Learn more about @baosky/prompt-tsx](https://www.npmjs.com/package/@baosky/prompt-tsx)
+- [Language Models API 参考](/api/references/baosky-api#lm)
+- [了解更多 about @baosky/prompt-tsx](https://www.npmjs.com/package/@baosky/prompt-tsx)
 - [Build a Baosky chat 插件](/api/插件-guides/ai/chat)

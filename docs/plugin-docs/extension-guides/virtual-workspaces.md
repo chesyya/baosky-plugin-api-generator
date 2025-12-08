@@ -1,58 +1,60 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: c64264b1-09cd-4680-b0dc-9f0f7803e451
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Learn how to support virtual workspaces in 插件
+
+MetaDescription: 了解如何在插件中支持虚拟工作区
 ---
 
-# Virtual Workspaces
+# 虚拟工作区
 
-插件 like the [GitHub Repositories](#) 插件 open Baosky on one or more folders backed by a [file system provider](/api/插件-guides/virtual-documents#file-system-api). When an 插件 implements a file system provider, workspace resources may not be located on the local disk, but be **virtual**, located on a server or the cloud, and editing operations happen there.
+像 [GitHub Repositories](#) 这样的插件在由 [文件系统提供程序](/api/extension-guides/virtual-documents#file-system-api) 支持的一个或多个文件夹上打开 Baosky。当插件实现文件系统提供程序时，工作区资源可能不位于本地磁盘上，而是 **虚拟的**，位于服务器或云上，并且编辑操作在那里发生。
 
-This configuration is called a **virtual workspace**. When a virtual workspace is open in a Baosky window, this is indicated by a label in the remote indicator in the lower left corner, similar to other [remote development](/docs/remote/remote-overview) windows.
+此配置称为 **虚拟工作区**。当虚拟工作区在 Baosky 窗口中打开时，这会通过左下角远程指示器中的标签来指示，类似于其他 [远程开发](/docs/remote/remote-overview) 窗口。
 
 <!-- 图片已移除 -->
 
-Not all 插件 are able to work with virtual resources and may require resources to be on disk. Some 插件 use tools that rely on disk access, need synchronous file access, or don't have the necessary file system abstractions. In these cases, when in a virtual workspace, Baosky indicates to the user that they are running in a restricted mode and that some 插件 are deactivated or work with limited functionality.
+并非所有插件都能处理虚拟资源，并且可能要求资源位于磁盘上。某些插件使用依赖于磁盘访问的工具，需要同步文件访问，或者没有必要的文件系统抽象。在这些情况下，当处于虚拟工作区时，Baosky 会向用户指示他们正在受限模式下运行，并且某些插件已停用或以有限功能运行。
 
-In general, users want as many 插件 as possible to work in virtual workspaces and to have a good user experience when browsing and editing remote resources. This guide shows how 插件 can test against virtual workspaces, describes modifications to allow them to work in virtual workspaces, and introduces the `virtualWorkspaces` capability property.
+通常，用户希望尽可能多的插件在虚拟工作区中工作，并在浏览和编辑远程资源时拥有良好的用户体验。本指南展示了插件如何针对虚拟工作区进行测试，描述了允许它们在虚拟工作区中工作所需的修改，并介绍了 `virtualWorkspaces` 功能属性。
 
-Modifying an 插件 to work with virtual workspaces is also an important step for working well in [Baosky for the Web](/docs/setup/baosky-web). Baosky for the Web runs entirely inside a browser and workspaces are virtual due to the browser sandbox. See the [Web 插件](/api/插件-guides/web-插件) guide for more details.
+修改插件以使用虚拟工作区也是在 [Baosky for the Web](/docs/setup/baosky-web) 中良好工作的重要一步。Baosky for the Web 完全在浏览器内运行，并且由于浏览器沙箱，工作区是虚拟的。有关更多详细信息，请参阅 [Web 插件](/api/extension-guides/web-extensions) 指南。
 
-## Is my 插件 affected?
+## 我的插件是否受影响？
 
-When an 插件 has no executable code but is purely declarative like themes, keybindings, snippets, or grammar 插件, it can run in a virtual workspace and no modification is necessary.
+当插件没有可执行代码而是纯声明性的（如主题、键绑定、片段或语法插件）时，它可以在虚拟工作区中运行，无需修改。
 
-插件 with code, meaning 插件 that define a `main` entry point, require inspection and, possibly, modification.
+带有代码的插件，即定义 `main` 入口点的插件，需要检查，并可能需要修改。
 
-## Run your 插件 against a virtual workspace
+## 针对虚拟工作区运行您的插件
 
-Install the [GitHub Repositories](#) 插件 and run the **Open GitHub Repository...** command from the Command Palette. The command shows a Quick Pick dropdown and you can paste in any GitHub URL, or choose to search for a specific repository or pull request.
+安装 [GitHub Repositories](#) 插件，并从命令面板运行 **打开 GitHub 存储库...** (Open GitHub Repository...) 命令。该命令显示一个快速选择下拉列表，您可以粘贴任何 GitHub URL，或选择搜索特定的存储库或拉取请求。
 
-This opens a Baosky window for a virtual workspace where all resources are virtual.
+这将打开一个虚拟工作区的 Baosky 窗口，其中所有资源都是虚拟的。
 
-## Review that the 插件 code is ready for virtual resources
+## 检查插件代码是否已准备好用于虚拟资源
 
-The Baosky API support for virtual file systems has been around for quite a while. You can check out the [file system provider API](/api/插件-guides/virtual-documents#file-system-api).
+Baosky API 对虚拟文件系统的支持已经存在了一段时间。您可以查看 [文件系统提供程序 API](/api/extension-guides/virtual-documents#file-system-api)。
 
-A file system provider is registered for a new URI scheme (for example, `vscode-vfs`) and resources on that file system will be represented by URIs using that schema (`vscode-vfs://github/microsoft/vscode/package.json`)
+文件系统提供程序注册为新的 URI scheme（例如 `vscode-vfs`），该文件系统上的资源将使用该 schema 的 URI 表示（`vscode-vfs://github/microsoft/vscode/package.json`）。
 
-Check how your 插件 deals with URIs returned from the Baosky APIs:
+检查您的插件如何处理从 Baosky API 返回的 URI：
 
-* Never assume that the URI scheme is `file`. `URI.fsPath` can only be used when the URI scheme is `file`.
-* Look out for usages of the `fs` node module for file system operations. If possible, use the `vscode.workspace.fs` API, which delegates to the appropriate file system provider.
-* Check for third-party components that depend on a `fs` access (for example, a language server or a node module).
-* If you run executables and tasks from commands, check whether these commands make sense in a virtual workspace window or whether they should be disabled.
+* 切勿假设 URI scheme 是 `file`。`URI.fsPath` 仅当 URI scheme 为 `file` 时才能使用。
+* 留意文件系统操作对 `fs` 节点模块的使用。如果可能，请使用 `vscode.workspace.fs` API，它委托给适当的文件系统提供程序。
+* 检查依赖于 `fs` 访问的第三方组件（例如，语言服务器或节点模块）。
+* 如果您从命令运行可执行文件和任务，请检查这些命令在虚拟工作区窗口中是否有意义，或者是否应该禁用它们。
 
-## Signal whether your 插件 can handle virtual workspaces
+## 信号指示您的插件是否可以处理虚拟工作区
 
-The `virtualWorkspaces` property under `capabilities` in `package.json` is used to signal whether an 插件 works with virtual workspaces.
+`package.json` 中 `capabilities` 下的 `virtualWorkspaces` 属性用于指示插件是否适用于虚拟工作区。
 
-### No support for virtual workspaces
+### 不支持虚拟工作区
 
-The example below declares that an 插件 does not support virtual workspaces and should not be enabled by Baosky in this setup.
+下面的示例声明插件不支持虚拟工作区，并且在这种设置下不应由 Baosky 启用。
 
 ```json
 {
@@ -65,9 +67,9 @@ The example below declares that an 插件 does not support virtual workspaces an
 }
 ```
 
-### Partial and full support for virtual workspaces
+### 对虚拟工作区的部分和完全支持
 
-When an 插件 works or partially works with virtual workspaces, it should define `"virtualWorkspaces": true`.
+当插件在虚拟工作区中工作或部分工作时，它应该定义 `"virtualWorkspaces": true`。
 
 ```json
 {
@@ -77,7 +79,7 @@ When an 插件 works or partially works with virtual workspaces, it should defin
 }
 ```
 
-If an 插件 works, but has limited functionality, it should explain the limitation to the user:
+如果插件可以工作，但功能有限，它应该向用户解释限制：
 
 ```json
 {
@@ -90,28 +92,28 @@ If an 插件 works, but has limited functionality, it should explain the limitat
 }
 ```
 
-The description is shown in the 插件 view:
+描述显示在插件视图中：
 
 <!-- 图片已移除 -->
 
-The 插件 should then disable the features that are not supported in a virtual workspace as described below.
+然后，插件应禁用虚拟工作区中不支持的功能，如下所述。
 
-### Default
+### 默认值
 
-`"virtualWorkspaces": true` is the default for all 插件 that have not yet filled in the `virtualWorkspaces` capability.
+对于尚未填写 `virtualWorkspaces` 功能的所有插件，`"virtualWorkspaces": true` 是默认值。
 
-However, while testing virtual workspaces, we came up list of 插件 that we think should be disabled in virtual workspaces.
-The list can be found in [issue #122836](https://github.com/microsoft/baosky/issues/122836). These 插件 have `"virtualWorkspaces": false` as default.
+但是，在测试虚拟工作区时，我们提出了一个我们认为应该在虚拟工作区中禁用的插件列表。
+该列表可以在 [issue #122836](https://github.com/microsoft/baosky/issues/122836) 中找到。这些插件默认具有 `"virtualWorkspaces": false`。
 
-Of course, 插件 authors are in a better position to make this decision. The `virtualWorkspaces` capability in an 插件's `package.json` will override our default and we will eventually retire our list.
+当然，插件作者更适合做出此决定。插件的 `package.json` 中的 `virtualWorkspaces` 功能将覆盖我们的默认值，我们最终将停用我们的列表。
 
-## Disable functionality when a virtual workspace is opened
+## 打开虚拟工作区时禁用功能
 
-### Disable commands and view contributions
+### 禁用命令和视图贡献
 
-The availability of commands and views and many other contributions can be controlled through context keys in [when clauses](/api/references/when-clause-contexts).
+命令和视图以及许多其他贡献的可用性可以通过 [when 子句](/api/references/when-clause-contexts) 中的上下文键来控制。
 
-The `virtualWorkspace` context key is set when all workspace folders are located on virtual file systems. The example below only shows the command `npm.publish` in the Command Palette when not in a virtual workspace:
+当所有工作区文件夹都位于虚拟文件系统上时，将设置 `virtualWorkspace` 上下文键。下面的示例仅在不在虚拟工作区中时在命令面板中显示命令 `npm.publish`：
 
 ```json
 {
@@ -126,9 +128,9 @@ The `virtualWorkspace` context key is set when all workspace folders are located
 }
 ```
 
-The `resourceScheme` context key is set to the URI scheme of the currently selected element in the File Explorer or the element open in the editor.
+`resourceScheme` 上下文键设置为文件资源管理器中当前选定元素或编辑器中打开元素的 URI scheme。
 
-In the example below, the `npm.runSelectedScript` command is only displayed in the editor context menu if the underlying resource is on the local disk.
+在下面的示例中，仅当基础资源位于本地磁盘上时，`npm.runSelectedScript` 命令才会显示在编辑器上下文菜单中。
 
 ```json
 {
@@ -143,58 +145,58 @@ In the example below, the `npm.runSelectedScript` command is only displayed in t
 }
 ```
 
-### Detect virtual workspaces programmatically
+### 以编程方式检测虚拟工作区
 
-To check whether the current workspace consists of non-`file` schemes and is virtual, you can use the following source code:
+要检查当前工作区是否由非 `file` scheme 组成并且是虚拟的，您可以使用以下源代码：
 
 ```ts
 const isVirtualWorkspace = workspace.workspaceFolders && workspace.workspaceFolders.every(f => f.uri.scheme !== 'file');
 ```
 
-## Language 插件 and virtual workspaces
+## 语言插件和虚拟工作区
 
-### What are the expectations for language support with virtual workspaces?
+### 对虚拟工作区的语言支持有什么期望？
 
-It's not realistic that all 插件 be able to fully work with virtual resources. Many 插件 use external tools that require synchronous file access and files on disk. It's therefore fine to only provide limited functionality, such as the **Basic** and the **Single-file** support as listed below.
+所有插件都能完全使用虚拟资源是不现实的。许多插件使用需要同步文件访问和磁盘文件的外部工具。因此，仅提供有限的功能是可以的，例如下面列出的 **基本** 和 **单文件** 支持。
 
-A. **Basic** language support:
+A. **基本** 语言支持：
 
-* TextMate tokenization and colorization
-* Language-specific editing support: bracket pairs, comments, on enter rules, folding markers
-* Code snippets
+* TextMate 标记化和着色
+* 特定于语言的编辑支持：括号对、注释、回车规则、折叠标记
+* 代码片段
 
-B. **Single-file** language support:
+B. **单文件** 语言支持：
 
-* Document symbols (outline), folding, selection ranges
-* Document highlights, semantic highlighting, document colors
-* Completions, hovers, signature help, find references/declarations based on symbols on the current file and on static language libraries
-* Formatting, linked editing
-* Syntax validation and same-file semantic validation and Code Actions
+* 文档符号（大纲）、折叠、选择范围
+* 文档高亮显示、语义高亮显示、文档颜色
+* 基于当前文件和静态语言库中的符号的补全、悬停、签名帮助、查找引用/声明
+* 格式化、链接编辑
+* 语法验证和同文件语义验证以及代码操作
 
-C. **Cross-file, workspace-aware** language support:
+C. **跨文件、工作区感知** 语言支持：
 
-* References across files
-* Workspace symbols
-* Validation of all files in the workspace/project
+* 跨文件引用
+* 工作区符号
+* 工作区/项目中所有文件的验证
 
-The rich language 插件 that ship with Baosky (TypeScript, JSON, CSS, HTML, Markdown) are limited to single-file language support when working on virtual resources.
+Baosky 附带的丰富语言插件（TypeScript、JSON、CSS、HTML、Markdown）在处理虚拟资源时仅限于单文件语言支持。
 
-### Disabling a language 插件
+### 禁用语言插件
 
-If working on a single file is not option, language 插件 can also decide to disable the 插件 when in a virtual workspace.
+如果处理单个文件不是选项，语言插件还可以决定在虚拟工作区中时禁用该插件。
 
-If your 插件 provides both grammars and rich language support that needs to be disabled, the grammars will also be disabled. To avoid this, you can create a basic language 插件 (grammars, language configuration, snippets) separate from the rich language support and have two 插件.
+如果您的插件同时提供语法和需要禁用的丰富语言支持，那么语法也将被禁用。为了避免这种情况，您可以创建一个与丰富语言支持分离的基本语言插件（语法、语言配置、片段），并拥有两个插件。
 
-* The basic language 插件 has `"virtualWorkspaces": true` and provides the language ID, configuration, grammar, and snippets.
-* The rich language 插件 has `"virtualWorkspaces": false` and contains the `main` file. It contributes language support, commands, and has an 插件 dependency (`extensionDependencies`) on the basic language 插件. The rich language 插件 should keep the 插件 ID of the established 插件, so the user can continue to have the full functionality by installing a single 插件.
+* 基本语言插件具有 `"virtualWorkspaces": true` 并提供语言 ID、配置、语法和片段。
+* 丰富语言插件具有 `"virtualWorkspaces": false` 并包含 `main` 文件。它贡献语言支持、命令，并对基本语言插件具有插件依赖关系 (`extensionDependencies`)。丰富语言插件应保留已建立插件的插件 ID，以便用户可以通过安装单个插件继续拥有完整功能。
 
-You can see this approach with the built-in language 插件, such as JSON, which consists of a JSON 插件 and a JSON language feature 插件.
+您可以通过内置语言插件看到这种方法，例如 JSON，它由 JSON 插件和 JSON 语言功能插件组成。
 
-This separation also helps with [Untrusted Workspaces](/api/插件-guides/workspace-trust) running in [Restricted Mode](/docs/editor/workspace-trust#restricted-mode). Rich language 插件 often require trust while basic language features can run in any setup.
+这种分离还有助于在 [受限模式](/docs/editor/workspace-trust#restricted-mode) 下运行的 [不受信任的工作区](/api/extension-guides/workspace-trust)。丰富的语言插件通常需要信任，而基本的语言功能可以在任何设置中运行。
 
-### Language selectors
+### 语言选择器
 
-When registering a provider for a language feature (for example, completions, hovers, Code Actions, etc.) make sure to specify the schemes the provider supports:
+为语言功能（例如，补全、悬停、代码操作等）注册提供程序时，请确指定提供程序支持的 scheme：
 
 ```ts
 return vscode.languages.registerCompletionItemProvider({ language: 'typescript', scheme: 'file' }, {
@@ -204,6 +206,6 @@ return vscode.languages.registerCompletionItemProvider({ language: 'typescript',
 });
 ```
 
-### What about support in the Language Server Protocol (LSP) for accessing virtual resources?
+### 语言服务器协议 (LSP) 中对访问虚拟资源的支持如何？
 
-Work is under way that will add file system provider support to LSP. Tracked in Language Server Protocol [issue #1264](https://github.com/microsoft/language-server-protocol/issues/1264).
+正在进行的工作将向 LSP 添加文件系统提供程序支持。在语言服务器协议 [issue #1264](https://github.com/microsoft/language-server-protocol/issues/1264) 中跟踪。

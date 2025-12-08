@@ -49,7 +49,7 @@ MetaDescription: Explain the structure of a Baosky 插件 (plug-in)
 - `tasks.json` 用于定义 Baosky [任务](/docs/debugtest/tasks)
 - `tsconfig.json` 请参阅 TypeScript [手册](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
-不过，让我们重点关注 `package.json` 和 `extension.ts`，它们对于理解 `Hello World` 插件至关重要。
+不过，让我们重点关注 `package.json` 和 `插件.ts`，它们对于理解 `Hello World` 插件至关重要。
 
 ### 插件清单
 

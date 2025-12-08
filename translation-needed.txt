@@ -1,0 +1,1291 @@
+
+================================================================================
+文件: references/theme-color.md
+需要翻译: 963 行
+================================================================================
+
+第 14 行:
+您可以 customize your active Baosky [color theme](/docs/getstarted/themes) with the `workbench.colorCustomizations` user [setting](/docs/configure/settings).
+
+第 24 行:
+** Note ** : If you want 要 use an existing color theme, see [Color Themes](/docs/getstarted/themes) where you'll learn how 要 set the active color theme through the ** Preferences: Color Theme ** dropdown (`kb(workbench.action.selectTheme)`).
+
+第 26 行:
+Theme colors are available as CSS variables in [webviews](/api/插件-guides/webview), and [an 插件](#) is available which provides IntelliSense for them.
+
+第 30 行:
+Color values can be defined in the RGB color model with an alpha channel for transparency. As format, 以下 hexadecimal notations are supported: `#RGB`, `#RGBA`, `#RRGGBB` and `#RRGGBBAA`. R (red), G (green), B (blue), and A (alpha) are hexadecimal characters (0-9, a-f or A-F). The three-digit notation (`#RGB`) is a shorter version of the six-digit form (`#RRGGBB`) and the four-digit RGB notation (`#RGBA`) is a shorter version of the eight-digit form (`#RRGGBBAA`). 例如 `#e35f` is the same color as `#ee3355ff`.
+
+第 32 行:
+If no alpha value is defined, it defaults 要 `ff` (opaque, no transparency). If alpha is set 要 `00`, the color is fully transparent.
+
+第 34 行:
+Some colors should not be opaque in order 要 not cover other annotations. Check the color descriptions 要 see 要 which colors this applies.
+
+第 38 行:
+The contrast colors are typically only set for high contrast themes. If set, they add an additional border around items across the UI 要 increase the contrast.
+
+第 40 行:
+- `contrastActiveBorder`: An extra border around active elements 要 separate them from others for greater contrast.
+
+第 41 行:
+- `contrastBorder`: An extra border around elements 要 separate them from others for greater contrast.
+
+第 45 行:
+- `focusBorder`: Overall border color for focused elements. This color is only used if not overridden by a component.
+
+... 还有 953 行需要翻译
+
+================================================================================
+文件: references/contribution-points.md
+需要翻译: 255 行
+================================================================================
+
+第 14 行:
+** Contribution Points ** are a set of JSON declarations that you make in the `contributes` field of the `package.json` [插件 Manifest](/api/references/插件-manifest). Your 插件 registers ** Contribution Points ** 要 extend various functionalities within Baosky. Here is a list of all available ** Contribution Points ** :
+
+第 51 行:
+Contributes an authentication provider. This will set up an activation event for your provider and display it in your 插件's features.
+
+第 68 行:
+Usually a debugger 插件 will also have a `contributes.breakpoints` entry where the 插件 lists the language file types for which setting breakpoints will be enabled.
+
+第 87 行:
+Contributes new themable colors. These colors can be used by the 插件 in editor decorators and in the status bar. Once defined, users can customize the color in the `workspace.colorCustomization` setting and user themes can set the color value.
+
+第 108 行:
+Color default values can be defined for light, dark and high contrast theme and can either be a reference 要 an existing color or a [Color Hex Value](/api/references/theme-color#color-formats).
+
+第 110 行:
+插件 can consume new and existing theme colors with the `ThemeColor` API:
+
+第 118 行:
+Contribute the UI for a command consisting of a title and (optionally) an icon, category, and enabled state. Enablement is expressed with [when clauses](/api/references/when-clause-contexts). By default, commands show in the ** Command Palette ** (`kb(workbench.action.showCommands)`) but they can also show in other [menus](/api/references/contribution-points#contributes.menus).
+
+第 120 行:
+Presentation of contributed commands depends on the containing menu. The ** Command Palette ** , for
+
+第 121 行:
+instance, prefixes commands with their `category`, allowing for easy grouping. However, the
+
+第 122 行:
+** Command Palette ** doesn't show icons nor disabled commands. The editor context menu, on the other
+
+... 还有 245 行需要翻译
+
+================================================================================
+文件: references/icons-in-labels.md
+需要翻译: 231 行
+================================================================================
+
+第 14 行:
+Baosky contains a set of built-in icons that are used in views and the editor, but can also be used in hovers, the status bar, and by 插件. These icons are ** product icons ** as opposed 要 ** file icons ** , which are used next 要 file names throughout the UI.
+
+第 16 行:
+The product icons that ship with Baosky are contained in the [Codicon icon font](https://github.com/microsoft/baosky-codicons) and form the ** default ** product icon theme. 插件 can provide new [Product Icon Themes](/api/插件-guides/product-icon-theme) 要 redefine these icons and give Baosky a new appearance.
+
+第 18 行:
+In order 要 allow this, all product icons are identified by an ID. The icon identifier is what's used in UI components in labels (`$(pencil)`), in the API as `ThemeIcon` and in contributions when icons are needed.
+
+第 20 行:
+The association of icon identifier 要 an actual icon font glyph happens the product icon theme.
+
+第 22 行:
+## Icons in labels
+
+第 24 行:
+Icons can be used in Markdown labels in hovers, in the  [StatusBarItem](/api/references/baosky-api#StatusBarItem) text and [QuickPickItem](/api/references/baosky-api#QuickPickItem) label API. The syntax for adding an icon in Markdown is `$(iconIdentifier)`:
+
+第 30 行:
+您可以 also embed text and use multiple icons:
+
+第 36 行:
+要 place a literal `$(...)` text inside a label, escape the `要 place a literal `$(...)` text inside a label, escape the  with a backslash:
+
+第 44 行:
+您可以 apply a spinning animation 要 以下 icons by appending `~spin` 要 the icon name:
+
+第 54 行:
+## Icon contribution point
+
+... 还有 221 行需要翻译
+
+================================================================================
+文件: references/commands.md
+需要翻译: 213 行
+================================================================================
+
+第 14 行:
+This document lists a subset of Baosky commands that you might use with `vscode.commands.executeCommand` API.
+
+第 16 行:
+Read the [Commands guide](/api/插件-guides/command) for how 要 use the commands API.
+
+第 18 行:
+以下 is a sample of how 要 open a new folder in Baosky:
+
+第 25 行:
+> ** Note ** : 您可以 review the full set of Baosky commands via the Keyboard Shortcuts editor ** File ** > ** Preferences ** > ** Keyboard Shortcuts ** . The Keyboard Shortcuts editor lists all commands built into Baosky or contributed by 插件, along with their keybindings and visibility when clauses.
+
+第 29 行:
+`vscode.executeDataToNotebook` - Invoke notebook serializer
+
+第 35 行:
+`vscode.executeNotebookToData` - Invoke notebook serializer
+
+第 41 行:
+`notebook.selectKernel` - Trigger kernel picker for specified notebook editor widget
+
+第 43 行:
+* _options_ - Select kernel options
+
+第 46 行:
+`interactive.open` - Open interactive window and return notebook editor and input URI
+
+第 51 行:
+* _title_ - Interactive editor title
+
+... 还有 203 行需要翻译
+
+================================================================================
+文件: extension-guides/web-extensions.md
+需要翻译: 152 行
+================================================================================
+
+第 14 行:
+Baosky can run as an editor in the browser. One example is the `github.dev` user interface reached by pressing `.` (the period key) when browsing a repository or Pull Request in GitHub. When Baosky is used in the Web, installed 插件 are run in an 插件 host in the browser, called the 'web 插件 host'. An 插件 that can run in a web 插件 host is called a 'web 插件'.
+
+第 16 行:
+Web 插件 share the same structure as regular 插件, but given the different runtime, don't run with the same code as 插件 written for a Node.js runtime. Web 插件 still have access 要 the full Baosky API, but no longer 要 the Node.js APIs and module loading. Instead, web 插件 are restricted by the browser sandbox and therefore have [limitations](#web-插件-main-file) compared 要 normal 插件.
+
+第 18 行:
+The web 插件 runtime is supported on VS Code desktop too. If you decide 要 create your 插件 as a web 插件, it will be supported on [VS Code for the Web](/docs/setup/baosky-web) (including `vscode.dev` and `github.dev`) as well as on the desktop and in services like [GitHub Codespaces](/docs/remote/codespaces).
+
+第 22 行:
+A web 插件 is [structured like a regular 插件](/api/get-started/插件-anatomy). The 插件 manifest (`package.json`) defines the entry file for the 插件's source code and declares 插件 contributions.
+
+第 24 行:
+For web 插件, the [main entry file](#web-插件-main-file) is defined by the `browser` property, and not by the `main` property as with regular 插件.
+
+第 26 行:
+The `contributes` property works the same way for both web and regular 插件.
+
+第 28 行:
+The example below shows the `package.json` for a simple hello world 插件, that runs in the web 插件 host only (it only has a `browser` entry point):
+
+第 69 行:
+> ** Note ** : If your 插件 targets a Baosky version prior 要 1.74, you must explicitly list `onCommand:helloworld-web-sample.helloWorld` in `activationEvents`.
+
+第 71 行:
+插件 that have only a `main` entry point, but no `browser` are not web 插件. They are ignored by the web 插件 host and not available for download in the 插件 view.
+
+第 75 行:
+插件 with only declarative contributions (only `contributes`, no `main` or `browser`) can be web 插件. They can be installed and run in [Baosky for the Web](/docs/setup/baosky-web) without any modifications by the 插件 author. 示例 of 插件 with declarative contributions include themes, grammars, and snippets.
+
+... 还有 142 行需要翻译
+
+================================================================================
+文件: references/when-clause-contexts.md
+需要翻译: 141 行
+================================================================================
+
+第 11 行:
+Baosky sets various context keys and specific values depending on what elements are visible and active in the Baosky UI. These contexts can be used 要 selectively enable or disable 插件 commands and UI elements, such as menus and views.
+
+第 13 行:
+例如, Baosky uses when clauses 要 enable or disable command keybindings, which 您可以 see in the Default Keybindings JSON ( ** Preferences: Open Default Keyboard Shortcuts (JSON) ** ):
+
+第 20 行:
+Above, the built-in ** Start Debugging ** command has the keyboard shortcut `kb(workbench.action.debug.start)`, which is only enabled when there is an appropriate debugger available (context key `debuggersAvailable` is true) and the editor isn't in debug mode (context key `inDebugMode` is false).
+
+第 24 行:
+A when clause can consist of a context key (例如, `inDebugMode`) or can use various operators 要 express more nuanced editor state.
+
+第 28 行:
+Logical operators allow combining simple context keys or when-clause expressions that include other logical, equality, comparison, match, `in`/`not in` operators or parenthesized expressions.
+
+第 36 行:
+Note on logical operator precedence: the above table lists operators in order of highest 要 lowest precedence. 示例:
+
+第 48 行:
+您可以 check for equality of a context key's value against a specified value. Note that the right-hand side is a value and not interpreted as a context key, meaning it is not looked up in the context.
+
+第 57 行:
+* If the value on the right-hand side is a string containing whitespace, it must be wrapped in single-quotes - `"resourceFilename == 'My New File.md'"`.
+
+第 58 行:
+* `===` has the same behavior as `==`, and `!==` has the same behavior as `!=`
+
+第 62 行:
+您可以 compare a context key's value against a number. Note that left- and right-hand side of the operator must be separated by whitespace - `foo < 1`, but not `foo<1`.
+
+... 还有 131 行需要翻译
+
+================================================================================
+文件: working-with-extensions/publishing-extension.md
+需要翻译: 137 行
+================================================================================
+
+第 14 行:
+Once you have made a high-quality 插件, 您可以 publish it 要 the [Baosky 插件 Marketplace](#) so others can find, download, and use your 插件. Alternatively, 您可以 [package](#packaging-插件) an 插件 into the installable VSIX format and share it with other users.
+
+第 16 行:
+This topic covers:
+
+第 24 行:
+[vsce](https://github.com/microsoft/baosky-vsce), short for "Baosky 插件", is a command-line tool for packaging, publishing and managing Baosky 插件.
+
+第 28 行:
+Make sure you have [Node.js](https://nodejs.org/) installed. Then run:
+
+第 48 行:
+`vsce` can also search, retrieve metadata, and unpublish 插件. For a reference on all the available `vsce` commands, run `vsce --help`.
+
+第 57 行:
+The publishing tool checks 以下 constraints:
+
+第 59 行:
+- The icon provided in `package.json` may not be an SVG.
+
+第 60 行:
+- The badges provided in the `package.json` may not be SVGs unless they are from [trusted badge providers](/api/references/插件-manifest#approved-badges).
+
+第 62 行:
+- Images in `README.md` and `CHANGELOG.md` may not be SVGs unless they are from [trusted badge providers](/api/references/插件-manifest#approved-badges).
+
+第 66 行:
+Baosky uses [Azure DevOps](https://azure.microsoft.com/services/devops/) for its Marketplace services. This means that authentication, hosting, and management of 插件 are provided through Azure DevOps.
+
+... 还有 127 行需要翻译
+
+================================================================================
+文件: extension-guides/webview.md
+需要翻译: 130 行
+================================================================================
+
+第 14 行:
+The webview API allows 插件 要 create fully customizable views within Baosky. 例如, the built-in Markdown 插件 uses webviews 要 render Markdown previews. Webviews can also be used 要 build complex user interfaces beyond what Baosky's native APIs support.
+
+第 16 行:
+Think of a webview as an `iframe` within Baosky that your 插件 controls. A webview can render almost any HTML content in this frame, and it communicates with 插件 using message passing. This freedom makes webviews incredibly powerful, and opens up a whole new range of 插件 possibilities.
+
+第 18 行:
+Webviews are used in several Baosky APIs:
+
+第 20 行:
+- With Webview Panels created using `createWebviewPanel`. In this case, Webview panels are shown in Baosky as distinct editors. This makes them useful for displaying custom UI and custom visualizations.
+
+第 21 行:
+- As the view for a [custom editor](/api/插件-guides/custom-editors). Custom editors allow 插件 要 provide a custom UI for editing any file in the workspace. The custom editor API also lets your 插件 hook into editor events such as undo and redo, as well as file events such as save.
+
+第 22 行:
+- In [Webview views](/api/references/baosky-api#WebviewView) that are rendered in the sidebar or panel areas. See the [webview view sample 插件](https://github.com/microsoft/baosky-插件-samples/tree/main/webview-view-sample) for more details.
+
+第 24 行:
+This page focuses on the basic webview panel API, although almost everything covered here applies 要 the webviews used in custom editors and webview views as well. Even if you are more interested in those APIs, we recommend reading through this page first 要 familiarize yourself with the webview basics.
+
+第 39 行:
+Webviews are pretty amazing, but they should also be used sparingly and only when Baosky's native API is inadequate. Webviews are resource heavy and run in a separate context from normal 插件. A poorly designed webview can also easily feel out of place within Baosky.
+
+第 41 行:
+Before using a webview, please consider 以下:
+
+第 43 行:
+- Does this functionality really need 要 live within Baosky? Would it be better as a separate application or website?
+
+... 还有 120 行需要翻译
+
+================================================================================
+文件: extension-guides/notebook.md
+需要翻译: 66 行
+================================================================================
+
+第 14 行:
+The Notebook API allows Baosky 插件 要 open files as notebooks, execute notebook code cells, and render notebook outputs in a variety of rich and interactive formats. You may know of popular notebook interfaces like Jupyter Notebook or Google Colab – the Notebook API allows for similar experiences inside Baosky.
+
+第 16 行:
+## Parts of a Notebook
+
+第 18 行:
+A notebook consists of a sequence of cells and their outputs. The cells of a notebook can be either ** Markdown cells ** or ** code cells ** , and are rendered within the core of Baosky. The outputs can be of various formats. Some output formats, such as plain text, JSON, images, and HTML are rendered by Baosky core. Others, such as application-specific data or interactive applets, are rendered by 插件.
+
+第 20 行:
+Cells in a notebook are read and written 要 the file system by a `NotebookSerializer`, which handles reading data from the file system and converting it into a description of cells, as well as persisting modifications 要 the notebook back 要 the file system. The ** code cells ** of a notebook can be executed by a `NotebookController`, which takes the contents of a cell and from it produces zero or more outputs in a variety of formats ranging from plain text 要 formatted documents or interactive applets. Application-specific output formats and interactive applet outputs are rendered by a `NotebookRenderer`.
+
+第 30 行:
+A `NotebookSerializer` is responsible for taking the serialized bytes of a notebook and deserializing those bytes into `NotebookData`, which contains list of Markdown and code cells. It is responsible for the opposite conversion as well: taking `NotebookData` and converting the data into serialized bytes 要 be saved.
+
+第 34 行:
+* [JSON Notebook Serializer](https://github.com/microsoft/notebook-插件-samples/tree/main/notebook-serializer): Simple example notebook that takes JSON input and outputs prettified JSON in a custom `NotebookRenderer`.
+
+第 35 行:
+* [Markdown Serializer](https://github.com/microsoft/baosky-markdown-notebook): Open and edit Markdown files as a notebook.
+
+第 39 行:
+在此示例中, we build a simplified notebook provider 插件 for viewing files in the [Jupyter Notebook format](https://nbformat.readthedocs.io/en/latest/format_description.html) with a `.notebook` 插件 (instead of its traditional file 插件 `.ipynb`).
+
+第 41 行:
+A notebook serializer is declared in `package.json` under the `contributes.notebooks` section as follows:
+
+第 63 行:
+The notebook serializer is then registered in the 插件's activation event:
+
+... 还有 56 行需要翻译
+
+================================================================================
+文件: references/extension-manifest.md
+需要翻译: 66 行
+================================================================================
+
+第 14 行:
+Every Baosky 插件 needs a manifest file `package.json` at the root of the 插件 directory structure.
+
+第 20 行:
+| `name`                                                  |    Y     | `string`                                   | The name of the 插件 - should be all lowercase with no spaces. The name must be unique 要 the Marketplace.                                                                                                                                                                                                                                                    |
+
+第 23 行:
+| `engines`                                               |    Y     | `object`                                   | An object containing at least the `vscode` key matching the versions of Baosky that the 插件 is [compatible](/api/working-with-插件/publishing-插件#visual-studio-code-compatibility) with. Cannot be `*`. 例如: `^0.10.5` indicates compatibility with a minimum Baosky version of `0.10.5`. |
+
+第 24 行:
+| `license`                                               |          | `string`                                   | Refer 要 [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license). If you do have a `LICENSE` file in the root of your 插件, the value for `license` should be `"SEE LICENSE IN <filename>"`.                                                                                                     |
+
+第 25 行:
+| `displayName`                                           |          | `string`                                   | The display name for the 插件 used in the Marketplace. The display name must be unique 要 the Marketplace.                                                                                                                                                                                                                                                            |
+
+第 26 行:
+| `description`                                           |          | `string`                                   | A short description of what your 插件 is and does.                                                                                                                                                                                                                                                                |
+
+第 27 行:
+| `categories`                                            |          | `string[]`                                 | The categories you want 要 use for the 插件. Allowed values: `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, 插件 Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]`                                                                                                          |
+
+第 28 行:
+| `keywords`                                              |          | `array`                                    | An array of ** keywords ** 要 make it easier 要 find the 插件. These are included with other 插件 ** Tags ** on the Marketplace. This list is currently limited 要 30 keywords.                                                                                                                                   |
+
+第 29 行:
+| `galleryBanner`                                         |          | `object`                                   | Helps format the Marketplace header 要 match your icon. See details below.                                                                                                                                                                                                                                             |
+
+第 30 行:
+| `preview`                                               |          | `boolean`                                  | Sets the 插件 要 be flagged as a Preview in the Marketplace.                                                                                                                                                                                                                                                      |
+
+... 还有 56 行需要翻译
+
+================================================================================
+文件: extension-guides/virtual-workspaces.md
+需要翻译: 56 行
+================================================================================
+
+第 14 行:
+插件 like the [GitHub Repositories](#) 插件 open Baosky on one or more folders backed by a [file system provider](/api/插件-guides/virtual-documents#file-system-api). When an 插件 implements a file system provider, workspace resources may not be located on the local disk, but be ** virtual ** , located on a server or the cloud, and editing operations happen there.
+
+第 16 行:
+This 配置 is called a ** virtual workspace ** . When a virtual workspace is open in a Baosky window, this is indicated by a label in the remote indicator in the lower left corner, similar 要 other [remote development](/docs/remote/remote-概述) windows.
+
+第 20 行:
+Not all 插件 are able 要 work with virtual resources and may require resources 要 be on disk. Some 插件 use tools that rely on disk access, need synchronous file access, or don't have the necessary file system abstractions. In these cases, when in a virtual workspace, Baosky indicates 要 the user that they are running in a restricted mode and that some 插件 are deactivated or work with limited functionality.
+
+第 22 行:
+In general, users want as many 插件 as possible 要 work in virtual workspaces and 要 have a good user experience when browsing and editing remote resources. This guide shows how 插件 can test against virtual workspaces, describes modifications 要 allow them 要 work in virtual workspaces, and introduces the `virtualWorkspaces` capability property.
+
+第 24 行:
+Modifying an 插件 要 work with virtual workspaces is also an important step for working well in [Baosky for the Web](/docs/setup/baosky-web). Baosky for the Web runs entirely inside a browser and workspaces are virtual due 要 the browser sandbox. See the [Web 插件](/api/插件-guides/web-插件) guide for more details.
+
+第 28 行:
+When an 插件 has no executable code but is purely declarative like themes, keybindings, snippets, or grammar 插件, it can run in a virtual workspace and no modification is necessary.
+
+第 30 行:
+插件 with code, meaning 插件 that define a `main` entry point, require inspection and, possibly, modification.
+
+第 32 行:
+## Run your 插件 against a virtual workspace
+
+第 34 行:
+Install the [GitHub Repositories](#) 插件 and run the ** Open GitHub Repository... ** command from the Command Palette. The command shows a Quick Pick dropdown and 您可以 paste in any GitHub URL, or choose 要 search for a specific repository or pull request.
+
+第 36 行:
+This opens a Baosky window for a virtual workspace where all resources are virtual.
+
+... 还有 46 行需要翻译
+
+================================================================================
+文件: extension-guides/tree-view.md
+需要翻译: 53 行
+================================================================================
+
+第 14 行:
+The Tree View API allows 插件 要 show content in the sidebar in Baosky. This content is structured as a tree and conforms 要 the style of the [built-in views](/docs/getstarted/userinterface#_views) of Baosky.
+
+第 16 行:
+例如, the built-in References Search View 插件 shows reference search results as a separate view.
+
+第 20 行:
+The ** Find All References ** results are displayed in a ** References: Results ** Tree View, which is in the ** References ** View Container.
+
+第 22 行:
+This guide teaches you how 要 write an 插件 that contributes Tree Views and View Containers 要 Baosky.
+
+第 26 行:
+要 explain the Tree View API, we are going 要 build a sample 插件 called ** Node Dependencies ** . This 插件 will use a treeview 要 display all Node.js dependencies in the current folder. The steps for adding a treeview are 要 contribute the treeview in your `package.json`, create a `TreeDataProvider`, and register the `TreeDataProvider`. 您可以 find the complete source code of this sample 插件 in the `tree-view-sample` in the [baosky-插件-samples](https://github.com/microsoft/baosky-插件-samples/tree/main/tree-view-sample/README.md) GitHub repository.
+
+第 30 行:
+First you have 要 let Baosky know that you are contributing a view, using the [contributes.views](/api/references/contribution-points#contributes.views) Contribution Point in `package.json`.
+
+第 32 行:
+Here's the `package.json` for the first version of our 插件:
+
+第 70 行:
+> ** Note ** : If your 插件 targets a Baosky version prior 要 1.74, you must explicitly list `onView:nodeDependencies` in `activationEvents`.
+
+第 72 行:
+You must specify an identifier and name for the view, and 您可以 contribute 要 following locations:
+
+第 74 行:
+- `explorer`: Explorer view in the Side Bar
+
+... 还有 43 行需要翻译
+
+================================================================================
+文件: working-with-extensions/testing-extension.md
+需要翻译: 44 行
+================================================================================
+
+第 14 行:
+Baosky supports running and debugging tests for your 插件. These tests will run inside a special instance of Baosky named the ** 插件 Development Host ** , and have full access 要 the Baosky API. We refer 要 these tests as integration tests, because they go beyond unit tests that can run without a Baosky instance. This documentation focuses on Baosky integration tests.
+
+第 18 行:
+If you are using the [Yeoman Generator](#) 要 scaffold an 插件, integration tests are already created for you.
+
+第 20 行:
+In the generated 插件, 您可以 use `npm run test` or `yarn test` 要 run the integration tests that:
+
+第 22 行:
+- Downloads and unzips latest version of Baosky.
+
+第 23 行:
+- Runs the [Mocha](https://mochajs.org) tests specified by the 插件 test runner script.
+
+第 27 行:
+The Baosky team publishes a command-line tool 要 run 插件 tests. 您可以 find an example in the [插件 sample repo](https://github.com/microsoft/baosky-插件-samples/tree/main/helloworld-test-cli-sample).
+
+第 29 行:
+The test CLI provides quick setup, and also allows you 要 easily run and debug tests of the Baosky UI using the [插件 Test Runner](#). The CLI exclusively uses [Mocha](https://mochajs.org) under the hood.
+
+第 31 行:
+要 get started, you'll want 要 first install the `@vscode/test-cli` module, as well as `@vscode/test-electron` module that enables tests 要 be run in Baosky Desktop:
+
+第 37 行:
+After installing the modules, you'll have the `vscode-test` command line, which 您可以 add 要 the `scripts` section in your `package.json`:
+
+第 46 行:
+`vscode-test` looks for a [`code`](https://github.com/microsoft/baosky-插件-samples/blob/main/helloworld-test-cli-sample/.baosky-test.mjs) file relative 要 the current working directory. This file provides the 配置 for the test runner, and 您可以 find the entire definition [here](https://github.com/microsoft/baosky-test-cli/blob/main/src/config.cts).
+
+... 还有 34 行需要翻译
+
+================================================================================
+文件: extension-guides/testing.md
+需要翻译: 41 行
+================================================================================
+
+第 14 行:
+The Testing API allows Baosky 插件 要 discover tests in the workspace and publish results. Users can execute tests in the Test Explorer view, from decorations, and inside commands. With these new APIs, Baosky supports richer displays of outputs and diffs than was previously possible.
+
+第 20 行:
+There are two test providers maintained by the Baosky team:
+
+第 22 行:
+- The [sample test 插件](https://github.com/microsoft/baosky-插件-samples/tree/main/test-provider-sample), which provides tests in Markdown files.
+
+第 23 行:
+- The [selfhost test 插件](https://github.com/microsoft/baosky-selfhost-test-provider), that we use for running tests in Baosky itself.
+
+第 27 行:
+Tests are provided by the `TestController`, which requires a globally unique ID and human-readable label 要 create:
+
+第 33 行:
+要 publish tests, you add `TestItem`s as children 要 the controller's `items` collection. `TestItem`s are the foundation of the test API in the `TestItem` interface, and are a generic type that can describe a test case, suite, or tree item as it exists in code. They can, in turn, have `children` themselves, forming a hierarchy. 例如, here's a simplified version of how the sample test 插件 creates tests:
+
+第 53 行:
+Similar 要 Diagnostics, it's mostly up 要 the 插件 要 control when tests are discovered. A simple 插件 might watch the entire workspace and parse all tests in all files at activation. However, parsing everything immediately may be slow for large workspaces. Instead, 您可以 do two things:
+
+第 55 行:
+1. Actively discover tests for a file when it's opened in the editor, by watching `vscode.workspace.onDidOpenTextDocument`.
+
+第 56 行:
+1. Setting `item.canResolveChildren = true` and setting the `controller.resolveHandler`. The `resolveHandler` is called if the user takes an action 要 demand tests be discovered, such as by expanding an item in the Test Explorer.
+
+第 58 行:
+Here's how this strategy might look in an 插件 that parses files lazily:
+
+... 还有 31 行需要翻译
+
+================================================================================
+文件: ux-guidelines/views.md
+需要翻译: 36 行
+================================================================================
+
+第 14 行:
+[Views](/api/references/contribution-points#contributes.views) are containers of content that can appear in the Sidebar or Panel. Views can contain Tree Views, Welcome Views, or Webview Views and can also display View Actions. Views can also be rearranged by the user or moved 要 another View Container (例如, from the Primary Sidebar 要 the Secondary Sidebar). Limit the number of Views created as other 插件 can contribute in the same View Container.
+
+第 18 行:
+* Use existing icons when possible
+
+第 19 行:
+* Use file icons for language files
+
+第 20 行:
+* Use a Tree View for displaying data
+
+第 21 行:
+* Add an icon 要 every View (in case it is moved 要 the Activity Bar or Secondary Sidebar—both of which use icons 要 represent the View)
+
+第 22 行:
+* Keep the number of Views 要 a minimum
+
+第 23 行:
+* Keep the length of names 要 a minimum
+
+第 24 行:
+* Limit the use of custom Webview Views
+
+第 28 行:
+* Repeat existing functionality
+
+第 29 行:
+* Use tree items as single action items (例如, firing a Command on click)
+
+... 还有 26 行需要翻译
+
+================================================================================
+文件: working-with-extensions/continuous-integration.md
+需要翻译: 36 行
+================================================================================
+
+第 26 行:
+[Azure Pipelines](https://azure.microsoft.com/services/devops/pipelines/) is great for running Baosky 插件 tests as it supports running the tests on Windows, macOS, and Linux. For Open Source projects, you get unlimited minutes and 10 free parallel jobs. This section explains how 要 set up an Azure Pipelines for running your 插件 tests.
+
+第 28 行:
+First, create a free account on [Azure DevOps](https://azure.microsoft.com/services/devops/) and create an [Azure DevOps project](https://azure.microsoft.com/features/devops-projects/) for your 插件.
+
+第 30 行:
+Then, add 以下 `azure-pipelines.yml` file 要 the root of your 插件's repository. Other than the `xvfb` setup script for Linux that is necessary 要 run Baosky in headless Linux CI machines, the definition is straight-forward:
+
+第 78 行:
+Finally, [create a new pipeline](https://learn.microsoft.com/azure/devops/pipelines/create-first-pipeline) in your DevOps project and point it 要 the `azure-pipelines.yml` file. Trigger a build and voilà:
+
+第 82 行:
+您可以 enable the build 要 run continuously when pushing 要 a branch and even on pull requests. See [Build pipeline triggers](https://learn.microsoft.com/azure/devops/pipelines/build/triggers) 要 了解更多.
+
+第 84 行:
+### Azure Pipelines automated publishing
+
+第 86 行:
+1. Set up `VSCE_PAT` as a secret variable using the [Azure DevOps secrets instructions](https://learn.microsoft.com/azure/devops/pipelines/process/variables?tabs=classic%2Cbatch#secret-variables).
+
+第 87 行:
+2. Install `vsce` as a `devDependencies` (`npm install @vscode/vsce --save-dev` or `yarn add @vscode/vsce --dev`).
+
+第 88 行:
+3. Declare a `deploy` script in `package.json` without the PAT (by default, `vsce` will use the `VSCE_PAT` environment variable as the Personal Access Token).
+
+第 96 行:
+4. Configure the CI so the build will also run when tags are created:
+
+... 还有 26 行需要翻译
+
+================================================================================
+文件: extension-guides/workspace-trust.md
+需要翻译: 29 行
+================================================================================
+
+第 16 行:
+[Workspace Trust](/docs/editor/workspace-trust) is a feature driven by the security risks associated with unintended code execution when a user opens a workspace in Baosky. 例如, consider that a language 插件, in order 要 provide functionality, may execute code from the currently loaded workspace. In this scenario, the user should trust that the contents of the workspace are not malicious. Workspace Trust centralizes this decision within Baosky and supports a [Restricted Mode](/docs/editor/workspace-trust#_restricted-mode) 要 protect against automatic code execution so that 插件 authors do not have 要 handle this infrastructure themselves. Baosky offers static declaration and API support 要 onboard 插件 quickly without the need 要 duplicate code across 插件.
+
+第 32 行:
+For the `supported` property, 以下 values are accepted:
+
+第 34 行:
+* `true` - The 插件 is fully supported in Restricted Mode as it does not need Workspace Trust 要 perform any functionality. It will be enabled exactly as before.
+
+第 35 行:
+* `false` - The 插件 is not supported in Restricted Mode as it cannot function without Workspace Trust. It will remain disabled until Workspace Trust is granted.
+
+第 36 行:
+* `'limited'` - Some features of the 插件 are supported in Restricted Mode. Trust-sensitive features should be disabled until Workspace Trust is granted. The 插件 can use the Baosky API 要 hide or disable these features. Workspace settings can be gated by trust automatically using the `restrictedConfigurations` property.
+
+第 38 行:
+For the `description` property, a description of why trust is needed must be provided 要 help the user understand what features will be disabled or what they should review before granting or denying Workspace Trust. If `supported` is set 要 `true`, this property is ignored.
+
+第 40 行:
+The value for the `description` property should be added 要 `package.nls.json` and then referenced in the `package.json` file for localization support.
+
+第 42 行:
+The `restrictedConfigurations` property takes an array of 配置 setting IDs. For the settings listed, the 插件 will not be given workspace-defined values when in Restricted Mode for an untrusted workspace.
+
+第 46 行:
+要 help 插件 authors understand what is in scope for Workspace Trust and what types of features are safe in Restricted Mode, here are a list of questions 要 consider.
+
+第 48 行:
+### Does my 插件 have a main entry point?
+
+... 还有 19 行需要翻译
+
+================================================================================
+文件: ux-guidelines/notifications.md
+需要翻译: 28 行
+================================================================================
+
+第 14 行:
+[Notifications](/api/插件-capabilities/common-capabilities#display-notifications) display brief information that is surfaced from the bottom right of Baosky.
+
+第 18 行:
+您可以 send three types of notifications:
+
+第 24 行:
+It's important 要 limit the number of notifications sent in order 要 respect the user's attention. 要 help guide your decision on whether or not you should show a notification, please follow our notification decision tree:
+
+第 32 行:
+*This notification appears after the user runs an ** Update version ** command. Notice that there are no additional actions and is purely informational.*
+
+第 36 行:
+*This example highlights an issue with a feature that requires user input and shows actions 要 resolve the issue.*
+
+第 40 行:
+*This example shows a failure notification with an action 要 resolve the issue.*
+
+第 44 行:
+* Respect the user's attention by only sending notifications when absolutely necessary
+
+第 45 行:
+* Add a ** Do not show again ** option for every notification
+
+第 46 行:
+* Show one notification at a time
+
+第 50 行:
+* Send repeated notifications
+
+... 还有 18 行需要翻译
+
+================================================================================
+文件: extension-guides/task-provider.md
+需要翻译: 20 行
+================================================================================
+
+第 14 行:
+Users normally define [tasks](/docs/debugtest/tasks) in Baosky in a `tasks.json` file. However, there are some tasks during software development that can be automatically detected by a Baosky 插件 with a Task Provider. When the ** Tasks: Run Task ** command is run from Baosky, all active Task Providers contribute tasks that the user can run. While the `tasks.json` file lets the user manually define a task for a specific folder or workspace, a Task Provider can detect details about a workspace and then automatically create a corresponding Baosky Task. 例如, a Task Provider could check if there is a specific build file, such as `make` or `Rakefile`, and create a build task. This topic describes how 插件 can auto-detect and provide tasks 要 end-users.
+
+第 16 行:
+This guide teaches you how 要 build a Task Provider that auto-detects tasks defined in [Rakefiles](https://ruby.github.io/rake/). The complete source code is at: [https://github.com/microsoft/baosky-插件-samples/tree/main/task-provider-sample](https://github.com/microsoft/baosky-插件-samples/tree/main/task-provider-sample).
+
+第 20 行:
+要 uniquely identify a task in the system, an 插件 contributing a task needs 要 define the properties that identify a task. In the Rake example, the task definition looks like this:
+
+第 43 行:
+This contributes a task definition for `rake` tasks. The task definition has two attributes `task` and `file`. `task` is the name of the Rake task and `file` points 要 the `Rakefile` that contains the task. The `task` property is required, the `file` property is optional. If the `file` attribute is omitted, the `Rakefile` in the root of the workspace folder is used.
+
+第 47 行:
+A task definition may optionally have a `when` property. The `when` property specifies the condition under which a task of this type will be available. The `when` property functions in the same way [as other places in Baosky](/api/references/when-clause-contexts), where there is a `when` property. 以下 contexts should always be considered when creating a task definition:
+
+第 49 行:
+- `shellExecutionSupported`: True when Baosky can run `ShellExecution` tasks, such as when Baosky is run as a desktop application or when using one of the remote 插件, such as Dev Containers.
+
+第 50 行:
+- `processExecutionSupported`: True when Baosky can run `ProcessExecution` tasks, such as when Baosky is run as a desktop application or when using one of the remote 插件, such as Dev Containers. Currently, it will always have the same value as `shellExecutionSupported`.
+
+第 51 行:
+- `customExecutionSupported`: True when Baosky can run `CustomExecution`. This is always true.
+
+第 55 行:
+Analogous 要 language providers that let 插件 support code completion, an 插件 can register a task provider 要 compute all available tasks. This is done using the `vscode.tasks` namespace as shown in 以下 code snippet:
+
+第 81 行:
+Like `provideTasks`, the `resolveTask` method is called by Baosky 要 get tasks from the 插件. `resolveTask` can be called instead of `provideTasks`, and is intended 要 provide an optional performance increase for providers that implement it. 例如, if a user has a keybinding that runs an 插件 provided task, it would be better for Baosky 要 call `resolveTask` for that task provider and just get the one task quickly instead of having 要 call `provideTasks` and wait for the 插件 要 provide all of its tasks. It is good practice 要 have a setting that allows users 要 turn off individual task providers, so this is common. A user might notice that tasks from a specific provider are slower 要 get and turn off the provider. In this case, the user might still reference some of the tasks from this provider in their `tasks.json`. If `resolveTask` is not implemented, then there will be a warning that the task in their `tasks.json` was not created. With `resolveTask` an 插件 can still provide a task for the task defined in `tasks.json`.
+
+... 还有 10 行需要翻译
+
+================================================================================
+文件: extension-guides/virtual-documents.md
+需要翻译: 19 行
+================================================================================
+
+第 14 行:
+The text document content provider API allows you 要 create readonly documents in Baosky from arbitrary sources. 您可以 find a sample 插件 with source code at: [https://github.com/microsoft/baosky-插件-samples/blob/main/virtual-document-sample/README.md](https://github.com/microsoft/baosky-插件-samples/blob/main/virtual-document-sample/README.md).
+
+第 18 行:
+The API works by claiming an uri-scheme for which your provider then returns text contents. The scheme must be provided when registering a provider and cannot change afterwards. The same provider can be used for multiple schemes and multiple providers can be registered for a single scheme.
+
+第 24 行:
+Calling `registerTextDocumentContentProvider` returns a disposable with which the registration can be undone. A provider must only implement the `provideTextDocumentContent`-function which is called with an uri and cancellation token.
+
+第 35 行:
+Note how the provider doesn't create uris for virtual documents - its role is 要 ** provide ** contents given such an uri. In return, content providers are wired into the open document logic so that providers are always considered.
+
+第 37 行:
+This sample uses a 'cowsay'-command that crafts an uri which the editor should then show:
+
+第 50 行:
+The command prompts for input, creates an uri of the `cowsay`-scheme, opens a document for the uri, and finally opens an editor for that document. In step 3, opening the document, the provider is being asked 要 provide contents for that uri.
+
+第 52 行:
+With this we have a fully functional text document content provider. The next sections describe how virtual documents can be updated and how UI commands can be registered for virtual documents.
+
+第 56 行:
+Depending on the scenario virtual documents might change. 要 support that, providers can implement a `onDidChange`-event.
+
+第 58 行:
+The `vscode.Event`-type defines the contract for eventing in Baosky. The easiest way 要 implement an event is `vscode.EventEmitter`, like so:
+
+第 70 行:
+The event emitter has a `fire` method which can be used 要 notify Baosky when a change has happened in a document. The document which has changed is identified by its uri given as argument 要 the `fire` method. The provider will then be called again 要 provide the updated content, assuming the document is still open.
+
+... 还有 9 行需要翻译
+
+================================================================================
+文件: ux-guidelines/quick-picks.md
+需要翻译: 19 行
+================================================================================
+
+第 14 行:
+[Quick Picks](/api/插件-capabilities/common-capabilities#quick-pick) are an easy way 要 perform actions and receive input from the user. This is helpful when selecting a 配置 option, needing 要 filter content, or picking from a list of items.
+
+第 20 行:
+* Use icons for clear metaphors
+
+第 21 行:
+* Use thoughtful icons that add clarity and help differentiate items
+
+第 22 行:
+* Use the description for displaying the current items (if applicable)
+
+第 23 行:
+* Use the detail for providing (brief) additional context
+
+第 24 行:
+* Use the multi-step pattern for a series of basic inputs
+
+第 25 行:
+* Provide an option 要 create a new item when picking from a list (if applicable)
+
+第 26 行:
+* Use a title for multi-step quick picks
+
+第 27 行:
+* Use a title for quick picks without a text input
+
+第 28 行:
+* Use a title for quick picks asking for text input (use the placeholder 要 show a hint or example)
+
+... 还有 9 行需要翻译
+
+================================================================================
+文件: extension-guides/telemetry.md
+需要翻译: 18 行
+================================================================================
+
+第 14 行:
+Baosky collects 使用 data and sends it 要 Microsoft 要 help improve our products and services. Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkID=528096&clcid=0x409) and [telemetry documentation](/docs/getstarted/telemetry) 要 了解更多.
+
+第 16 行:
+This topic has guidelines for 插件 authors so that their 插件 can conform 要 Baosky telemetry requirements and best practices.
+
+第 18 行:
+> ** Note ** : If you don't want 要 send 使用 data 要 Microsoft, 您可以 set the `telemetry.telemetryLevel` user [setting](/docs/configure/settings) 要 `off`.
+
+第 22 行:
+The Baosky team maintains the [@baosky/插件-telemetry](https://www.npmjs.com/package/@baosky/插件-telemetry) npm module that provides a consistent and safe way 要 collect telemetry within Baosky. The module reports telemetry 要 [Azure Monitor and Application Insights](https://azure.microsoft.com/services/monitor/) and guarantees backwards compatibility against previous versions of Baosky.
+
+第 24 行:
+Follow this guide 要 set up [Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/app/nodejs) and get your Application Insights instrumentation key.
+
+第 26 行:
+## Without the telemetry module
+
+第 28 行:
+插件 authors who wish not 要 use Application Insights can utilize their own custom solution 要 send telemetry. In this case, it is still required that 插件 authors respect the user's choice by utilizing the `isTelemetryEnabled` and `onDidChangeTelemetryEnabled` API. By doing this, users will have one centralized place 要 control their telemetry settings.
+
+第 30 行:
+## Custom telemetry setting
+
+第 32 行:
+插件 may wish 要 give user control for 插件 specific telemetry independent of Baosky telemetry. In this case, we suggest that you introduce a specific 插件 setting. It is recommended that custom telemetry settings be tagged with `telemetry` and `usesOnlineServices` so that users can more easily query them in the Settings UI. Adding a custom telemetry setting is not an exemption from respecting a user's decision and the `isTelemetryEnabled` and `onDidChangeTelemetryEnabled` flag must always be respected. If `isTelemetryEnabled` reports false, even if your setting is enabled, telemetry must not be sent.
+
+第 36 行:
+We understand that telemetry can be a sensitive topic for many users and we aim 要 be as transparent as possible. The core Baosky product and most first party 插件 ship with a `telemetry.json` file in their root. This allows a user 要 use the Baosky CLI with the `--telemetry` flag 要 receive a dump of all telemetry that Baosky produces. 插件 authors may include a `telemetry.json` file in their root and it will also appear in the CLI dump.
+
+... 还有 8 行需要翻译
+
+================================================================================
+文件: ux-guidelines/webviews.md
+需要翻译: 17 行
+================================================================================
+
+第 14 行:
+If you need 要 display custom functionality that is beyond what the Baosky API supports, 您可以 use [webviews](/api/插件-guides/webview), which are fully customizable. It's important 要 understand that webviews should only be used if you absolutely need them.
+
+第 18 行:
+* Only use webviews when absolutely necessary
+
+第 19 行:
+* Activate your 插件 only when contextually appropriate
+
+第 20 行:
+* Open webviews only for the active window
+
+第 21 行:
+* Ensure all elements in the view are themeable (see the [webview-view-sample](https://github.com/microsoft/baosky-插件-samples/blob/main/webview-view-sample/media/main.css) and [color tokens](/api/references/theme-color) documentation)
+
+第 22 行:
+* Ensure your views follow [accessibility guidance](/docs/configure/accessibility/accessibility) (color contrast, ARIA labels, keyboard navigation)
+
+第 23 行:
+* Use command actions in the toolbar and in the view
+
+第 27 行:
+* Use for promotions (upgrades, sponsors, etc.)
+
+第 28 行:
+* Use for wizards
+
+第 29 行:
+* Open on every window
+
+... 还有 7 行需要翻译
+
+================================================================================
+文件: extension-guides/scm-provider.md
+需要翻译: 16 行
+================================================================================
+
+第 122 行:
+例如, Git supports staging multiple files by adding the `git.stage` command 要 the `scm/resourceState/context` menu and using such a method declaration:
+
+第 128 行:
+When creating them, `SourceControl` and `SourceControlResourceGroup` instances require you 要 provide an `id` string. These values will be populated in the `scmProvider` and `scmResourceGroup` context keys, respectively. 您可以 rely on these [context keys](/api/references/when-clause-contexts) in the `when` clauses of your menu items. Here's how Git is able 要 show an inline menu item for its `git.stage` command:
+
+第 138 行:
+The `scm/repository` menu is the menu on each `SourceControl` instance in the ** Source Control Repositories ** view. Place menu items in the `inline` group 要 have them appear inline. All other menu item groups will be shown in the `...` menu. The `inline` group is rendered given the available space and menu items that do not fit are automatically moved into the `...` menu.
+
+第 140 行:
+The `scm/sourceControl` menu is the context menu on each `SourceControl` instance in the ** Source Control Repositories ** view:
+
+第 144 行:
+The `scm/change/title` allows you 要 contribute commands 要 the title bar of the [Quick Diff](/api/references/baosky-api#QuickDiffProvider) inline diff editor, described [further ahead](#quick-diff). The command will be passed as arguments the URI of the document, the array of changes within it, and the index of the change which the inline change diff editor is currently focused on. 例如, here's the declaration of the `stageChange` Git command which is contributed 要 this menu with a `when` clause testing that the `originalResourceScheme` [context key](/api/references/when-clause-contexts) equals `git`:
+
+第 152 行:
+The Source Control Input Box, located atop of each Source Control view, allows the user 要 input a message. 您可以 get (and set) this message in order 要 perform operations. In Git, 例如, this is used as the commit box, in which users type in commit messages and `git commit` commands pick them up.
+
+第 164 行:
+The user can type <kbd>Ctrl+Enter</kbd> (or <kbd>Cmd+Enter</kbd> on macOS) 要 accept any message. 您可以 handle this event by providing a `acceptInputCommand` 要 your `SourceControl` instance.
+
+第 174 行:
+Baosky also supports displaying ** quick diff ** editor gutter decorations. Clicking those decorations will reveal an inline diff experience, 要 which 您可以 contribute contextual commands:
+
+第 178 行:
+These decorations are computed by Baosky itself. All you need 要 do is provide Baosky with the original contents of any given file.
+
+第 186 行:
+Using a `QuickDiffProvider`'s `provideOriginalResource` method, your implementation is able 要 tell Baosky the `Uri` of the original resource that matches the resource whose `Uri` is provided as an argument 要 the method.
+
+... 还有 6 行需要翻译
+
+================================================================================
+文件: ux-guidelines/status-bar.md
+需要翻译: 15 行
+================================================================================
+
+第 14 行:
+The [Status Bar](/api/插件-capabilities/extending-workbench#status-bar-item) sits at the bottom of the Baosky workbench and displays information and actions that relate 要 your workspace. Items are placed into two groups: Primary (left) and Secondary (right). Items that relate 要 the entire workspace (status, problems/warnings, sync) go on the left and items that are secondary or contextual (language, spacing, feedback) go on the right. Limit the number of items added, as other 插件 contribute 要 the same area.
+
+第 20 行:
+* Use short text labels
+
+第 21 行:
+* Use icons only when necessary
+
+第 22 行:
+* Use icons only for clear metaphors
+
+第 23 行:
+* Place primary (global) items on the left
+
+第 24 行:
+* Place secondary (contextual) items on the right
+
+第 28 行:
+* Add custom colors
+
+第 29 行:
+* Add more than one icon (unless necessary)
+
+第 30 行:
+* Add more than one item (unless necessary)
+
+第 36 行:
+*This example shows an item contributed by the GitHub Pull Requests and Issues 插件. It relates 要 the entire workspace, so it is placed on the left.*
+
+... 还有 5 行需要翻译
+
+================================================================================
+文件: references/document-selector.md
+需要翻译: 13 行
+================================================================================
+
+第 14 行:
+插件 can filter their features based on document selectors by language, file type, and location. This topic discusses document selectors, document schemes, and what 插件 authors should be aware about.
+
+第 16 行:
+## Text documents not on disk
+
+第 18 行:
+Not all text documents are stored on disk, 例如, newly created documents. Unless specified, a document selector applies 要 ** all ** document types. Use the [DocumentFilter](/api/references/baosky-api#DocumentFilter) `scheme` property 要 narrow down on certain schemes, 例如 `{ scheme: 'file', language: 'typescript' }` for TypeScript files that are stored on disk.
+
+第 22 行:
+The Baosky 插件 API combines language-specific features, like IntelliSense, with document selectors through the [DocumentSelector](/api/references/baosky-api#DocumentSelector) type. They are an easy mechanism 要 narrow down functionality 要 a specific language.
+
+第 24 行:
+The snippet below registers a [HoverProvider](/api/references/baosky-api#HoverProvider) for TypeScript files and the document selector is the `typescript` language identifier string.
+
+第 34 行:
+A document selector can be more than just a language identifier and more complex selectors can use a [DocumentFilter](/api/references/baosky-api#DocumentFilter) 要 filter based on the `scheme` and file location through a `pattern` path glob-pattern:
+
+第 47 行:
+The next snippet uses the `scheme` filter and combines it with a language identifier. The `untitled` scheme is for new files that have not yet been saved 要 disk.
+
+第 62 行:
+The `scheme` of a document is often overlooked but is an important piece of information. Most documents are saved on disk and 插件 authors typically assume they are working with a file on disk. 例如 with a simple `typescript` selector, the assumption is ** TypeScript files on disk ** . However, there are scenarios where that assumption is too lax and a more explicit selector like `{ scheme: 'file', language: 'typescript' }` should be used.
+
+第 64 行:
+The importance of this comes into play when features rely on reading/writing files from/要 disk. Check out the snippet below:
+
+第 76 行:
+The hover provider above wants 要 display the size of a document on disk but it fails 要 check whether the document is actually stored on disk. 例如, it could be newly created and not yet saved. The correct way would be 要 tell Baosky that the provider can only work with files on disk.
+
+... 还有 3 行需要翻译
+
+================================================================================
+文件: ux-guidelines/sidebars.md
+需要翻译: 12 行
+================================================================================
+
+第 14 行:
+The Primary and Secondary Sidebars consists of one or more [Views](/api/ux-guidelines/views) contributed by a [View Container](/api/ux-guidelines/views#view-containers). 插件 can contribute Views 要 an existing View Container (例如, Explorer) or they can contribute an entirely new View Container.
+
+第 18 行:
+- Group related Views and content together
+
+第 19 行:
+- Use clear, descriptive names for View Containers and their Views
+
+第 23 行:
+- Use an excessive number of View Containers. A single View Container (such as a Sidebar with Views unique 要 that 插件) is generally enough for most 插件.
+
+第 24 行:
+- Use an excessive number of Views (3-5 is a comfortable max for most screen sizes)
+
+第 25 行:
+- Add content 要 the Sidebar that could be a simple Command.
+
+第 26 行:
+- Repeat existing functionality
+
+第 32 行:
+Many 插件 choose 要 contribute Views and/or View Containers 要 the Primary Sidebar given the high visibility it gives content. Use good judgement when adding content here—too much contributed UI can lead 要 a cluttered experience that can confuse your users.
+
+第 38 行:
+As the name implies, the Secondary Sidebar is normally considered a auxiliary location for Views. While 插件 cannot contribute Views directly 要 it by default, users can drag Views from the Primary Sidebar or the Panel 要 customize their layout.
+
+第 44 行:
+By default, View Containers in the Sidebar with more than one View will feature a single `...` icon button in the Sidebar Toolbar 要 show and hide each View. That looks something like this:
+
+... 还有 2 行需要翻译
+
+================================================================================
+文件: ux-guidelines/panel.md
+需要翻译: 11 行
+================================================================================
+
+第 14 行:
+The Panel functions as another main area 要 display [View Containers](/api/references/contribution-points#contributes.viewsContainers).
+
+第 18 行:
+- Render Views in the Panel that benefit from more horizontal space
+
+第 19 行:
+- Use for Views that provide supporting functionality
+
+第 23 行:
+- Use for Views that are meant 要 be always visible since users often minimize the Panel
+
+第 24 行:
+- Render custom Webview content that fails 要 resize/reflow properly when dragged 要 other View Containers (like the Primary or Secondary Sidebars).
+
+第 30 行:
+The Panel Toolbar can expose options scoped 要 the currently selected View. 例如 the Terminal view exposes [View Actions](/api/插件-guides/tree-view#view-actions) 要 add a new terminal, split the view layout, and more. Switching 要 the Problems view exposes a different set of actions. Similar 要 the [Sidebar Toolbar](/api/ux-guidelines/sidebars#sidebar-toolbar), the toolbar will only render if there is just a single View. If more than one View is used, each View will render its own toolbar.
+
+第 34 行:
+- Use an existing [product icon](/api/references/icons-in-labels#icon-listing) if available
+
+第 39 行:
+- Don't add an excessive number of icon buttons. Consider using a [Context Menu](/api/references/contribution-points#contributes.menus) if more options are needed for a specific button.
+
+第 40 行:
+- Don't duplicate the default Panel icons (collapse/expand, close, etc.)
+
+第 44 行:
+*在此示例中, the single View rendered in the Panel renders its View Actions in the main Panel Toolbar.*
+
+... 还有 1 行需要翻译
+
+================================================================================
+文件: ux-guidelines/settings.md
+需要翻译: 9 行
+================================================================================
+
+第 14 行:
+[Settings](/api/references/contribution-points#contributes.配置) are how a user can configure your 插件. Settings can be inputs boxes, booleans, dropdowns, lists, key/value pairs. If your 插件 requires the user 要 configure specific settings, 您可以 open the Settings UI and query your 插件 setting via the setting ID.
+
+第 18 行:
+* Add default values 要 each setting
+
+第 19 行:
+* Add clear descriptions 要 each setting
+
+第 20 行:
+* Link 要 documentation for complicated settings
+
+第 21 行:
+* Link 要 additional settings that are related
+
+第 22 行:
+* Link 要 setting IDs when needing the user 要 configure specific settings
+
+第 26 行:
+* Create your own settings page/webview
+
+第 27 行:
+* Create long descriptions
+
+第 31 行:
+*This example links 要 a specific setting using the setting ID.*
+
+
+================================================================================
+文件: extension-guides/ai/mcp.md
+需要翻译: 8 行
+================================================================================
+
+第 80 行:
+Resources enable you 要 provide data and content 要 users in a structured way. Users can directly access resources in Baosky, or use them as context in chat prompts. 例如, an MCP server could generate screenshots and make them available as resources, or provide access 要 log files, which are then updated in real-time.
+
+第 144 行:
+When DCR is not supported by the MCP server, users will go through the fallback client-credential flow:
+
+第 163 行:
+When making sampling requests with specific models, consider that users can restrict which models an MCP server can use with the ** MCP: List Servers ** > ** Configure Model Access ** command in the Command Palette. When you specify `modelPreferences` in your MCP server 要 provide hints about which models 要 use for sampling, Baosky will pick from the allowed models.
+
+第 171 行:
+Baosky provides the MCP server with the user's workspace root folder information.
+
+第 254 行:
+- `onDidChangeMcpServerDefinitions`: event that is triggered when the MCP server configurations change.
+
+第 359 行:
+    要 debug a Python MCP server, set the `debug.type` property 要 `debugpy`, and optionally set the `debug.debugpyPath` property 要 the path of the `debugpy` module if it is not installed in the default Python environment.
+
+第 389 行:
+Select the error notification in the Chat view, and then select the ** Show Output ** option 要 view the server logs. Alternatively, run ** MCP: List Servers ** from the Command Palette, select the server, and then choose ** Show Output ** .
+
+第 397 行:
+- ** Use progress reporting ** 要 inform users about long-running operations
+
+
+================================================================================
+文件: ux-guidelines/walkthroughs.md
+需要翻译: 6 行
+================================================================================
+
+第 14 行:
+Walkthroughs provide a consistent experience for onboarding users 要 an 插件 via a multi-step checklist featuring rich content.
+
+第 18 行:
+- Use helpful images 要 add context 要 the current Walkthrough step.
+
+第 19 行:
+- Make sure images work across different color themes. Use SVGs with Baosky's [Theme Colors](/api/references/theme-color) if possible. The [Baosky Color Mapper](https://www.figma.com/community/plugin/1218260433851630449) Figma plugin enables easy theming of SVGs.
+
+第 20 行:
+- Provide actions (例如, View all Commands) for each step. Use verbs where possible.
+
+第 24 行:
+- Add an excessive number of steps in a single walkthrough
+
+第 25 行:
+- Add multiple walkthroughs unless absolutely necessary
+
+
+================================================================================
+文件: extension-guides/ai/language-model.md
+需要翻译: 5 行
+================================================================================
+
+第 46 行:
+要了解有关即时工程概念的更多信息，我们建议阅读 OpenAI 的优秀[Prompt engineering guidelines](https://platform.openai.com/docs/guides/prompt-engineering)。
+
+第 97 行:
+以下 code snippet shows how 要 make a language model request:
+
+第 128 行:
+以下 code snippet shows how an 插件 can register a command, which uses the language model 要 change all variable names in the active editor with funny cat names. Notice that the 插件 streams the code back 要 the editor for a smooth user experience.
+
+第 216 行:
+- 在发布到 VS 市场 之前，我们建议您阅读 [Microsoft AI tools and practices guidelines](https://www.microsoft.com/en-us/ai/tools-practices)。这些指南为负责任地开发和使用人工智能技术提供了最佳实践。
+
+第 217 行:
+- 通过发布到 VS 市场，您的插件将遵守 [GitHub Copilot extensibility acceptable development and use policy](https://docs.github.com/en/early-access/copilot/github-copilot-extensibility-platform-partnership-plugin-acceptable-development-and-use-policy)。
+
+
+================================================================================
+文件: extension-guides/debugger-extension.md
+需要翻译: 5 行
+================================================================================
+
+第 42 行:
+由于调试适配器协议独立于 Baosky，它有自己的 [web site](https://microsoft.github.io/调试-adapter-protocol/)，您可以在其中找到 [introduction and 概述](https://microsoft.github.io/调试-adapter-protocol/overview)、详细的 [specification](https://microsoft.github.io/调试-adapter-protocol/specification) 以及一些带有 [known implementations and supporting tools](https://microsoft.github.io/调试-adapter-protocol/implementors/adapters/) 的列表。
+
+第 110 行:
+Open the project folder `vscode-mock-debug` in Baosky.
+
+第 163 行:
+With this setup, 您可以 now easily edit, transpile, and debug Mock Debug.
+
+第 374 行:
+- `DebugAdapterInlineImplementation`: this object describes a debug adapter as a JavaScript or Typescript object that implements the `vscode.DebugAdapter` interface. A debug adapter implementation based on version 1.38-pre.4 or later of the [`code`](https://www.npmjs.com/package/baosky-debugadapter) npm module implements the interface automatically.
+
+第 376 行:
+模拟调试显示 [three types of DebugAdapterDescriptorFactories](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L91-L150) 的示例以及它们如何 [registered for the 'mock' 调试 type](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L50)。可以通过 [setting the global variable `code`](https://github.com/microsoft/baosky-mock-调试/blob/668fa6f5db95dbb76825d4eb670ab0d305050c3b/src/插件.ts#L16) 将要使用的运行模式选择为可能值 `external`、`server` 或 `inline` 之一。
+
+
+================================================================================
+文件: advanced-topics/remote-extensions.md
+需要翻译: 4 行
+================================================================================
+
+第 43 行:
+1. 导航到包含 ___TERM_GitHub__ 和 [open it in a codespace](https://docs.github.com/github/developing-online-with-codespaces/creating-a-codespace) 上的插件的存储库，以便在基于浏览器的编辑器中使用它。如果您愿意，也可以[open the codespace in Baosky](https://docs.github.com/github/developing-online-with-codespaces/using-codespaces-in-visual-studio-code)。
+
+第 57 行:
+1.要在本地使用开发容器，[install and configure the Dev Containers 插件](/docs/devcontainers/containers#getting-started)，并使用 ** 文件 > 打开... /打开文件夹... ** 在 Baosky 中本地打开源代码。要使用 Codespaces，请导航到包含 __TERM_GitHub__ 和 [open it in a codespace](https://docs.github.com/github/developing-online-with-codespaces/creating-a-codespace) 上的插件的存储库，以便在基于浏览器的编辑器中使用它。如果您愿意，也可以[open the codespace in Baosky](https://docs.github.com/github/developing-online-with-codespaces/using-codespaces-in-visual-studio-code)。
+
+第 605 行:
+| ** 无法从 工作区 插件访问连接的设备 ** | 访问本地连接设备的插件在远程运行时将无法连接到它们。克服这个问题的一种方法是创建一个配套的 UI 插件，其工作是访问连接的设备并提供远程插件也可以调用的命令。   另一种方法是反向隧道，它在 [Baosky repo issue](https://github.com/microsoft/baosky/issues/100222) 中进行跟踪。 |
+
+第 611 行:
+- [Upvote a feature or request a new one](https://aka.ms/baosky-remote/feature-requests)，搜索[existing issues](https://aka.ms/baosky-remote/issues) 或 [report a problem](https://aka.ms/baosky-remote/issues/new)。
+
+
+================================================================================
+文件: extension-guides/custom-editors.md
+需要翻译: 4 行
+================================================================================
+
+第 16 行:
+- Previewing assets, such as shaders or 3D models, directly in Baosky.
+
+第 23 行:
+Although custom editors are a powerful new 插件 point, implementing a basic custom editor is not actually that difficult! Still, if you are working on your first Baosky 插件, you may want 要 consider holding off on diving into custom editors until you are more familiar with the basics of the Baosky API. Custom editors build on a lot of Baosky concepts—such as [webviews](/api/插件-guides/webview) and text documents—so it may be a bit overwhelming if you are learning all of these new ideas at the same time.
+
+第 97 行:
+    `priority` controls when a custom editor is used when a resource is open. Possible values are:
+
+第 255 行:
+- `undo` — Function invoked by Baosky when the edit needs 要 be undone.
+
+
+================================================================================
+文件: extension-guides/ai/chat.md
+需要翻译: 3 行
+================================================================================
+
+第 520 行:
+在 Baosky 插件示例存储库中查看实现 [tool calling by using prompt-tsx](https://github.com/microsoft/baosky-插件-samples/blob/main/chat-sample/src/toolParticipant.ts) 的完整源代码。
+
+第 578 行:
+- 在发布到 VS 市场之前，我们建议您阅读 [Microsoft AI tools and practices guidelines](https://www.microsoft.com/en-us/ai/tools-practices)。这些指南为创业地开发和使用人工智能技术提供了最佳实践。
+
+第 579 行:
+- 通过发布到 VS 市场，您的插件将遵守 [GitHub Copilot extensibility acceptable development and use policy](https://docs.github.com/en/early-access/copilot/github-copilot-extensibility-platform-partnership-plugin-acceptable-development-and-use-policy)。
+
+
+================================================================================
+文件: extension-guides/ai/prompt-tsx.md
+需要翻译: 2 行
+================================================================================
+
+第 124 行:
+Now, all older history messages are pruned before the library tries 要 prune other elements of the prompt.
+
+第 162 行:
+### Step 1: Define base instructions and user query
+
+
+================================================================================
+文件: extension-guides/file-icon-theme.md
+需要翻译: 2 行
+================================================================================
+
+第 152 行:
+- the weight property values are defined [here](https://developer.mozilla.org/docs/Web/CSS/font-weight#Values).
+
+第 210 行:
+- the file icon theme has specific file icons. E.g. `Minimal` does not have specific file icons and therefore does not use the language default icons
+
+
+================================================================================
+文件: extension-guides/markdown-extension.md
+需要翻译: 2 行
+================================================================================
+
+第 60 行:
+要 contribute multiple markdown-it plugins, return multiple `use` statements chained together:
+
+第 77 行:
+For advanced functionality, 插件 may contribute scripts that are executed inside of the Markdown preview.
+
+
+================================================================================
+文件: working-with-extensions/bundling-extension.md
+需要翻译: 2 行
+================================================================================
+
+第 259 行:
+* `target` 指示你的插件将在哪个上下文中运行。我们建议使用 `webworker`，以便你的插件既可以在 Baosky for web 中工作，也可以在 Baosky 桌面版本中工作。
+
+第 361 行:
+运行 webpack 时，你可能会遇到类似 ** Critical dependencies: the request of a dependency is an expression ** 的警告。必须认真对待此类警告，你的打包可能无法工作。该消息意味着 webpack 无法静态确定如何打包某些依赖项。这通常是由动态 `require` 语句引起的，例如 `require(someDynamicVariable)`。
+
+
+================================================================================
+文件: extension-guides/ai/language-model-tutorial.md
+需要翻译: 1 行
+================================================================================
+
+第 135 行:
+This code uses the `visibleRanges` property of the TextEditor 要 get the position of the lines that are currently visible in the editor. It then starts with the first line position and moves 要 the last line position, adding each line of code 要 a string along with the line number. Finally, it returns the string that contains all the viewable code with line numbers.
+
+
+================================================================================
+文件: extension-guides/ai/tools.md
+需要翻译: 1 行
+================================================================================
+
+第 98 行:
+    Describe what each parameter does and how it relates 要 the tool's functionality.
+
+
+================================================================================
+文件: extension-guides/color-theme.md
+需要翻译: 1 行
+================================================================================
+
+第 118 行:
+要 try out the new theme, press F5 要 launch an 插件 Development Host window.
+

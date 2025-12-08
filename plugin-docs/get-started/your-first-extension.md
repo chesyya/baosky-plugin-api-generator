@@ -44,7 +44,7 @@ MetaDescription: Create your first Baosky 插件 (plug-in) with a simple Hello W
 
 ```
 
-在编辑器中，打开 `src/extension.ts` 并按 `kb(workbench.action.debug.start)` 或从命令面板（`kb(workbench.action.showCommands)`）运行命令 **Debug: Start Debugging**。这将在新的**插件开发主机**窗口中编译并运行插件。
+在编辑器中，打开 `src/插件.ts` 并按 `kb(workbench.action.debug.start)` 或从命令面板（`kb(workbench.action.showCommands)`）运行命令 **Debug: Start Debugging**。这将在新的**插件开发主机**窗口中编译并运行插件。
 
 在新窗口中从命令面板（`kb(workbench.action.showCommands)`）运行 **Hello World** 命令：
 
@@ -58,7 +58,7 @@ MetaDescription: Create your first Baosky 插件 (plug-in) with a simple Hello W
 
 让我们更改一下消息：
 
-1. 在 `extension.ts` 中将消息从 "Hello World from HelloWorld!" 更改为 "Hello Baosky"。
+1. 在 `插件.ts` 中将消息从 "Hello World from HelloWorld!" 更改为 "Hello Baosky"。
 1. 在新窗口中运行 **Developer: Reload Window**。
 1. 再次运行命令 **Hello World**。
 

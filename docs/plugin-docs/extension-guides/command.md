@@ -1,10 +1,12 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 995c7085-5fc0-44e0-a171-30a759c0b7da
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to using commands programmatically in Baosky 插件 (plug-ins)
+
+MetaDescription: 在 Baosky 插件（插件）中以编程方式使用命令的指南
 ---
 
 # 命令
@@ -17,7 +19,7 @@ Baosky 包含大量的[内置命令](/api/references/commands)，你可以使用
 
 ### 以编程方式执行命令
 
-[`code`](/api/references/baosky-api#commands.executeCommand) API 以编程方式执行命令。这使你可以使用 Baosky 的内置功能，并基于插件（如 Baosky 的内置 Git 和 Markdown 插件）进行构建。
+[`code`](/api/references/baosky-api#commands.executeCommand) API 以编程方式执行命令。这使您可以使用 Baosky 的内置功能，并基于插件（如 Baosky 的内置 Git 和 Markdown ）进行构建。
 
 例如，`editor.action.addCommentLine` 命令会注释活动文本编辑器中当前选定的行：
 
@@ -117,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
-你可以在创建 webview 时通过在 `WebviewOptions` 中设置 `enableCommandUris` 来在 [webview](/api/插件-guides/webview) 中启用命令 URI。
+您可以在 webview 时通过在 `WebviewOptions` 中设置 `enableCommandUris` 来在 [webview](/api/插件-guides/webview) 中启用命令 URI。
 
 ## 创建新命令
 
@@ -164,10 +166,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 现在，当用户首次从命令面板或通过键绑定调用 `myExtension.sayHello` 命令时，插件将被激活，`registerCommand` 会将 `myExtension.sayHello` 绑定到正确的处理函数。
 
-> **注意**：面向 1.74.0 之前的 Baosky 版本的插件必须为所有面向用户的命令显式注册 `onCommand` `activationEvent`，以便插件激活并执行 `registerCommand`：
+> ** 注意 ** ：面向 1.74.0 之前的 Baosky 版本的插件必须为所有面向用户的命令显式注册 `onCommand` `activationEvent`，以便插件激活并执行 `registerCommand`：
 > ```json
 > {
->   "activationEvents": ["onCommand:myExtension.sayHello"]
+> "activationEvents": ["onCommand:myExtension.sayHello"]
 > }
 > ```
 
@@ -183,7 +185,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 默认情况下，通过 `package.json` 的 `commands` 部分贡献的所有面向用户的命令都会显示在命令面板中。然而，许多命令仅在特定情况下才相关，例如当存在给定语言的活动文本编辑器时，或者当用户设置了某个配置选项时。
 
-[`code`](/api/references/contribution-points#contributes.menus) 贡献点允许你限制命令何时应该显示在命令面板中。它接受目标命令的 ID 和一个控制何时显示命令的 [when 子句](/api/references/when-clause-contexts)：
+[`code`](/api/references/contribution-points#contributes.menus) 贡献点允许你限制命令何时应显示在命令面板中。它接受目标命令的 ID 和一个控制何时显示命令的 [when 子句](/api/references/when-clause-contexts)：
 
 ```json
 {
@@ -206,7 +208,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 命令通过 `enablement` 属性支持启用 - 其值是一个 [when 子句](/api/references/when-clause-contexts)。启用适用于所有菜单和已注册的键绑定。
 
-> **注意**：`enablement` 和菜单项的 `when` 条件之间存在语义重叠。后者用于防止菜单充满禁用的项。例如，分析 JavaScript 正则表达式的命令应该在文件是 JavaScript 时**显示**（when），并且仅在光标位于正则表达式上方时**启用**（enabled）。`when` 子句通过不为所有其他语言文件显示命令来防止混乱。强烈建议防止菜单混乱。
+> ** 注意 ** ：`enablement` 和菜单项的 `when` 条件之间存在语义重叠。后者用于防止菜单充满禁用的项。例如，分析 JavaScript 正则表达式的命令应该在文件是 JavaScript 时 ** 显示 ** （when），并且仅在光标位于正则表达式上方时 ** 启用 ** （enabled）。`when` 子句通过不为所有其他语言文件显示命令来防止混乱。强烈建议防止菜单混乱。
 
 最后，显示命令的菜单（如命令面板或上下文菜单）实现了处理启用的不同方式。编辑器和资源管理器上下文菜单会渲染启用/禁用的项，而命令面板则会过滤它们。
 

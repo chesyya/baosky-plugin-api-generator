@@ -1,0 +1,109 @@
+
+> my-website@0.0.0 build
+> docusaurus build
+
+[INFO] [en] Creating an optimized production build...
+[webpackbar] ℹ Compiling Client
+[webpackbar] ℹ Compiling Server
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminal` in source file "plugin-docs/references/activation-events.md" (34:3) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminalShellIntegration` in source file "plugin-docs/references/activation-events.md" (36:7) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with empty URL found in source file "docs/api-reference.md" (8279:16).
+[WARNING] Markdown link with empty URL found in source file "docs/api-reference.md" (8323:16).
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminal` in source file "docs/plugin-docs/references/activation-events.md" (36:3) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminalShellIntegration` in source file "docs/plugin-docs/references/activation-events.md" (38:7) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (16:83) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (23:22) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (52:6) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#mcp-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (78:24) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/mcp.md" (16:48) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/customization/mcp-servers.md` in source file "docs/plugin-docs/extension-guides/ai/mcp.md" (21:28) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminal` in source file "plugin-docs/references/activation-events.md" (34:3) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminalShellIntegration` in source file "plugin-docs/references/activation-events.md" (36:7) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminal` in source file "docs/plugin-docs/references/activation-events.md" (36:3) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/api/references/activation-events.md#onTerminalShellIntegration` in source file "docs/plugin-docs/references/activation-events.md" (38:7) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with empty URL found in source file "docs/api-reference.md" (8279:16).
+[WARNING] Markdown link with empty URL found in source file "docs/api-reference.md" (8323:16).
+[webpackbar] ✔ Server: Compiled with some errors in 13.86s
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (16:83) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (23:22) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (52:6) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#mcp-tools` in source file "docs/plugin-docs/extension-guides/ai/tools.md" (78:24) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/chat/chat-tools.md#types-of-tools` in source file "docs/plugin-docs/extension-guides/ai/mcp.md" (16:48) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+[WARNING] Markdown link with URL `/docs/copilot/customization/mcp-servers.md` in source file "docs/plugin-docs/extension-guides/ai/mcp.md" (21:28) couldn't be resolved.
+Make sure it references a local Markdown file that exists within the current plugin.
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|/root/my_website/my-website/node_modules/@docusaurus/mdx-loader/lib/index.js??ruleSet[1].rules[8].use[0]!/root/my_website/my-website/docs/plugin-docs/references/icons-in-labels.md': No serializer registered for VFileMessage
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> Error -> VFileMessage
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|/root/my_website/my-website/node_modules/@docusaurus/mdx-loader/lib/index.js??ruleSet[1].rules[8].use[0]!/root/my_website/my-website/docs/plugin-docs/advanced-topics/extension-host.md': No serializer registered for VFileMessage
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> Error -> VFileMessage
+[webpackbar] ✔ Client: Compiled with some errors in 21.38s
+[ERROR] Client bundle compiled with errors therefore further build is impossible.
+Error: MDX compilation failed for file "/root/my_website/my-website/docs/plugin-docs/advanced-topics/extension-host.md"
+Cause: Unexpected character `1` (U+0031) before name, expected a character that can start a name, such as a letter, `$`, or `_`
+Details:
+{
+  "column": 26,
+  "file": "",
+  "message": "Unexpected character `1` (U+0031) before name, expected a character that can start a name, such as a letter, `$`, or `_`",
+  "line": 54,
+  "name": "54:26",
+  "place": {
+    "_bufferIndex": 25,
+    "_index": 0,
+    "line": 54,
+    "column": 26,
+    "offset": 2167
+  },
+  "reason": "Unexpected character `1` (U+0031) before name, expected a character that can start a name, such as a letter, `$`, or `_`",
+  "ruleId": "unexpected-character",
+  "source": "micromark-extension-mdx-jsx",
+  "url": "https://github.com/micromark/micromark-extension-mdx-jsx#unexpected-character-at-expected-expect"
+}
+
+--------------------------
+
+Error: MDX compilation failed for file "/root/my_website/my-website/docs/plugin-docs/references/icons-in-labels.md"
+Cause: Could not parse expression with acorn
+Details:
+{
+  "cause": {
+    "pos": 1639,
+    "loc": {
+      "line": 36,
+      "column": 83
+    },
+    "raisedAt": 3
+  },
+  "column": 84,
+  "file": "",
+  "message": "Could not parse expression with acorn",
+  "line": 36,
+  "name": "36:84",
+  "place": {
+    "line": 36,
+    "column": 84,
+    "offset": 1639
+  },
+  "reason": "Could not parse expression with acorn",
+  "ruleId": "acorn",
+  "source": "micromark-extension-mdx-expression",
+  "url": "https://github.com/micromark/micromark-extension-mdx-expression/tree/main/packages/micromark-extension-mdx-expression#could-not-parse-expression-with-acorn"
+}

@@ -1,45 +1,47 @@
----
+--- 
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 109a10fc-2d64-44b6-98ce-b8375d245776
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Reference of all product icons by id
+
+MetaDescription: 按 ID 列出的所有产品图标参考
 ---
 
-# Product Icon Reference
+# 产品图标参考手册
 
-Baosky contains a set of built-in icons that are used in views and the editor, but can also be used in hovers, the status bar, and by 插件. These icons are **product icons** as opposed to **file icons**, which are used next to file names throughout the UI.
+Baosky 内置了一套图标集，这些图标不仅用于视图和编辑器，还可以用于悬停提示、状态栏以及插件中。这些图标被称为 **产品图标**，以区别于在 UI 中显示在文件名旁边的 **文件图标**。
 
-The product icons that ship with Baosky are contained in the [Codicon icon font](https://github.com/microsoft/baosky-codicons) and form the **default** product icon theme. 插件 can provide new [Product Icon Themes](/api/插件-guides/product-icon-theme) to redefine these icons and give Baosky a new appearance.
+Baosky 附带的产品图标包含在 [Codicon 图标字体](https://github.com/microsoft/baosky-codicons) 中，并构成了 **默认** 的产品图标主题。插件可以提供新的 [产品图标主题](/api/extension-guides/product-icon-theme) 来重新定义这些图标，从而赋予 Baosky 新的外观。
 
-In order to allow this, all product icons are identified by an ID. The icon identifier is what's used in UI components in labels (`$(pencil)`), in the API as `ThemeIcon` and in contributions when icons are needed.
+为了实现这一点，所有产品图标都由一个 ID 标识。图标标识符用于 UI 组件的标签中 (`$(pencil)`)、API 中的 `ThemeIcon` 以及需要图标的贡献点中。
 
-The association of icon identifier to an actual icon font glyph happens the product icon theme.
+将图标标识符关联到实际图标字体字形的工作是由产品图标主题完成的。
 
-## Icons in labels
+## 标签中的图标
 
-Icons can be used in Markdown labels in hovers, in the  [StatusBarItem](/api/references/baosky-api#StatusBarItem) text and [QuickPickItem](/api/references/baosky-api#QuickPickItem) label API. The syntax for adding an icon in Markdown is `$(iconIdentifier)`:
+图标可以用在悬停提示的 Markdown 标签中、[StatusBarItem](/api/references/baosky-api#StatusBarItem) 文本中以及 [QuickPickItem](/api/references/baosky-api#QuickPickItem) 标签 API 中。在 Markdown 中添加图标的语法是 `$(iconIdentifier)`：
 
 ```ts
 $(alert);
 ```
 
-You can also embed text and use multiple icons:
+您还可以嵌入文本并使用多个图标：
 
 ```ts
 $(eye) $(heart) $(mark-github) GitHub
 ```
 
-To place a literal `${...}` text inside a label, escape the `To place a literal `${...}` text inside a label, escape the  with a backslash:
+要在标签中放置字面意义的 `$(...)` 文本，请使用反斜杠转义 `$`：
 
 ```ts
 \$(eye)
 ```
 
-## Animation
+## 动画
 
-You can apply a spinning animation to the following icons by appending `~spin` to the icon name:
+您可以通过在图标名称后附加 `~spin` 来将旋转动画应用于以下图标：
 
 - `sync`
 - `loading`
@@ -49,9 +51,9 @@ You can apply a spinning animation to the following icons by appending `~spin` t
 $(sync~spin)
 ```
 
-## Icon contribution point
+## 图标贡献点
 
-The icon contribution point allow 插件 to define additional icons by ID, along with a default icon. The icon ID can then be used by the 插件 (or any other 插件 that depend on the 插件) in labels (`$(iconId)`) or at all places where a `ThemeIcon` can be used (`new ThemeIcon("iconId")`).
+图标贡献点允许插件通过 ID 定义额外的图标，以及默认图标。然后，插件（或依赖该插件的任何其他插件）可以在标签 (`$(iconId)`) 或可以使用 `ThemeIcon` 的所有位置 (`new ThemeIcon("iconId")`) 使用该图标 ID。
 
 ```json
 "contributes": {
@@ -74,248 +76,248 @@ The icon contribution point allow 插件 to define additional icons by ID, along
 }
 ```
 
-Product icon themes can redefine the icon (if they know about the icon ID).
+产品图标主题可以重新定义图标（如果它们知道图标 ID）。
 
-## Icon Listing
+## 图标列表
 
-Below is a listing of the built-in product icons by identifier.
+下面是按标识符列出的内置产品图标。
 
-The ID of the icon identifies the location where the icon is used. The default codicon ID describes which icon from the codicon library is used by default, and the preview shows what that icon looks like.
+图标的 ID 标识了图标使用的位置。默认 codicon ID 描述了默认情况下使用 codicon 库中的哪个图标，预览显示了该图标的外观。
 
-[Product Icon Themes](/api/插件-guides/product-icon-theme) can replace each icon individually, as well as all icons from the codicon library.
+[产品图标主题](/api/extension-guides/product-icon-theme) 可以单独替换每个图标，也可以替换 codicon 库中的所有图标。
 
 <div id="codicon-listing">
 
-| preview     | identifier                        | default codicon ID                | description
+| 预览        | 标识符                           | 默认 codicon ID                   | 描述 |
 | ----------- | --------------------------------- | --------------------------------- | --------------------------------- |
-|<i class="codicon codicon-account"></i>|accounts-view-bar-icon|account|Accounts icon in the view bar.|
-|<i class="codicon codicon-activate-breakpoints"></i>|breakpoints-activate|activate-breakpoints|Icon for the activate action in the breakpoints view.|
-|<i class="codicon codicon-close-all"></i>|breakpoints-remove-all|close-all|Icon for the Remove All action in the breakpoints view.|
-|<i class="codicon codicon-debug-alt"></i>|breakpoints-view-icon|debug-alt|View icon of the breakpoints view.|
-|<i class="codicon codicon-call-incoming"></i>|callhierarchy-incoming|call-incoming|Icon for incoming calls in the call hierarchy view.|
-|<i class="codicon codicon-call-outgoing"></i>|callhierarchy-outgoing|call-outgoing|Icon for outgoing calls in the call hierarchy view.|
-|<i class="codicon codicon-debug-alt"></i>|callstack-view-icon|debug-alt|View icon of the call stack view.|
-|<i class="codicon codicon-bug"></i>|callstack-view-session|bug|Icon for the session icon in the call stack view.|
-|<i class="codicon codicon-comment-discussion"></i>|chat-editor-label-icon|comment-discussion|Icon of the chat editor label.|
-|<i class="codicon codicon-comment-discussion"></i>|comments-view-icon|comment-discussion|View icon of the comments view.|
-|<i class="codicon codicon-debug-breakpoint"></i>|debug-breakpoint|debug-breakpoint|Icon for breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-conditional"></i>|debug-breakpoint-conditional|debug-breakpoint-conditional|Icon for conditional breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-conditional-disabled"></i>|debug-breakpoint-conditional-disabled|debug-breakpoint-conditional-disabled|Icon for disabled conditional breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-conditional-unverified"></i>|debug-breakpoint-conditional-unverified|debug-breakpoint-conditional-unverified|Icon for unverified conditional breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-data"></i>|debug-breakpoint-data|debug-breakpoint-data|Icon for data breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-data-disabled"></i>|debug-breakpoint-data-disabled|debug-breakpoint-data-disabled|Icon for disabled data breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-data-unverified"></i>|debug-breakpoint-data-unverified|debug-breakpoint-data-unverified|Icon for unverified data breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-disabled"></i>|debug-breakpoint-disabled|debug-breakpoint-disabled|Icon for disabled breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-function"></i>|debug-breakpoint-function|debug-breakpoint-function|Icon for function breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-function-disabled"></i>|debug-breakpoint-function-disabled|debug-breakpoint-function-disabled|Icon for disabled function breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-function-unverified"></i>|debug-breakpoint-function-unverified|debug-breakpoint-function-unverified|Icon for unverified function breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-log"></i>|debug-breakpoint-log|debug-breakpoint-log|Icon for log breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-log-disabled"></i>|debug-breakpoint-log-disabled|debug-breakpoint-log-disabled|Icon for disabled log breakpoint.|
-|<i class="codicon codicon-debug-breakpoint-log-unverified"></i>|debug-breakpoint-log-unverified|debug-breakpoint-log-unverified|Icon for unverified log breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-unsupported"></i>|debug-breakpoint-unsupported|debug-breakpoint-unsupported|Icon for unsupported breakpoints.|
-|<i class="codicon codicon-debug-breakpoint-unverified"></i>|debug-breakpoint-unverified|debug-breakpoint-unverified|Icon for unverified breakpoints.|
-|<i class="codicon codicon-collapse-all"></i>|debug-collapse-all|collapse-all|Icon for the collapse all action in the debug views.|
-|<i class="codicon codicon-gear"></i>|debug-configure|gear|Icon for the debug configure action.|
-|<i class="codicon codicon-debug-console"></i>|debug-console|debug-console|Icon for the debug console open action.|
-|<i class="codicon codicon-clear-all"></i>|debug-console-clear-all|clear-all|Icon for the clear all action in the debug console.|
-|<i class="codicon codicon-arrow-small-right"></i>|debug-console-evaluation-input|arrow-small-right|Icon for the debug evaluation input marker.|
-|<i class="codicon codicon-chevron-right"></i>|debug-console-evaluation-prompt|chevron-right|Icon for the debug evaluation prompt.|
-|<i class="codicon codicon-debug-console"></i>|debug-console-view-icon|debug-console|View icon of the debug console view.|
-|<i class="codicon codicon-debug-continue"></i>|debug-continue|debug-continue|Icon for the debug continue action.|
-|<i class="codicon codicon-debug-disconnect"></i>|debug-disconnect|debug-disconnect|Icon for the debug disconnect action.|
-|<i class="codicon codicon-gripper"></i>|debug-gripper|gripper|Icon for the debug bar gripper.|
-|<i class="codicon codicon-debug-hint"></i>|debug-hint|debug-hint|Icon for breakpoint hints shown on hover in editor glyph margin.|
-|<i class="codicon codicon-debug-pause"></i>|debug-pause|debug-pause|Icon for the debug pause action.|
-|<i class="codicon codicon-debug-restart"></i>|debug-restart|debug-restart|Icon for the debug restart action.|
-|<i class="codicon codicon-debug-restart-frame"></i>|debug-restart-frame|debug-restart-frame|Icon for the debug restart frame action.|
-|<i class="codicon codicon-debug-reverse-continue"></i>|debug-reverse-continue|debug-reverse-continue|Icon for the debug reverse continue action.|
-|<i class="codicon codicon-debug-stackframe"></i>|debug-stackframe|debug-stackframe|Icon for a stackframe shown in the editor glyph margin.|
-|<i class="codicon codicon-debug-stackframe-focused"></i>|debug-stackframe-focused|debug-stackframe-focused|Icon for a focused stackframe  shown in the editor glyph margin.|
-|<i class="codicon codicon-debug-start"></i>|debug-start|debug-start|Icon for the debug start action.|
-|<i class="codicon codicon-debug-step-back"></i>|debug-step-back|debug-step-back|Icon for the debug step back action.|
-|<i class="codicon codicon-debug-step-into"></i>|debug-step-into|debug-step-into|Icon for the debug step into action.|
-|<i class="codicon codicon-debug-step-out"></i>|debug-step-out|debug-step-out|Icon for the debug step out action.|
-|<i class="codicon codicon-debug-step-over"></i>|debug-step-over|debug-step-over|Icon for the debug step over action.|
-|<i class="codicon codicon-debug-stop"></i>|debug-stop|debug-stop|Icon for the debug stop action.|
-|<i class="codicon codicon-window"></i>|default-view-icon|window|Default view icon.|
-|<i class="codicon codicon-arrow-down"></i>|diff-editor-next-change|arrow-down|Icon for the next change action in the diff editor.|
-|<i class="codicon codicon-arrow-up"></i>|diff-editor-previous-change|arrow-up|Icon for the previous change action in the diff editor.|
-|<i class="codicon codicon-whitespace"></i>|diff-editor-toggle-whitespace|whitespace|Icon for the toggle whitespace action in the diff editor.|
-|<i class="codicon codicon-add"></i>|diff-insert|add|Line decoration for inserts in the diff editor.|
-|<i class="codicon codicon-remove"></i>|diff-remove|remove|Line decoration for removals in the diff editor.|
-|<i class="codicon codicon-close"></i>|diff-review-close|close|Icon for 'Close' in diff review.|
-|<i class="codicon codicon-add"></i>|diff-review-insert|add|Icon for 'Insert' in diff review.|
-|<i class="codicon codicon-remove"></i>|diff-review-remove|remove|Icon for 'Remove' in diff review.|
-|<i class="codicon codicon-debug"></i>|disassembly-editor-label-icon|debug|Icon of the disassembly editor label.|
-|<i class="codicon codicon-files"></i>|explorer-view-icon|files|View icon of the explorer view.|
-|<i class="codicon codicon-clear-all"></i>|插件-clear-search-results|clear-all|Icon for the 'Clear Search Result' action in the 插件 view.|
-|<i class="codicon codicon-pencil"></i>|插件-configure-recommended|pencil|Icon for the 'Configure Recommended 插件' action in the 插件 view.|
-|<i class="codicon codicon-插件"></i>|插件-editor-label-icon|插件|Icon of the 插件 editor label.|
-|<i class="codicon codicon-filter"></i>|插件-filter|filter|Icon for the 'Filter' action in the 插件 view.|
-|<i class="codicon codicon-info"></i>|插件-info-message|info|Icon shown with an info message in the 插件 editor.|
-|<i class="codicon codicon-cloud-download"></i>|插件-install-count|cloud-download|Icon shown along with the install count in the 插件 view and editor.|
-|<i class="codicon codicon-cloud-download"></i>|插件-install-local-in-remote|cloud-download|Icon for the 'Install Local 插件 in Remote' action in the 插件 view.|
-|<i class="codicon codicon-cloud-download"></i>|插件-install-workspace-recommended|cloud-download|Icon for the 'Install Workspace Recommended 插件' action in the 插件 view.|
-|<i class="codicon codicon-gear"></i>|插件-manage|gear|Icon for the 'Manage' action in the 插件 view.|
-|<i class="codicon codicon-star"></i>|插件-rating|star|Icon shown along with the rating in the 插件 view and editor.|
-|<i class="codicon codicon-refresh"></i>|插件-refresh|refresh|Icon for the 'Refresh' action in the 插件 view.|
-|<i class="codicon codicon-remote"></i>|插件-remote|remote|Icon to indicate that an 插件 is remote in the 插件 view and editor.|
-|<i class="codicon codicon-star-empty"></i>|插件-star-empty|star-empty|Empty star icon used for the rating in the 插件 editor.|
-|<i class="codicon codicon-star-full"></i>|插件-star-full|star-full|Full star icon used for the rating in the 插件 editor.|
-|<i class="codicon codicon-star-half"></i>|插件-star-half|star-half|Half star icon used for the rating in the 插件 editor.|
-|<i class="codicon codicon-sync"></i>|插件-sync-enabled|sync|Icon to indicate that an 插件 is synced.|
-|<i class="codicon codicon-sync-ignored"></i>|插件-sync-ignored|sync-ignored|Icon to indicate that an 插件 is ignored when syncing.|
-|<i class="codicon codicon-插件"></i>|插件-view-icon|插件|View icon of the 插件 view.|
-|<i class="codicon codicon-warning"></i>|插件-warning-message|warning|Icon shown with a warning message in the 插件 editor.|
-|<i class="codicon codicon-chevron-right"></i>|find-collapsed|chevron-right|Icon to indicate that the editor find widget is collapsed.|
-|<i class="codicon codicon-chevron-down"></i>|find-expanded|chevron-down|Icon to indicate that the editor find widget is expanded.|
-|<i class="codicon codicon-arrow-down"></i>|find-next-match|arrow-down|Icon for 'Find Next' in the editor find widget.|
-|<i class="codicon codicon-arrow-up"></i>|find-previous-match|arrow-up|Icon for 'Find Previous' in the editor find widget.|
-|<i class="codicon codicon-replace"></i>|find-replace|replace|Icon for 'Replace' in the editor find widget.|
-|<i class="codicon codicon-replace-all"></i>|find-replace-all|replace-all|Icon for 'Replace All' in the editor find widget.|
-|<i class="codicon codicon-selection"></i>|find-selection|selection|Icon for 'Find in Selection' in the editor find widget.|
-|<i class="codicon codicon-chevron-right"></i>|folding-collapsed|chevron-right|Icon for collapsed ranges in the editor glyph margin.|
-|<i class="codicon codicon-chevron-down"></i>|folding-expanded|chevron-down|Icon for expanded ranges in the editor glyph margin.|
-|<i class="codicon codicon-lightbulb"></i>|getting-started-beginner|lightbulb|Icon used for the beginner category of getting started|
-|<i class="codicon codicon-github"></i>|getting-started-codespaces|github|Icon used for the codespaces category of getting started|
-|<i class="codicon codicon-pass-filled"></i>|getting-started-item-checked|pass-filled|Used to represent getting started items which have been completed|
-|<i class="codicon codicon-circle-large-outline"></i>|getting-started-item-unchecked|circle-large-outline|Used to represent getting started items which have not been completed|
-|<i class="codicon codicon-heart"></i>|getting-started-setup|heart|Icon used for the setup category of getting started|
-|<i class="codicon codicon-arrow-down"></i>|goto-next-location|arrow-down|Icon for goto next editor location.|
-|<i class="codicon codicon-arrow-up"></i>|goto-previous-location|arrow-up|Icon for goto previous editor location.|
-|<i class="codicon codicon-add"></i>|keybindings-add|add|Icon for the add action in the keybinding UI.|
-|<i class="codicon codicon-edit"></i>|keybindings-edit|edit|Icon for the edit action in the keybinding UI.|
-|<i class="codicon codicon-keyboard"></i>|keybindings-editor-label-icon|keyboard|Icon of the keybindings editor label.|
-|<i class="codicon codicon-record-keys"></i>|keybindings-record-keys|record-keys|Icon for the 'record keys' action in the keybinding UI.|
-|<i class="codicon codicon-sort-precedence"></i>|keybindings-sort|sort-precedence|Icon for the 'sort by precedence' toggle in the keybinding UI.|
-|<i class="codicon codicon-debug-alt"></i>|loaded-scripts-view-icon|debug-alt|View icon of the loaded scripts view.|
-|<i class="codicon codicon-chevron-down"></i>|marker-navigation-next|chevron-down|Icon for goto next marker.|
-|<i class="codicon codicon-chevron-up"></i>|marker-navigation-previous|chevron-up|Icon for goto previous marker.|
-|<i class="codicon codicon-filter"></i>|markers-view-filter|filter|Icon for the filter configuration in the markers view.|
-|<i class="codicon codicon-warning"></i>|markers-view-icon|warning|View icon of the markers view.|
-|<i class="codicon codicon-chevron-down"></i>|markers-view-multi-line-collapsed|chevron-down|Icon indicating that multiple lines are collapsed in the markers view.|
-|<i class="codicon codicon-chevron-up"></i>|markers-view-multi-line-expanded|chevron-up|Icon indicating that multiple lines are shown in the markers view.|
-|<i class="codicon codicon-diff-multiple"></i>|multi-diff-editor-label-icon|diff-multiple|Icon of the multi diff editor label.|
-|<i class="codicon codicon-clear-all"></i>|notebook-clear|clear-all|Icon to clear cell outputs in notebook editors.|
-|<i class="codicon codicon-chevron-right"></i>|notebook-collapsed|chevron-right|Icon to annotate a collapsed section in notebook editors.|
-|<i class="codicon codicon-trash"></i>|notebook-delete-cell|trash|Icon to delete a cell in notebook editors.|
-|<i class="codicon codicon-pencil"></i>|notebook-edit|pencil|Icon to edit a cell in notebook editors.|
-|<i class="codicon codicon-play"></i>|notebook-execute|play|Icon to execute in notebook editors.|
-|<i class="codicon codicon-run-all"></i>|notebook-execute-all|run-all|Icon to execute all cells in notebook editors.|
-|<i class="codicon codicon-chevron-down"></i>|notebook-expanded|chevron-down|Icon to annotate an expanded section in notebook editors.|
-|<i class="codicon codicon-settings-gear"></i>|notebook-kernel-configure|settings-gear|Configure icon in kernel configuration widget in notebook editors.|
-|<i class="codicon codicon-server-environment"></i>|notebook-kernel-select|server-environment|Configure icon to select a kernel in notebook editors.|
-|<i class="codicon codicon-code"></i>|notebook-mimetype|code|Icon for a mime type in notebook editors.|
-|<i class="codicon codicon-arrow-down"></i>|notebook-move-down|arrow-down|Icon to move down a cell in notebook editors.|
-|<i class="codicon codicon-arrow-up"></i>|notebook-move-up|arrow-up|Icon to move up a cell in notebook editors.|
-|<i class="codicon codicon-file-code"></i>|notebook-open-as-text|file-code|Icon to open the notebook in a text editor.|
-|<i class="codicon codicon-preview"></i>|notebook-render-output|preview|Icon to render output in diff editor.|
-|<i class="codicon codicon-discard"></i>|notebook-revert|discard|Icon to revert in notebook editors.|
-|<i class="codicon codicon-split-vertical"></i>|notebook-split-cell|split-vertical|Icon to split a cell in notebook editors.|
-|<i class="codicon codicon-error"></i>|notebook-state-error|error|Icon to indicate an error state in notebook editors.|
-|<i class="codicon codicon-check"></i>|notebook-state-success|check|Icon to indicate a success state in notebook editors.|
-|<i class="codicon codicon-primitive-square"></i>|notebook-stop|primitive-square|Icon to stop an execution in notebook editors.|
-|<i class="codicon codicon-check"></i>|notebook-stop-edit|check|Icon to stop editing a cell in notebook editors.|
-|<i class="codicon codicon-unfold"></i>|notebook-unfold|unfold|Icon to unfold a cell in notebook editors.|
-|<i class="codicon codicon-close"></i>|notifications-clear|close|Icon for the clear action in notifications.|
-|<i class="codicon codicon-clear-all"></i>|notifications-clear-all|clear-all|Icon for the clear all action in notifications.|
-|<i class="codicon codicon-chevron-down"></i>|notifications-collapse|chevron-down|Icon for the collapse action in notifications.|
-|<i class="codicon codicon-gear"></i>|notifications-configure|gear|Icon for the configure action in notifications.|
-|<i class="codicon codicon-chevron-up"></i>|notifications-expand|chevron-up|Icon for the expand action in notifications.|
-|<i class="codicon codicon-chevron-down"></i>|notifications-hide|chevron-down|Icon for the hide action in notifications.|
-|<i class="codicon codicon-book"></i>|open-editors-view-icon|book|View icon of the open editors view.|
-|<i class="codicon codicon-symbol-class"></i>|outline-view-icon|symbol-class|View icon of the outline view.|
-|<i class="codicon codicon-output"></i>|output-view-icon|output|View icon of the output view.|
-|<i class="codicon codicon-close"></i>|panel-close|close|Icon to close a panel.|
-|<i class="codicon codicon-chevron-up"></i>|panel-maximize|chevron-up|Icon to maximize a panel.|
-|<i class="codicon codicon-chevron-down"></i>|panel-restore|chevron-down|Icon to restore a panel.|
-|<i class="codicon codicon-chevron-down"></i>|parameter-hints-next|chevron-down|Icon for show next parameter hint.|
-|<i class="codicon codicon-chevron-up"></i>|parameter-hints-previous|chevron-up|Icon for show previous parameter hint.|
-|<i class="codicon codicon-plus"></i>|ports-forward-icon|plus|Icon for the forward action.|
-|<i class="codicon codicon-globe"></i>|ports-open-browser-icon|globe|Icon for the open browser action.|
-|<i class="codicon codicon-x"></i>|ports-stop-forward-icon|x|Icon for the stop forwarding action.|
-|<i class="codicon codicon-plug"></i>|ports-view-icon|plug|View icon of the remote ports view.|
-|<i class="codicon codicon-clear-all"></i>|preferences-clear-input|clear-all|Icon for clear input in the settings and keybinding UI.|
-|<i class="codicon codicon-go-to-file"></i>|preferences-open-settings|go-to-file|Icon for open settings commands.|
-|<i class="codicon codicon-lock"></i>|private-ports-view-icon|lock|Icon representing a private remote port.|
-|<i class="codicon codicon-eye"></i>|public-ports-view-icon|eye|Icon representing a public remote port.|
-|<i class="codicon codicon-lightbulb"></i>|refactor-preview-view-icon|lightbulb|View icon of the refactor preview view.|
-|<i class="codicon codicon-book"></i>|remote-explorer-documentation|book|Documentation icon in the remote explorer view.|
-|<i class="codicon codicon-twitter"></i>|remote-explorer-feedback|twitter|Feedback icon in the remote explorer view.|
-|<i class="codicon codicon-star"></i>|remote-explorer-get-started|star|Getting started icon in the remote explorer view.|
-|<i class="codicon codicon-comment"></i>|remote-explorer-report-issues|comment|Report issue icon in the remote explorer view.|
-|<i class="codicon codicon-issues"></i>|remote-explorer-review-issues|issues|Review issue icon in the remote explorer view.|
-|<i class="codicon codicon-remote-explorer"></i>|remote-explorer-view-icon|remote-explorer|View icon of the remote explorer view.|
-|<i class="codicon codicon-chevron-up"></i>|review-comment-collapse|chevron-up|Icon to collapse a review comment.|
-|<i class="codicon codicon-debug-alt"></i>|run-view-icon|debug-alt|View icon of the Run and Debug view.|
-|<i class="codicon codicon-插件"></i>|runtime-插件-editor-label-icon|插件|Icon of the runtime 插件 editor label.|
-|<i class="codicon codicon-clear-all"></i>|search-clear-results|clear-all|Icon for clear results in the search view.|
-|<i class="codicon codicon-collapse-all"></i>|search-collapse-results|collapse-all|Icon for collapse results in the search view.|
-|<i class="codicon codicon-ellipsis"></i>|search-details|ellipsis|Icon to make search details visible.|
-|<i class="codicon codicon-search"></i>|search-editor-label-icon|search|Icon of the search editor label.|
-|<i class="codicon codicon-expand-all"></i>|search-expand-results|expand-all|Icon for expand results in the search view.|
-|<i class="codicon codicon-chevron-right"></i>|search-hide-replace|chevron-right|Icon to collapse the replace section in the search view.|
-|<i class="codicon codicon-new-file"></i>|search-new-editor|new-file|Icon for the action to open a new search editor.|
-|<i class="codicon codicon-refresh"></i>|search-refresh|refresh|Icon for refresh in the search view.|
-|<i class="codicon codicon-close"></i>|search-remove|close|Icon to remove a search result.|
-|<i class="codicon codicon-replace"></i>|search-replace|replace|Icon for replace in the search view.|
-|<i class="codicon codicon-replace-all"></i>|search-replace-all|replace-all|Icon for replace all in the search view.|
-|<i class="codicon codicon-list-selection"></i>|search-show-context|list-selection|Icon for toggle the context in the search editor.|
-|<i class="codicon codicon-chevron-down"></i>|search-show-replace|chevron-down|Icon to expand the replace section in the search view.|
-|<i class="codicon codicon-search-stop"></i>|search-stop|search-stop|Icon for stop in the search view.|
-|<i class="codicon codicon-search"></i>|search-view-icon|search|View icon of the search view.|
-|<i class="codicon codicon-add"></i>|settings-add|add|Icon for the add action in the Settings UI.|
-|<i class="codicon codicon-discard"></i>|settings-discard|discard|Icon for the discard action in the Settings UI.|
-|<i class="codicon codicon-edit"></i>|settings-edit|edit|Icon for the edit action in the Settings UI.|
-|<i class="codicon codicon-settings"></i>|settings-editor-label-icon|settings|Icon of the settings editor label.|
-|<i class="codicon codicon-triangle-down"></i>|settings-folder-dropdown|triangle-down|Icon for the folder dropdown button in the split JSON Settings editor.|
-|<i class="codicon codicon-chevron-right"></i>|settings-group-collapsed|chevron-right|Icon for a collapsed section in the split JSON Settings editor.|
-|<i class="codicon codicon-chevron-down"></i>|settings-group-expanded|chevron-down|Icon for an expanded section in the split JSON Settings editor.|
-|<i class="codicon codicon-gear"></i>|settings-more-action|gear|Icon for the 'more actions' action in the Settings UI.|
-|<i class="codicon codicon-close"></i>|settings-remove|close|Icon for the remove action in the Settings UI.|
-|<i class="codicon codicon-sync"></i>|settings-sync-view-icon|sync|View icon of the Settings Sync view.|
-|<i class="codicon codicon-settings-gear"></i>|settings-view-bar-icon|settings-gear|Settings icon in the view bar.|
-|<i class="codicon codicon-source-control"></i>|source-control-view-icon|source-control|View icon of the Source Control view.|
-|<i class="codicon codicon-chevron-right"></i>|suggest-more-info|chevron-right|Icon for more information in the suggest widget.|
-|<i class="codicon codicon-gear"></i>|tasks-list-configure|gear|Configuration icon in the tasks selection list.|
-|<i class="codicon codicon-close"></i>|tasks-remove|close|Icon for remove in the tasks selection list.|
-|<i class="codicon codicon-trash"></i>|terminal-kill|trash|Icon for killing a terminal instance.|
-|<i class="codicon codicon-add"></i>|terminal-new|add|Icon for creating a new terminal instance.|
-|<i class="codicon codicon-gear"></i>|terminal-rename|gear|Icon for rename in the terminal quick menu.|
-|<i class="codicon codicon-terminal"></i>|terminal-view-icon|terminal|View icon of the terminal view.|
-|<i class="codicon codicon-beaker"></i>|test-view-icon|beaker|View icon of the test view.|
-|<i class="codicon codicon-close"></i>|testing-cancel-icon|close|Icon to cancel ongoing test runs.|
-|<i class="codicon codicon-debug-alt"></i>|testing-debug-icon|debug-alt|Icon of the "debug test" action.|
-|<i class="codicon codicon-warning"></i>|testing-error-icon|warning|Icon shown for tests that have an error.|
-|<i class="codicon codicon-close"></i>|testing-failed-icon|close|Icon shown for tests that failed.|
-|<i class="codicon codicon-pass"></i>|testing-passed-icon|pass|Icon shown for tests that passed.|
-|<i class="codicon codicon-watch"></i>|testing-queued-icon|watch|Icon shown for tests that are queued.|
-|<i class="codicon codicon-run-all"></i>|testing-run-all-icon|run-all|Icon of the "run all tests" action.|
-|<i class="codicon codicon-run"></i>|testing-run-icon|run|Icon of the "run test" action.|
-|<i class="codicon codicon-list-tree"></i>|testing-show-as-list-icon|list-tree|Icon shown when the test explorer is disabled as a tree.|
-|<i class="codicon codicon-debug-step-over"></i>|testing-skipped-icon|debug-step-over|Icon shown for tests that are skipped.|
-|<i class="codicon codicon-circle-outline"></i>|testing-unset-icon|circle-outline|Icon shown for tests that are in an unset state.|
-|<i class="codicon codicon-history"></i>|timeline-open|history|Icon for the open timeline action.|
-|<i class="codicon codicon-pin"></i>|timeline-pin|pin|Icon for the pin timeline action.|
-|<i class="codicon codicon-refresh"></i>|timeline-refresh|refresh|Icon for the refresh timeline action.|
-|<i class="codicon codicon-pinned"></i>|timeline-unpin|pinned|Icon for the unpin timeline action.|
-|<i class="codicon codicon-history"></i>|timeline-view-icon|history|View icon of the timeline view.|
-|<i class="codicon codicon-debug-alt"></i>|variables-view-icon|debug-alt|View icon of the variables view.|
-|<i class="codicon codicon-chevron-right"></i>|view-pane-container-collapsed|chevron-right|Icon for a collapsed view pane container.|
-|<i class="codicon codicon-chevron-down"></i>|view-pane-container-expanded|chevron-down|Icon for an expanded view pane container.|
-|<i class="codicon codicon-add"></i>|watch-expressions-add|add|Icon for the add action in the watch view.|
-|<i class="codicon codicon-add"></i>|watch-expressions-add-function-breakpoint|add|Icon for the add function breakpoint action in the watch view.|
-|<i class="codicon codicon-close-all"></i>|watch-expressions-remove-all|close-all|Icon for the Remove All action in the watch view.|
-|<i class="codicon codicon-debug-alt"></i>|watch-view-icon|debug-alt|View icon of the watch view.|
-|<i class="codicon codicon-close"></i>|widget-close|close|Icon for the close action in widgets.|
-|<i class="codicon codicon-shield"></i>|workspace-trust-editor-label-icon|shield|Icon of the workspace trust editor label.|
+|<i class="codicon codicon-account"></i>|accounts-view-bar-icon|account|视图栏中的账户图标。|
+|<i class="codicon codicon-activate-breakpoints"></i>|breakpoints-activate|activate-breakpoints|断点视图中激活操作的图标。|
+|<i class="codicon codicon-close-all"></i>|breakpoints-remove-all|close-all|断点视图中全部移除操作的图标。|
+|<i class="codicon codicon-debug-alt"></i>|breakpoints-view-icon|debug-alt|断点视图的视图图标。|
+|<i class="codicon codicon-call-incoming"></i>|callhierarchy-incoming|call-incoming|调用层次结构视图中传入调用的图标。|
+|<i class="codicon codicon-call-outgoing"></i>|callhierarchy-outgoing|call-outgoing|调用层次结构视图中传出调用的图标。|
+|<i class="codicon codicon-debug-alt"></i>|callstack-view-icon|debug-alt|调用堆栈视图的视图图标。|
+|<i class="codicon codicon-bug"></i>|callstack-view-session|bug|调用堆栈视图中会话图标的图标。|
+|<i class="codicon codicon-comment-discussion"></i>|chat-editor-label-icon|comment-discussion|聊天编辑器标签的图标。|
+|<i class="codicon codicon-comment-discussion"></i>|comments-view-icon|comment-discussion|评论视图的视图图标。|
+|<i class="codicon codicon-debug-breakpoint"></i>|debug-breakpoint|debug-breakpoint|断点图标。|
+|<i class="codicon codicon-debug-breakpoint-conditional"></i>|debug-breakpoint-conditional|debug-breakpoint-conditional|条件断点图标。|
+|<i class="codicon codicon-debug-breakpoint-conditional-disabled"></i>|debug-breakpoint-conditional-disabled|debug-breakpoint-conditional-disabled|禁用的条件断点图标。|
+|<i class="codicon codicon-debug-breakpoint-conditional-unverified"></i>|debug-breakpoint-conditional-unverified|debug-breakpoint-conditional-unverified|未验证的条件断点图标。|
+|<i class="codicon codicon-debug-breakpoint-data"></i>|debug-breakpoint-data|debug-breakpoint-data|数据断点图标。|
+|<i class="codicon codicon-debug-breakpoint-data-disabled"></i>|debug-breakpoint-data-disabled|debug-breakpoint-data-disabled|禁用的数据断点图标。|
+|<i class="codicon codicon-debug-breakpoint-data-unverified"></i>|debug-breakpoint-data-unverified|debug-breakpoint-data-unverified|未验证的数据断点图标。|
+|<i class="codicon codicon-debug-breakpoint-disabled"></i>|debug-breakpoint-disabled|debug-breakpoint-disabled|禁用的断点图标。|
+|<i class="codicon codicon-debug-breakpoint-function"></i>|debug-breakpoint-function|debug-breakpoint-function|函数断点图标。|
+|<i class="codicon codicon-debug-breakpoint-function-disabled"></i>|debug-breakpoint-function-disabled|debug-breakpoint-function-disabled|禁用的函数断点图标。|
+|<i class="codicon codicon-debug-breakpoint-function-unverified"></i>|debug-breakpoint-function-unverified|debug-breakpoint-function-unverified|未验证的函数断点图标。|
+|<i class="codicon codicon-debug-breakpoint-log"></i>|debug-breakpoint-log|debug-breakpoint-log|日志断点图标。|
+|<i class="codicon codicon-debug-breakpoint-log-disabled"></i>|debug-breakpoint-log-disabled|debug-breakpoint-log-disabled|禁用的日志断点图标。|
+|<i class="codicon codicon-debug-breakpoint-log-unverified"></i>|debug-breakpoint-log-unverified|debug-breakpoint-log-unverified|未验证的日志断点图标。|
+|<i class="codicon codicon-debug-breakpoint-unsupported"></i>|debug-breakpoint-unsupported|debug-breakpoint-unsupported|不支持的断点图标。|
+|<i class="codicon codicon-debug-breakpoint-unverified"></i>|debug-breakpoint-unverified|debug-breakpoint-unverified|未验证的断点图标。|
+|<i class="codicon codicon-collapse-all"></i>|debug-collapse-all|collapse-all|调试视图中全部折叠操作的图标。|
+|<i class="codicon codicon-gear"></i>|debug-configure|gear|调试配置操作的图标。|
+|<i class="codicon codicon-debug-console"></i>|debug-console|debug-console|打开调试控制台操作的图标。|
+|<i class="codicon codicon-clear-all"></i>|debug-console-clear-all|clear-all|调试控制台中全部清除操作的图标。|
+|<i class="codicon codicon-arrow-small-right"></i>|debug-console-evaluation-input|arrow-small-right|调试评估输入标记的图标。|
+|<i class="codicon codicon-chevron-right"></i>|debug-console-evaluation-prompt|chevron-right|调试评估提示的图标。|
+|<i class="codicon codicon-debug-console"></i>|debug-console-view-icon|debug-console|调试控制台视图的视图图标。|
+|<i class="codicon codicon-debug-continue"></i>|debug-continue|debug-continue|调试继续操作的图标。|
+|<i class="codicon codicon-debug-disconnect"></i>|debug-disconnect|debug-disconnect|调试断开连接操作的图标。|
+|<i class="codicon codicon-gripper"></i>|debug-gripper|gripper|调试栏抓手的图标。|
+|<i class="codicon codicon-debug-hint"></i>|debug-hint|debug-hint|在编辑器字形边距悬停时显示的断点提示图标。|
+|<i class="codicon codicon-debug-pause"></i>|debug-pause|debug-pause|调试暂停操作的图标。|
+|<i class="codicon codicon-debug-restart"></i>|debug-restart|debug-restart|调试重启操作的图标。|
+|<i class="codicon codicon-debug-restart-frame"></i>|debug-restart-frame|debug-restart-frame|调试重启帧操作的图标。|
+|<i class="codicon codicon-debug-reverse-continue"></i>|debug-reverse-continue|debug-reverse-continue|调试反向继续操作的图标。|
+|<i class="codicon codicon-debug-stackframe"></i>|debug-stackframe|debug-stackframe|编辑器字形边距中显示的堆栈帧图标。|
+|<i class="codicon codicon-debug-stackframe-focused"></i>|debug-stackframe-focused|debug-stackframe-focused|编辑器字形边距中显示的聚焦堆栈帧图标。|
+|<i class="codicon codicon-debug-start"></i>|debug-start|debug-start|调试开始操作的图标。|
+|<i class="codicon codicon-debug-step-back"></i>|debug-step-back|debug-step-back|调试后退操作的图标。|
+|<i class="codicon codicon-debug-step-into"></i>|debug-step-into|debug-step-into|调试步入操作的图标。|
+|<i class="codicon codicon-debug-step-out"></i>|debug-step-out|debug-step-out|调试步出操作的图标。|
+|<i class="codicon codicon-debug-step-over"></i>|debug-step-over|debug-step-over|调试步过操作的图标。|
+|<i class="codicon codicon-debug-stop"></i>|debug-stop|debug-stop|调试停止操作的图标。|
+|<i class="codicon codicon-window"></i>|default-view-icon|window|默认视图图标。|
+|<i class="codicon codicon-arrow-down"></i>|diff-editor-next-change|arrow-down|差异编辑器中下一个更改操作的图标。|
+|<i class="codicon codicon-arrow-up"></i>|diff-editor-previous-change|arrow-up|差异编辑器中上一个更改操作的图标。|
+|<i class="codicon codicon-whitespace"></i>|diff-editor-toggle-whitespace|whitespace|差异编辑器中切换空白字符操作的图标。|
+|<i class="codicon codicon-add"></i>|diff-insert|add|差异编辑器中插入的行装饰。|
+|<i class="codicon codicon-remove"></i>|diff-remove|remove|差异编辑器中移除的行装饰。|
+|<i class="codicon codicon-close"></i>|diff-review-close|close|差异审查中“关闭”的图标。|
+|<i class="codicon codicon-add"></i>|diff-review-insert|add|差异审查中“插入”的图标。|
+|<i class="codicon codicon-remove"></i>|diff-review-remove|remove|差异审查中“移除”的图标。|
+|<i class="codicon codicon-debug"></i>|disassembly-editor-label-icon|debug|反汇编编辑器标签的图标。|
+|<i class="codicon codicon-files"></i>|explorer-view-icon|files|资源管理器视图的视图图标。|
+|<i class="codicon codicon-clear-all"></i>|extension-clear-search-results|clear-all|插件视图中“清除搜索结果”操作的图标。|
+|<i class="codicon codicon-pencil"></i>|extension-configure-recommended|pencil|插件视图中“配置推荐插件”操作的图标。|
+|<i class="codicon codicon-extensions"></i>|extension-editor-label-icon|extensions|插件编辑器标签的图标。|
+|<i class="codicon codicon-filter"></i>|extension-filter|filter|插件视图中“过滤”操作的图标。|
+|<i class="codicon codicon-info"></i>|extension-info-message|info|插件编辑器中随信息消息显示的图标。|
+|<i class="codicon codicon-cloud-download"></i>|extension-install-count|cloud-download|插件视图和编辑器中随安装计数显示的图标。|
+|<i class="codicon codicon-cloud-download"></i>|extension-install-local-in-remote|cloud-download|插件视图中“在远程安装本地插件”操作的图标。|
+|<i class="codicon codicon-cloud-download"></i>|extension-install-workspace-recommended|cloud-download|插件视图中“安装工作区推荐插件”操作的图标。|
+|<i class="codicon codicon-gear"></i>|extension-manage|gear|插件视图中“管理”操作的图标。|
+|<i class="codicon codicon-star"></i>|extension-rating|star|插件视图和编辑器中随评分显示的图标。|
+|<i class="codicon codicon-refresh"></i>|extension-refresh|refresh|插件视图中“刷新”操作的图标。|
+|<i class="codicon codicon-remote"></i>|extension-remote|remote|插件视图和编辑器中指示插件是远程的图标。|
+|<i class="codicon codicon-star-empty"></i>|extension-star-empty|star-empty|插件编辑器中用于评分的空星图标。|
+|<i class="codicon codicon-star-full"></i>|extension-star-full|star-full|插件编辑器中用于评分的实星图标。|
+|<i class="codicon codicon-star-half"></i>|extension-star-half|star-half|插件编辑器中用于评分的半星图标。|
+|<i class="codicon codicon-sync"></i>|extension-sync-enabled|sync|指示插件已同步的图标。|
+|<i class="codicon codicon-sync-ignored"></i>|extension-sync-ignored|sync-ignored|指示同步时忽略插件的图标。|
+|<i class="codicon codicon-extensions"></i>|extension-view-icon|extensions|插件视图的视图图标。|
+|<i class="codicon codicon-warning"></i>|extension-warning-message|warning|插件编辑器中随警告消息显示的图标。|
+|<i class="codicon codicon-chevron-right"></i>|find-collapsed|chevron-right|指示编辑器查找小部件已折叠的图标。|
+|<i class="codicon codicon-chevron-down"></i>|find-expanded|chevron-down|指示编辑器查找小部件已展开的图标。|
+|<i class="codicon codicon-arrow-down"></i>|find-next-match|arrow-down|编辑器查找小部件中“查找下一个”的图标。|
+|<i class="codicon codicon-arrow-up"></i>|find-previous-match|arrow-up|编辑器查找小部件中“查找上一个”的图标。|
+|<i class="codicon codicon-replace"></i>|find-replace|replace|编辑器查找小部件中“替换”的图标。|
+|<i class="codicon codicon-replace-all"></i>|find-replace-all|replace-all|编辑器查找小部件中“全部替换”的图标。|
+|<i class="codicon codicon-selection"></i>|find-selection|selection|编辑器查找小部件中“在选择中查找”的图标。|
+|<i class="codicon codicon-chevron-right"></i>|folding-collapsed|chevron-right|编辑器字形边距中折叠范围的图标。|
+|<i class="codicon codicon-chevron-down"></i>|folding-expanded|chevron-down|编辑器字形边距中展开范围的图标。|
+|<i class="codicon codicon-lightbulb"></i>|getting-started-beginner|lightbulb|入门初学者类别使用的图标|
+|<i class="codicon codicon-github"></i>|getting-started-codespaces|github|入门 codespaces 类别使用的图标|
+|<i class="codicon codicon-pass-filled"></i>|getting-started-item-checked|pass-filled|用于表示已完成的入门项目|
+|<i class="codicon codicon-circle-large-outline"></i>|getting-started-item-unchecked|circle-large-outline|用于表示未完成的入门项目|
+|<i class="codicon codicon-heart"></i>|getting-started-setup|heart|入门设置类别使用的图标|
+|<i class="codicon codicon-arrow-down"></i>|goto-next-location|arrow-down|跳转到下一个编辑器位置的图标。|
+|<i class="codicon codicon-arrow-up"></i>|goto-previous-location|arrow-up|跳转到上一个编辑器位置的图标。|
+|<i class="codicon codicon-add"></i>|keybindings-add|add|键绑定 UI 中添加操作的图标。|
+|<i class="codicon codicon-edit"></i>|keybindings-edit|edit|键绑定 UI 中编辑操作的图标。|
+|<i class="codicon codicon-keyboard"></i>|keybindings-editor-label-icon|keyboard|键绑定编辑器标签的图标。|
+|<i class="codicon codicon-record-keys"></i>|keybindings-record-keys|record-keys|键绑定 UI 中“记录按键”操作的图标。|
+|<i class="codicon codicon-sort-precedence"></i>|keybindings-sort|sort-precedence|键绑定 UI 中“按优先级排序”切换的图标。|
+|<i class="codicon codicon-debug-alt"></i>|loaded-scripts-view-icon|debug-alt|已加载脚本视图的视图图标。|
+|<i class="codicon codicon-chevron-down"></i>|marker-navigation-next|chevron-down|跳转到下一个标记的图标。|
+|<i class="codicon codicon-chevron-up"></i>|marker-navigation-previous|chevron-up|跳转到上一个标记的图标。|
+|<i class="codicon codicon-filter"></i>|markers-view-filter|filter|标记视图中过滤器配置的图标。|
+|<i class="codicon codicon-warning"></i>|markers-view-icon|warning|标记视图的视图图标。|
+|<i class="codicon codicon-chevron-down"></i>|markers-view-multi-line-collapsed|chevron-down|指示标记视图中多行折叠的图标。|
+|<i class="codicon codicon-chevron-up"></i>|markers-view-multi-line-expanded|chevron-up|指示标记视图中多行显示的图标。|
+|<i class="codicon codicon-diff-multiple"></i>|multi-diff-editor-label-icon|diff-multiple|多重差异编辑器标签的图标。|
+|<i class="codicon codicon-clear-all"></i>|notebook-clear|clear-all|清除笔记本编辑器中单元格输出的图标。|
+|<i class="codicon codicon-chevron-right"></i>|notebook-collapsed|chevron-right|注释笔记本编辑器中折叠部分的图标。|
+|<i class="codicon codicon-trash"></i>|notebook-delete-cell|trash|删除笔记本编辑器中单元格的图标。|
+|<i class="codicon codicon-pencil"></i>|notebook-edit|pencil|编辑笔记本编辑器中单元格的图标。|
+|<i class="codicon codicon-play"></i>|notebook-execute|play|笔记本编辑器中执行的图标。|
+|<i class="codicon codicon-run-all"></i>|notebook-execute-all|run-all|执行笔记本编辑器中所有单元格的图标。|
+|<i class="codicon codicon-chevron-down"></i>|notebook-expanded|chevron-down|注释笔记本编辑器中展开部分的图标。|
+|<i class="codicon codicon-settings-gear"></i>|notebook-kernel-configure|settings-gear|笔记本编辑器中内核配置小部件的配置图标。|
+|<i class="codicon codicon-server-environment"></i>|notebook-kernel-select|server-environment|笔记本编辑器中选择内核的配置图标。|
+|<i class="codicon codicon-code"></i>|notebook-mimetype|code|笔记本编辑器中 mime 类型的图标。|
+|<i class="codicon codicon-arrow-down"></i>|notebook-move-down|arrow-down|笔记本编辑器中下移单元格的图标。|
+|<i class="codicon codicon-arrow-up"></i>|notebook-move-up|arrow-up|笔记本编辑器中上移单元格的图标。|
+|<i class="codicon codicon-file-code"></i>|notebook-open-as-text|file-code|在文本编辑器中打开笔记本的图标。|
+|<i class="codicon codicon-preview"></i>|notebook-render-output|preview|在差异编辑器中渲染输出的图标。|
+|<i class="codicon codicon-discard"></i>|notebook-revert|discard|笔记本编辑器中还原的图标。|
+|<i class="codicon codicon-split-vertical"></i>|notebook-split-cell|split-vertical|笔记本编辑器中拆分单元格的图标。|
+|<i class="codicon codicon-error"></i>|notebook-state-error|error|指示笔记本编辑器中错误状态的图标。|
+|<i class="codicon codicon-check"></i>|notebook-state-success|check|指示笔记本编辑器中成功状态的图标。|
+|<i class="codicon codicon-primitive-square"></i>|notebook-stop|primitive-square|停止笔记本编辑器中执行的图标。|
+|<i class="codicon codicon-check"></i>|notebook-stop-edit|check|停止编辑笔记本编辑器中单元格的图标。|
+|<i class="codicon codicon-unfold"></i>|notebook-unfold|unfold|展开笔记本编辑器中单元格的图标。|
+|<i class="codicon codicon-close"></i>|notifications-clear|close|通知中清除操作的图标。|
+|<i class="codicon codicon-clear-all"></i>|notifications-clear-all|clear-all|通知中全部清除操作的图标。|
+|<i class="codicon codicon-chevron-down"></i>|notifications-collapse|chevron-down|通知中折叠操作的图标。|
+|<i class="codicon codicon-gear"></i>|notifications-configure|gear|通知中配置操作的图标。|
+|<i class="codicon codicon-chevron-up"></i>|notifications-expand|chevron-up|通知中展开操作的图标。|
+|<i class="codicon codicon-chevron-down"></i>|notifications-hide|chevron-down|通知中隐藏操作的图标。|
+|<i class="codicon codicon-book"></i>|open-editors-view-icon|book|打开编辑器视图的视图图标。|
+|<i class="codicon codicon-symbol-class"></i>|outline-view-icon|symbol-class|大纲视图的视图图标。|
+|<i class="codicon codicon-output"></i>|output-view-icon|output|输出视图的视图图标。|
+|<i class="codicon codicon-close"></i>|panel-close|close|关闭面板的图标。|
+|<i class="codicon codicon-chevron-up"></i>|panel-maximize|chevron-up|最大化面板的图标。|
+|<i class="codicon codicon-chevron-down"></i>|panel-restore|chevron-down|还原面板的图标。|
+|<i class="codicon codicon-chevron-down"></i>|parameter-hints-next|chevron-down|显示下一个参数提示的图标。|
+|<i class="codicon codicon-chevron-up"></i>|parameter-hints-previous|chevron-up|显示上一个参数提示的图标。|
+|<i class="codicon codicon-plus"></i>|ports-forward-icon|plus|转发操作的图标。|
+|<i class="codicon codicon-globe"></i>|ports-open-browser-icon|globe|打开浏览器操作的图标。|
+|<i class="codicon codicon-x"></i>|ports-stop-forward-icon|x|停止转发操作的图标。|
+|<i class="codicon codicon-plug"></i>|ports-view-icon|plug|远程端口视图的视图图标。|
+|<i class="codicon codicon-clear-all"></i>|preferences-clear-input|clear-all|设置和键绑定 UI 中清除输入的图标。|
+|<i class="codicon codicon-go-to-file"></i>|preferences-open-settings|go-to-file|打开设置命令的图标。|
+|<i class="codicon codicon-lock"></i>|private-ports-view-icon|lock|代表私有远程端口的图标。|
+|<i class="codicon codicon-eye"></i>|public-ports-view-icon|eye|代表公共远程端口的图标。|
+|<i class="codicon codicon-lightbulb"></i>|refactor-preview-view-icon|lightbulb|重构预览视图的视图图标。|
+|<i class="codicon codicon-book"></i>|remote-explorer-documentation|book|远程资源管理器视图中的文档图标。|
+|<i class="codicon codicon-twitter"></i>|remote-explorer-feedback|twitter|远程资源管理器视图中的反馈图标。|
+|<i class="codicon codicon-star"></i>|remote-explorer-get-started|star|远程资源管理器视图中的入门图标。|
+|<i class="codicon codicon-comment"></i>|remote-explorer-report-issues|comment|远程资源管理器视图中的报告问题图标。|
+|<i class="codicon codicon-issues"></i>|remote-explorer-review-issues|issues|远程资源管理器视图中的审查问题图标。|
+|<i class="codicon codicon-remote-explorer"></i>|remote-explorer-view-icon|remote-explorer|远程资源管理器视图的视图图标。|
+|<i class="codicon codicon-chevron-up"></i>|review-comment-collapse|chevron-up|折叠审查评论的图标。|
+|<i class="codicon codicon-debug-alt"></i>|run-view-icon|debug-alt|运行和调试视图的视图图标。|
+|<i class="codicon codicon-extensions"></i>|runtime-extension-editor-label-icon|extensions|运行时插件编辑器标签的图标。|
+|<i class="codicon codicon-clear-all"></i>|search-clear-results|clear-all|搜索视图中清除结果的图标。|
+|<i class="codicon codicon-collapse-all"></i>|search-collapse-results|collapse-all|搜索视图中折叠结果的图标。|
+|<i class="codicon codicon-ellipsis"></i>|search-details|ellipsis|使搜索详细信息可见的图标。|
+|<i class="codicon codicon-search"></i>|search-editor-label-icon|search|搜索编辑器标签的图标。|
+|<i class="codicon codicon-expand-all"></i>|search-expand-results|expand-all|搜索视图中展开结果的图标。|
+|<i class="codicon codicon-chevron-right"></i>|search-hide-replace|chevron-right|在搜索视图中折叠替换部分的图标。|
+|<i class="codicon codicon-new-file"></i>|search-new-editor|new-file|打开新搜索编辑器操作的图标。|
+|<i class="codicon codicon-refresh"></i>|search-refresh|refresh|搜索视图中刷新的图标。|
+|<i class="codicon codicon-close"></i>|search-remove|close|移除搜索结果的图标。|
+|<i class="codicon codicon-replace"></i>|search-replace|replace|搜索视图中替换的图标。|
+|<i class="codicon codicon-replace-all"></i>|search-replace-all|replace-all|搜索视图中全部替换的图标。|
+|<i class="codicon codicon-list-selection"></i>|search-show-context|list-selection|在搜索编辑器中切换上下文的图标。|
+|<i class="codicon codicon-chevron-down"></i>|search-show-replace|chevron-down|在搜索视图中展开替换部分的图标。|
+|<i class="codicon codicon-search-stop"></i>|search-stop|search-stop|搜索视图中停止的图标。|
+|<i class="codicon codicon-search"></i>|search-view-icon|search|搜索视图的视图图标。|
+|<i class="codicon codicon-add"></i>|settings-add|add|设置 UI 中添加操作的图标。|
+|<i class="codicon codicon-discard"></i>|settings-discard|discard|设置 UI 中丢弃操作的图标。|
+|<i class="codicon codicon-edit"></i>|settings-edit|edit|设置 UI 中编辑操作的图标。|
+|<i class="codicon codicon-settings"></i>|settings-editor-label-icon|settings|设置编辑器标签的图标。|
+|<i class="codicon codicon-triangle-down"></i>|settings-folder-dropdown|triangle-down|拆分 JSON 设置编辑器中文件夹下拉按钮的图标。|
+|<i class="codicon codicon-chevron-right"></i>|settings-group-collapsed|chevron-right|拆分 JSON 设置编辑器中折叠部分的图标。|
+|<i class="codicon codicon-chevron-down"></i>|settings-group-expanded|chevron-down|拆分 JSON 设置编辑器中展开部分的图标。|
+|<i class="codicon codicon-gear"></i>|settings-more-action|gear|设置 UI 中“更多操作”操作的图标。|
+|<i class="codicon codicon-close"></i>|settings-remove|close|设置 UI 中移除操作的图标。|
+|<i class="codicon codicon-sync"></i>|settings-sync-view-icon|sync|设置同步视图的视图图标。|
+|<i class="codicon codicon-settings-gear"></i>|settings-view-bar-icon|settings-gear|视图栏中的设置图标。|
+|<i class="codicon codicon-source-control"></i>|source-control-view-icon|source-control|源代码管理视图的视图图标。|
+|<i class="codicon codicon-chevron-right"></i>|suggest-more-info|chevron-right|建议小部件中更多信息的图标。|
+|<i class="codicon codicon-gear"></i>|tasks-list-configure|gear|任务选择列表中的配置图标。|
+|<i class="codicon codicon-close"></i>|tasks-remove|close|任务选择列表中的移除图标。|
+|<i class="codicon codicon-trash"></i>|terminal-kill|trash|终止终端实例的图标。|
+|<i class="codicon codicon-add"></i>|terminal-new|add|创建新终端实例的图标。|
+|<i class="codicon codicon-gear"></i>|terminal-rename|gear|终端快速菜单中重命名的图标。|
+|<i class="codicon codicon-terminal"></i>|terminal-view-icon|terminal|终端视图的视图图标。|
+|<i class="codicon codicon-beaker"></i>|test-view-icon|beaker|测试视图的视图图标。|
+|<i class="codicon codicon-close"></i>|testing-cancel-icon|close|取消正在进行的测试运行的图标。|
+|<i class="codicon codicon-debug-alt"></i>|testing-debug-icon|debug-alt|“调试测试”操作的图标。|
+|<i class="codicon codicon-warning"></i>|testing-error-icon|warning|显示有错误的测试的图标。|
+|<i class="codicon codicon-close"></i>|testing-failed-icon|close|显示失败测试的图标。|
+|<i class="codicon codicon-pass"></i>|testing-passed-icon|pass|显示通过测试的图标。|
+|<i class="codicon codicon-watch"></i>|testing-queued-icon|watch|显示已排队测试的图标。|
+|<i class="codicon codicon-run-all"></i>|testing-run-all-icon|run-all|“运行所有测试”操作的图标。|
+|<i class="codicon codicon-run"></i>|testing-run-icon|run|“运行测试”操作的图标。|
+|<i class="codicon codicon-list-tree"></i>|testing-show-as-list-icon|list-tree|当测试资源管理器被禁用为树时显示的图标。|
+|<i class="codicon codicon-debug-step-over"></i>|testing-skipped-icon|debug-step-over|显示已跳过测试的图标。|
+|<i class="codicon codicon-circle-outline"></i>|testing-unset-icon|circle-outline|显示处于未设置状态的测试的图标。|
+|<i class="codicon codicon-history"></i>|timeline-open|history|打开时间线操作的图标。|
+|<i class="codicon codicon-pin"></i>|timeline-pin|pin|固定时间线操作的图标。|
+|<i class="codicon codicon-refresh"></i>|timeline-refresh|refresh|刷新时间线操作的图标。|
+|<i class="codicon codicon-pinned"></i>|timeline-unpin|pinned|取消固定时间线操作的图标。|
+|<i class="codicon codicon-history"></i>|timeline-view-icon|history|时间线视图的视图图标。|
+|<i class="codicon codicon-debug-alt"></i>|variables-view-icon|debug-alt|变量视图的视图图标。|
+|<i class="codicon codicon-chevron-right"></i>|view-pane-container-collapsed|chevron-right|折叠视图窗格容器的图标。|
+|<i class="codicon codicon-chevron-down"></i>|view-pane-container-expanded|chevron-down|展开视图窗格容器的图标。|
+|<i class="codicon codicon-add"></i>|watch-expressions-add|add|监视视图中添加操作的图标。|
+|<i class="codicon codicon-add"></i>|watch-expressions-add-function-breakpoint|add|监视视图中添加函数断点操作的图标。|
+|<i class="codicon codicon-close-all"></i>|watch-expressions-remove-all|close-all|监视视图中全部移除操作的图标。|
+|<i class="codicon codicon-debug-alt"></i>|watch-view-icon|debug-alt|监视视图的视图图标。|
+|<i class="codicon codicon-close"></i>|widget-close|close|小部件中关闭操作的图标。|
+|<i class="codicon codicon-shield"></i>|workspace-trust-editor-label-icon|shield|工作区信任编辑器标签的图标。|
 
-The Codicon library contains all the icons used in Baosky views, as well as a set of useful icons.
+Codicon 库包含了 Baosky 视图中使用的所有图标，以及一套有用的图标。
 
-Baosky 插件 can use these icons in labels, views, and trees.
+Baosky 插件可以在标签、视图和树中使用这些图标。
 
-| preview     | identifier
-| ----------- | --------------------------------- |
+| 预览 | 标识符
+| --- | --- |
 |<i class="codicon codicon-account"></i>|account|
 |<i class="codicon codicon-activate-breakpoints"></i>|activate-breakpoints|
 |<i class="codicon codicon-add"></i>|add|
@@ -470,7 +472,7 @@ Baosky 插件 can use these icons in labels, views, and trees.
 |<i class="codicon codicon-exclude"></i>|exclude|
 |<i class="codicon codicon-expand-all"></i>|expand-all|
 |<i class="codicon codicon-export"></i>|export|
-|<i class="codicon codicon-插件"></i>|插件|
+|<i class="codicon codicon-extensions"></i>|extensions|
 |<i class="codicon codicon-eye"></i>|eye|
 |<i class="codicon codicon-eye-closed"></i>|eye-closed|
 |<i class="codicon codicon-eye-unwatch"></i>|eye-unwatch|
@@ -835,4 +837,3 @@ Baosky 插件 can use these icons in labels, views, and trees.
 |<i class="codicon codicon-zoom-in"></i>|zoom-in|
 |<i class="codicon codicon-zoom-out"></i>|zoom-out|
 </div>
-

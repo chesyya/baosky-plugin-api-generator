@@ -1,35 +1,37 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: d9038699-4ffe-485b-b40a-b1260a9973ad
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Tutorial that walks you through creating a Baosky 插件 that uses the Language Model API to generate AI-powered code annotations.
+
+MetaDescription: 教程将引导您创建 Baosky 插件，该插件使用语言模型 API 生成 AI 驱动的代码注释。
 ---
 
-# Tutorial: Generate AI-powered code annotations by using the Language Model API
+# 教程：使用语言模型 API 生成人工智能驱动的代码注释
 
-In this tutorial, You'll learn how to create a Baosky 插件 to build an AI-powered Code Tutor. You use the Language Model (LM) API to generate suggestions to improve your code and take advantage of the Baosky 插件 APIs to integrate it seamlessly in the editor as inline annotations that the user can hover over for more information. After you complete this tutorial, you will know how to implement custom AI features in Baosky.
+在本教程中，您将学习如何创建 Baosky 插件来构建人工智能驱动的代码导师。您可以使用语言模型 (LM) API 生成建议来改进代码，并利用 Baosky 插件 API 将其作为内联注释无缝集成到编辑器中，用户可以将鼠标悬停在该注释上以获取更多信息。完成本教程后，您将了解如何在Baosky中实现自定义AI功能。
 
 <!-- 图片已移除 -->
 
-## Prerequisites
+## 先决条件
 
-You'll need the following tools and accounts to complete this tutorial:
+您将需要以下工具和帐户来完成本教程：
 
 - [Baosky](#)
 - [GitHub Copilot](#)
 - [Node.js](https://nodejs.org/en/download/)
 
-## Scaffold out the 插件
+## 搭建插件
 
-First, use Yeoman and Baosky 插件 Generator to scaffold a TypeScript or JavaScript project ready for development.
+首先，使用 Yeoman 和 Baosky 插件生成器搭建 TypeScript 或 JavaScript 项目以供开发。
 
 ```bash
 npx --package yo --package generator-code -- yo code
 ```
 
-Select the following options to complete the new 插件 wizard...
+选择以下选项来完成新的插件向导...
 
 ```bash
 # ? What type of extension do you want to create? New Extension (TypeScript)
@@ -44,11 +46,12 @@ Select the following options to complete the new 插件 wizard...
 # ? Which package manager to use? npm
 
 # ? Do you want to open the new folder with Baosky? Open with `code`
+
 ```
 
-## Modify the package.json file to include the correct commands
+## 修改 package.json 文件以包含正确的命令
 
-The scaffolded project includes a single "helloWorld" command in the `package.json` file. This command is what shows up in the Command Palette when your 插件 is installed.
+脚手架项目在 `package.json` 文件中包含一个“helloWorld”命令。安装插件后，此命令将显示在命令面板中。
 
 ```json
 "contributes": {
@@ -61,7 +64,7 @@ The scaffolded project includes a single "helloWorld" command in the `package.js
 }
 ```
 
-Since we're building a Code Tutor 插件 that will be adding annotations to lines, we'll need a command to allow the user to toggle these annotations on and off. Update the `command` and `title` properties:
+由于我们正在构建一个代码导师插件，它将向行添加注释，因此我们需要一个命令来允许用户打开和关闭这些注释。更新 `命令` 和 `title` 属性：
 
 ```json
 "contributes": {
@@ -74,41 +77,41 @@ Since we're building a Code Tutor 插件 that will be adding annotations to line
 }
 ```
 
-While the `package.json` defines the commands and UI elements for an 插件, the `src/插件.ts` file is where you put the code that should be executed for those commands.
+虽然 `package.json` 定义了插件的命令和 UI 元素，但 `src/插件.ts` 文件是放置应为这些命令执行的代码的位置。
 
-Open the `src/插件.ts` file and change the `registerCommand` method so that it matches the `command` property in the `package.json` file.
+打开 `src/插件.ts` 文件并更改 `registerCommand` 方法，使其与 `package.json` 文件中的 `命令` 属性匹配。
 
 ```ts
 const disposable = vscode.commands.registerCommand('code-tutor.annotate', () => {
 ```
 
-Run the 插件 by pressing `kbstyle(F5)`. This will open a new Baosky instance with the 插件 installed. Open the Command Palette by pressing `kb(workbench.action.showCommands)`, and search for "tutor". You should see the "Tutor Annotations" command.
+按 `kbstyle(F5)` 运行插件。这将打开一个安装了插件的新 Baosky 实例。按 `kb(工作台.action.showCommands)` 打开命令面板，然后搜索“tutor”。您应该会看到“导师注释”命令。
 
 <!-- 图片已移除 -->
 
-If you select the "Tutor Annotations" command, you'll see a "Hello World" notification message.
+如果您选择“导师注释”命令，您将看到一条“Hello World”通知消息。
 
 <!-- 图片已移除 -->
 
-## Implement the "annotate" command
+## 执行“注释”命令
 
-To get our Code Tutor annotations working, we need to send it some code and ask it to provide annotations. We'll do this in three steps:
+为了让我们的 Code Tutor 注释正常工作，我们需要向它发送一些代码并要求它提供注释。我们将分三步完成此操作：
 
-1. Get the code with line numbers from the current tab the user has open.
-2. Send that code to the Language Model API along with a custom prompt that instructs the model on how to provide annotations.
-3. Parse the annotations and display them in the editor.
+1. 从用户打开的当前选项卡中获取带有行号的代码。
+2. 将该代码连同指示模型如何提供注释的自定义提示一起发送到语言模型 API。
+3. 解析注释并将其显示在编辑器中。
 
-### Step 1: Get the code with line numbers
+### 第 1 步：获取带有行号的代码
 
-To get the code from the current tab, we need a reference to the tab that the user has open. We can get that by modifying the `registerCommand` method to be a `registerTextEditorCommand`. The difference between these two commands is that the latter gives us a reference to the tab that the user has open, called the `TextEditor`.
+要从当前选项卡获取代码，我们需要引用用户已打开的选项卡。我们可以通过将 `registerCommand` 方法修改为 `registerTextEditorCommand` 来实现这一点。这两个命令之间的区别在于，后者为我们提供了对用户打开的选项卡的引用，称为 `TextEditor`。
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
 ```
 
-Now we can use the `textEditor` reference to get all of the code in the "viewable editor space". This is the code that can be seen on the screen - it does not include code that is either above or below what is in the viewable editor space.
+现在我们可以使用 `textEditor` 引用来获取“可查看编辑器空间”中的所有代码。这是可以在屏幕上看到的代码 - 它不包括位于可查看编辑器空间上方或下方的代码。
 
-Add the following method directly above the `export function deactivate() { }` line at the bottom of the `插件.ts` file.
+将以下方法直接添加到 `插件.ts` 文件底部的 `export function deactivate() { }` 行上方。
 
 ```ts
 function getVisibleCodeWithLineNumbers(textEditor: vscode.TextEditor) {
@@ -129,9 +132,9 @@ function getVisibleCodeWithLineNumbers(textEditor: vscode.TextEditor) {
 }
 ```
 
-This code uses the `visibleRanges` property of the TextEditor to get the position of the lines that are currently visible in the editor. It then starts with the first line position and moves to the last line position, adding each line of code to a string along with the line number. Finally, it returns the string that contains all the viewable code with line numbers.
+This code uses the `visibleRanges` property of the TextEditor 要 get the position of the lines that are currently visible in the editor. It then starts with the first line position and moves 要 the last line position, adding each line of code 要 a string along with the line number. Finally, it returns the string that contains all the viewable code with line numbers.
 
-Now we can call this method from the `code-tutor.annotate` command. Modify the implementation of the command so that it looks like this:
+现在我们可以从 `code-tutor.annotate` 命令调用这个方法。修改命令的实现，使其看起来像这样：
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
@@ -142,11 +145,11 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 });
 ```
 
-### Step 2: Send code and prompt to language model API
+### 第 2 步：将代码和提示发送到语言模型 API
 
-The next step is to call the GitHub Copilot language model and send it the user's code along with instructions to create the annotations.
+下一步是调用 _GitHub Copilot 语言模型，并向其发送用户代码以及创建注释的说明。
 
-To do this, we first need to specify which chat model we want to use. We select 4o here because it is a fast and capable model for the kind of interaction we are building.
+为此，我们首先需要指定要使用的聊天模型。我们在这里选择 4o 是因为它对于我们正在构建的交互类型来说是一个快速且功能强大的模型。
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
@@ -162,7 +165,7 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 });
 ```
 
-We need instructions - or a "prompt" - that will tell the model to create the annotations and what format we want the response to be. Add the following code to the top of the file directly under the imports.
+我们需要指令 - 或“提示” - 告诉模型创建注释以及我们希望响应的格式。将以下代码添加到文件顶部的导入正下方。
 
 ```ts
 const ANNOTATION_PROMPT = `You are a code tutor who helps students learn how to write better code. Your job is to evaluate a block of code that the user gives you and then annotate any lines that could be improved with a brief suggestion and the reason why you are making that suggestion. Only make suggestions when you feel the severity is enough that it will impact the readability and maintainability of the code. Be friendly with your suggestions and remember that these are students so they need gentle guidance. Format each suggestion as a single JSON object. It is not necessary to wrap your response in triple backticks. Here is an example of what your response should look like:
@@ -171,9 +174,9 @@ const ANNOTATION_PROMPT = `You are a code tutor who helps students learn how to 
 `;
 ```
 
-This is a special prompt that instructs the language model on how to generate annotations. It also includes examples for how the model should format its response. These examples (also called, "multi-shot") are what enable us to define what the format the response will be so that we can parse it and display it as annotations.
+这是一个特殊的提示，指示语言模型如何生成注释。它还包括模型应如何格式化其响应的示例。这些示例（也称为“多镜头”）使我们能够定义响应的格式，以便我们可以解析它并将其显示为注释。
 
-We pass messages to the model in an array. This array can contain as many messages as you like. In our case, it contains the prompt followed by the users code with line numbers.
+我们通过数组将消息传递给模型。该数组可以包含任意数量的消息。在我们的例子中，它包含提示，后跟带有行号的用户代码。
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
@@ -195,7 +198,7 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 });
 ```
 
-To send the messages to the model, we need to first make sure the selected model is available. This handles cases where the 插件 is not ready or the user is not signed in to GitHub Copilot. Then we send the messages to the model.
+要将消息发送到模型，我们需要首先确保所选模型可用。这可以处理插件未准备好或用户未登录到 GitHub Copilot 的情况。然后我们将消息发送给模型。
 
 ```ts
 const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotate', async (textEditor: vscode.TextEditor) => {
@@ -227,9 +230,9 @@ const disposable = vscode.commands.registerTextEditorCommand('code-tutor.annotat
 });
 ```
 
-Chat responses come in as fragments. These fragments usually contain single words, but sometimes they contain just punctuation. In order to display annotations as the response streams in, we want to wait until we have a complete annotation before we display it. Because of the way we have instructed our model to return its response, we know that when we see a closing `}` we have a complete annotation. We can then parse the annotation and display it in the editor.
+聊天回复以片段形式出现。这些片段通常包含单个单词，但有时只包含标点符号。为了在响应流中显示注释，我们希望等到获得完整的注释后再显示它。由于我们指示模型返回其响应的方式，我们知道当我们看到结束 `}` 时，我们就有了一个完整的注释。然后我们可以解析注释并将其显示在编辑器中。
 
-Add the missing `parseChatResponse` function above the `getVisibleCodeWithLineNumbers` method in the `插件.ts` file.
+在 `插件.ts` 文件中的 `getVisibleCodeWithLineNumbers` 方法上方添加缺少的 `parseChatResponse` 函数。
 
 ```ts
 async function parseChatResponse(chatResponse: vscode.LanguageModelChatResponse, textEditor: vscode.TextEditor) {
@@ -254,7 +257,7 @@ async function parseChatResponse(chatResponse: vscode.LanguageModelChatResponse,
 }
 ```
 
-We need one last method to actually display the annotations. Baosky calls these "decorations". Add the following method above the `parseChatResponse` method in the `插件.ts` file.
+我们需要最后一种方法来实际显示注释。 Baosky 称这些为“装饰”。在 `插件.ts` 文件中的 `parseChatResponse` 方法上方添加以下方法。
 
 ```ts
 function applyDecoration(editor: vscode.TextEditor, line: number, suggestion: string) {
@@ -281,21 +284,21 @@ function applyDecoration(editor: vscode.TextEditor, line: number, suggestion: st
 }
 ```
 
-This method takes in our parsed annotation from the model and uses it to create a decoration. This is done by first creating a `TextEditorDecorationType` that specifies the appearance of the decoration. In this case, we are just adding a grey annotation and truncating it to 25 characters. We'll show the full message when the user hovers over the message.
+此方法从模型中获取我们解析的注释并使用它来创建装饰。这是通过首先创建一个指定装饰外观的 `TextEditorDecorationType` 来完成的。在本例中，我们只是添加灰色注释并将其截断为 25 个字符。当用户将鼠标悬停在消息上时，我们将显示完整消息。
 
-We are then setting where the decoration should appear. We need it to be on the line number that was specified in the annotation, and at the end of the line.
+然后我们设置装饰应该出现的位置。我们需要它位于注释中指定的行号上，并位于该行的末尾。
 
-Finally, we set the decoration on the active text editor which is what causes the annotation to appear in the editor.
+最后，我们在活动文本编辑器上设置装饰，这会导致注释出现在编辑器中。
 
-If your 插件 is still running, restart it by selecting the green arrow from the debug bar. If you closed the debug session, press `kbstyle(F5)` to run the 插件. Open a code file in the new Baosky window instance that opens. When you select "Toggle Tutor Annotations" from the Command Palette, you should see the code annotations appear in the editor.
+如果您的插件仍在运行，请通过从调试栏中选择绿色箭头来重新启动它。如果您关闭了调试会话，请按 `kbstyle(F5)` 运行插件。在打开的新 Baosky 窗口实例中打开代码文件。当您从命令面板中选择“切换导师注释”时，您应该会看到代码注释出现在编辑器中。
 
 <!-- 图片已移除 -->
 
-## Add a button to the editor title bar
+## 添加一个按钮到编辑器标题栏
 
-You can enable your command to be invoked from places other than the Command Palette. In our case, we can add a button to the top of the current tab that allows the user to easily toggle the annotations.
+您可以启用从命令面板以外的位置调用命令。在我们的例子中，我们可以在当前选项卡的顶部添加一个按钮，允许用户轻松切换注释。
 
-To do this, modify the "contributes" portion of the `package.json` as follows:
+为此，请修改 `package.json` 的“contributes”部分，如下所示：
 
 ```json
 "contributes": {
@@ -317,22 +320,22 @@ To do this, modify the "contributes" portion of the `package.json` as follows:
 }
 ```
 
-This causes a button to appear in the navigation area (right-side) of the editor title bar. The "icon" comes from the [Product Icon Reference](#).
+这会导致编辑器标题栏的导航区域（右侧）中出现一个按钮。 “图标”来自[Product Icon Reference](#)。
 
-Restart your 插件 with the green arrow or press `kbstyle(F5)` if the 插件 is not already running. You should now see a comment icon that will trigger the "Toggle Tutor Annotations" command.
+使用绿色箭头重新启动您的插件，或者如果插件尚未运行，请按 `kbstyle(F5)`。您现在应该看到一个注释图标，它将触发“切换导师注释”命令。
 
 <!-- 图片已移除 -->
 
-## Next Steps
+## 下一步
 
-In this tutorial, you learned how to create a Baosky 插件 that integrates AI into the editor with the language model API. You used the Baosky 插件 API to get the code from the current tab, sent it to the model with a custom prompt, and then parsed and displayed the model result right in the editor using decorators.
+在本教程中，您学习了如何创建 Baosky 插件，使用语言模型 API 将 AI 集成到编辑器中。您使用 Baosky 插件 API 从当前选项卡获取代码，使用自定义提示将其发送到模型，然后使用装饰器在编辑器中解析并显示模型结果。
 
-Next, you can extend your Code Tutor 插件 to [include a chat participant](/api/插件-guides/ai/chat-tutorial) as well which will allow users to interact directly with your 插件 via the GitHub Copilot chat interface. You can also [explore the full range of API's in Baosky](/api/references/baosky-api) to explore new ways of building custom AI experiences your editor.
+接下来，您也可以将 Code Tutor 插件扩展至 [include a chat participant](/api/插件-guides/ai/chat-tutorial)，这将允许用户通过 GitHub Copilot 聊天界面直接与您的插件进行交互。您还可以[explore the full range of API's in Baosky](/api/references/baosky-api) 探索为编辑器构建自定义 AI 体验的新方法。
 
-You can find the complete source code for this tutorial in the [baosky-插件-sample repository](https://github.com/microsoft/baosky-插件-samples/tree/main/lm-api-tutorial).
+您可以在 [baosky-插件-sample repository](https://github.com/microsoft/baosky-插件-samples/tree/main/lm-api-tutorial) 中找到本教程的完整源代码。
 
-## Related content
+## 相关内容
 
 - [Language Model API 插件 guide](/api/插件-guides/ai/language-model)
 - [Tutorial: Create a code tutor chat participant with the Chat API](/api/插件-guides/ai/chat-tutorial)
-- [Baosky Chat API reference](/api/插件-guides/ai/chat)
+- [Baosky Chat API 参考](/api/插件-guides/ai/chat)

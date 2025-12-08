@@ -1,10 +1,12 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: bea1d4c5-71e5-4b27-ac1e-fa9b59886dab
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Tutorial that walks you through creating a GitHub Copilot chat participant in Baosky by using the Chat API.
+
+MetaDescription: 教程将引导您使用聊天 API 在 Baosky 中创建 _GitHub Copilot 聊天参与者。
 ---
 
 # 教程：使用 Chat API 构建代码教程聊天参与者
@@ -42,6 +44,7 @@ npx --package yo --package generator-code -- yo code
 # ? Which package manager to use? npm
 
 # ? Do you want to open the new folder with Baosky? Open with `code`
+
 ```
 
 一旦生成插件项目，你将在两个文件中工作：`插件.ts` 和 `package.json`，你可以在[插件解剖文档](/api/get-started/插件-anatomy#插件-file-structure)中了解更多信息。快速概述如下：
@@ -71,7 +74,7 @@ npx --package yo --package generator-code -- yo code
 
 此代码注册了一个具有以下属性的聊天参与者：
 
-- 唯一 ID `chat-tutorial.code-tutor`，将在代码中引用
+- 唯一ID `chat-tutorial.code-tutor`，将在代码中引用
 - 全名 `Code Tutor`，将显示在参与者响应的标题区域
 - 名称 `tutor`，将用于在聊天视图中以 `@tutor` 引用聊天参与者
 - 描述 "What can I teach you?"，将在聊天输入字段中显示为占位符文本
@@ -88,8 +91,8 @@ npx --package yo --package generator-code -- yo code
 
 考虑以下两个提示。哪一个更可能给出指定的行为？
 
-1. > You are a helpful code tutor. Your job is to teach the user with simple descriptions and sample code of the concept.
-2. > You are a helpful code tutor. Your job is to teach the user with simple descriptions and sample code of the concept. Respond with a guided overview of the concept in a series of messages. Do not give the user the answer directly, but guide them to find the answer themselves. If the user asks a non-programming question, politely decline to respond.
+1. > 你是一位乐于助人的代码导师。您的工作是通过概念的简单描述和示例代码来教导用户。
+2. > 你是一位乐于助人的代码导师。您的工作是通过概念的简单描述和示例代码来教导用户。通过一系列消息中的概念指导概述进行回应。不要直接给用户答案，而是引导他们自己寻找答案。如果用户提出非编程问题，请礼貌地拒绝回复。
 
 第二个提示更具体，为参与者提供了如何响应的明确方向。在 `插件.ts` 文件中添加此提示。
 
@@ -198,11 +201,11 @@ tutor.iconPath = vscode.Uri.joinPath(context.extensionUri, 'tutor.jpeg');
 
 <!-- 图片已移除 -->
 
-## Step 7: Add message history for more context
+## 步骤 7：添加消息历史记录以获取更多上下文
 
-One of the biggest values of Copilot Chat is the ability to iterate over several messages to get the best response. To do this, you want to send in the participant's message history to the chat request. You can access this through `context.history`.
+Copilot Chat 的最大价值之一是能够迭代多条消息以获得最佳响应。为此，您需要将参与者的消息历史记录发送到聊天请求。您可以通过 `context.history` 访问它。
 
-You'll need to retrieve that history and add it to the `messages` array. You will need to do this before the `request.prompt` is added.
+您需要检索该历史记录并将其添加到 `messages` 数组中。您需要在添加 `request.prompt` 之前执行此操作。
 
 ```ts
 // define a chat handler
@@ -246,17 +249,17 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 };
 ```
 
-Now when you run the code, you can have a conversation with your participant with all the context of the previous messages! In the screenshot below, the participant correctly understands that the user is requesting to see an implementation of stacks in Python.
+现在，当您运行代码时，您可以与参与者进行对话，并了解之前消息的所有上下文！在下面的屏幕截图中，参与者正确理解用户正在请求查看 Python 中堆栈的实现。
 
 <!-- 图片已移除 -->
 
-## Step 8: Add a command
+## 步骤8：添加命令
 
-Now that the basic participant is implemented, you can extend it by adding a command. Commands are a shorthand notation for common user intents, and are indicated by the `/` symbol. The 插件 can then use the command to prompt the language model accordingly.
+现在基本参与者已经实现，您可以通过添加命令来扩展它。命令是常见用户意图的简写符号，由 `/` 符号表示。然后插件可以使用该命令来相应地提示语言模型。
 
-It would be great to add a command to prompt your tutor to give a practice exercise for a concept. You'll need to register the command in the `package.json` file and implement the logic in `插件.ts`. You can name the command `exercise` so that it can be invoked by typing `/exercise`.
+如果添加一个命令来提示您的导师对某个概念进行练习，那就太好了。您需要在 `package.json` 文件中注册命令并在 `插件.ts` 中实现逻辑。您可以将命令命名为 `exercise`，以便可以通过键入 `/exercise` 来调用它。
 
-In `package.json` add the `commands` property to the `chatParticipants` property. Here, you'll specify the name of the command and a quick description:
+在 `package.json` 中，将 `commands` 属性添加到 `chatParticipants` 属性中。在这里，您将指定命令的名称和快速描述：
 
 ```json
 "contributes": {
@@ -278,15 +281,15 @@ In `package.json` add the `commands` property to the `chatParticipants` property
   },
 ```
 
-To implement the logic for getting sample exercises from the tutor, the simplest way is to change the prompt that you send in to the request. Create a new prompt, `EXERCISES_PROMPT`, that asks the participant to return sample exercises. Here's an example of what that could look like:
+要实现从导师处获取示例练习的逻辑，最简单的方法是更改​​发送到请求的提示。创建一个新提示 `EXERCISES_PROMPT`，要求参与者返回示例练习。下面是一个示例：
 
 ```ts
 const EXERCISES_PROMPT = 'You are a helpful tutor. Your job is to teach the user with fun, simple exercises that they can complete in the editor. Your exercises should start simple and get more complex as the user progresses. Move one concept at a time, and do not move on to the next concept until the user provides the correct answer. Give hints in your exercises to help the user learn. If the user is stuck, you can provide the answer and explain why it is the answer. If the user asks a non-programming question, politely decline to respond.';
 ```
 
-In the request handler, you then need to add logic to detect that the user referenced the command. You can do this through the `request.command` property.
+然后，您需要在请求处理程序中添加逻辑来检测用户是否引用了该命令。您可以通过 `request.命令` 属性来执行此操作。
 
-If the command is referenced, update the prompt to the newly created `EXERCISES_PROMPT`
+如果引用该命令，则将提示更新为新创建的`EXERCISES_PROMPT`
 
 ```ts
 // define a chat handler
@@ -334,19 +337,19 @@ const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, c
 };
 ```
 
-And that's all that needs to be added! The rest of the logic to get the message history, send the request, and stream the request all stays the same.
+这就是需要添加的全部内容！获取消息历史记录、发送请求和流式传输请求的其余逻辑都保持不变。
 
-Now you can type `/exercise`, which will bring up your chat participant, and you can get interactive exercises to practice coding!
+现在您可以输入 `/exercise`，这将调出您的聊天参与者，您可以获得交互式练习来练习编码！
 
 <!-- 图片已移除 -->
 
-## Next steps
+## 后续步骤
 
-Congratulations! You have successfully created a chat participant that can provide explanations and sample exercises for programming concepts. You can further extend your participant by fine-tuning the prompts, adding more slash commands, or leveraging other APIs like the [Language Model API](/api/插件-guides/ai/language-model). Once ready, you can also publish your 插件 to the [Baosky Marketplace](#).
+恭喜！您已成功创建一个聊天参与者，可以为编程概念提供解释和示例练习。您可以通过微调提示、添加更多斜线命令或利用其他 API（如 [Language Model API](/api/插件-guides/ai/language-model)）来进一步扩展您的参与者。准备好后，您还可以将插件发布到 [Baosky 市场](#)。
 
-You can find the complete source code for this tutorial in the [baosky-插件-sample repository](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-tutorial).
+您可以在 [baosky-插件-sample repository](https://github.com/microsoft/baosky-插件-samples/tree/main/chat-tutorial) 中找到本教程的完整源代码。
 
-## Related content
+## 相关内容
 
 - [Chat API 插件 guide](/api/插件-guides/ai/chat)
 - [Tutorial: Generate AI-powered code annotations by using the Language Model API](/api/插件-guides/ai/language-model-tutorial)

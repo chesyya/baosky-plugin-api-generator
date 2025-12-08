@@ -1,10 +1,12 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 891072bb-c46d-4392-800a-84d747072ce3
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Use Continuous Integration for testing Baosky 插件 (plug-ins).
+
+MetaDescription: 使用持续集成测试 Baosky 插件 (plug-ins)。
 ---
 
 # 持续集成
@@ -19,13 +21,13 @@ MetaDescription: Use Continuous Integration for testing Baosky 插件 (plug-ins)
 
 ## Azure Pipelines
 
-<a href="https://azure.microsoft.com/services/devops/"><img alt="Azure Pipelines" src="/assets/api/working-with-插件/continuous-integration/pipelines-logo.png" width="318" /></a>
+<a href="https://azure.microsoft.com/services/devops/"><img alt="Azure Pipelines" src="/assets/api/working-with-extensions/continuous-integration/pipelines-logo.png" width="318" /></a>
 
-[Azure Pipelines](https://azure.microsoft.com/services/devops/pipelines/) is great for running Baosky 插件 tests as it supports running the tests on Windows, macOS, and Linux. For Open Source projects, you get unlimited minutes and 10 free parallel jobs. This section explains how to set up an Azure Pipelines for running your 插件 tests.
+[Azure Pipelines](https://azure.microsoft.com/services/devops/pipelines/) 非常适合运行 Baosky 插件测试，因为它支持在 Windows、macOS 和 Linux 上运行测试。对于开源项目，您可以获得无限制的时间和 10 个免费的并行作业。本节说明如何设置 Azure Pipelines 来运行您的插件测试。
 
-First, create a free account on [Azure DevOps](https://azure.microsoft.com/services/devops/) and create an [Azure DevOps project](https://azure.microsoft.com/features/devops-projects/) for your 插件.
+首先，在 [Azure DevOps](https://azure.microsoft.com/services/devops/) 上创建一个免费帐户，并为您的插件创建一个 [Azure DevOps 项目](https://azure.microsoft.com/features/devops-projects/)。
 
-Then, add the following `azure-pipelines.yml` file to the root of your 插件's repository. Other than the `xvfb` setup script for Linux that is necessary to run Baosky in headless Linux CI machines, the definition is straight-forward:
+然后，将以下 `azure-pipelines.yml` 文件添加到插件存储库的根目录。除了在无头 Linux CI 机器中运行 Baosky 所需的 Linux `xvfb` 设置脚本外，定义非常简单：
 
 ```yaml
 trigger:
@@ -73,17 +75,17 @@ steps:
     DISPLAY: ':99.0'
 ```
 
-Finally, [create a new pipeline](https://learn.microsoft.com/azure/devops/pipelines/create-first-pipeline) in your DevOps project and point it to the `azure-pipelines.yml` file. Trigger a build and voilà:
+最后，在您的 DevOps 项目中 [创建一个新管道](https://learn.microsoft.com/azure/devops/pipelines/create-first-pipeline) 并将其指向 `azure-pipelines.yml` 文件。触发构建，瞧：
 
 <!-- 图片已移除 -->
 
-You can enable the build to run continuously when pushing to a branch and even on pull requests. See [Build pipeline triggers](https://learn.microsoft.com/azure/devops/pipelines/build/triggers) to learn more.
+您可以启用构建，以便在推送到分支甚至拉取请求时连续运行。有关更多信息，请参阅 [构建管道触发器](https://learn.microsoft.com/azure/devops/pipelines/build/triggers)。
 
-### Azure Pipelines automated publishing
+### Azure Pipelines 自动发布
 
-1. Set up `VSCE_PAT` as a secret variable using the [Azure DevOps secrets instructions](https://learn.microsoft.com/azure/devops/pipelines/process/variables?tabs=classic%2Cbatch#secret-variables).
-2. Install `vsce` as a `devDependencies` (`npm install @vscode/vsce --save-dev` or `yarn add @vscode/vsce --dev`).
-3. Declare a `deploy` script in `package.json` without the PAT (by default, `vsce` will use the `VSCE_PAT` environment variable as the Personal Access Token).
+1. 使用 [Azure DevOps 机密说明](https://learn.microsoft.com/azure/devops/pipelines/process/variables?tabs=classic%2Cbatch#secret-variables) 将 `VSCE_PAT` 设置为机密变量。
+2. 安装 `vsce` 作为 `devDependencies` (`npm install @vscode/vsce --save-dev` 或 `yarn add @vscode/vsce --dev`)。
+3. 在 `package.json` 中声明一个没有 PAT 的 `deploy` 脚本（默认情况下，`vsce` 将使用 `VSCE_PAT` 环境变量作为个人访问令牌）。
 
 ```json
 "scripts": {
@@ -91,7 +93,7 @@ You can enable the build to run continuously when pushing to a branch and even o
 }
 ```
 
-4. Configure the CI so the build will also run when tags are created:
+4. 配置 CI，以便在创建标签时也会运行构建：
 
 ```yaml
 trigger:
@@ -103,7 +105,7 @@ trigger:
     - refs/tags/v*
 ```
 
-5. Add a `publish` step in `azure-pipelines.yml` that calls `yarn deploy` with the secret variable.
+5. 在 `azure-pipelines.yml` 中添加一个 `publish` 步骤，使用机密变量调用 `yarn deploy`。
 
 ```yaml
 - bash: |
@@ -115,19 +117,19 @@ trigger:
     VSCE_PAT: $(VSCE_PAT)
 ```
 
-The [condition](https://learn.microsoft.com/azure/devops/pipelines/process/conditions) property tells the CI to run the publish step only in certain cases.
+[condition](https://learn.microsoft.com/azure/devops/pipelines/process/conditions) 属性告诉 CI 仅在某些情况下运行发布步骤。
 
-In our example, the condition has three checks:
+在我们的示例中，条件有三个检查：
 
-- `succeeded()` - Publish only if the tests pass.
-- `startsWith(variables['Build.SourceBranch'], 'refs/tags/')` - Publish only if a tagged (release) build.
-- `eq(variables['Agent.OS'], 'Linux')` - Include if your build runs on multiple agents (Windows, Linux, etc.). If not, remove that part of the condition.
+- `succeeded()` - 仅当测试通过时发布。
+- `startsWith(variables['Build.SourceBranch'], 'refs/tags/')` - 仅当是标记（发布）构建时发布。
+- `eq(variables['Agent.OS'], 'Linux')` - 如果您的构建在多个代理（Windows、Linux 等）上运行，则包含此项。如果没有，请删除条件的这一部分。
 
-Since `VSCE_PAT` is a secret variable, it is not immediately usable as an environment variable. Thus, we need to explicitly map the environment variable `VSCE_PAT` to the secret variable.
+由于 `VSCE_PAT` 是一个机密变量，它不能立即用作环境变量。因此，我们需要显式地将环境变量 `VSCE_PAT` 映射到机密变量。
 
 ## GitHub Actions
 
-You can also configure GitHub Actions to run your 插件 CI. In headless Linux CI machines `xvfb` is required to run Baosky, so if Linux is the current OS run the tests in an Xvfb enabled environment:
+您也可以配置 GitHub Actions 来运行您的插件 CI。在无头 Linux CI 机器中，运行 Baosky 需要 `xvfb`，因此如果当前操作系统是 Linux，请在启用了 Xvfb 的环境中运行测试：
 
 ```yaml
 on:
@@ -155,11 +157,11 @@ jobs:
       if: runner.os != 'Linux'
 ```
 
-### GitHub Actions automated publishing
+### GitHub Actions 自动发布
 
-1. Set up `VSCE_PAT` as an encrypted secret using the [GitHub Actions secrets instructions](https://docs.github.com/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository).
-2. Install `vsce` as a `devDependencies` (`npm install @vscode/vsce --save-dev` or `yarn add @vscode/vsce --dev`).
-3. Declare a `deploy` script in `package.json` without the PAT.
+1. 使用 [GitHub Actions 机密说明](https://docs.github.com/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) 将 `VSCE_PAT` 设置为加密机密。
+2. 安装 `vsce` 作为 `devDependencies` (`npm install @vscode/vsce --save-dev` 或 `yarn add @vscode/vsce --dev`)。
+3. 在 `package.json` 中声明一个没有 PAT 的 `deploy` 脚本。
 
 ```json
 "scripts": {
@@ -167,7 +169,7 @@ jobs:
 }
 ```
 
-4. Configure the CI so the build will also run when tags are created:
+4. 配置 CI，以便在创建标签时也会运行构建：
 
 ```yaml
 on:
@@ -179,7 +181,7 @@ on:
     - created
 ```
 
-5. Add a `publish` job to the pipeline that calls `npm run deploy` with the secret variable.
+5. 向管道添加一个 `publish` 作业，该作业使用机密变量调用 `npm run deploy`。
 
 ```yaml
 - name: Publish
@@ -189,17 +191,17 @@ on:
     VSCE_PAT: $\{{ secrets.VSCE_PAT }}
 ```
 
-The [if](https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idif) property tells the CI to run the publish step only in certain cases.
+[if](https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idif) 属性告诉 CI 仅在某些情况下运行发布步骤。
 
-In our example, the condition has three checks:
+在我们的示例中，条件有三个检查：
 
-- `success()` - Publish only if the tests pass.
-- `startsWith(github.ref, 'refs/tags/')` - Publish only if a tagged (release) build.
-- `matrix.os == 'ubuntu-latest'` - Include if your build runs on multiple agents (Windows, Linux, etc.). If not, remove that part of the condition.
+- `success()` - 仅当测试通过时发布。
+- `startsWith(github.ref, 'refs/tags/')` - 仅当是标记（发布）构建时发布。
+- `matrix.os == 'ubuntu-latest'` - 如果您的构建在多个代理（Windows、Linux 等）上运行，则包含此项。如果没有，请删除条件的这一部分。
 
 ## GitLab CI
 
-GitLab CI can be used to test and publish the 插件 in headless Docker containers. This can be done by pulling a preconfigured Docker image, or installing `xvfb` and the libraries required to run Baosky during the pipeline.
+GitLab CI 可用于在无头 Docker 容器中测试和发布插件。这可以通过拉取预配置的 Docker 映像，或者在管道期间安装 `xvfb` 和运行 Baosky 所需的库来完成。
 
 ```yaml
 image: node:12-buster
@@ -215,11 +217,11 @@ test:
       xvfb-run -a npm run test
 ```
 
-### GitLab CI automated publishing
+### GitLab CI 自动发布
 
-1. Set up `VSCE_PAT` as a masked variable using the [GitLab CI documentation](https://docs.gitlab.com/ee/ci/variables/README.html#mask-a-cicd-variable).
-2. Install `vsce` as a `devDependencies` (`npm install @vscode/vsce --save-dev` or `yarn add @vscode/vsce --dev`).
-3. Declare a `deploy` script in `package.json` without the PAT.
+1. 使用 [GitLab CI 文档](https://docs.gitlab.com/ee/ci/variables/README.html#mask-a-cicd-variable) 将 `VSCE_PAT` 设置为掩码变量。
+2. 安装 `vsce` 作为 `devDependencies` (`npm install @vscode/vsce --save-dev` 或 `yarn add @vscode/vsce --dev`)。
+3. 在 `package.json` 中声明一个没有 PAT 的 `deploy` 脚本。
 
 ```json
 "scripts": {
@@ -227,7 +229,7 @@ test:
 }
 ```
 
-4. Add a `deploy` job that calls `npm run deploy` with the masked variable which will only trigger on tags.
+4. 添加一个 `deploy` 作业，该作业使用掩码变量调用 `npm run deploy`，这将仅在标签上触发。
 
 ```yaml
 deploy:
@@ -237,8 +239,8 @@ deploy:
     - npm run deploy
 ```
 
-## Common questions
+## 常见问题
 
-### Do I need to use Yarn for continuous integration?
+### 我需要使用 Yarn 进行持续集成吗？
 
-All of the above examples refer to a hypothetical project built with [Yarn](https://yarnpkg.com/), but can be adapted to use [npm](https://www.npmjs.com/), [Grunt](https://gruntjs.com/), [Gulp](https://gulpjs.com/), or any other JavaScript build tool.
+上述所有示例均指使用 [Yarn](https://yarnpkg.com/) 构建的假设项目，但也可以调整为使用 [npm](https://www.npmjs.com/)、[Grunt](https://gruntjs.com/)、[Gulp](https://gulpjs.com/) 或任何其他 JavaScript 构建工具。

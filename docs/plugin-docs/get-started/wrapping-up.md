@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: a15875fa-19b5-4c11-8903-864af133ce57
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: 学习入门部分后的下一步
 ---
 
@@ -13,7 +15,7 @@ MetaDescription: 学习入门部分后的下一步
 
 ## 插件功能
 
-在本节中,我们将 [Baosky API](/api/references/baosky-api) 和[贡献点](/api/references/contribution-points)分为几个类别,每个类别都简要描述了你的插件可以实现的功能。通过查看 [Baosky API](/api/references/baosky-api) 或阅读[插件功能](/api/插件-capabilities/overview)部分来验证你的插件想法是否可行,以获取新的插件想法。
+在本节中,我们将 [Baosky API](/api/references/baosky-api) 和[贡献点](/api/references/contribution-points)分为几个类别,每个类别都简要描述了你的插件可以实现的功能。通过查看 [Baosky API](/api/references/baosky-api) 或阅读[插件功能](/api/插件-capabilities/概述)部分来验证你的插件想法是否可行,以获取新的插件想法。
 
 ## 指南和示例
 
@@ -25,9 +27,9 @@ MetaDescription: 学习入门部分后的下一步
 
 ## 问题报告
 
-Baosky 用户可以使用 **Help: Report Issue...** 命令 (`workbench.action.openIssueReporter`) 报告问题,或者在快速打开 (`workbench.action.quickOpen`) 中键入 `issue  `,然后选择已安装的插件。这为用户报告核心产品或已安装插件的问题提供了一致的体验。
+Baosky 用户可以使用 ** Help: Report Issue... ** 命令 (`workbench.action.openIssueReporter`) 报告问题,或者在快速打开 (`workbench.action.quickOpen`) 中键入 `issue  `,然后选择已安装的插件。这为用户报告核心产品或已安装插件的问题提供了一致的体验。
 
-作为插件作者,你可以将插件集成到 **Help: Report Issue...** 问题报告流程中,而不是贡献单独的问题报告命令。此集成还使你能够在用户报告问题时附加任何其他信息。
+作为插件作者,你可以将插件集成到 ** Help: Report Issue... ** 问题报告流程中,而不是贡献单独的问题报告命令。此集成还使你能够在用户报告问题时附加任何其他信息。
 
 要集成到问题报告流程中,你需要贡献一个自定义命令和一个 `issue/reporter` 菜单贡献点。此自定义命令将调用 `openIssueReporter`。
 

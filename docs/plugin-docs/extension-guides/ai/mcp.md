@@ -1,99 +1,101 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: e655f324-ed0b-452d-aff3-52cdca3978a5
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A comprehensive guide for developers building MCP servers that work with Baosky.
+
+MetaDescription: 为开发人员构建与 Baosky 配合使用的 MCP 服务器的综合指南。
 ---
 
-# MCP developer guide
+# MCP 开发者指南
 
-Model Context Protocol (MCP) is an open standard that enables AI models to interact with external tools and services through a unified interface. Baosky implements the full MCP specification, enabling you to create MCP servers that provide tools, prompts, and resources for extending the capabilities of AI agents in Baosky.
+模型上下文协议（MCP）是一种开放标准，使人工智能模型能够通过统一的接口与外部工具和服务进行交互。 Baosky 实现了完整的 MCP 规范，使您能够创建 MCP 服务器，该服务器提供工具、提示和资源，用于扩展 Baosky 中的 AI 代理的功能。
 
-MCP servers provide one of three types of tools available in Baosky, alongside built-in tools and 插件-contributed tools. Learn more about [tool types](/docs/copilot/chat/chat-tools.md#types-of-tools).
+MCP 服务器提供 Baosky 中可用的三种工具之一，以及内置工具和插件贡献的工具。了解有关[tool types](/docs/copilot/chat/chat-tools.md#types-of-tools)的更多信息。
 
-This guide covers everything you need to know to build MCP servers that work seamlessly with Baosky and other MCP clients.
+本指南涵盖了构建与 Baosky 和其他 MCP 客户端无缝协作的 MCP 服务器所需了解的所有内容。
 
-> [!TIP]
-> For information about using MCP servers as an end user, see [Use MCP servers in Baosky](/docs/copilot/customization/mcp-servers.md).
+> [!提示]
+> 有关作为最终用户使用 MCP 服务器的信息，请参阅[Use MCP servers in Baosky](/docs/copilot/customization/mcp-servers.md)。
 
-## Why use MCP servers?
+## 为什么使用 MCP 服务器？
 
-Implementing an MCP server to extend chat in Baosky with language model tools has the following benefits:
+实现 MCP 服务器以使用语言模型工具扩展 Baosky 中的聊天具有以下好处：
 
-- **Extend agent mode** with specialized, domain-specific, tools that are automatically invoked as part of responding to a user prompt. For example, enable database scaffolding and querying to dynamically provide the LLM with relevant context.
-- **Flexible deployment options** for local and remote scenarios.
-- **Reuse** your MCP server across different tools and platforms.
+- ** 使用专门的、特定于域的工具扩展代理模式 ** ，这些工具会作为响应用户提示的一部分自动调用。例如，启用数据库支架和查询以动态为法学硕士提供相关上下文。
+- ** 灵活的部署选项 ** 适用于本地和远程场景。
+- ** 在不同的工具和平台上重复使用 ** 您的 MCP 服务器。
 
-You might consider implementing a language model tool with the [Language Model API](/api/插件-guides/ai/tools) in the following scenarios:
+您可以考虑在以下场景中使用 [Language Model API](/api/插件-guides/ai/tools) 实现语言模型工具：
 
-- You want to deeply integrate with Baosky by using 插件 APIs.
-- You want to distribute your tool and updates by using the Visual Studio Marketplace.
+- 您想通过使用插件 APIs 与 Baosky 深度集成。
+- 您想要使用 Visual Studio 市场 分发您的工具和更新。
 
-## MCP features supported by Baosky
+## Baosky 支持的 MCP 功能
 
-Baosky supports the following MCP capabilities:
+Baosky 支持以下 MCP 功能：
 
-* [Transports](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports):
-    * Local standard input/output (`stdio`)
-    * Streamable HTTP (`http`)
-    * Server-sent events (`sse`) - legacy support.
+* [Transports](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports)：
+* 本地标准输入/输出 (`stdio`)
+* 可流式传输 HTTP (`http`)
+* 服务器发送的事件 (`sse`) - 旧版支持。
 
-* [Features](https://modelcontextprotocol.io/specification/2025-06-18#features):
-    * Tools: extend [agent mode](/docs/copilot/chat/chat-agent-mode) with extra tools
-    * Prompts: add reusable prompts as slash commands in chat
-    * Resources: provide data and content that users can add as chat context or interact with directly in Baosky
-    * Elicitation: request input from the user
-    * Sampling: make language model requests using the user's configured models and subscription
-    * Authentication: authorize access to an MCP server using OAuth
-    * Server instructions
-    * Roots: provide information about the user's workspace root folder(s)
+* [Features](https://modelcontextprotocol.io/specification/2025-06-18#features)：
+* 工具：使用额外的工具扩展[agent mode](/docs/copilot/chat/chat-agent-mode)
+* 提示：在聊天中添加可重复使用的提示作为斜杠命令
+* 资源：提供数据和内容，用户可以添加为聊天上下文或直接在Baosky中进行交互
+* 启发：请求用户输入
+* 采样：使用用户配置的模型和订阅来发出语言模型请求
+* 身份验证：使用 OAuth 授权访问 MCP 服务器
+* 服务器指令
+* Roots：提供有关用户工作区根文件夹的信息
 
-### Tools
+＃＃＃ 工具
 
-#### Tool definition
+#### 工具定义
 
-Baosky supports MCP tools in agent mode, where they are invoked as needed based on the task. Users can enable and configure them with the tools picker. The tool description is shown in the tools picker, alongside the tool name, and in the dialog when asking for confirmation before running a tool.
-
-<!-- 图片已移除 -->
-
-Users can edit model-generated input parameters in the tool confirmation dialog. The confirmation dialog will be shown for all tools that are not marked with the `readOnlyHint` annotation.
+Baosky 支持代理模式的 MCP 工具，根据任务需要调用它们。用户可以使用工具选择器启用和配置它们。工具描述显示在工具选择器中、工具名称旁边，以及在运行工具之前要求确认时的对话框中。
 
 <!-- 图片已移除 -->
 
-#### Dynamic tool discovery
-
-Baosky also supports [dynamic tool discovery](https://modelcontextprotocol.io/docs/concepts/tools#tool-discovery-and-updates), allowing servers to register tools at runtime. For example, a server can provide different tools based on the framework or language detected in the workspace, or in response to the user's chat prompt.
-
-#### Tool annotations
-
-To provide extra metadata about a tool's behavior, you can use [tool annotations](https://modelcontextprotocol.io/docs/concepts/tools#tool-annotations):
-
-- `title`: Human-readable title for the tool, shown in the Chat view when a tool is invoked
-- `readOnlyHint`: Optional hint to indicate that the tool is read-only. Baosky doesn't ask for confirmation to run read-only tools.
-
-### Resources
-
-Resources enable you to provide data and content to users in a structured way. Users can directly access resources in Baosky, or use them as context in chat prompts. For example, an MCP server could generate screenshots and make them available as resources, or provide access to log files, which are then updated in real-time.
-
-When you define an MCP resource, the resource name is shown in the MCP Resources Quick Picks. Resources can be opened via the **MCP: Browse Resources** command or attached to a chat request with **Add Context** and then selecting **MCP Resource**. Resources can contain text or binary content.
+用户可以在工具确认对话框中编辑模型生成的输入参数。对于所有未标有 `readOnlyHint` 注释的工具，都会显示确认对话框。
 
 <!-- 图片已移除 -->
 
-Baosky supports resource updates, enabling users to see changes to the contents of a resource in real-time in the editor.
+#### 动态工具发现
 
-#### Resource templates
+Baosky 还支持 [dynamic tool discovery](https://modelcontextprotocol.io/docs/concepts/tools#tool-discovery-and-updates)，允许服务器在运行时注册工具。例如，服务器可以基于工作区中检测到的框架或语言，或者响应用户的聊天提示来提供不同的工具。
 
-Baosky also supports [resource templates](https://modelcontextprotocol.io/docs/concepts/resources#resource-templates), enabling users to provide input parameters when referencing a resource. For example, a database query tool could ask for the database table name.
+#### 工具注释
 
-When accessing a resource with a template, users are prompted for the required parameters in a Quick Pick. You can provide completions to suggest values for the parameter.
+要提供有关工具行为的额外元数据，您可以使用 [tool annotations](https://modelcontextprotocol.io/docs/concepts/tools#tool-annotations)：
 
-### Prompts
+- `title`：工具的人类可读标题，在调用工具时显示在聊天视图中
+- `readOnlyHint`：可选提示，指示该工具是只读的。 Baosky 不要求确认运行只读工具。
 
-Prompts are reusable chat prompt templates that users can invoke in chat by using a slash command (`mcp.servername.promptname`). Prompts can be useful for onboarding users to your servers by highlighting various tools or providing built-in complex workflows that adapt to the user's local context and service.
+＃＃＃ 资源
 
-If you define [completions](https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion) to suggest values for prompt input arguments, then Baosky shows a dialog to collect input from the user.
+Resources enable you 要 provide data and content 要 users in a structured way. Users can directly access resources in Baosky, or use them as context in chat prompts. 例如, an MCP server could generate screenshots and make them available as resources, or provide access 要 log files, which are then updated in real-time.
+
+定义 MCP 资源时，资源名称将显示在 MCP 资源快速选择中。可以通过 ** MCP：浏览资源 ** 命令打开资源，或使用 ** 添加上下文 ** 将资源附加到聊天请求，然后选择 ** MCP 资源 ** 。资源可以包含文本或二进制内容。
+
+<!-- 图片已移除 -->
+
+Baosky支持资源更新，使用户可以在编辑器中实时看到资源内容的变化。
+
+#### 资源模板
+
+Baosky 还支持 [resource templates](https://modelcontextprotocol.io/docs/concepts/resources#resource-templates)，允许用户在引用资源时提供输入参数。例如，数据库查询工具可以询问数据库表名称。
+
+使用模板访问资源时，系统会提示用户在“快速选择”中输入所需参数。您可以提供补全来建议参数值。
+
+### 提示
+
+提示是可重用的聊天提示模板，用户可以使用斜杠命令 (`mcp.servername.promptname`) 在聊天中调用它们。通过突出显示各种工具或提供适应用户本地上下文和服务的内置复杂工作流程，提示对于将用户引入您的服务器非常有用。
+
+如果您定义 [completions](https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion) 来建议提示输入参数的值，则 Baosky 会显示一个对话框来收集用户的输入。
 
 ```typescript
 server.prompt(
@@ -114,30 +116,30 @@ server.prompt(
 
 <!-- 图片已移除 -->
 
-> [!NOTE]
-> Users can enter a terminal command in the prompt dialog and use the command output as input for the prompt.
+> [!注意]
+> 用户可以在提示对话框中输入终端命令，并将命令输出作为提示的输入。
 
-When you include a resource type in the prompt response, Baosky attaches that resource as context to the chat prompt.
+当您在提示响应中包含资源类型时，Baosky 会将该资源作为上下文附加到聊天提示。
 
-### Authorization
+＃＃＃ 授权
 
-Baosky supports MCP servers that require authentication, allowing users to interact with an MCP server that operates on behalf of their user account for that service.
+Baosky 支持需要身份验证的 MCP 服务器，允许用户与代表其用户帐户操作该服务的 MCP 服务器进行交互。
 
-The [authorization specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) cleanly separates MCP servers as Resource Servers from Authorization Servers, allowing developers to delegate authentication to existing identity providers (IdPs) rather than building their own OAuth implementations from scratch.
+[authorization specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) 将作为资源服务器的 MCP 服务器与授权服务器完全分开，允许开发人员将身份验证委托给现有身份提供商 (IdP)，而不是从头开始构建自己的 OAuth 实现。
 
-Baosky has built-in authentication support for GitHub and Microsoft Entra. If your MCP server implements the latest specification and uses GitHub or Microsoft Entra as the authorization server, users can manage which MCP servers have access to their account through the **Accounts menu** > **Manage Trusted MCP Servers** action for that account.
+Baosky 内置了对 GitHub 和 Microsoft Entra 的身份验证支持。如果您的 MCP 服务器实施最新规范并使用 GitHub 或 Microsoft Entra 作为授权服务器，则用户可以通过该帐户的 ** 帐户菜单 ** > ** 管理受信任的 MCP 服务器 ** 操作来管理哪些 MCP 服务器有权访问其帐户。
 
 <!-- 图片已移除 -->
 
-Baosky supports authorization using OAuth 2.1 standards and 2.0 standards to other IdPs than GitHub and Microsoft Entra. Baosky first starts with a [Dynamic Client Registration (DCR)](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#dynamic-client-registration) handshake and then falls back to a client-credentials workflow if the IdP does not support DCR. This gives more flexibility to the various IdPs to create static client IDs or specific client ID-secret pairs for each MCP server accordingly.
+Baosky 支持使用 OAuth 2.1 标准和 2.0 标准对 GitHub 和 Microsoft Entra 之外的其他 IdP 进行授权。 Baosky 首先以 [Dynamic Client Registration (DCR)](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#dynamic-client-registration) 握手开始，然后如果 IdP 不支持 DCR，则返回到客户端凭据工作流程。这为各种 IdP 提供了更大的灵活性，可以相应地为每个 MCP 服务器创建静态客户端 ID 或特定客户端 ID-秘密对。
 
-Users can then view their authentication status also through the **Accounts menu**. To remove dynamic client registrations, users can use the **Authentication: Remove Dynamic Authentication Providers** command in the Command Palette.
+然后，用户还可以通过 ** 帐户菜单 ** 查看其身份验证状态。要删除动态客户端注册，用户可以使用命令面板中的 ** 身份验证：删除动态身份验证提供程序 ** 命令。
 
-Below is a checklist to ensure your MCP server and Baosky's OAuth workflows will work:
+以下是确保您的 MCP 服务器和 Baosky 的 OAuth 工作流程正常运行的清单：
 
-1. The MCP server defines the [MCP authorization specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization).
-2. The IdP must support either DCR or client credentials
-3. The redirect URL list must include these URLs: `http://127.0.0.1:33418` and `https://vscode.dev/redirect`
+1. MCP 服务器定义 [MCP authorization specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization)。
+2. IdP 必须支持 DCR 或客户端凭据
+3. 重定向 URL 列表必须包含以下 URL：`http://127.0.0.1:33418` 和 `https://vscode.dev/redirect`
 
 When DCR is not supported by the MCP server, users will go through the fallback client-credential flow:
 
@@ -147,86 +149,86 @@ When DCR is not supported by the MCP server, users will go through the fallback 
 
 <!-- 图片已移除 -->
 
-> [!NOTE]
-> Baosky still supports MCP servers that behave as an authorization server, but it is recommended to use the latest specification for new servers.
+> [!注意]
+> Baosky 仍然支持充当授权服务器的 MCP 服务器，但建议新服务器使用最新规范。
 
-### Sampling
+### 采样
 
-Baosky provides access to [sampling](https://modelcontextprotocol.io/docs/concepts/sampling) for MCP servers. This allows your MCP server to make language model requests using the user's configured models and subscriptions. For example, use sampling to summarize large data sets, to extract information before sending it to the client, or to implement agentic decision logic in a tool.
+Baosky 为 MCP 服务器提供对 [sampling](https://modelcontextprotocol.io/docs/concepts/sampling) 的访问。这允许您的 MCP 服务器使用用户配置的模型和订阅发出语言模型请求。例如，使用采样来汇总大型数据集，在将信息发送到客户端之前提取信息，或者在工具中实现代理决策逻辑。
 
-The first time an MCP server performs a sampling request, the user is prompted to authorize the server to access their models.
-
-<!-- 图片已移除 -->
-
-When making sampling requests with specific models, consider that users can restrict which models an MCP server can use with the **MCP: List Servers** > **Configure Model Access** command in the Command Palette. When you specify `modelPreferences` in your MCP server to provide hints about which models to use for sampling, Baosky will pick from the allowed models.
+MCP 服务器第一次执行采样请求时，系统会提示用户授权服务器访问其模型。
 
 <!-- 图片已移除 -->
 
-Users can view the sampling requests made by an MCP server with the **MCP: List Servers** > **Show Sampling Requests** command in the Command Palette.
+When making sampling requests with specific models, consider that users can restrict which models an MCP server can use with the ** MCP: List Servers ** > ** Configure Model Access ** command in the Command Palette. When you specify `modelPreferences` in your MCP server 要 provide hints about which models 要 use for sampling, Baosky will pick from the allowed models.
 
-### Workspace roots
+<!-- 图片已移除 -->
+
+用户可以使用命令面板中的 ** MCP：列出服务器 ** > ** 显示采样请求 ** 命令查看 MCP 服务器发出的采样请求。
+
+### 工作区根
 
 Baosky provides the MCP server with the user's workspace root folder information.
 
-### Icons
+### 图标
 
-Baosky supports `icons` provided on MCP servers, resources, and tools. MCP Icons have a `src` property which is a URI to the image:
+Baosky 支持 MCP 服务器、资源和工具上提供的 `icons`。 MCP 图标有一个 `src` 属性，它是图像的 URI ：
 
-- MCP servers using the HTTP or SSE transports may serve images from the same authority the MCP server is hosted on. For example, a server configured at `https://example.com/mcp` can serve images from `example.com`.
-- MCP servers using the stdio transport may serve images from the file system using `file:///` URIs.
-- Any MCP server can embed images as data URIs beginning with `data:`.
+- 使用 HTTP 或 SSE 传输的 MCP 服务器可以提供来自托管 MCP 服务器的同一机构的图像。例如，配置在 `https://example.com/mcp` 的服务器可以提供来自 `example.com` 的图像。
+- 使用 stdio 传输的 MCP 服务器可以使用 `file:///` URI 提供来自文件系统的图像。
+- 任何 MCP 服务器都可以将图像嵌入为以 `data:` 开头的数据 URI。
 
-## Add MCP servers to Baosky
+## 将 MCP 服务器添加到 Baosky
 
-Users can add MCP servers within Baosky in several ways:
+用户可以通过多种方式在 Baosky 中添加 MCP 服务器：
 
-- Install directly from the web: use a special MCP installation URL (`vscode:mcp/install`) on your website.
-- Workspace configuration: Specify the server configuration in a `.vscode/mcp.json` file in the workspace.
-- Global configuration: Define servers globally in the user [profile](/docs/configure/profiles).
-- Autodiscovery: Baosky can discover servers from other tools like Claude Desktop.
-- 插件: Baosky 插件 can register MCP servers programmatically.
-- Command line: Install MCP servers from the command line with the `--add-mcp` Baosky command-line option.
+- 直接从网络安装：在您的网站上使用特殊的 MCP 安装 URL (`vscode:mcp/install`)。
+- 工作区配置：在工作区的 `.vscode/mcp.json` 文件中指定服务器配置。
+- 全局配置：在用户[profile](/docs/configure/profiles)中全局定义服务器。
+- 自动发现：Baosky 可以从其他工具（如 Claude Desktop）发现服务器。
+- 插件：Baosky 插件可以通过编程方式注册 MCP 服务器。
+- 命令行：使用 `--add-mcp` Baosky 命令行选项从命令行安装 MCP 服务器。
 
-Learn more about the different ways to [add MCP servers to Baosky](/docs/copilot/customization/mcp-servers#add-an-mcp-server).
+详细了解 [add MCP servers 要 Baosky](/docs/copilot/customization/mcp-servers#add-an-mcp-server) 的不同方式。
 
-## Manage MCP servers
+## 管理 MCP 服务器
 
-You can manage the list of installed MCP servers from the 插件 view (`kb(workbench.view.插件)`) in Baosky.
+您可以从 Baosky 中的插件视图 (`kb(工作台.view.插件)`) 管理已安装的 MCP 服务器列表。
 
 <!-- 图片已移除 -->
 
-Right-click on an MCP server or select the gear icon to perform different management actions on the server. Alternatively, run the **MCP: List Servers** command from the Command Palette to view the list of configured MCP servers. You can then select a server and perform actions on it.
+右键单击 MCP 服务器或选择齿轮图标可在服务器上执行不同的管理操作。或者，从命令面板运行 ** MCP：列出服务器 ** 命令来查看已配置的 MCP 服务器的列表。然后，您可以选择一个服务器并对其执行操作。
 
-> [!TIP]
-> When you open the `.vscode/mcp.json` file, Baosky shows commands in the editor to start, stop, or restart a server directly from the editor.
+> [!提示]
+> 当您打开 `.vscode/mcp.json` 文件时，Baosky 在编辑器中显示命令，以直接从编辑器启动、停止或重新启动服务器。
 >
 > <!-- 图片已移除 -->
 
-## Create an MCP installation URL
+## 创建 MCP 安装 URL
 
-Baosky provides a URL handler for installing an MCP server from a link: `vscode:mcp/install?{json-configuration}` (Insiders: `vscode-insiders:mcp/install?{json-configuration}`).
+Baosky 提供了一个 URL 处理程序，用于从链接安装 MCP 服务器：`vscode:mcp/install?{json-配置}`（内部人士：`vscode-insiders:mcp/install?{json-配置}`）。
 
-Provide the JSON server configuration in the form `{\"name\":\"server-name\",\"command\":...}` and then perform a JSON-stringify and URL encode on it. For example, use the following logic to create the installation URL:
+以 `{\"name\":\"server-name\",\"命令\":...}` 形式提供 JSON 服务器配置，然后对其执行 JSON-stringify 和 URL 编码。例如，使用以下逻辑创建安装 URL：
 
 ```typescript
 // For Insiders, use `vscode-insiders` instead of `code`
 const link = `vscode:mcp/install?${encodeURIComponent(JSON.stringify(obj))}`;
 ```
 
-This link can be used in a browser, or opened on the command line, for example via `xdg-open $LINK` on Linux.
+该链接可以在浏览器中使用，也可以在命令行上打开，例如在 Linux 上通过 `xdg-open $LINK` 打开。
 
-## Register an MCP server in your 插件
+## 在您的插件中注册 MCP 服务器
 
-To register an MCP server in your 插件, you need to perform the following steps:
+要在您的插件中注册 MCP 服务器，您需要执行以下步骤：
 
-1. Define the MCP server definition provider in the `package.json` file of your 插件.
-1. Implement the MCP server definition provider in your 插件 code by using the [`code`](/api/references/baosky-api#lm.registerMcpServerDefinitionProvider) API.
+1. 在插件的 `package.json` 文件中定义 MCP 服务器定义提供程序。
+1. 使用 [`code`](/api/references/baosky-api#lm.registerMcpServerDefinitionProvider) API 在您的插件代码中实现 MCP 服务器定义提供程序。
 
-You can get started with a basic [example of how to register an MCP server in a Baosky 插件](https://github.com/microsoft/baosky-插件-samples/blob/main/mcp-插件-sample).
+您可以从基本的 [example of how 要 register an MCP server in a Baosky 插件](https://github.com/microsoft/baosky-插件-samples/blob/main/mcp-插件-sample) 开始。
 
-### 1. Static configuration in `package.json`
+### 1. `package.json` 中的静态配置
 
-插件 that want to register MCP servers must contribute the `contributes.mcpServerDefinitionProviders` 插件 point in the `package.json` with the `id` of the provider. This `id` should match the one used in the implementation.
+想要注册 MCP 服务器的插件必须在 `package.json` 中贡献 `contributes.mcpServerDefinitionProviders` 插件点以及提供商的 `id` 。此 `id` 应与实现中使用的一致。
 
 ```json
 {
@@ -243,25 +245,25 @@ You can get started with a basic [example of how to register an MCP server in a 
 }
 ```
 
-### 2. Implement the provider
+### 2. 实施提供者
 
-To register an MCP server in your 插件, use the [`code`](/api/references/baosky-api#lm.registerMcpServerDefinitionProvider) API to provide the [MCP configuration](/docs/copilot/chat/mcp-servers#_configuration-format) for the server. The API takes a `providerId` string and a `McpServerDefinitionProvider` object.
+要在插件中注册 MCP 服务器，请使用 [`code`](/api/references/baosky-api#lm.registerMcpServerDefinitionProvider) API 为服务器提供 [MCP 配置](/docs/copilot/chat/mcp-servers#_configuration-format)。 API 采用 `providerId` 字符串和 `McpServerDefinitionProvider` 对象。
 
-The `McpServerDefinitionProvider` object has three properties:
+`McpServerDefinitionProvider` 对象具有三个属性：
 
 - `onDidChangeMcpServerDefinitions`: event that is triggered when the MCP server configurations change.
-- `provideMcpServerDefinitions`: function that returns an array of MCP server configurations (`vscode.McpServerDefinition[]`).
-- `resolveMcpServerDefinition`: function that the editor calls when the MCP server needs to be started. Use this function to perform additional actions that may require user interaction, such as authentication.
+- `provideMcpServerDefinitions`：返回 MCP 服务器配置数组 (`vscode.McpServerDefinition[]`) 的函数。
+- `resolveMcpServerDefinition`：当MCP服务器需要启动时编辑器调用的函数。使用此函数执行可能需要用户交互的其他操作，例如身份验证。
 
-An `McpServerDefinition` object can be one of the following types:
+`McpServerDefinition` 对象可以是以下类型之一：
 
-- `vscode.McpStdioServerDefinition`: represents an MCP server available by running a local process and operating on its stdin and stdout streams.
-- `vscode.McpHttpServerDefinition`: represents an MCP server available using the Streamable HTTP transport.
+- `vscode.McpStdioServerDefinition`：表示通过运行本地进程并对其 stdin 和 stdout 流进行操作而可用的 MCP 服务器。
+- `vscode.McpHttpServerDefinition`：表示使用 Streamable HTTP 传输可用的 MCP 服务器。
 
 <details>
-<summary>Example MCP server definition provider</summary>
+<summary>MCP 服务器定义提供程序示例</summary>
 
-The following example demonstrates how to register MCP servers in an 插件 and prompt the user for an API key when starting the server.
+以下示例演示如何在插件中注册 MCP 服务器并在启动服务器时提示用户输入 API 密钥。
 
 ```ts
 import * as vscode from 'vscode';
@@ -318,19 +320,19 @@ export function activate(context: vscode.ExtensionContext) {
 
 </details>
 
-## Troubleshoot and debug MCP servers
+## MCP 服务器故障排除和调试
 
-### MCP development mode in Baosky
+###Baosky中的MCP开发模式
 
-When developing MCP servers, you can enable _development mode_ for MCP servers by adding a `dev` key to the MCP server configuration. This is an object with two properties:
+开发 MCP 服务器时，您可以通过向 MCP 服务器配置添加 `dev` 键来启用 MCP 服务器的_开发模式_。这是一个具有两个属性的对象：
 
-* `watch`: A file glob pattern to watch for files change that will restart the MCP server.
-* `debug`: Enables you to set up a debugger with the MCP server. Currently, Baosky supports debugging Node.js and Python MCP servers.
+* `watch`：文件全局模​​式，用于监视将重新启动 MCP 服务器的文件更改。
+* `调试`：使您能够使用 MCP 服务器设置调试器。目前，Baosky 支持调试Node.js 和Python MCP 服务器。
 
-    <details>
-    <summary>Node.js MCP server</summary>
+<details>
+<summary>Node.js MCP 服务器</summary>
 
-    To debug a Node.js MCP server, set the `debug.type` property to `node`.
+要调试 Node.js MCP 服务器，请将 `调试.type` 属性设置为 `node`。
 
     ```json
     {
@@ -341,7 +343,7 @@ When developing MCP servers, you can enable _development mode_ for MCP servers b
                 "cwd": "${workspaceFolder}",
                 "args": [ "./build/index.js" ],
                 "dev": {
-                    "watch": "src/**/*.ts",
+                    "watch": "src/ ** /*.ts",
                     "debug": { "type": "node" }
                 }
             }
@@ -349,12 +351,12 @@ When developing MCP servers, you can enable _development mode_ for MCP servers b
     }
     ```
 
-    </details>
+</details>
 
-    <details>
-    <summary>Python MCP server</summary>
+<details>
+<summary>Python MCP 服务器</summary>
 
-    To debug a Python MCP server, set the `debug.type` property to `debugpy`, and optionally set the `debug.debugpyPath` property to the path of the `debugpy` module if it is not installed in the default Python environment.
+    要 debug a Python MCP server, set the `debug.type` property 要 `debugpy`, and optionally set the `debug.debugpyPath` property 要 the path of the `debugpy` module if it is not installed in the default Python environment.
 
     ```json
     {
@@ -365,7 +367,7 @@ When developing MCP servers, you can enable _development mode_ for MCP servers b
                 "cwd": "${workspaceFolder}",
                 "args": [ "./server.py" ],
                 "dev": {
-                    "watch": "**/*.py",
+                    "watch": " ** /*.py",
                     "debug": {
                         "type": "debugpy",
                         "debugpyPath": "/path/to/debugpy"
@@ -376,48 +378,48 @@ When developing MCP servers, you can enable _development mode_ for MCP servers b
     }
     ```
 
-    </details>
+</details>
 
-### MCP output log
+### MCP输出日志
 
-When Baosky encounters an issue with an MCP server, it shows an error indicator in the Chat view.
-
-<!-- 图片已移除 -->
-
-Select the error notification in the Chat view, and then select the **Show Output** option to view the server logs. Alternatively, run **MCP: List Servers** from the Command Palette, select the server, and then choose **Show Output**.
+当 Baosky 遇到 MCP 服务器问题时，它会在聊天视图中显示错误指示器。
 
 <!-- 图片已移除 -->
 
-## Best practices
+Select the error notification in the Chat view, and then select the ** Show Output ** option 要 view the server logs. Alternatively, run ** MCP: List Servers ** from the Command Palette, select the server, and then choose ** Show Output ** .
 
-- **Naming conventions** to ensure unique and descriptive names
-- **Implement proper error handling and validation** with descriptive error messages
-- **Use progress reporting** to inform users about long-running operations
-- **Keep tool operations focused and atomic** to avoid complex interactions
-- **Document your tools clearly** with descriptions that help users understand when to use them
-- **Handle missing input parameters gracefully** by providing default values or clear error messages
-- **Set MIME types for resources** to ensure proper handling of different content types in Baosky
-- **Use resource templates** to allow users to provide input parameters when accessing resources
-- **Cache resource content** to improve performance and reduce unnecessary network requests
-- **Set reasonable token limits** for sampling requests to avoid excessive resource usage
-- **Validate sampling responses** before using them
+<!-- 图片已移除 -->
 
-### Naming conventions
+## 最佳实践
 
-The following naming conventions are recommended for MCP servers and their components:
+- ** 命名约定 ** 以确保唯一且具有描述性的名称
+- ** 使用描述性错误消息实施正确的错误处理和验证 **
+- ** Use progress reporting ** 要 inform users about long-running operations
+- ** 保持工具操作的重点和原子性 ** 以避免复杂的交互
+- ** 清楚地记录您的工具 ** 并提供帮助用户了解何时使用它们的说明
+- ** 通过提供默认值或清除错误消息来优雅地处理丢失的输入参数 **
+- ** 设置资源的MIME类型 ** 以确保正确处理Baosky中的不同内容类型
+- ** 使用资源模板 ** 允许用户在访问资源时提供输入参数
+- ** 缓存资源内容 ** 以提高性能并减少不必要的网络请求
+- ** 为采样请求设置合理的令牌限制 ** ，以避免过多的资源使用
+- ** 在使用采样响应之前验证它们 **
 
-| Component | Naming Convention Guidelines |
-|-----------|----------------------------|
-| Tool name | <ul><li>Unique within the MCP server</li><li>Describes the action and the target of the action</li><li>Use snake case, structured as `{verb}_{noun}`</li><li>Examples: `generate_report`, `fetch_data`, `analyze_code`</li></ul> |
-| Tool input parameter | <ul><li>Describes the purpose of the parameter</li><li>Use camelCase for multi-word parameters</li><li>Examples: `path`, `queryString`, `userId`</li></ul> |
-| Resource name | <ul><li>Unique within the MCP server</li><li>Describes the content of the resource</li><li>Use title case</li><li>Examples: `Application Logs`, `Database Table`, `GitHub Repository`</li></ul> |
-| Resource template parameter | <ul><li>Describes the purpose of the parameter</li><li>Use camelCase for multi-word parameters</li><li>Examples: `name`, `repo`, `fileType`</li></ul> |
-| Prompt name | <ul><li>Unique within the MCP server</li><li>Describes the intended use of the prompt</li><li>Use camelCase for multi-word parameters</li><li>Examples: `generateApiRoute`, `performSecurityReview`, `analyzeCodeQuality`</li></ul> |
-| Prompt input parameter | <ul><li>Describes the purpose of the parameter</li><li>Use camelCase for multi-word parameters</li><li>Examples: `filePath`, `queryString`, `userId`</li></ul> |
+### 命名约定
 
-## Get started to create an MCP server
+建议 MCP 服务器及其组件采用以下命名约定：
 
-Baosky has all the tools you need to develop your own MCP server. While MCP servers can be written in any language that can handle `stdout`, the MCP's official SDKs are a good place to start:
+|组件|命名约定指南 |
+|----------|----------------------------|
+|工具名称| <ul><li>在 MCP 服务器内唯一</li><li>描述操作和操作目标</li><li>使用蛇形命名法，结构为 `{verb}_{noun}`</li><li>示例：`generate_report`、`fetch_data`、`analyze_code`</li></ul> |
+|工具输入参数| <ul><li>描述参数的用途</li><li>对多字参数使用驼峰命名法</li><li>示例：`path`、`queryString`、`userId`</li></ul> |
+|资源名称 | <ul><li>在 MCP 服务器内唯一</li><li>描述资源内容</li><li>使用标题大小写</li><li>示例：`Application Logs`、`Database Table`、`GitHub Repository`</li></ul> |
+|资源模板参数| <ul><li>描述参数的用途</li><li>对多字参数使用驼峰命名法</li><li>示例：`name`、`repo`、`fileType`</li></ul> |
+|提示名称 | <ul><li>在 MCP 服务器内唯一</li><li>描述提示的预期用途</li><li>对多字参数使用驼峰命名法</li><li>示例：`generateApiRoute`、`performSecurityReview`、`analyzeCodeQuality`</li></ul> |
+|提示输入参数 | <ul><li>描述参数的用途</li><li>对多字参数使用驼峰命名法</li><li>示例：`filePath`、`queryString`、`userId`</li></ul> |
+
+## 开始创建 MCP 服务器
+
+Baosky 拥有开发您自己的 MCP 服务器所需的所有工具。虽然 MCP 服务器可以用任何可以处理 `stdout` 的语言编写，但 MCP 的官方 SDK 是一个很好的起点：
 
 - [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 - [Python SDK](https://github.com/modelcontextprotocol/python-sdk)
@@ -425,9 +427,9 @@ Baosky has all the tools you need to develop your own MCP server. While MCP serv
 - [Kotlin SDK](https://github.com/modelcontextprotocol/kotlin-sdk)
 - [C# SDK](https://github.com/modelcontextprotocol/csharp-sdk)
 
-You might also find the [MCP for Beginners curriculum](https://github.com/microsoft/mcp-for-beginners) helpful to get started with building your first MCP server.
+您可能还会发现 [MCP for Beginners curriculum](https://github.com/microsoft/mcp-for-beginners) 对于开始构建您的第一个 MCP 服务器很有帮助。
 
-## Related content
+## 相关内容
 
 - [Contribute a language model tool](/api/插件-guides/ai/tools)
 - [Use MCP tools in agent mode](/docs/copilot/chat/mcp-servers)

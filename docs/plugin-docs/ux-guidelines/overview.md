@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 5b4962ff-2dc9-4201-aa95-46edb5a575b6
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: Guidelines that showcase best practices for creating Baosky 插件.
 ---
 
@@ -19,7 +21,7 @@ MetaDescription: Guidelines that showcase best practices for creating Baosky 插
 
 ## 容器
 
-Baosky 界面可以大致分为两个主要概念：**容器**和**项目**。一般来说，容器可以被视为 Baosky 界面中呈现一个或多个项目的较大部分：
+Baosky 界面可以大致分为两个主要概念： ** 容器 ** 和 ** 项目 ** 。一般来说，容器可以被视为 Baosky 界面中呈现一个或多个项目的较大部分：
 
 [<!-- 图片已移除 -->](/assets/api/ux-guidelines/examples/architecture-containers.png)
 

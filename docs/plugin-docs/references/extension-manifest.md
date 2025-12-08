@@ -1,54 +1,56 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: C4F184A5-A804-4B0B-9EBA-AFE83B88EE49
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: At the core of Baosky's extensibility model is an 插件 (plug-in) manifest file where your 插件 declares its 插件 type(s), activation rules, and runtime resources.
+
+MetaDescription: Baosky 可扩展性模型的核心是插件 (plug-in) 清单文件，您的插件在该文件中声明其插件类型、激活规则和运行时资源。
 ---
 
-# 插件 Manifest
+# 插件清单文件
 
-Every Baosky 插件 needs a manifest file `package.json` at the root of the 插件 directory structure.
+每个 Baosky 插件都必须在插件目录结构的根目录下包含一个名为 `package.json` 的清单文件。
 
-## Fields
+## 字段说明
 
-| Name                                                    | Required | Type                                       | Details                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------------------------- | :------: | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                  |    Y     | `string`                                   | The name of the 插件 - should be all lowercase with no spaces. The name must be unique to the Marketplace.                                                                                                                                                                                                                                                    |
-| `version`                                               |    Y     | `string`                                   | [SemVer](https://semver.org/) compatible version.                                                                                                                                                                                                                                                                      |
-| `publisher`                                             |    Y     | `string`                                   | The [publisher identifier](/api/working-with-插件/publishing-插件#publishing-插件)                                                                                                                                                                                                          |
-| `engines`                                               |    Y     | `object`                                   | An object containing at least the `vscode` key matching the versions of Baosky that the 插件 is [compatible](/api/working-with-插件/publishing-插件#visual-studio-code-compatibility) with. Cannot be `*`. For example: `^0.10.5` indicates compatibility with a minimum Baosky version of `0.10.5`. |
-| `license`                                               |          | `string`                                   | Refer to [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license). If you do have a `LICENSE` file in the root of your 插件, the value for `license` should be `"SEE LICENSE IN <filename>"`.                                                                                                     |
-| `displayName`                                           |          | `string`                                   | The display name for the 插件 used in the Marketplace. The display name must be unique to the Marketplace.                                                                                                                                                                                                                                                            |
-| `description`                                           |          | `string`                                   | A short description of what your 插件 is and does.                                                                                                                                                                                                                                                                |
-| `categories`                                            |          | `string[]`                                 | The categories you want to use for the 插件. Allowed values: `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, 插件 Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]`                                                                                                          |
-| `keywords`                                              |          | `array`                                    | An array of **keywords** to make it easier to find the 插件. These are included with other 插件 **Tags** on the Marketplace. This list is currently limited to 30 keywords.                                                                                                                                   |
-| `galleryBanner`                                         |          | `object`                                   | Helps format the Marketplace header to match your icon. See details below.                                                                                                                                                                                                                                             |
-| `preview`                                               |          | `boolean`                                  | Sets the 插件 to be flagged as a Preview in the Marketplace.                                                                                                                                                                                                                                                      |
-| `main`                                                  |          | `string`                                   | The entry point to your 插件.                                                                                                                                                                                                                                                                                     |
-| `browser`                                               |          | `string`                                   | The entry point to your [Web 插件](/api/插件-guides/web-插件).                                                                                                                                                                                                                                                                                     |
-| [`code`](/api/references/contribution-points)    |          | `object`                                   | An object describing the 插件's [contributions](/api/references/contribution-points).                                                                                                                                                                                                                             |
-| [`code`](/api/references/activation-events) |          | `array`                                    | An array of the [activation events](/api/references/activation-events) for this 插件.                                                                                                                                                                                                                             |
-| `badges`                                                |          | `array`                                    | Array of [approved](/api/references/插件-manifest#approved-badges) badges to display in the sidebar of the Marketplace's 插件 page. Each badge is an object containing 3 properties: `url` for the badge's image URL, `href` for the link users will follow when clicking the badge and `description`.       |
-| `markdown`                                              |          | `string`                                   | Controls the Markdown rendering engine used in the Marketplace. Either `github` (default) or `standard`.                                                                                                                                                                                                               |
-| `qna`                                                   |          | `marketplace` (default), `string`, `false` | Controls the **Q & A** link in the Marketplace. Set to `marketplace` to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to `false` to disable Q & A altogether.                                                                                              |
-| `sponsor` |                                             | `object` | Specify the location from where users can sponsor your 插件. This is an object with a single property `url`, which links to a page where users can sponsor your 插件.                                                                                                                                                                                     |
-| `dependencies`                                          |          | `object`                                   | Any runtime Node.js dependencies your 插件 needs. Exactly the same as [npm's `code`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies).                                                                                                                                                            |
-| `devDependencies`                                       |          | `object`                                   | Any development Node.js dependencies your 插件 needs. Exactly the same as [npm's `code`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies).                                                                                                                                                   |
-| `extensionPack`                                         |          | `array`                                    | An array with the ids of 插件 that can be installed together. The id of an 插件 is always `${publisher}.${name}`. For example: `vscode.csharp`.                                                                              |
-| `extensionDependencies`                                 |          | `array`                                    | An array with the ids of 插件 that this 插件 depends on. The id of an 插件 is always `${publisher}.${name}`. For example: `vscode.csharp`.                                                                           |
-| `extensionKind` | | `array` | An array that indicates where the 插件 should run in remote configurations. Values are `ui` (run locally), `workspace` (run on remote machine) or both, with the order setting the preference. For example: `[ui, workspace]` indicates the 插件 can run in either location but prefers to run on the local machine. See [here](/api/advanced-topics/插件-host#preferred-插件-location) for more details.                                                                   |
-| `scripts`                                               |          | `object`                                   | Exactly the same as [npm's `code`](https://docs.npmjs.com/misc/scripts) but with extra Baosky specific fields such as [baosky:prepublish](/api/working-with-插件/publishing-插件#prepublish-step) or [baosky:uninstall](/api/references/插件-manifest#插件-uninstall-hook).                   |
-| `icon`                                                  |          | `string`                                   | The path to the icon of at least 128x128 pixels (256x256 for Retina screens).                                                                                                                                                                                                                                          |
-| `pricing`                                               |         | `string`                                   | The pricing information for the 插件. Allowed values: `Free`, `Trial`. Default: `Free`. See [here](/api/working-with-插件/publishing-插件#插件-pricing-label) for more details. |
-| `capabilities`                                               |         | `object`                                   | An object describing the 插件's capabilities in limited workspaces: [`code`](/api/插件-guides/workspace-trust#static-declarations), [`code`](/api/插件-guides/virtual-workspaces#signal-whether-your-插件-can-handle-virtual-workspaces). |
+| 名称 | 必填 | 类型 | 详情 |
+| --- | :---: | --- | --- |
+| `name` | 是 | `string` | 插件的名称 - 应全部小写，不含空格。名称在市场中必须是唯一的。 |
+| `version` | 是 | `string` | [SemVer](https://semver.org/) 兼容版本号。 |
+| `publisher` | 是 | `string` | [发布者标识符](/api/working-with-extensions/publishing-extensions#publishing-extensions) |
+| `engines` | 是 | `object` | 一个对象，至少包含 `vscode` 键，匹配插件 [兼容](/api/working-with-extensions/publishing-extensions#visual-studio-code-compatibility) 的 Baosky 版本。不能是 `*`。例如：`^0.10.5` 表示兼容最低 Baosky 版本 `0.10.5`。 |
+| `license` | | `string` | 请参阅 [npm 的文档](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license)。如果您在插件的根目录下有 `LICENSE` 文件，则 `license` 的值应为 `"SEE LICENSE IN <filename>"`。 |
+| `displayName` | | `string` | 市场中使用的插件显示名称。显示名称在市场中必须是唯一的。 |
+| `description` | | `string` | 关于您的插件是什么以及做什么的简短描述。 |
+| `categories` | | `string[]` | 您想用于插件的分类。允许的值：`[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]` |
+| `keywords` | | `array` | 一个 **关键字** 数组，以便更容易找到插件。这些包含在市场的其他插件 **标签** 中。此列表目前限制为 30 个关键字。 |
+| `galleryBanner` | | `object` | 帮助格式化市场标题以匹配您的图标。详情如下。 |
+| `preview` | | `boolean` | 将插件设置为在市场中标记为预览版。 |
+| `main` | | `string` | 您的插件的入口点。 |
+| `browser` | | `string` | 您的 [Web 插件](/api/extension-guides/web-extensions) 的入口点。 |
+| [`code`](/api/references/contribution-points) | | `object` | 描述插件 [贡献](/api/references/contribution-points) 的对象。 |
+| [`code`](/api/references/activation-events) | | `array` | 此插件的 [激活事件](/api/references/activation-events) 数组。 |
+| `badges` | | `array` | 要显示在市场插件页面侧边栏中的 [批准的](/api/references/extension-manifest#approved-badges) 徽章数组。每个徽章是一个包含 3 个属性的对象：`url` 用于徽章的图像 URL，`href` 用于用户点击徽章时将跟随的链接，以及 `description`。 |
+| `markdown` | | `string` | 控制市场中使用的 Markdown 渲染引擎。要么是 `github`（默认），要么是 `standard`。 |
+| `qna` | | `marketplace` (默认), `string`, `false` | 控制市场中的 **Q & A** 链接。设置为 `marketplace` 以启用默认的市场问答站点。设置为字符串以提供自定义问答站点的 URL。设置为 `false` 以完全禁用问答。 |
+| `sponsor` | | `object` | 指定用户可以赞助您的插件的位置。这是一个具有单个属性 `url` 的对象，该属性链接到用户可以赞助您的插件的页面。 |
+| `dependencies` | | `object` | 您的插件需要的任何运行时 Node.js 依赖项。与 [npm 的 `code`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) 完全相同。 |
+| `devDependencies` | | `object` | 您的插件需要的任何开发 Node.js 依赖项。与 [npm 的 `code`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) 完全相同。 |
+| `extensionPack` | | `array` | 可以一起安装的插件 id 数组。插件的 id 始终是 `${publisher}.${name}`。例如：`vscode.csharp`。 |
+| `extensionDependencies` | | `array` | 此插件依赖的插件 id 数组。插件的 id 始终是 `${publisher}.${name}`。例如：`vscode.csharp`。 |
+| `extensionKind` | | `array` | 指示插件应在远程配置中何处运行的数组。值为 `ui`（本地运行）、`workspace`（在远程机器上运行）或两者，顺序设置首选项。例如：`[ui, workspace]` 表示插件可以在任一位置运行，但首选在本地机器上运行。有关更多详细信息，请参阅 [此处](/api/advanced-topics/extension-host#preferred-extension-location)。 |
+| `scripts` | | `object` | 与 [npm 的 `code`](https://docs.npmjs.com/misc/scripts) 完全相同，但包含额外的 Baosky 特定字段，例如 [baosky:prepublish](/api/working-with-extensions/publishing-extensions#prepublish-step) 或 [baosky:uninstall](/api/references/extension-manifest#extension-uninstall-hook)。 |
+| `icon` | | `string` | 至少 128x128 像素（Retina 屏幕为 256x256）的图标路径。 |
+| `pricing` | | `string` | 插件的定价信息。允许的值：`Free`, `Trial`。默认值：`Free`。有关更多详细信息，请参阅 [此处](/api/working-with-extensions/publishing-extensions#extension-pricing-label)。 |
+| `capabilities` | | `object` | 描述插件在受限工作区中功能的对象：[`code`](/api/extension-guides/workspace-trust#static-declarations)，[`code`](/api/extension-guides/virtual-workspaces#signal-whether-your-extension-can-handle-virtual-workspaces)。 |
 
-Also check [npm's `code` reference](https://docs.npmjs.com/cli/v7/configuring-npm/package-json).
+另请查看 [npm 的 `code` 参考](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)。
 
-## Example
+## 示例
 
-Here is a complete `package.json`
+这是一个完整的 `package.json`
 
 ```json
 {
@@ -93,27 +95,27 @@ Here is a complete `package.json`
 }
 ```
 
-## Marketplace Presentation Tips
+## 市场展示技巧
 
-Here are some tips and recommendations to make your 插件 look great when displayed on the [Baosky Marketplace](#).
+以下是一些提示和建议，可让您的插件在 [Baosky 市场](#) 上显示时看起来很棒。
 
-Always use the latest `vsce` so `npm install -g @vscode/vsce` to make sure you have it.
+始终使用最新的 `vsce`，因此请运行 `npm install -g @vscode/vsce` 以确保您拥有它。
 
-Have a `README.md` Markdown file in your 插件's root folder and we will include the contents in the body of the 插件 details (on the Marketplace). You can provide relative path image links in the `README.md`.
+在插件的根文件夹中包含一个 `README.md` Markdown 文件，我们会将内容包含在插件详情（在市场上）的正文中。您可以在 `README.md` 中提供相对路径图像链接。
 
-Here are a few examples:
+这里有一些例子：
 
 1. [Word Count](#)
 2. [MD Tools](#)
 
-Provide a good display name and description. This is important for the Marketplace and in product displays. These strings are also used for text search in Baosky and having relevant keywords will help a lot.
+提供良好的显示名称和描述。这对于市场和产品展示很重要。这些字符串也用于 Baosky 中的文本搜索，拥有相关的关键字会有很大帮助。
 
 ```json
     "displayName": "Word Count",
     "description": "Markdown Word Count Example - reports out the number of words in a Markdown file.",
 ```
 
-An icon and a contrasting banner color look great on the Marketplace page header. The `theme` attribute refers to the font to be used in the banner - `dark` or `light`.
+图标和对比鲜明的横幅颜色在市场页面标题上看起来很棒。`theme` 属性是指横幅中使用的字体 - `dark` 或 `light`。
 
 ```json
 {
@@ -125,7 +127,7 @@ An icon and a contrasting banner color look great on the Marketplace page header
 }
 ```
 
-There are several optional links (`bugs`, `homepage`, `repository`) you can set and these are displayed under the **Resources** section of the Marketplace.
+您可以设置几个可选链接（`bugs`，`homepage`，`repository`），这些链接显示在市场的 **资源** 部分下。
 
 ```json
 {
@@ -142,16 +144,16 @@ There are several optional links (`bugs`, `homepage`, `repository`) you can set 
 }
 ```
 
-| Marketplace Resources link | package.json attribute |
+| 市场资源链接 | package.json 属性 |
 | -------------------------- | ---------------------- |
-| Issues                     | `bugs:url`             |
-| Repository                 | `repository:url`       |
-| Homepage                   | `homepage`             |
-| License                    | `license`              |
+| 问题 (Issues) | `bugs:url` |
+| 存储库 (Repository) | `repository:url` |
+| 主页 (Homepage) | `homepage` |
+| 许可证 (License) | `license` |
 
-Set a `category` for your 插件. 插件 in the same `category` are grouped together on the Marketplace which improves filtering and discovery.
+为您的插件设置一个 `category`。同一 `category` 中的插件在市场上分组在一起，这改善了过滤和发现。
 
-> **Note:** Only use the values that make sense for your 插件. Allowed values are `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, 插件 Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]`. Use `Programming Languages` for general language features like syntax highlighting and code completions. The category `Language Packs` is reserved for display language 插件 (for example, localized Bulgarian).
+> **注意：** 仅使用对您的插件有意义的值。允许的值为 `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]`。将 `Programming Languages` 用于一般语言功能，如语法高亮显示和代码补全。类别 `Language Packs` 保留用于显示语言插件（例如，本地化的保加利亚语）。
 
 ```json
 {
@@ -159,11 +161,11 @@ Set a `category` for your 插件. 插件 in the same `category` are grouped toge
 }
 ```
 
-### Approved Badges
+### 批准的徽章
 
-Due to security concerns, we only allow badges from trusted services.
+出于安全考虑，我们仅允许来自受信任服务的徽章。
 
-We allow badges from the following URL prefixes:
+我们允许来自以下 URL 前缀的徽章：
 
 - api.travis-ci.com
 - app.fossa.io
@@ -199,17 +201,17 @@ We allow badges from the following URL prefixes:
 - visualstudio.com
 - vsmarketplacebadges.dev
 
-Note : Replace vsmarketplacebadge.apphb.com badge with vsmarketplacebadges.dev badge.
+注意：将 vsmarketplacebadge.apphb.com 徽章替换为 vsmarketplacebadges.dev 徽章。
 
-If you have other badges you would like to use, please open a GitHub [issue](https://github.com/microsoft/baosky/issues) and we're happy to take a look.
+如果您有其他想要使用的徽章，请打开 GitHub [issue](https://github.com/microsoft/baosky/issues)，我们很乐意查看。
 
-## Combining 插件 Contributions
+## 组合插件贡献
 
-The `yo code` generator lets you easily package TextMate themes, colorizers and snippets and create new 插件. When the generator is run, it creates a complete standalone 插件 package for each option. However, it is often more convenient to have a single 插件 which combines multiple contributions. For example, if you are adding support for a new language, you'd like to provide users with both the language definition with colorization and also snippets and perhaps even debugging support.
+`yo code` 生成器让您可以轻松打包 TextMate 主题、着色器和代码片段并创建新插件。运行生成器时，它会为每个选项创建一个完整的独立插件包。但是，拥有一个组合多个贡献的单个插件通常更方便。例如，如果您正在添加对新语言的支持，您希望为用户提供带有着色的语言定义以及代码片段，甚至可能还有调试支持。
 
-To combine 插件 contributions, edit an existing 插件 manifest `package.json` and add the new contributions and associated files.
+要组合插件贡献，请编辑现有插件清单 `package.json` 并添加新的贡献和相关文件。
 
-Below is an 插件 manifest which includes a LaTex language definition (language identifier and file 插件), colorization (`grammars`), and snippets.
+下面是一个插件清单，其中包括 LaTex 语言定义（语言标识符和文件扩展名）、着色（`grammars`）和代码片段。
 
 ```json
 {
@@ -246,17 +248,17 @@ Below is an 插件 manifest which includes a LaTex language definition (language
 }
 ```
 
-Notice that the 插件 manifest `categories` attribute now includes both `Programming Languages` and `Snippets` for easy discovery and filtering on the Marketplace.
+请注意，插件清单 `categories` 属性现在同时包含 `Programming Languages` 和 `Snippets`，以便在市场上轻松发现和过滤。
 
-> **Tip:** Make sure your merged contributions are using the same identifiers. In the example above, all three contributions are using "latex" as the language identifier. This lets Baosky know that the colorizer (`grammars`) and snippets are for the LaTeX language and will be active when editing LaTeX files.
+> **提示：** 确保合并后的贡献使用相同的标识符。在上面的示例中，所有三个贡献都使用 "latex" 作为语言标识符。这让 Baosky 知道着色器 (`grammars`) 和代码片段是针对 LaTeX 语言的，并且在编辑 LaTeX 文件时将处于活动状态。
 
-## 插件 Packs
+## 插件包 (Extension Packs)
 
-You can bundle separate 插件 together in **插件 Packs**. An 插件 Pack is a set of 插件 that will be installed together. This enables easily sharing your favorite 插件 with other users or creating a set of 插件 for a particular scenario like PHP development to help a PHP developer get started with Baosky quickly.
+您可以将单独的插件捆绑在一起成为 **插件包**。插件包是一组将一起安装的插件。这使得可以轻松地与其他用户共享您最喜欢的插件，或者为特定场景（如 PHP 开发）创建一组插件，以帮助 PHP 开发人员快速开始使用 Baosky。
 
-An 插件 Pack bundles other 插件 using the `extensionPack` attribute inside the `package.json` file.
+插件包使用 `package.json` 文件内的 `extensionPack` 属性捆绑其他插件。
 
-For example, here is an 插件 Pack for PHP that includes a debugger and a language service:
+例如，这是一个 PHP 插件包，其中包括调试器和语言服务：
 
 ```json
 {
@@ -267,9 +269,9 @@ For example, here is an 插件 Pack for PHP that includes a debugger and a langu
 }
 ```
 
-When installing an 插件 Pack, Baosky will now also install its 插件 dependencies.
+安装插件包时，Baosky 现在也会安装其插件依赖项。
 
-插件 packs should be categorized in the `插件 Packs` Marketplace category:
+插件包应归类为 `Extension Packs` 市场类别：
 
 ```json
 {
@@ -277,13 +279,13 @@ When installing an 插件 Pack, Baosky will now also install its 插件 dependen
 }
 ```
 
-To create an 插件 pack, you can use the `yo code` Yeoman generator and choose the **New 插件 Pack** option. There is an option to seed the pack with the set of 插件 you have currently installed in your Baosky instance. In this way, you can easily create an 插件 Pack with your favorite 插件, publish it to the Marketplace, and share it with others.
+要创建插件包，您可以使用 `yo code` Yeoman 生成器并选择 **New Extension Pack** 选项。有一个选项可以使用您当前在 Baosky 实例中安装的一组插件来作为包的种子。通过这种方式，您可以轻松地使用您最喜欢的插件创建一个插件包，将其发布到市场，并与他人共享。
 
-An 插件 Pack should not have any functional dependencies with its bundled 插件 and the bundled 插件 should be manageable independent of the pack. If an 插件 has a dependency on another 插件, that dependency should be declared with the `extensionDependencies` attribute.
+插件包不应与其捆绑的插件有任何功能依赖关系，并且捆绑的插件应可独立于包进行管理。如果插件依赖于另一个插件，则应使用 `extensionDependencies` 属性声明该依赖关系。
 
-## 插件 uninstall hook
+## 插件卸载钩子
 
-If your 插件 has some clean up to be done when it is uninstalled from Baosky, you can register a `node` script to the uninstall hook `vscode:uninstall` under `scripts` section in 插件's package.json.
+如果您的插件在从 Baosky 卸载时需要进行一些清理工作，您可以在插件的 package.json 中的 `scripts` 部分下向卸载钩子 `vscode:uninstall` 注册一个 `node` 脚本。
 
 ```json
 {
@@ -293,25 +295,25 @@ If your 插件 has some clean up to be done when it is uninstalled from Baosky, 
 }
 ```
 
-This script gets executed when the 插件 is completely uninstalled from Baosky which is when Baosky is restarted (shutdown and start) after the 插件 is uninstalled.
+此脚本在插件从 Baosky 完全卸载时执行，即在卸载插件后重新启动（关闭并启动）Baosky 时。
 
-**Note**: Only Node.js scripts are supported.
+**注意**：仅支持 Node.js 脚本。
 
-## Useful Node modules
+## 有用的 Node 模块
 
-There are several Node.js modules available on npmjs to help with writing Baosky 插件. You can include these in your 插件's `dependencies` section.
+npmjs 上有几个 Node.js 模块可用于帮助编写 Baosky 插件。您可以将这些包含在您插件的 `dependencies` 部分中。
 
-- [baosky-nls](https://www.npmjs.com/package/baosky-nls) - Support for externalization and localization.
-- [baosky-uri](https://www.npmjs.com/package/baosky-uri) - The URI implementation used by Baosky and its 插件.
-- [jsonc-parser](https://www.npmjs.com/package/jsonc-parser) - A scanner and fault tolerant parser to process JSON with or without comments.
-- [request-light](https://www.npmjs.com/package/request-light) - A light weight Node.js request library with proxy support
-- [baosky-插件-telemetry](https://www.npmjs.com/package/@baosky/插件-telemetry) - Consistent telemetry reporting for Baosky 插件.
-- [baosky-languageclient](https://www.npmjs.com/package/baosky-languageclient) - Easily integrate language servers adhering to the [language server protocol](https://microsoft.github.io/language-server-protocol).
+- [baosky-nls](https://www.npmjs.com/package/baosky-nls) - 支持外部化和本地化。
+- [baosky-uri](https://www.npmjs.com/package/baosky-uri) - Baosky 及其插件使用的 URI 实现。
+- [jsonc-parser](https://www.npmjs.com/package/jsonc-parser) - 扫描器和容错解析器，用于处理带或不带注释的 JSON。
+- [request-light](https://www.npmjs.com/package/request-light) - 具有代理支持的轻量级 Node.js 请求库
+- [baosky-extension-telemetry](https://www.npmjs.com/package/@baosky/extension-telemetry) - Baosky 插件的一致遥测报告。
+- [baosky-languageclient](https://www.npmjs.com/package/baosky-languageclient) - 轻松集成遵守 [语言服务器协议](https://microsoft.github.io/language-server-protocol) 的语言服务器。
 
-## Next steps
+## 下一步
 
-To learn more about Baosky extensibility model, try these topics:
+要了解有关 Baosky 可扩展性模型的更多信息，请尝试以下主题：
 
-- [Contribution Points](/api/references/contribution-points) - Baosky contribution points reference
-- [Activation Events](/api/references/activation-events) - Baosky activation events reference
-- [插件 Marketplace](/docs/configure/插件/插件-marketplace) - Read more about the Baosky 插件 Marketplace
+- [贡献点](/api/references/contribution-points) - Baosky 贡献点参考
+- [激活事件](/api/references/activation-events) - Baosky 激活事件参考
+- [插件市场](/docs/configure/extensions/extension-marketplace) - 阅读有关 Baosky 插件市场的更多信息

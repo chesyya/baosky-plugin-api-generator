@@ -1,21 +1,23 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: f470466d-89b0-4115-ab7a-2448023b0a6d
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: A guide to creating a File Icon Theme in Baosky
+
+MetaDescription: 在 Baosky 中创建文件图标主题的指南
 ---
 
-# File Icon Theme
+# 文件图标主题
 
-Baosky displays icons next to filenames throughout its UI, and 插件 can contribute new sets of file icons that users can choose from.
+Baosky 在整个 UI 中的文件名旁边显示图标，插件可以提供新的文件图标集供用户选择。
 
-## Adding a new File Icon Theme
+## 添加新的文件图标主题
 
-You can create your own file icon theme from icons (preferably SVG) and from icon fonts. As example, check out the two built-in themes: [Minimal](https://github.com/microsoft/baosky/tree/main/插件/theme-defaults) and [Seti](https://github.com/microsoft/baosky/tree/main/插件/theme-seti).
+您可以从图标（最好是 SVG）和图标字体创建您自己的文件图标主题。例如，查看两个内置主题：[Minimal](https://github.com/microsoft/baosky/tree/main/插件/主题-defaults) 和 [Seti](https://github.com/microsoft/baosky/tree/main/插件/主题-seti)。
 
-To begin, create a Baosky 插件 and add the `iconTheme` contribution point.
+首先，创建一个 Baosky 插件并添加 `iconTheme` 贡献点。
 
 ```json
 {
@@ -31,17 +33,17 @@ To begin, create a Baosky 插件 and add the `iconTheme` contribution point.
 }
 ```
 
-The `id` is the identifier for the icon theme. It is used as an identifier in the settings, so make it unique but also readable. `label` is shown in the file icon theme picker dropdown. The `path` points to a file in the 插件 that defines the icon set. If your icon set name follows the `*icon-theme.json` name scheme, you will get completion support and hovers in Baosky.
+`id` 是图标主题的标识符。它在设置中用作标识符，因此请使其唯一且可读。 `label` 显示在文件图标主题选择器下拉列表中。 `path` 指向插件中定义图标集的文件。如果您的图标集名称遵循 `*icon-主题.json` 名称方案，您将获得补全支持并悬停在 Baosky 中。
 
-### File Icon Set File
+### 文件图标集文件
 
-The file icon set file is a JSON file consisting of file icon associations and icon definitions.
+文件图标集文件是一个 JSON 文件，由文件图标关联和图标定义组成。
 
-An icon association maps a file type ('file', 'folder', 'json-file'...) to an icon definition. Icon definitions define where the icon is located: That can be an image file or also glyph in a font.
+图标关联将文件类型（“文件”、“文件夹”、“json 文件”...）映射到图标定义。图标定义定义图标所在的位置：可以是图像文件，也可以是字体中的字形。
 
-### Icon definitions
+### 图标定义
 
-The `iconDefinitions` section contains all definitions. Each definition has an id, which will be used to reference the definition. A definition can be referenced also by more than one file association.
+`iconDefinitions` 部分包含所有定义。每个定义都有一个 id，用于引用该定义。一个定义也可以被多个文件关联引用。
 
 ```json
 {
@@ -53,23 +55,23 @@ The `iconDefinitions` section contains all definitions. Each definition has an i
 }
 ```
 
-This icon definition above contains a definition with the identifier `_folder_dark`.
+上面的图标定义包含一个带有标识符 `_folder_dark` 的定义。
 
-The following properties are supported:
+支持以下属性：
 
-- `iconPath`: When using a svg/png: the path to the image.
-- `fontCharacter`: When using a glyph font: The character in the font to use.
-- `fontColor`: When using a glyph font: The color to use for the glyph.
-- `fontSize`: When using a font: The font size. By default, the size specified in the font specification is used. Should be a relative size (e.g. 150%) to the parent font size.
-- `fontId`: When using a font: The id of the font. If not specified, the first font specified in font specification section will be picked.
+- `iconPath`：使用 svg/png 时：图像的路径。
+- `fontCharacter`：使用字形字体时：要使用的字体中的字符。
+- `fontColor`：使用字形字体时：字形使用的颜色。
+- `fontSize`：使用字体时：字体大小。默认情况下，使用字体规范中指定的大小。应为父字体大小的相对大小（例如 150%）。
+- `fontId`：使用字体时：字体的 ID。如果未指定，将选择字体规范部分中指定的第一个字体。
 
-### File association
+### 文件关联
 
-Icons can be associated to folders, folder names, files, file 插件, file names and [language IDs](/api/references/contribution-points#contributes.languages).
+图标可以与文件夹、文件夹名称、文件、文件插件、文件名和 [language IDs](/api/references/contribution-points#contributes.languages) 相关联。
 
-Additionally each of these associations can be refined for 'light' and 'highContrast' color themes.
+此外，这些关联中的每一个都可以针对“浅色”和“高对比度”颜色主题进行细化。
 
-Each file association points to an icon definition.
+每个文件关联都指向一个图标定义。
 
 ```json
 {
@@ -100,21 +102,21 @@ Each file association points to an icon definition.
 }
 ```
 
-- `file` is the default file icon, shown for all files that don't match any 插件, filename or language ID. Currently all properties defined by the definition of the file icon will be inherited (only relevant for font glyphs, useful for the fontSize).
-- `folder` is the folder icon for collapsed folders, and if `folderExpanded` is not set, also for expanded folders. Icons for specific folder names can be associated using the `folderNames` property.
-  The folder icon is optional. If not set, no icon will be shown for folder.
-- `folderExpanded` is the folder icon for expanded folders. The expanded folder icon is optional. If not set, the icon defined for `folder` will be shown.
-- `folderNames` associates folder names to icons. The key of the set is the folder name, optionally prefixed by a single parent path segment (*). Patterns or wildcards are not supported. Folder name matching is case insensitive.
-- `folderNamesExpanded` associates folder names to icons for expanded folder. The key of the set is the folder name, optionally prefixed by a single parent path segment (*). Patterns or wildcards are not supported. Folder name matching is case insensitive.
-- `rootFolder` is the folder icon for collapsed workspace root folders , and if `rootFolderExpanded` is not set, also for expanded workspace root folders. If not set, the icon defined for `folder` will be shown for workspace root folders.
-- `rootFolderExpanded` is the folder icon for expanded workspace root folders. If not set, the icon defined for `rootFolder` will be shown for expanded workspace root folders.
-- `rootFolderNames` associates root folder names to icons. The key of the set is the folder name. Patterns or wildcards are not supported. Root folder name matching is case insensitive.
-- `rootFolderNamesExpanded` associates root folder names to icons for expanded folder. The key of the set is the folder name. Patterns or wildcards are not supported. Root folder name matching is case insensitive.
-- `languageIds` associates languages to icons. The key in the set is the language ID as defined in the [language contribution point](/api/references/contribution-points#contributes.languages). The language of a file is evaluated based on the file 插件 and file names as defined in the language contribution. Note that the 'first line match' of the language contribution is not considered.
-- `fileExtensions` associates file 插件 to icons. The key in the set is the file 插件 name. The 插件 name is a file name segment after a dot (not including the dot). File names with multiple dots such as `lib.d.ts` can match multiple 插件; 'd.ts' and 'ts'. Optionally, the file 插件 name can be prefixed by a single parent path segment (*). 插件 are compared case insensitive.
-- `fileNames` associates file names to icons. The key in the set is the full file name, not including any path segments. Optionally, the file 插件 name can be prefixed by a single parent path segment (*). Patterns or wildcards are not supported. File name matching is case insensitive. A 'fileName' match is the strongest match, and the icon associated to the file name will be preferred over an icon of a matching fileExtension and also of a matching language ID.
+- `file` 是默认文件图标，针对与任何插件、文件名或语言 ID 不匹配的所有文件显示。目前，文件图标定义定义的所有属性都将被继承（仅与字体字形相关，对 fontSize 有用）。
+- `folder` 是折叠文件夹的文件夹图标，如果未设置 `folderExpanded`，也适用于展开的文件夹。可以使用 `folderNames` 属性关联特定文件夹名称的图标。
+文件夹图标是可选的。如果未设置，则不会显示文件夹图标。
+- `folderExpanded` 是展开文件夹的文件夹图标。展开的文件夹图标是可选的。如果未设置，将显示为 `folder` 定义的图标。
+- `folderNames` 将文件夹名称与图标相关联。该集合的键是文件夹名称，可以选择以单个父路径段 (*) 作为前缀。不支持模式或通配符。文件夹名称匹配不区分大小写。
+- `folderNamesExpanded` 将文件夹名称与展开文件夹的图标相关联。该集合的键是文件夹名称，可以选择以单个父路径段 (*) 作为前缀。不支持模式或通配符。文件夹名称匹配不区分大小写。
+- `rootFolder` 是折叠工作区根文件夹的文件夹图标，如果未设置 `rootFolderExpanded`，也适用于展开工作区根文件夹。如果未设置，将为工作区根文件夹显示为 `folder` 定义的图标。
+- `rootFolderExpanded` 是展开的工作区根文件夹的文件夹图标。如果未设置，将为扩展工作区根文件夹显示为 `rootFolder` 定义的图标。
+- `rootFolderNames` 将根文件夹名称与图标相关联。该集合的关键是文件夹名称。不支持模式或通配符。根文件夹名称匹配不区分大小写。
+- `rootFolderNamesExpanded` 将根文件夹名称与展开文件夹的图标相关联。该集合的关键是文件夹名称。不支持模式或通配符。根文件夹名称匹配不区分大小写。
+- `languageIds` 将语言与图标相关联。该集合中的键是 [language contribution point](/api/references/contribution-points#contributes.languages) 中定义的语言 ID。文件的语言是根据语言贡献中定义的文件插件和文件名来评估的。请注意，不考虑语言贡献的“第一行匹配”。
+- `fileExtensions` 将文件插件与图标相关联。该集合中的键是文件插件名称。插件名称是点后面的文件名段（不包括点）。带有多个点的文件名（例如 `lib.d.ts`）可以匹配多个插件； “d.ts”和“ts”。或者，文件插件名称可以以单个父路径段 (*) 为前缀。 插件比较不区分大小写。
+- `fileNames` 将文件名与图标相关联。该集中的键是完整的文件名，不包括任何路径段。或者，文件插件名称可以以单个父路径段 (*) 为前缀。不支持模式或通配符。文件名匹配不区分大小写。 “文件名”匹配是最强的匹配，与文件名关联的图标将优先于匹配文件扩展名和匹配语言 ID 的图标。
 
-(*) Some property keys (`folderNames`, `folderNamesExpanded`, `fileExtensions`, `fileNames`) can be prefixed by a single parent path segment. The icon will only be used if the resource's direct parent folder matches the parent path folder. This can be used to give resources in a particular folder (for example, `system`) a different appearance:
+(*) 某些属性键（`folderNames`、`folderNamesExpanded`、`fileExtensions`、`fileNames`）可以使用单个父路径段作为前缀。仅当资源的直接父文件夹与父路径文件夹匹配时才会使用该图标。这可用于为特定文件夹（例如 `system`）中的资源提供不同的外观：
 
 ```json
   "fileNames": {
@@ -122,7 +124,7 @@ Each file association points to an icon definition.
   },
 ```
 
-`system/win.ini` means that the association matches files called `win.ini` directly in a folder `system`
+`system/win.ini` 表示关联直接匹配文件夹 `system` 中名为 `win.ini` 的文件
 
 ```json
   "fileExtensions": {
@@ -130,26 +132,26 @@ Each file association points to an icon definition.
   },
 ```
 
-`system/ini` means that the association matches files called `*.ini` directly in a folder `system`
+`system/ini` 表示关联直接匹配文件夹 `system` 中名为 `*.ini` 的文件
 
-A file 插件 match is preferred over a language match, but is weaker than a file name match. A match with a parent path segment is preferred over a match without such a segment of the same kind.
+文件插件匹配优于语言匹配，但弱于文件名匹配。具有父路径段的匹配优于不具有此类同类段的匹配。
 
-`file name match with parent > file name match > file extension match with parent > file extension match > language match ...`
+__代码_0__
 
-The `light` and the `highContrast` section have the same file association properties as just listed. They allow to override icons for the corresponding themes.
+`light` 和 `highContrast` 部分具有与刚刚列出的相同的文件关联属性。它们允许覆盖相应主题的图标。
 
-### Font definitions
+### 字体定义
 
-The `fonts` section lets you declare any number of glyph fonts that you want to use.
-You can later reference these fonts in the icon definitions. The font declared first will be used as the default if an icon definition does not specify a font id.
+`fonts` 部分允许您声明要使用的任意数量的字形字体。
+您稍后可以在图标定义中引用这些字体。如果图标定义未指定字体 ID，则首先声明的字体将用作默认字体。
 
-Copy the font file into your 插件 and set the path accordingly.
-It is recommended to use [WOFF](https://developer.mozilla.org/docs/Web/Guide/WOFF) fonts.
+将字体文件复制到您的插件中并相应地设置路径。
+建议使用[WOFF](https://developer.mozilla.org/docs/Web/Guide/WOFF)字体。
 
-- Set 'woff' as the format.
+- 将“woff”设置为格式。
 - the weight property values are defined [here](https://developer.mozilla.org/docs/Web/CSS/font-weight#Values).
-- the style property values are defined [here](https://developer.mozilla.org/docs/Web/CSS/@font-face/font-style#Values).
-- the size should be relative to the font size where the icon is used. Therefore, always use percentage.
+- 样式属性值定义为 [here](https://developer.mozilla.org/docs/Web/CSS/@font-face/font-style#Values)。
+- 大小应与使用图标的字体大小相关。因此，始终使用百分比。
 
 ```json
 {
@@ -177,13 +179,13 @@ It is recommended to use [WOFF](https://developer.mozilla.org/docs/Web/Guide/WOF
 }
 ```
 
-### Folder icons in File Icon Themes
+### 文件图标主题中的文件夹图标
 
-File Icon themes can instruct the File Explorer not to show the default folder icon (the rotating triangles or "twisties") when the folder icons are good enough to indicate the expansion state of a folder. This mode is enabled by setting `"hidesExplorerArrows":true` in the File Icon theme definition file.
+当文件夹图标足以指示文件夹的展开状态时，文件图标主题可以指示文件资源管理器不显示默认文件夹图标（旋转三角形或“扭曲”）。通过在文件图标主题定义文件中设置 `"hidesExplorerArrows":true` 来启用此模式。
 
-### Language default icons
+### 语言默认图标
 
-Language contributors can define an icon for the language.
+语言贡献者可以为该语言定义一个图标。
 
 ```jsonc
 {
@@ -202,12 +204,12 @@ Language contributors can define an icon for the language.
 }
 ```
 
-The icon is used if a file icon theme only has a generic file icon for the language.
+如果文件图标主题仅具有该语言的通用文件图标，则使用该图标。
 
-Language default icons are only shown if:
+仅在以下情况下才显示语言默认图标：
 - the file icon theme has specific file icons. E.g. `Minimal` does not have specific file icons and therefore does not use the language default icons
-- the file icon theme does not contain an icon for the given language, file 插件 or file name.
-- the file icon theme does not define `"showLanguageModeIcons":false`
+- 文件图标主题不包含给定语言、文件插件或文件名的图标。
+- 文件图标主题未定义 `"showLanguageModeIcons":false`
 
-Language default icons are always shown if
-- the file icon theme does define `"showLanguageModeIcons":true`
+如果满足以下条件，则始终显示语言默认图标：
+- 文件图标主题确实定义了 `"showLanguageModeIcons":true`

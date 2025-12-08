@@ -1,9 +1,11 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: f470466d-89b0-4115-ab7a-2448023b0a6d
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
+
 MetaDescription: A guide to creating Product Icon Theme in Baosky
 ---
 
@@ -98,9 +100,9 @@ Baosky 内置了对 `package.json` 文件以及产品图标主题文件的编辑
 
 此外，主题文件会被监视更改，每当修改主题文件时，图标更新将自动应用。在处理产品图标定义文件时，您将在保存时实时看到更改。
 
-要在产品图标主题之间切换，请使用命令 **Preferences: Product Icon Theme**。
+要在产品图标主题之间切换，请使用命令 ** Preferences: Product Icon Theme ** 。
 
-要找出 Baosky UI 中某个位置使用的图标，请通过运行 **Help > Toggle Developer Tools** 打开开发者工具，然后：
+要找出 Baosky UI 中某个位置使用的图标，请通过运行 ** Help > Toggle Developer Tools ** 打开开发者工具，然后：
 
 - 单击左上角的开发者工具检查工具。
 - 将鼠标移到要检查的图标上。

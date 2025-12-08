@@ -1,33 +1,35 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 9f5daebb-1566-46b8-a04d-0fd6c5d4a926
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: UX guidelines for settings contributed by a Baosky 插件.
+
+MetaDescription: 由 Baosky 插件贡献的设置的 UX 指南。
 ---
 
-# Settings
+# 设置
 
-[Settings](/api/references/contribution-points#contributes.configuration) are how a user can configure your 插件. Settings can be inputs boxes, booleans, dropdowns, lists, key/value pairs. If your 插件 requires the user to configure specific settings, you can open the Settings UI and query your 插件 setting via the setting ID.
+[设置](/api/references/contribution-points#contributes.configuration) 是用户配置您的插件的方式。设置可以是输入框、布尔值、下拉列表、列表、键/值对。如果您的插件需要用户配置特定设置，您可以打开设置 UI 并通过设置 ID 查询您的插件设置。
 
-**✔️ Do**
+**✔️ 建议**
 
-* Add default values to each setting
-* Add clear descriptions to each setting
-* Link to documentation for complicated settings
-* Link to additional settings that are related
-* Link to setting IDs when needing the user to configure specific settings
+* 为每个设置添加默认值。
+* 为每个设置添加清晰的描述。
+* 链接到复杂设置的文档。
+* 链接到相关的其他设置。
+* 当需要用户配置特定设置时，链接到设置 ID。
 
-❌ Don't
+**❌ 不建议**
 
-* Create your own settings page/webview
-* Create long descriptions
+* 创建您自己的设置页面/webview。
+* 创建过长的描述。
 
 <!-- 图片已移除 -->
 
-*This example links to a specific setting using the setting ID.*
+*此示例使用设置 ID 链接到特定设置。*
 
-## Links
+## 链接
 
-* [Configuration contribution point](/api/references/contribution-points#contributes.configuration)
+* [配置贡献点](/api/references/contribution-points#contributes.configuration)

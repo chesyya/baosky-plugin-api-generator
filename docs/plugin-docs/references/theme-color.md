@@ -1,15 +1,17 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
+
 ContentId: 8e03996d-35e9-4e9f-a60e-50d0962231b8
 DateApproved: 11/12/2025
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
-MetaDescription: Theme Color reference that lists all themable colors in Baosky.
+
+MetaDescription: 引用列表，列出了 Baosky 中所有可主题化的颜色。
 ---
 
-# Theme Color
+# 主题颜色指南
 
-You can customize your active Baosky [color theme](/docs/getstarted/themes) with the `workbench.colorCustomizations` user [setting](/docs/configure/settings).
+您可以通过修改用户设置中的 `workbench.colorCustomizations` 字段，来个性化定制当前激活的 Baosky [颜色主题](/docs/getstarted/themes)。
 
 ```json
 {
@@ -19,1312 +21,1310 @@ You can customize your active Baosky [color theme](/docs/getstarted/themes) with
 }
 ```
 
-**Note**: If you want to use an existing color theme, see [Color Themes](/docs/getstarted/themes) where you'll learn how to set the active color theme through the **Preferences: Color Theme** dropdown (`kb(workbench.action.selectTheme)`).
+**注意**：如果您希望使用现成的颜色主题，请参阅 [颜色主题](/docs/getstarted/themes) 章节，了解如何通过 **首选项：颜色主题** 下拉菜单 (`kb(workbench.action.selectTheme)`) 来设置活动颜色主题。
 
-Theme colors are available as CSS variables in [webviews](/api/插件-guides/webview), and [an 插件](#) is available which provides IntelliSense for them.
+在 [webviews](/api/extension-guides/webview) 中，主题颜色可以作为 CSS 变量使用，此外，还有一个 [插件](#) 可以为这些变量提供智能感知功能。
 
-## Color formats
+## 颜色格式
 
-Color values can be defined in the RGB color model with an alpha channel for transparency. As format, the following hexadecimal notations are supported: `#RGB`, `#RGBA`, `#RRGGBB` and `#RRGGBBAA`. R (red), G (green), B (blue), and A (alpha) are hexadecimal characters (0-9, a-f or A-F). The three-digit notation (`#RGB`) is a shorter version of the six-digit form (`#RRGGBB`) and the four-digit RGB notation (`#RGBA`) is a shorter version of the eight-digit form (`#RRGGBBAA`). For example `#e35f` is the same color as `#ee3355ff`.
+颜色值使用带有 alpha 通道（用于透明度）的 RGB 颜色模型定义。支持以下十六进制格式：`#RGB`、`#RGBA`、`#RRGGBB` 和 `#RRGGBBAA`。其中 R（红）、G（绿）、B（蓝）和 A（alpha）是十六进制字符（0-9，a-f 或 A-F）。三位表示法 (`#RGB`) 是六位形式 (`#RRGGBB`) 的简写，四位 RGB 表示法 (`#RGBA`) 是八位形式 (`#RRGGBBAA`) 的简写。例如 `#e35f` 与 `#ee3355ff` 代表相同的颜色。
 
-If no alpha value is defined, it defaults to `ff` (opaque, no transparency). If alpha is set to `00`, the color is fully transparent.
+如果未定义 alpha 值，则默认为 `ff`（不透明，无透明度）。如果 alpha 设置为 `00`，则颜色完全透明。
 
-Some colors should not be opaque in order to not cover other annotations. Check the color descriptions to see to which colors this applies.
+某些颜色不应是不透明的，以免遮挡其他注释。请查看颜色描述，了解这适用于哪些颜色。
 
-## Contrast colors
+## 对比色
 
-The contrast colors are typically only set for high contrast themes. If set, they add an additional border around items across the UI to increase the contrast.
+对比色通常仅针对高对比度主题进行设置。如果设置了这些颜色，它们会在 UI 项目周围添加额外的边框以增加对比度。
 
-- `contrastActiveBorder`: An extra border around active elements to separate them from others for greater contrast.
-- `contrastBorder`: An extra border around elements to separate them from others for greater contrast.
+- `contrastActiveBorder`: 活动元素周围的额外边框，以便与其他元素区分开来，提高对比度。
+- `contrastBorder`: 元素周围的额外边框，以便与其他元素区分开来，提高对比度。
 
-## Base colors
+## 基础颜色
 
-- `focusBorder`: Overall border color for focused elements. This color is only used if not overridden by a component.
-- `foreground`: Overall foreground color. This color is only used if not overridden by a component.
-- `disabledForeground`: Overall foreground for disabled elements. This color is only used if not overridden by a component.
-- `widget.border`: Border color of widgets such as Find/Replace inside the editor.
-- `widget.shadow`: Shadow color of widgets such as Find/Replace inside the editor.
-- `selection.background`: Background color of text selections in the workbench (for input fields or text areas, does not apply to selections within the editor and the terminal).
-- `descriptionForeground`: Foreground color for description text providing additional information, for example for a label.
-- `errorForeground`: Overall foreground color for error messages (this color is only used if not overridden by a component).
-- `icon.foreground`: The default color for icons in the workbench.
-- `sash.hoverBorder`: The hover border color for draggable sashes.
+- `focusBorder`: 聚焦元素的整体边框颜色。仅当组件未覆盖此颜色时使用。
+- `foreground`: 整体前景色。仅当组件未覆盖此颜色时使用。
+- `disabledForeground`: 禁用元素的整体前景色。仅当组件未覆盖此颜色时使用。
+- `widget.border`: 编辑器内小部件（如查找/替换）的边框颜色。
+- `widget.shadow`: 编辑器内小部件（如查找/替换）的阴影颜色。
+- `selection.background`: 工作台中文本选择的背景颜色（用于输入字段或文本区域，不适用于编辑器和终端内的选择）。
+- `descriptionForeground`: 提供附加信息的描述文本的前景色，例如标签。
+- `errorForeground`: 错误消息的整体前景色（仅当组件未覆盖此颜色时使用）。
+- `icon.foreground`: 工作台中图标的默认颜色。
+- `sash.hoverBorder`: 可拖动分隔条的悬停边框颜色。
 
-## Window border
+## 窗口边框
 
-The theme colors for Baosky window border.
+Baosky 窗口边框的主题颜色。
 
-- `window.activeBorder`: Border color for the active (focused) window.
-- `window.inactiveBorder`: Border color for the inactive (unfocused) windows.
+- `window.activeBorder`: 活动（聚焦）窗口的边框颜色。
+- `window.inactiveBorder`: 非活动（未聚焦）窗口的边框颜色。
 
-The window border colors are only supported on macOS and Linux (not Windows) and only when the custom title bar is enabled (`"window.titleBarStyle": "custom"`).
+窗口边框颜色仅在 macOS 和 Linux（非 Windows）上受支持，并且仅当启用自定义标题栏 (`"window.titleBarStyle": "custom"`) 时才受支持。
 
-## Text colors
+## 文本颜色
 
-Colors inside a text document, such as the welcome page.
+文本文档内的颜色，例如欢迎页面。
 
-- `textBlockQuote.background`: Background color for block quotes in text.
-- `textBlockQuote.border`: Border color for block quotes in text.
-- `textCodeBlock.background`: Background color for code blocks in text.
-- `textLink.activeForeground`: Foreground color for links in text when clicked on and on mouse hover.
-- `textLink.foreground`: Foreground color for links in text.
-- `textPreformat.foreground`: Foreground color for preformatted text segments.
-- `textPreformat.background`: Background color for preformatted text segments.
-- `textSeparator.foreground`: Color for text separators.
+- `textBlockQuote.background`: 文本中块引用的背景颜色。
+- `textBlockQuote.border`: 文本中块引用的边框颜色。
+- `textCodeBlock.background`: 文本中代码块的背景颜色。
+- `textLink.activeForeground`: 点击或鼠标悬停时文本中链接的前景色。
+- `textLink.foreground`: 文本中链接的前景色。
+- `textPreformat.foreground`: 预格式化文本段的前景色。
+- `textPreformat.background`: 预格式化文本段的背景色。
+- `textSeparator.foreground`: 文本分隔符的颜色。
 
-## Action colors
+## 操作颜色
 
-A set of colors to control the interactions with actions across the workbench.
+一组用于控制工作台中操作交互的颜色。
 
-- `toolbar.hoverBackground`: Toolbar background when hovering over actions using the mouse
-- `toolbar.hoverOutline`: Toolbar outline when hovering over actions using the mouse
-- `toolbar.activeBackground`: Toolbar background when holding the mouse over actions
-- `editorActionList.background`: Action List background color.
-- `editorActionList.foreground`: Action List foreground color.
-- `editorActionList.focusForeground`: Action List foreground color for the focused item.
-- `editorActionList.focusBackground`: Action List background color for the focused item.
+- `toolbar.hoverBackground`: 使用鼠标悬停在操作上时的工具栏背景
+- `toolbar.hoverOutline`: 使用鼠标悬停在操作上时的工具栏轮廓
+- `toolbar.activeBackground`: 鼠标按住操作时的工具栏背景
+- `editorActionList.background`: 操作列表背景颜色。
+- `editorActionList.foreground`: 操作列表前景色。
+- `editorActionList.focusForeground`: 聚焦项的操作列表前景色。
+- `editorActionList.focusBackground`: 聚焦项的操作列表背景颜色。
 
-## Button control
+## 按钮控件
 
-A set of colors for button widgets such as **Open Folder** button in the Explorer of a new window.
-
-<!-- 图片已移除 -->
-
-- `button.background`: Button background color.
-- `button.foreground`: Button foreground color.
-- `button.border`: Button border color.
-- `button.separator`: Button separator color.
-- `button.hoverBackground`: Button background color when hovering.
-- `button.secondaryForeground`: Secondary button foreground color.
-- `button.secondaryBackground`: Secondary button background color.
-- `button.secondaryHoverBackground`: Secondary button background color when hovering.
-- `checkbox.background`: Background color of checkbox widget.
-- `checkbox.foreground`: Foreground color of checkbox widget.
-- `checkbox.disabled.background`: Background of a disabled checkbox.
-- `checkbox.disabled.foreground`: Foreground of a disabled checkbox.
-- `checkbox.border`: Border color of checkbox widget.
-- `checkbox.selectBackground`: Background color of checkbox widget when the element it's in is selected.
-- `checkbox.selectBorder`: Border color of checkbox widget when the element it's in is selected.
-- `radio.activeForeground`: Foreground color of active radio option.
-- `radio.activeBackground`: Background color of active radio option.
-- `radio.activeBorder`: Border color of the active radio option.
-- `radio.inactiveForeground`: Foreground color of inactive radio option.
-- `radio.inactiveBackground`: Background color of inactive radio option.
-- `radio.inactiveBorder`: Border color of the inactive radio option.
-- `radio.inactiveHoverBackground`: Background color of inactive active radio option when hovering.
-
-## Dropdown control
-
-A set of colors for all Dropdown widgets such as in the Integrated Terminal or the Output panel. Note that the
-Dropdown control is not used on macOS currently.
+一组用于按钮小部件的颜色，例如新窗口资源管理器中的 **打开文件夹** 按钮。
 
 <!-- 图片已移除 -->
 
-- `dropdown.background`: Dropdown background.
-- `dropdown.listBackground`: Dropdown list background.
-- `dropdown.border`: Dropdown border.
-- `dropdown.foreground`: Dropdown foreground.
+- `button.background`: 按钮背景颜色。
+- `button.foreground`: 按钮前景色。
+- `button.border`: 按钮边框颜色。
+- `button.separator`: 按钮分隔符颜色。
+- `button.hoverBackground`: 悬停时的按钮背景颜色。
+- `button.secondaryForeground`: 辅助按钮前景色。
+- `button.secondaryBackground`: 辅助按钮背景颜色。
+- `button.secondaryHoverBackground`: 悬停时的辅助按钮背景颜色。
+- `checkbox.background`: 复选框小部件的背景颜色。
+- `checkbox.foreground`: 复选框小部件的前景色。
+- `checkbox.disabled.background`: 禁用复选框的背景。
+- `checkbox.disabled.foreground`: 禁用复选框的前景。
+- `checkbox.border`: 复选框小部件的边框颜色。
+- `checkbox.selectBackground`: 当选中复选框所在元素时，复选框小部件的背景颜色。
+- `checkbox.selectBorder`: 当选中复选框所在元素时，复选框小部件的边框颜色。
+- `radio.activeForeground`: 活动单选选项的前景色。
+- `radio.activeBackground`: 活动单选选项的背景颜色。
+- `radio.activeBorder`: 活动单选选项的边框颜色。
+- `radio.inactiveForeground`: 非活动单选选项的前景色。
+- `radio.inactiveBackground`: 非活动单选选项的背景颜色。
+- `radio.inactiveBorder`: 非活动单选选项的边框颜色。
+- `radio.inactiveHoverBackground`: 悬停时非活动单选选项的背景颜色。
 
-## Input control
+## 下拉控件
 
-Colors for input controls such as in the Search view or the Find/Replace dialog.
+一组用于所有下拉小部件（例如在集成终端或输出面板中）的颜色。请注意，macOS 目前不使用下拉控件。
 
 <!-- 图片已移除 -->
 
-- `input.background`: Input box background.
-- `input.border`: Input box border.
-- `input.foreground`: Input box foreground.
-- `input.placeholderForeground`: Input box foreground color for placeholder text.
-- `inputOption.activeBackground`: Background color of activated options in input fields.
-- `inputOption.activeBorder`: Border color of activated options in input fields.
-- `inputOption.activeForeground`: Foreground color of activated options in input fields.
-- `inputOption.hoverBackground`: Background color of activated options in input fields.
-- `inputValidation.errorBackground`: Input validation background color for error severity.
-- `inputValidation.errorForeground`: Input validation foreground color for error severity.
-- `inputValidation.errorBorder`: Input validation border color for error severity.
-- `inputValidation.infoBackground`: Input validation background color for information severity.
-- `inputValidation.infoForeground`: Input validation foreground color for information severity.
-- `inputValidation.infoBorder`: Input validation border color for information severity.
-- `inputValidation.warningBackground`: Input validation background color for information warning.
-- `inputValidation.warningForeground`: Input validation foreground color for warning severity.
-- `inputValidation.warningBorder`: Input validation border color for warning severity.
+- `dropdown.background`: 下拉背景。
+- `dropdown.listBackground`: 下拉列表背景。
+- `dropdown.border`: 下拉边框。
+- `dropdown.foreground`: 下拉前景。
 
-## Scrollbar control
+## 输入控件
 
-- `scrollbar.background`: Scrollbar track background color.
-- `scrollbar.shadow`: Scrollbar slider shadow to indicate that the view is scrolled.
-- `scrollbarSlider.activeBackground`: Scrollbar slider background color when clicked on.
-- `scrollbarSlider.background`: Scrollbar slider background color.
-- `scrollbarSlider.hoverBackground`: Scrollbar slider background color when hovering.
+用于输入控件（例如搜索视图或查找/替换对话框中）的颜色。
 
-## Badge
+<!-- 图片已移除 -->
 
-Badges are small information labels, for example, search results count.
+- `input.background`: 输入框背景。
+- `input.border`: 输入框边框。
+- `input.foreground`: 输入框前景。
+- `input.placeholderForeground`: 占位符文本的输入框前景色。
+- `inputOption.activeBackground`: 输入字段中激活选项的背景颜色。
+- `inputOption.activeBorder`: 输入字段中激活选项的边框颜色。
+- `inputOption.activeForeground`: 输入字段中激活选项的前景色。
+- `inputOption.hoverBackground`: 输入字段中激活选项的背景颜色。
+- `inputValidation.errorBackground`: 错误严重性的输入验证背景颜色。
+- `inputValidation.errorForeground`: 错误严重性的输入验证前景色。
+- `inputValidation.errorBorder`: 错误严重性的输入验证边框颜色。
+- `inputValidation.infoBackground`: 信息严重性的输入验证背景颜色。
+- `inputValidation.infoForeground`: 信息严重性的输入验证前景色。
+- `inputValidation.infoBorder`: 信息严重性的输入验证边框颜色。
+- `inputValidation.warningBackground`: 警告信息的输入验证背景颜色。
+- `inputValidation.warningForeground`: 警告严重性的输入验证前景色。
+- `inputValidation.warningBorder`: 警告严重性的输入验证边框颜色。
 
-- `badge.foreground`: Badge foreground color.
-- `badge.background`: Badge background color.
+## 滚动条控件
 
-## Progress bar
+- `scrollbar.background`: 滚动条滑道背景颜色。
+- `scrollbar.shadow`: 滚动条滑块阴影，用于指示视图已滚动。
+- `scrollbarSlider.activeBackground`: 点击时的滚动条滑块背景颜色。
+- `scrollbarSlider.background`: 滚动条滑块背景颜色。
+- `scrollbarSlider.hoverBackground`: 悬停时的滚动条滑块背景颜色。
 
-- `progressBar.background`: Background color of the progress bar shown for long running operations.
+## 徽章 (Badge)
 
-## Lists and trees
+徽章是小型信息标签，例如搜索结果计数。
 
-Colors for list and trees like the File Explorer. An active list/tree has keyboard focus, an inactive does not.
+- `badge.foreground`: 徽章前景色。
+- `badge.background`: 徽章背景颜色。
 
-- `list.activeSelectionBackground`: List/Tree background color for the selected item when the list/tree is active.
-- `list.activeSelectionForeground`: List/Tree foreground color for the selected item when the list/tree is active.
-- `list.activeSelectionIconForeground`: List/Tree icon foreground color for the selected item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
-- `list.dropBackground`: List/Tree drag and drop background when moving items around using the mouse.
-- `list.focusBackground`: List/Tree background color for the focused item when the list/tree is active.
-- `list.focusForeground`: List/Tree foreground color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
-- `list.focusHighlightForeground`: List/Tree foreground color of the match highlights on actively focused items when searching inside the list/tree.
-- `list.focusOutline`: List/Tree outline color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
-- `list.focusAndSelectionOutline`: List/Tree outline color for the focused item when the list/tree is active and selected. An active list/tree has keyboard focus, an inactive does not.
-- `list.highlightForeground`: List/Tree foreground color of the match highlights when searching inside the list/tree.
-- `list.hoverBackground`: List/Tree background when hovering over items using the mouse.
-- `list.hoverForeground`: List/Tree foreground when hovering over items using the mouse.
-- `list.inactiveSelectionBackground`: List/Tree background color for the selected item when the list/tree is inactive.
-- `list.inactiveSelectionForeground`: List/Tree foreground color for the selected item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
-- `list.inactiveSelectionIconForeground`: List/Tree icon foreground color for the selected item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
-- `list.inactiveFocusBackground`: List background color for the focused item when the list is inactive. An active list has keyboard focus, an inactive does not. Currently only supported in lists.
-- `list.inactiveFocusOutline`: List/Tree outline color for the focused item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
-- `list.invalidItemForeground`: List/Tree foreground color for invalid items, for example an unresolved root in explorer.
-- `list.errorForeground`: Foreground color of list items containing errors.
-- `list.warningForeground`: Foreground color of list items containing warnings.
-- `listFilterWidget.background`: List/Tree Filter background color of typed text when searching inside the list/tree.
-- `listFilterWidget.outline`: List/Tree Filter Widget's outline color of typed text when searching inside the list/tree.
-- `listFilterWidget.noMatchesOutline`: List/Tree Filter Widget's outline color when no match is found of typed text when searching inside the list/tree.
-- `listFilterWidget.shadow`: Shadow color of the type filter widget in lists and tree.
-- `list.filterMatchBackground`: Background color of the filtered matches in lists and trees.
-- `list.filterMatchBorder`: Border color of the filtered matches in lists and trees.
-- `list.deemphasizedForeground`: List/Tree foreground color for items that are deemphasized.
-- `list.dropBetweenBackground`: List/Tree drag and drop border color when moving items between items when using the mouse.
-- `tree.indentGuidesStroke`: Tree Widget's stroke color for indent guides.
-- `tree.inactiveIndentGuidesStroke`: Tree stroke color for the indentation guides that are not active.
-- `tree.tableColumnsBorder`: Tree stroke color for the indentation guides.
-- `tree.tableOddRowsBackground`: Background color for odd table rows.
+## 进度条
 
-## Activity Bar
+- `progressBar.background`: 用于长时间运行操作显示的进度条的背景颜色。
 
-The Activity Bar is usually displayed either on the far left or right of the workbench and allows fast switching between views of the Side Bar.
+## 列表和树
 
-- `activityBar.background`: Activity Bar background color.
-- `activityBar.dropBorder`: Drag and drop feedback color for the activity bar items. The activity bar is showing on the far left or right and allows to switch between views of the side bar.
-- `activityBar.foreground`: Activity Bar foreground color (for example used for the icons).
-- `activityBar.inactiveForeground`: Activity Bar item foreground color when it is inactive.
-- `activityBar.border`: Activity Bar border color with the Side Bar.
-- `activityBarBadge.background`: Activity notification badge background color.
-- `activityBarBadge.foreground`: Activity notification badge foreground color.
-- `activityBar.activeBorder`: Activity Bar active indicator border color.
-- `activityBar.activeBackground`: Activity Bar optional background color for the active element.
-- `activityBar.activeFocusBorder`: Activity bar focus border color for the active item.
-- `activityBarTop.foreground`: Active foreground color of the item in the Activity bar when it is on top. The activity allows to switch between views of the side bar.
-- `activityBarTop.activeBorder`: Focus border color for the active item in the Activity bar when it is on top. The activity allows to switch between views of the side bar.
-- `activityBarTop.inactiveForeground`: Inactive foreground color of the item in the Activity bar when it is on top. The activity allows to switch between views of the side bar.
-- `activityBarTop.dropBorder`: Drag and drop feedback color for the items in the Activity bar when it is on top. The activity allows to switch between views of the side bar.
-- `activityBarTop.background`: Background color of the activity bar when set to top / bottom.
-- `activityBarTop.activeBackground`: Background color for the active item in the Activity bar when it is on top / bottom. The activity allows to switch between views of the side bar.
-- `activityWarningBadge.foreground`: Foreground color of the warning activity badge
-- `activityWarningBadge.background`: Background color of the warning activity badge
-- `activityErrorBadge.foreground`: Foreground color of the error activity badge
-- `activityErrorBadge.background`: Background color of the error activity badge
+用于列表和树（如文件资源管理器）的颜色。活动列表/树具有键盘焦点，非活动则没有。
 
-## Profiles
+- `list.activeSelectionBackground`: 当列表/树处于活动状态时，所选项的列表/树背景颜色。
+- `list.activeSelectionForeground`: 当列表/树处于活动状态时，所选项的列表/树前景色。
+- `list.activeSelectionIconForeground`: 当列表/树处于活动状态时，所选项的列表/树图标前景色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.dropBackground`: 使用鼠标移动项目时的列表/树拖放背景。
+- `list.focusBackground`: 当列表/树处于活动状态时，聚焦项的列表/树背景颜色。
+- `list.focusForeground`: 当列表/树处于活动状态时，聚焦项的列表/树前景色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.focusHighlightForeground`: 在列表/树内搜索时，主动聚焦项上匹配高亮显示的列表/树前景色。
+- `list.focusOutline`: 当列表/树处于活动状态时，聚焦项的列表/树轮廓颜色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.focusAndSelectionOutline`: 当列表/树处于活动状态并被选中时，聚焦项的列表/树轮廓颜色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.highlightForeground`: 在列表/树内搜索时，匹配高亮显示的列表/树前景色。
+- `list.hoverBackground`: 使用鼠标悬停在项目上时的列表/树背景。
+- `list.hoverForeground`: 使用鼠标悬停在项目上时的列表/树前景。
+- `list.inactiveSelectionBackground`: 当列表/树处于非活动状态时，所选项的列表/树背景颜色。
+- `list.inactiveSelectionForeground`: 当列表/树处于非活动状态时，所选项的列表/树前景色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.inactiveSelectionIconForeground`: 当列表/树处于非活动状态时，所选项的列表/树图标前景色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.inactiveFocusBackground`: 当列表处于非活动状态时，聚焦项的列表背景颜色。活动列表具有键盘焦点，非活动则没有。目前仅在列表中受支持。
+- `list.inactiveFocusOutline`: 当列表/树处于非活动状态时，聚焦项的列表/树轮廓颜色。活动列表/树具有键盘焦点，非活动则没有。
+- `list.invalidItemForeground`: 无效项的列表/树前景色，例如资源管理器中未解析的根目录。
+- `list.errorForeground`: 包含错误的列表项的前景色。
+- `list.warningForeground`: 包含警告的列表项的前景色。
+- `listFilterWidget.background`: 在列表/树内搜索时，键入文本的列表/树过滤器背景颜色。
+- `listFilterWidget.outline`: 在列表/树内搜索时，键入文本的列表/树过滤器小部件轮廓颜色。
+- `listFilterWidget.noMatchesOutline`: 在列表/树内搜索时，未找到匹配项时键入文本的列表/树过滤器小部件轮廓颜色。
+- `listFilterWidget.shadow`: 列表和树中类型过滤器小部件的阴影颜色。
+- `list.filterMatchBackground`: 列表和树中过滤匹配项的背景颜色。
+- `list.filterMatchBorder`: 列表和树中过滤匹配项的边框颜色。
+- `list.deemphasizedForeground`: 被淡化项的列表/树前景色。
+- `list.dropBetweenBackground`: 使用鼠标在项目之间移动项目时的列表/树拖放边框颜色。
+- `tree.indentGuidesStroke`: 缩进参考线的树小部件描边颜色。
+- `tree.inactiveIndentGuidesStroke`: 非活动缩进参考线的树描边颜色。
+- `tree.tableColumnsBorder`: 表格列的树描边颜色。
+- `tree.tableOddRowsBackground`: 奇数表格行的背景颜色。
 
-- `profileBadge.background`: Profile badge background color. The profile badge shows on top of the settings gear icon in the activity bar.
-- `profileBadge.foreground`: Profile badge foreground color. The profile badge shows on top of the settings gear icon in the activity bar.
-- `profiles.sashBorder`: The color of the Profiles editor splitview sash border.
+## 活动栏
 
-## Side Bar
+活动栏通常显示在工作台的最左侧或最右侧，允许在侧边栏视图之间快速切换。
 
-The Side Bar contains views like the Explorer and Search.
+- `activityBar.background`: 活动栏背景颜色。
+- `activityBar.dropBorder`: 活动栏项目的拖放反馈颜色。活动栏显示在最左侧或最右侧，允许在侧边栏视图之间切换。
+- `activityBar.foreground`: 活动栏前景色（例如用于图标）。
+- `activityBar.inactiveForeground`: 活动栏项目处于非活动状态时的前景色。
+- `activityBar.border`: 活动栏与侧边栏的边框颜色。
+- `activityBarBadge.background`: 活动通知徽章背景颜色。
+- `activityBarBadge.foreground`: 活动通知徽章前景色。
+- `activityBar.activeBorder`: 活动栏活动指示器边框颜色。
+- `activityBar.activeBackground`: 活动栏活动元素的可选背景颜色。
+- `activityBar.activeFocusBorder`: 活动项目的活动栏焦点边框颜色。
+- `activityBarTop.foreground`: 当活动栏位于顶部时，活动栏中项目的活动前景色。活动栏允许在侧边栏视图之间切换。
+- `activityBarTop.activeBorder`: 当活动栏位于顶部时，活动栏中活动项目的焦点边框颜色。活动栏允许在侧边栏视图之间切换。
+- `activityBarTop.inactiveForeground`: 当活动栏位于顶部时，活动栏中项目的非活动前景色。活动栏允许在侧边栏视图之间切换。
+- `activityBarTop.dropBorder`: 当活动栏位于顶部时，活动栏中项目的拖放反馈颜色。活动栏允许在侧边栏视图之间切换。
+- `activityBarTop.background`: 当设置为顶部/底部时，活动栏的背景颜色。
+- `activityBarTop.activeBackground`: 当位于顶部/底部时，活动栏中活动项目的背景颜色。活动栏允许在侧边栏视图之间切换。
+- `activityWarningBadge.foreground`: 警告活动徽章的前景色
+- `activityWarningBadge.background`: 警告活动徽章的背景颜色
+- `activityErrorBadge.foreground`: 错误活动徽章的前景色
+- `activityErrorBadge.background`: 错误活动徽章的背景颜色
 
-- `sideBar.background`: Side Bar background color.
-- `sideBar.foreground`: Side Bar foreground color. The Side Bar is the container for views like Explorer and Search.
-- `sideBar.border`: Side Bar border color on the side separating the editor.
-- `sideBar.dropBackground`: Drag and drop feedback color for the side bar sections. The color should have transparency so that the side bar sections can still shine through.
+## 配置文件
 
-- `sideBarTitle.foreground`: Side Bar title foreground color.
-- `sideBarSectionHeader.background`: Side Bar section header background color.
-- `sideBarSectionHeader.foreground`: Side Bar section header foreground color.
-- `sideBarSectionHeader.border`: Side bar section header border color.
-- `sideBarActivityBarTop.border`: Border color between the activity bar at the top/bottom and the views.
-- `sideBarTitle.background`: Side bar title background color. The side bar is the container for views like explorer and search.
-- `sideBarTitle.border`: Side bar title border color on the bottom, separating the title from the views. The side bar is the container for views like explorer and search.
-- `sideBarStickyScroll.background`: Background color of sticky scroll in the side bar.
-- `sideBarStickyScroll.border`: Border color of sticky scroll in the side bar.
-- `sideBarStickyScroll.shadow`: Shadow color of sticky scroll in the side bar.
+- `profileBadge.background`: 配置文件徽章背景颜色。配置文件徽章显示在活动栏中的设置齿轮图标顶部。
+- `profileBadge.foreground`: 配置文件徽章前景色。配置文件徽章显示在活动栏中的设置齿轮图标顶部。
+- `profiles.sashBorder`: 配置文件编辑器拆分视图分隔条边框的颜色。
 
+## 侧边栏
 
-## Minimap
+侧边栏包含诸如资源管理器和搜索之类的视图。
 
-The Minimap shows a minified version of the current file.
+- `sideBar.background`: 侧边栏背景颜色。
+- `sideBar.foreground`: 侧边栏前景色。侧边栏是资源管理器和搜索等视图的容器。
+- `sideBar.border`: 分隔编辑器的侧边栏边框颜色。
+- `sideBar.dropBackground`: 侧边栏部分的拖放反馈颜色。颜色应具有透明度，以便侧边栏部分仍然可以透出。
 
-- `minimap.findMatchHighlight`: Highlight color for matches from search within files.
-- `minimap.selectionHighlight`: Highlight color for the editor selection.
-- `minimap.errorHighlight`: Highlight color for errors within the editor.
-- `minimap.warningHighlight`: Highlight color for warnings within the editor.
-- `minimap.background`: Minimap background color.
-- `minimap.selectionOccurrenceHighlight`: Minimap marker color for repeating editor selections.
-- `minimap.foregroundOpacity`: Opacity of foreground elements rendered in the minimap. For example, "#000000c0" will render the elements with 75% opacity.
-- `minimap.infoHighlight`: Minimap marker color for infos.
-- `minimap.chatEditHighlight`: Color of pending edit regions in the minimap.
+- `sideBarTitle.foreground`: 侧边栏标题前景色。
+- `sideBarSectionHeader.background`: 侧边栏部分标题背景颜色。
+- `sideBarSectionHeader.foreground`: 侧边栏部分标题前景色。
+- `sideBarSectionHeader.border`: 侧边栏部分标题边框颜色。
+- `sideBarActivityBarTop.border`: 顶部/底部活动栏与视图之间的边框颜色。
+- `sideBarTitle.background`: 侧边栏标题背景颜色。侧边栏是资源管理器和搜索等视图的容器。
+- `sideBarTitle.border`: 侧边栏底部的标题边框颜色，将标题与视图分隔开。侧边栏是资源管理器和搜索等视图的容器。
+- `sideBarStickyScroll.background`: 侧边栏中粘性滚动的背景颜色。
+- `sideBarStickyScroll.border`: 侧边栏中粘性滚动的边框颜色。
+- `sideBarStickyScroll.shadow`: 侧边栏中粘性滚动的阴影颜色。
 
-- `minimapSlider.background`: Minimap slider background color.
-- `minimapSlider.hoverBackground`: Minimap slider background color when hovering.
-- `minimapSlider.activeBackground`: Minimap slider background color when clicked on.
+## 缩略图 (Minimap)
 
-- `minimapGutter.addedBackground`: Minimap gutter color for added content.
-- `minimapGutter.modifiedBackground`: Minimap gutter color for modified content.
-- `minimapGutter.deletedBackground`: Minimap gutter color for deleted content.
-- `editorMinimap.inlineChatInserted`: Minimap marker color for inline chat inserted content.
+缩略图显示当前文件的缩小版本。
 
-## Editor Groups & Tabs
+- `minimap.findMatchHighlight`: 文件内搜索匹配项的高亮颜色。
+- `minimap.selectionHighlight`: 编辑器选择的高亮颜色。
+- `minimap.errorHighlight`: 编辑器内错误的高亮颜色。
+- `minimap.warningHighlight`: 编辑器内警告的高亮颜色。
+- `minimap.background`: 缩略图背景颜色。
+- `minimap.selectionOccurrenceHighlight`: 重复编辑器选择的缩略图标记颜色。
+- `minimap.foregroundOpacity`: 缩略图中渲染的前景元素的不透明度。例如，"#000000c0" 将以 75% 的不透明度渲染元素。
+- `minimap.infoHighlight`: 信息的缩略图标记颜色。
+- `minimap.chatEditHighlight`: 缩略图中待处理编辑区域的颜色。
 
-Editor Groups are the containers of editors. There can be many editor groups. A Tab is the container of an editor. Multiple Tabs can be opened in one editor group.
+- `minimapSlider.background`: 缩略图滑块背景颜色。
+- `minimapSlider.hoverBackground`: 悬停时的缩略图滑块背景颜色。
+- `minimapSlider.activeBackground`: 点击时的缩略图滑块背景颜色。
 
-- `editorGroup.border`: Color to separate multiple editor groups from each other.
+- `minimapGutter.addedBackground`: 已添加内容的缩略图装订线颜色。
+- `minimapGutter.modifiedBackground`: 已修改内容的缩略图装订线颜色。
+- `minimapGutter.deletedBackground`: 已删除内容的缩略图装订线颜色。
+- `editorMinimap.inlineChatInserted`: 内联聊天插入内容的缩略图标记颜色。
+
+## 编辑器组和选项卡
+
+编辑器组是编辑器的容器。可以有多个编辑器组。选项卡是编辑器的容器。一个编辑器组中可以打开多个选项卡。
+
+- `editorGroup.border`: 用于分隔多个编辑器组的颜色。
 
   <!-- 图片已移除 -->
 
-- `editorGroup.dropBackground`: Background color when dragging editors around.
+- `editorGroup.dropBackground`: 拖动编辑器时的背景颜色。
 
   <!-- 图片已移除 -->
 
-- `editorGroupHeader.noTabsBackground`: Background color of the editor group title header when using single Tab (set `"workbench.editor.showTabs": "single"`).
+- `editorGroupHeader.noTabsBackground`: 使用单个选项卡时编辑器组标题头的背景颜色（设置 `"workbench.editor.showTabs": "single"`）。
 
   <!-- 图片已移除 -->
 
-- `editorGroupHeader.tabsBackground`: Background color of the Tabs container.
+- `editorGroupHeader.tabsBackground`: 选项卡容器的背景颜色。
 
   <!-- 图片已移除 -->
 
-- `editorGroupHeader.tabsBorder`: Border color below the editor tabs control when tabs are enabled.
+- `editorGroupHeader.tabsBorder`: 启用选项卡时，编辑器选项卡控件下方的边框颜色。
 
   <!-- 图片已移除 -->
 
-- `editorGroupHeader.border`: Border color between editor group header and editor (below breadcrumbs if enabled).
-- `editorGroup.emptyBackground`: Background color of an empty editor group.
-- `editorGroup.focusedEmptyBorder`: Border color of an empty editor group that is focused.
-- `editorGroup.dropIntoPromptForeground`: Foreground color of text shown over editors when dragging files. This text informs the user that they can hold shift to drop into the editor.
-- `editorGroup.dropIntoPromptBackground`: Background color of text shown over editors when dragging files. This text informs the user that they can hold shift to drop into the editor.
-- `editorGroup.dropIntoPromptBorder`: Border color of text shown over editors when dragging files. This text informs the user that they can hold shift to drop into the editor.
+- `editorGroupHeader.border`: 编辑器组标题与编辑器之间的边框颜色（如果启用了面包屑，则在面包屑下方）。
+- `editorGroup.emptyBackground`: 空编辑器组的背景颜色。
+- `editorGroup.focusedEmptyBorder`: 聚焦的空编辑器组的边框颜色。
+- `editorGroup.dropIntoPromptForeground`: 拖动文件时显示在编辑器上方的文本的前景色。此文本通知用户可以按住 shift 键放入编辑器。
+- `editorGroup.dropIntoPromptBackground`: 拖动文件时显示在编辑器上方的文本的背景颜色。此文本通知用户可以按住 shift 键放入编辑器。
+- `editorGroup.dropIntoPromptBorder`: 拖动文件时显示在编辑器上方的文本的边框颜色。此文本通知用户可以按住 shift 键放入编辑器。
 
-- `tab.activeBackground`: Active Tab background color in an active group.
-- `tab.unfocusedActiveBackground`: Active Tab background color in an inactive editor group.
-- `tab.activeForeground`: Active Tab foreground color in an active group.
-- `tab.border`: Border to separate Tabs from each other.
-- `tab.activeBorder`: Bottom border for the active tab.
-- `tab.selectedBorderTop`: Border to the top of a selected tab. Tabs are the containers for editors in the editor area. Multiple tabs can be opened in one editor group. There can be multiple editor groups.
-- `tab.selectedBackground`: Background of a selected tab. Tabs are the containers for editors in the editor area. Multiple tabs can be opened in one editor group. There can be multiple editor groups.
-- `tab.selectedForeground`: Foreground of a selected tab. Tabs are the containers for editors in the editor area. Multiple tabs can be opened in one editor group. There can be multiple editor groups.
-- `tab.dragAndDropBorder`: Border between tabs to indicate that a tab can be inserted between two tabs. Tabs are the containers for editors in the editor area. Multiple tabs can be opened in one editor group. There can be multiple editor groups.
-- `tab.unfocusedActiveBorder`: Bottom border for the active tab in an inactive editor group.
-- `tab.activeBorderTop`: Top border for the active tab.
-- `tab.unfocusedActiveBorderTop`: Top border for the active tab in an inactive editor group
-- `tab.lastPinnedBorder`: Border on the right of the last pinned editor to separate from unpinned editors.
-- `tab.inactiveBackground`: Inactive Tab background color.
-- `tab.unfocusedInactiveBackground`: Inactive Tab background color in an unfocused group
-- `tab.inactiveForeground`: Inactive Tab foreground color in an active group.
-- `tab.unfocusedActiveForeground`: Active tab foreground color in an inactive editor group.
-- `tab.unfocusedInactiveForeground`: Inactive tab foreground color in an inactive editor group.
-- `tab.hoverBackground`: Tab background color when hovering
-- `tab.unfocusedHoverBackground`: Tab background color in an unfocused group when hovering
-- `tab.hoverForeground`: Tab foreground color when hovering
-- `tab.unfocusedHoverForeground`: Tab foreground color in an unfocused group when hovering
-- `tab.hoverBorder`: Border to highlight tabs when hovering
-- `tab.unfocusedHoverBorder`: Border to highlight tabs in an unfocused group when hovering
-- `tab.activeModifiedBorder`: Border on the top of modified (dirty) active tabs in an active group.
-- `tab.inactiveModifiedBorder`: Border on the top of modified (dirty) inactive tabs in an active group.
-- `tab.unfocusedActiveModifiedBorder`: Border on the top of modified (dirty) active tabs in an unfocused group.
-- `tab.unfocusedInactiveModifiedBorder`: Border on the top of modified (dirty) inactive tabs in an unfocused group.
-- `editorPane.background`: Background color of the editor pane visible on the left and right side of the centered editor layout.
-- `sideBySideEditor.horizontalBorder`: Color to separate two editors from each other when shown side by side in an editor group from top to bottom.
-- `sideBySideEditor.verticalBorder`: Color to separate two editors from each other when shown side by side in an editor group from left to right.
+- `tab.activeBackground`: 活动组中活动选项卡的背景颜色。
+- `tab.unfocusedActiveBackground`: 非活动编辑器组中活动选项卡的背景颜色。
+- `tab.activeForeground`: 活动组中活动选项卡的前景色。
+- `tab.border`: 用于分隔选项卡的边框。
+- `tab.activeBorder`: 活动选项卡的底部边框。
+- `tab.selectedBorderTop`: 选中选项卡顶部的边框。选项卡是编辑器区域中编辑器的容器。一个编辑器组中可以打开多个选项卡。可以有多个编辑器组。
+- `tab.selectedBackground`: 选中选项卡的背景。选项卡是编辑器区域中编辑器的容器。一个编辑器组中可以打开多个选项卡。可以有多个编辑器组。
+- `tab.selectedForeground`: 选中选项卡的前景。选项卡是编辑器区域中编辑器的容器。一个编辑器组中可以打开多个选项卡。可以有多个编辑器组。
+- `tab.dragAndDropBorder`: 选项卡之间的边框，用于指示可以在两个选项卡之间插入选项卡。选项卡是编辑器区域中编辑器的容器。一个编辑器组中可以打开多个选项卡。可以有多个编辑器组。
+- `tab.unfocusedActiveBorder`: 非活动编辑器组中活动选项卡的底部边框。
+- `tab.activeBorderTop`: 活动选项卡的顶部边框。
+- `tab.unfocusedActiveBorderTop`: 非活动编辑器组中活动选项卡的顶部边框。
+- `tab.lastPinnedBorder`: 最后一个固定编辑器右侧的边框，用于与未固定编辑器分隔。
+- `tab.inactiveBackground`: 非活动选项卡背景颜色。
+- `tab.unfocusedInactiveBackground`: 未聚焦组中非活动选项卡的背景颜色。
+- `tab.inactiveForeground`: 活动组中非活动选项卡的前景色。
+- `tab.unfocusedActiveForeground`: 非活动编辑器组中活动选项卡的前景色。
+- `tab.unfocusedInactiveForeground`: 非活动编辑器组中非活动选项卡的前景色。
+- `tab.hoverBackground`: 悬停时的选项卡背景颜色。
+- `tab.unfocusedHoverBackground`: 悬停时未聚焦组中的选项卡背景颜色。
+- `tab.hoverForeground`: 悬停时的选项卡前景色。
+- `tab.unfocusedHoverForeground`: 悬停时未聚焦组中的选项卡前景色。
+- `tab.hoverBorder`: 悬停时用于高亮显示选项卡的边框。
+- `tab.unfocusedHoverBorder`: 悬停时用于高亮显示未聚焦组中选项卡的边框。
+- `tab.activeModifiedBorder`: 活动组中已修改（脏）活动选项卡顶部的边框。
+- `tab.inactiveModifiedBorder`: 活动组中已修改（脏）非活动选项卡顶部的边框。
+- `tab.unfocusedActiveModifiedBorder`: 未聚焦组中已修改（脏）活动选项卡顶部的边框。
+- `tab.unfocusedInactiveModifiedBorder`: 未聚焦组中已修改（脏）非活动选项卡顶部的边框。
+- `editorPane.background`: 居中编辑器布局左右两侧可见的编辑器窗格的背景颜色。
+- `sideBySideEditor.horizontalBorder`: 当在编辑器组中从上到下并排显示时，用于分隔两个编辑器的颜色。
+- `sideBySideEditor.verticalBorder`: 当在编辑器组中从左到右并排显示时，用于分隔两个编辑器的颜色。
 
-## Editor colors
+## 编辑器颜色
 
-The most prominent editor colors are the token colors used for syntax highlighting and are based on the language grammar installed. These colors are defined by the Color Theme but can also be customized with the `editor.tokenColorCustomizations` setting. See [Customizing a Color Theme](/docs/getstarted/themes#customizing-a-color-theme) for details on updating a Color Theme and the available token types.
+最突出的编辑器颜色是用于语法高亮显示的标记颜色，基于已安装的语言语法。这些颜色由颜色主题定义，但也可以通过 `editor.tokenColorCustomizations` 设置进行自定义。有关更新颜色主题和可用标记类型的详细信息，请参阅 [自定义颜色主题](/docs/getstarted/themes#customizing-a-color-theme)。
 
-All other editor colors are listed here:
+此处列出了所有其他编辑器颜色：
 
-- `editor.background`: Editor background color.
-- `editor.foreground`: Editor default foreground color.
-- `editorLineNumber.foreground`: Color of editor line numbers.
-- `editorLineNumber.activeForeground`: Color of the active editor line number.
-- `editorLineNumber.dimmedForeground`: Color of the final editor line when editor.renderFinalNewline is set to dimmed.
-- `editorCursor.background`: The background color of the editor cursor. Allows customizing the color of a character overlapped by a block cursor.
-- `editorCursor.foreground`: Color of the editor cursor.
-- `editorMultiCursor.primary.foreground`: Color of the primary editor cursor when multiple cursors are present.
-- `editorMultiCursor.primary.background`: The background color of the primary editor cursor when multiple cursors are present. Allows customizing the color of a character overlapped by a block cursor.
-- `editorMultiCursor.secondary.foreground`: Color of secondary editor cursors when multiple cursors are present.
-- `editorMultiCursor.secondary.background`: The background color of secondary editor cursors when multiple cursors are present. Allows customizing the color of a character overlapped by a block cursor.
-- `editor.placeholder.foreground`: Foreground color of the placeholder text in the editor.
-- `editor.compositionBorder`: The border color for an IME composition.
+- `editor.background`: 编辑器背景颜色。
+- `editor.foreground`: 编辑器默认前景色。
+- `editorLineNumber.foreground`: 编辑器行号的颜色。
+- `editorLineNumber.activeForeground`: 活动编辑器行号的颜色。
+- `editorLineNumber.dimmedForeground`: 当 editor.renderFinalNewline 设置为 dimmed 时，最后一行编辑器行的颜色。
+- `editorCursor.background`: 编辑器光标的背景颜色。允许自定义被块光标覆盖的字符的颜色。
+- `editorCursor.foreground`: 编辑器光标的颜色。
+- `editorMultiCursor.primary.foreground`: 存在多个光标时，主编辑器光标的颜色。
+- `editorMultiCursor.primary.background`: 存在多个光标时，主编辑器光标的背景颜色。允许自定义被块光标覆盖的字符的颜色。
+- `editorMultiCursor.secondary.foreground`: 存在多个光标时，次要编辑器光标的颜色。
+- `editorMultiCursor.secondary.background`: 存在多个光标时，次要编辑器光标的背景颜色。允许自定义被块光标覆盖的字符的颜色。
+- `editor.placeholder.foreground`: 编辑器中占位符文本的前景色。
+- `editor.compositionBorder`: 输入法编辑器 (IME) 组合窗口的边框颜色。
 
-Selection colors are visible when selecting one or more characters. In addition to the selection also all regions with the same content are highlighted.
-
-<!-- 图片已移除 -->
-
-- `editor.selectionBackground`: Color of the editor selection.
-- `editor.selectionForeground`: Color of the selected text for high contrast.
-- `editor.inactiveSelectionBackground`: Color of the selection in an inactive editor. The color must not be opaque so as not to hide underlying decorations.
-- `editor.selectionHighlightBackground`: Color for regions with the same content as the selection. The color must not be opaque so as not to hide underlying decorations.
-- `editor.selectionHighlightBorder`: Border color for regions with the same content as the selection.
-
-Word highlight colors are visible when the cursor is inside a symbol or a word. Depending on the language support available for the file type, all matching references and declarations are highlighted and read and write accesses get different colors. If document symbol language support is not available, this falls back to word highlighting.
+选择颜色在选择一个或多个字符时可见。除了选择之外，所有具有相同内容的区域也会高亮显示。
 
 <!-- 图片已移除 -->
 
-- `editor.wordHighlightBackground`: Background color of a symbol during read-access, for example when reading a variable. The color must not be opaque so as not to hide underlying decorations.
-- `editor.wordHighlightBorder`: Border color of a symbol during read-access, for example when reading a variable.
-- `editor.wordHighlightStrongBackground`: Background color of a symbol during write-access, for example when writing to a variable. The color must not be opaque so as not to hide underlying decorations.
-- `editor.wordHighlightStrongBorder`: Border color of a symbol during write-access, for example when writing to a variable.
-- `editor.wordHighlightTextBackground`: Background color of a textual occurrence for a symbol. The color must not be opaque so as not to hide underlying decorations.
-- `editor.wordHighlightTextBorder`: Border color of a textual occurrence for a symbol.
+- `editor.selectionBackground`: 编辑器选择的颜色。
+- `editor.selectionForeground`: 高对比度下选定文本的颜色。
+- `editor.inactiveSelectionBackground`: 非活动编辑器中选择的颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.selectionHighlightBackground`: 内容与选择相同的区域的颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.selectionHighlightBorder`: 内容与选择相同的区域的边框颜色。
 
-Find colors depend on the current find string in the Find/Replace dialog.
-
-<!-- 图片已移除 -->
-
-- `editor.findMatchBackground`: Color of the current search match.
-- `editor.findMatchForeground`: Text color of the current search match.
-- `editor.findMatchHighlightForeground`: Foreground color of the other search matches.
-- `editor.findMatchHighlightBackground`: Color of the other search matches. The color must not be opaque so as not to hide underlying decorations.
-- `editor.findRangeHighlightBackground`: Color the range limiting the search (Enable 'Find in Selection' in the find widget). The color must not be opaque so as not to hide underlying decorations.
-- `editor.findMatchBorder`: Border color of the current search match.
-- `editor.findMatchHighlightBorder`: Border color of the other search matches.
-- `editor.findRangeHighlightBorder`: Border color the range limiting the search (Enable 'Find in Selection' in the find widget).
-
-Search colors are used in the search viewlet's global search results.
+当光标位于符号或单词内时，单词高亮颜色可见。根据文件类型可用的语言支持，所有匹配的引用和声明都会高亮显示，并且读取和写入访问会获得不同的颜色。如果文档符号语言支持不可用，则回退到单词高亮显示。
 
 <!-- 图片已移除 -->
 
-- `search.resultsInfoForeground`: Color of the text in the search viewlet's completion message. For example, this color is used in the text that says "`{x} results in {y} files`".
+- `editor.wordHighlightBackground`: 符号在读取访问期间的背景颜色，例如读取变量时。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.wordHighlightBorder`: 符号在读取访问期间的边框颜色，例如读取变量时。
+- `editor.wordHighlightStrongBackground`: 符号在写入访问期间的背景颜色，例如写入变量时。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.wordHighlightStrongBorder`: 符号在写入访问期间的边框颜色，例如写入变量时。
+- `editor.wordHighlightTextBackground`: 符号的文本出现的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.wordHighlightTextBorder`: 符号的文本出现的边框颜色。
 
-Search Editor colors highlight results in a Search Editor. This can be configured separately from other find matches in order to better differentiate between different classes of match in the same editor.
-
-<!-- 图片已移除 -->
-
-- `searchEditor.findMatchBackground`: Color of the editor's results.
-- `searchEditor.findMatchBorder`: Border color of the editor's results.
-- `searchEditor.textInputBorder`: Search editor text input box border.
-
-The hover highlight is shown behind the symbol for which a hover is shown.
+查找颜色取决于查找/替换对话框中当前的查找字符串。
 
 <!-- 图片已移除 -->
 
-- `editor.hoverHighlightBackground`: Highlight below the word for which a hover is shown. The color must not be opaque so as not to hide underlying decorations.
+- `editor.findMatchBackground`: 当前搜索匹配项的颜色。
+- `editor.findMatchForeground`: 当前搜索匹配项的文本颜色。
+- `editor.findMatchHighlightForeground`: 其他搜索匹配项的前景色。
+- `editor.findMatchHighlightBackground`: 其他搜索匹配项的颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.findRangeHighlightBackground`: 限制搜索范围的颜色（在查找小部件中启用“在选择中查找”）。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.findMatchBorder`: 当前搜索匹配项的边框颜色。
+- `editor.findMatchHighlightBorder`: 其他搜索匹配项的边框颜色。
+- `editor.findRangeHighlightBorder`: 限制搜索范围的边框颜色（在查找小部件中启用“在选择中查找”）。
 
-The current line is typically shown as either background highlight or a border (not both).
-
-<!-- 图片已移除 -->
-
-- `editor.lineHighlightBackground`: Background color for the highlight of line at the cursor position.
-- `editor.lineHighlightBorder`: Background color for the border around the line at the cursor position.
-
-The color for the editor watermark
-
-- `editorWatermark.foreground`: Foreground color for the labels in the editor watermark.
-
-The color for unicode highlights
-
-- `editorUnicodeHighlight.border`: Border color used to highlight unicode characters.
-- `editorUnicodeHighlight.background`: Background color used to highlight unicode characters.
-
-The link color is visible when clicking on a link.
+搜索颜色用于搜索视图栏的全局搜索结果。
 
 <!-- 图片已移除 -->
 
-- `editorLink.activeForeground`: Color of active links.
+- `search.resultsInfoForeground`: 搜索视图栏完成消息中的文本颜色。例如，此颜色用于显示 "`{x} results in {y} files`" 的文本中。
 
-The range highlight is visible when selecting a search result.
+搜索编辑器颜色高亮显示搜索编辑器中的结果。这可以与其他查找匹配项分开配置，以便更好地区分同一编辑器中的不同类别的匹配项。
 
 <!-- 图片已移除 -->
 
-- `editor.rangeHighlightBackground`: Background color of highlighted ranges, used by Quick Open, Symbol in File and Find features. The color must not be opaque so as not to hide underlying decorations.
-- `editor.rangeHighlightBorder`: Background color of the border around highlighted ranges.
+- `searchEditor.findMatchBackground`: 编辑器结果的颜色。
+- `searchEditor.findMatchBorder`: 编辑器结果的边框颜色。
+- `searchEditor.textInputBorder`: 搜索编辑器文本输入框边框。
 
-The symbol highlight is visible when navigating to a symbol via a command such as **Go to Definition**.
+悬停高亮显示在显示悬停的符号后面。
 
-- `editor.symbolHighlightBackground`: Background color of highlighted symbol. The color must not be opaque so as not to hide underlying decorations.
-- `editor.symbolHighlightBorder`: Background color of the border around highlighted symbols.
+<!-- 图片已移除 -->
 
-To see the editor white spaces, enable **Toggle Render Whitespace**.
+- `editor.hoverHighlightBackground`: 显示悬停的单词下方的高亮。颜色不得为不透明，以免遮挡底层装饰。
 
-- `editorWhitespace.foreground`: Color of whitespace characters in the editor.
+当前行通常显示为背景高亮或边框（不是两者都有）。
 
-To see the editor indent guides, set `"editor.guides.indentation": true` and `"editor.guides.highlightActiveIndentation": true`.
+<!-- 图片已移除 -->
 
-- `editorIndentGuide.background`: Color of the editor indentation guides.
-- `editorIndentGuide.background1`: Color of the editor indentation guides (1).
-- `editorIndentGuide.background2`: Color of the editor indentation guides (2).
-- `editorIndentGuide.background3`: Color of the editor indentation guides (3).
-- `editorIndentGuide.background4`: Color of the editor indentation guides (4).
-- `editorIndentGuide.background5`: Color of the editor indentation guides (5).
-- `editorIndentGuide.background6`: Color of the editor indentation guides (6).
-- `editorIndentGuide.activeBackground`: Color of the active editor indentation guide.
-- `editorIndentGuide.activeBackground1`: Color of the active editor indentation guides (1).
-- `editorIndentGuide.activeBackground2`: Color of the active editor indentation guides (2).
-- `editorIndentGuide.activeBackground3`: Color of the active editor indentation guides (3).
-- `editorIndentGuide.activeBackground4`: Color of the active editor indentation guides (4).
-- `editorIndentGuide.activeBackground5`: Color of the active editor indentation guides (5).
-- `editorIndentGuide.activeBackground6`: Color of the active editor indentation guides (6).
+- `editor.lineHighlightBackground`: 光标位置行高亮的背景颜色。
+- `editor.lineHighlightBorder`: 光标位置行周围边框的背景颜色。
 
-To see the editor inline hints, set `"editor.inlineSuggest.enabled": true`.
+编辑器水印的颜色
 
-- `editorInlayHint.background`: Background color of inline hints.
-- `editorInlayHint.foreground`: Foreground color of inline hints.
-- `editorInlayHint.typeForeground`: Foreground color of inline hints for types
-- `editorInlayHint.typeBackground`: Background color of inline hints for types
-- `editorInlayHint.parameterForeground`: Foreground color of inline hints for parameters
-- `editorInlayHint.parameterBackground`: Background color of inline hints for parameters
+- `editorWatermark.foreground`: 编辑器水印中标签的前景色。
 
-To see editor rulers, define their location with `"editor.rulers"`
+unicode 高亮的颜色
 
-- `editorRuler.foreground`: Color of the editor rulers.
+- `editorUnicodeHighlight.border`: 用于高亮显示 unicode 字符的边框颜色。
+- `editorUnicodeHighlight.background`: 用于高亮显示 unicode 字符的背景颜色。
 
-- `editor.linkedEditingBackground`: Background color when the editor is in linked editing mode.
+点击链接时，链接颜色可见。
+
+<!-- 图片已移除 -->
+
+- `editorLink.activeForeground`: 活动链接的颜色。
+
+选择搜索结果时，范围高亮可见。
+
+<!-- 图片已移除 -->
+
+- `editor.rangeHighlightBackground`: 高亮范围的背景颜色，由快速打开、文件中的符号和查找功能使用。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.rangeHighlightBorder`: 高亮范围周围边框的背景颜色。
+
+当通过诸如 **转到定义** 之类的命令导航到符号时，符号高亮可见。
+
+- `editor.symbolHighlightBackground`: 高亮符号的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.symbolHighlightBorder`: 高亮符号周围边框的背景颜色。
+
+要查看编辑器空白，请启用 **切换渲染空白**。
+
+- `editorWhitespace.foreground`: 编辑器中空白字符的颜色。
+
+要查看编辑器缩进参考线，请设置 `"editor.guides.indentation": true` 和 `"editor.guides.highlightActiveIndentation": true`。
+
+- `editorIndentGuide.background`: 编辑器缩进参考线的颜色。
+- `editorIndentGuide.background1`: 编辑器缩进参考线 (1) 的颜色。
+- `editorIndentGuide.background2`: 编辑器缩进参考线 (2) 的颜色。
+- `editorIndentGuide.background3`: 编辑器缩进参考线 (3) 的颜色。
+- `editorIndentGuide.background4`: 编辑器缩进参考线 (4) 的颜色。
+- `editorIndentGuide.background5`: 编辑器缩进参考线 (5) 的颜色。
+- `editorIndentGuide.background6`: 编辑器缩进参考线 (6) 的颜色。
+- `editorIndentGuide.activeBackground`: 活动编辑器缩进参考线的颜色。
+- `editorIndentGuide.activeBackground1`: 活动编辑器缩进参考线 (1) 的颜色。
+- `editorIndentGuide.activeBackground2`: 活动编辑器缩进参考线 (2) 的颜色。
+- `editorIndentGuide.activeBackground3`: 活动编辑器缩进参考线 (3) 的颜色。
+- `editorIndentGuide.activeBackground4`: 活动编辑器缩进参考线 (4) 的颜色。
+- `editorIndentGuide.activeBackground5`: 活动编辑器缩进参考线 (5) 的颜色。
+- `editorIndentGuide.activeBackground6`: 活动编辑器缩进参考线 (6) 的颜色。
+
+要查看编辑器内联提示，请设置 `"editor.inlineSuggest.enabled": true`。
+
+- `editorInlayHint.background`: 内联提示的背景颜色。
+- `editorInlayHint.foreground`: 内联提示的前景色。
+- `editorInlayHint.typeForeground`: 类型内联提示的前景色
+- `editorInlayHint.typeBackground`: 类型内联提示的背景颜色
+- `editorInlayHint.parameterForeground`: 参数内联提示的前景色
+- `editorInlayHint.parameterBackground`: 参数内联提示的背景颜色
+
+要查看编辑器标尺，请使用 `"editor.rulers"` 定义其位置
+
+- `editorRuler.foreground`: 编辑器标尺的颜色。
+
+- `editor.linkedEditingBackground`: 编辑器处于链接编辑模式时的背景颜色。
 
 CodeLens:
 
 <!-- 图片已移除 -->
 
-- `editorCodeLens.foreground`: Foreground color of an editor CodeLens.
+- `editorCodeLens.foreground`: 编辑器 CodeLens 的前景色。
 
-Lightbulb:
+灯泡：
 
-- `editorLightBulb.foreground`: The color used for the lightbulb actions icon.
-- `editorLightBulbAutoFix.foreground`: The color used for the lightbulb auto fix actions icon.
-- `editorLightBulbAi.foreground`: The color used for the lightbulb AI icon.
+- `editorLightBulb.foreground`: 灯泡操作图标使用的颜色。
+- `editorLightBulbAutoFix.foreground`: 灯泡自动修复操作图标使用的颜色。
+- `editorLightBulbAi.foreground`: 灯泡 AI 图标使用的颜色。
 
-Bracket matches:
-
-<!-- 图片已移除 -->
-
-- `editorBracketMatch.background`: Background color behind matching brackets.
-- `editorBracketMatch.border`: Color for matching brackets boxes.
-
-Bracket pair colorization:
-
-- `editorBracketHighlight.foreground1`: Foreground color of brackets (1). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.foreground2`: Foreground color of brackets (2). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.foreground3`: Foreground color of brackets (3). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.foreground4`: Foreground color of brackets (4). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.foreground5`: Foreground color of brackets (5). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.foreground6`: Foreground color of brackets (6). Requires enabling bracket pair colorization.
-- `editorBracketHighlight.unexpectedBracket.foreground`: Foreground color of unexpected brackets.
-
-Bracket pair guides:
-
-- `editorBracketPairGuide.activeBackground1`: Background color of active bracket pair guides (1). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.activeBackground2`: Background color of active bracket pair guides (2). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.activeBackground3`: Background color of active bracket pair guides (3). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.activeBackground4`: Background color of active bracket pair guides (4). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.activeBackground5`: Background color of active bracket pair guides (5). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.activeBackground6`: Background color of active bracket pair guides (6). Requires enabling bracket pair guides.
-
-- `editorBracketPairGuide.background1`: Background color of inactive bracket pair guides (1). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.background2`: Background color of inactive bracket pair guides (2). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.background3`: Background color of inactive bracket pair guides (3). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.background4`: Background color of inactive bracket pair guides (4). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.background5`: Background color of inactive bracket pair guides (5). Requires enabling bracket pair guides.
-- `editorBracketPairGuide.background6`: Background color of inactive bracket pair guides (6). Requires enabling bracket pair guides.
-
-Folding:
-
-- `editor.foldBackground`: Background color for folded ranges. The color must not be opaque so as not to hide underlying decorations.
-- `editor.foldPlaceholderForeground`: Color of the collapsed text after the first line of a folded range.
-
-Overview ruler:
-
-This ruler is located beneath the scroll bar on the right edge of the editor and gives an overview of the decorations in the editor.
-
-- `editorOverviewRuler.background`: Background color of the editor overview ruler. Only used when the minimap is enabled and placed on the right side of the editor.
-- `editorOverviewRuler.border`: Color of the overview ruler border.
-- `editorOverviewRuler.findMatchForeground`: Overview ruler marker color for find matches. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.rangeHighlightForeground`: Overview ruler marker color for highlighted ranges, like by the Quick Open, Symbol in File and Find features. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.selectionHighlightForeground`: Overview ruler marker color for selection highlights. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.wordHighlightForeground`: Overview ruler marker color for symbol highlights. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.wordHighlightStrongForeground`: Overview ruler marker color for write-access symbol highlights. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.wordHighlightTextForeground`: Overview ruler marker color of a textual occurrence for a symbol. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.modifiedForeground`: Overview ruler marker color for modified content.
-- `editorOverviewRuler.addedForeground`: Overview ruler marker color for added content.
-- `editorOverviewRuler.deletedForeground`: Overview ruler marker color for deleted content.
-- `editorOverviewRuler.errorForeground`: Overview ruler marker color for errors.
-- `editorOverviewRuler.warningForeground`: Overview ruler marker color for warnings.
-- `editorOverviewRuler.infoForeground`: Overview ruler marker color for infos.
-- `editorOverviewRuler.bracketMatchForeground`: Overview ruler marker color for matching brackets.
-- `editorOverviewRuler.inlineChatInserted`: Overview ruler marker color for inline chat inserted content.
-- `editorOverviewRuler.inlineChatRemoved`: Overview ruler marker color for inline chat removed content.
-
-Errors and warnings:
-
-- `editorError.foreground`: Foreground color of error squiggles in the editor.
-- `editorError.border`: Border color of error boxes in the editor.
-- `editorError.background`: Background color of error text in the editor. The color must not be opaque so as not to hide underlying decorations.
-- `editorWarning.foreground`: Foreground color of warning squiggles in the editor.
-- `editorWarning.border`: Border color of warning boxes in the editor.
-- `editorWarning.background`: Background color of warning text in the editor. The color must not be opaque so as not to hide underlying decorations.
-- `editorInfo.foreground`: Foreground color of info squiggles in the editor.
-- `editorInfo.border`: Border color of info boxes in the editor.
-- `editorInfo.background`: Background color of info text in the editor. The color must not be opaque so as not to hide underlying decorations.
-- `editorHint.foreground`: Foreground color of hints in the editor.
-- `editorHint.border`: Border color of hint boxes in the editor.
-- `problemsErrorIcon.foreground`: The color used for the problems error icon.
-- `problemsWarningIcon.foreground`: The color used for the problems warning icon.
-- `problemsInfoIcon.foreground`: The color used for the problems info icon.
-
-Unused source code:
-
-- `editorUnnecessaryCode.border`: Border color of unnecessary (unused) source code in the editor.
-- `editorUnnecessaryCode.opacity`: Opacity of unnecessary (unused) source code in the editor. For example, `"#000000c0"` will render the code with 75% opacity. For high contrast themes, use the `"editorUnnecessaryCode.border"` theme color to underline unnecessary code instead of fading it out.
-
-The gutter contains the glyph margins and the line numbers:
-
-- `editorGutter.background`: Background color of the editor gutter. The gutter contains the glyph margins and the line numbers.
-- `editorGutter.modifiedBackground`: Editor gutter background color for lines that are modified.
-- `editorGutter.modifiedSecondaryBackground`: Editor gutter secondary background color for lines that are modified.
-- `editorGutter.addedBackground`: Editor gutter background color for lines that are added.
-- `editorGutter.addedSecondaryBackground`: Editor gutter secondary background color for lines that are added.
-- `editorGutter.deletedBackground`: Editor gutter background color for lines that are deleted.
-- `editorGutter.deletedSecondaryBackground`: Editor gutter secondary background color for lines that are deleted.
-- `editorGutter.commentRangeForeground`: Editor gutter decoration color for commenting ranges.
-- `editorGutter.commentGlyphForeground`: Editor gutter decoration color for commenting glyphs.
-- `editorGutter.commentUnresolvedGlyphForeground`: Editor gutter decoration color for commenting glyphs for unresolved comment threads.
-- `editorGutter.foldingControlForeground`: Color of the folding control in the editor gutter.
-- `editorGutter.itemGlyphForeground`: Editor gutter decoration color for gutter item glyphs.
-- `editorGutter.itemBackground`: Editor gutter decoration color for gutter item background. This color should be opaque.
-
-The editor comments widget can be seen when reviewing pull requests:
-
-- `editorCommentsWidget.resolvedBorder`: Color of borders and arrow for resolved comments.
-- `editorCommentsWidget.unresolvedBorder`: Color of borders and arrow for unresolved comments.
-- `editorCommentsWidget.rangeBackground`: Color of background for comment ranges.
-- `editorCommentsWidget.rangeActiveBackground`: Color of background for currently selected or hovered comment range.
-- `editorCommentsWidget.replyInputBackground`: Background color for comment reply input box.
-
-Editor inline edits can be seen when using Copilot to suggest the next change to make:
-
-- `inlineEdit.gutterIndicator.primaryBorder`: Border color for the primary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.primaryForeground`: Foreground color for the primary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.primaryBackground`: Background color for the primary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.secondaryBorder`: Border color for the secondary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.secondaryForeground`: Foreground color for the secondary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.secondaryBackground`: Background color for the secondary inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.successfulBorder`: Border color for the successful inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.successfulForeground`: Foreground color for the successful inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.successfulBackground`: Background color for the successful inline edit gutter indicator.
-- `inlineEdit.gutterIndicator.background`: Background color for the inline edit gutter indicator.
-- `inlineEdit.originalBackground`: Background color for the original text in inline edits.
-- `inlineEdit.modifiedBackground`: Background color for the modified text in inline edits.
-- `inlineEdit.originalChangedLineBackground`: Background color for the changed lines in the original text of inline edits.
-- `inlineEdit.originalChangedTextBackground`: Overlay color for the changed text in the original text of inline edits.
-- `inlineEdit.modifiedChangedLineBackground`: Background color for the changed lines in the modified text of inline edits.
-- `inlineEdit.modifiedChangedTextBackground`: Overlay color for the changed text in the modified text of inline edits.
-- `inlineEdit.originalBorder`: Border color for the original text in inline edits.
-- `inlineEdit.modifiedBorder`: Border color for the modified text in inline edits.
-- `inlineEdit.tabWillAcceptModifiedBorder`: Modified border color for the inline edits widget when tab will accept it.
-- `inlineEdit.tabWillAcceptOriginalBorder`: Original border color for the inline edits widget over the original text when tab will accept it.
-
-## Diff editor colors
-
-For coloring inserted and removed text, use either a background or a border color but not both.
-
-- `diffEditor.insertedTextBackground`: Background color for text that got inserted. The color must not be opaque so as not to hide underlying decorations.
-- `diffEditor.insertedTextBorder`: Outline color for the text that got inserted.
-- `diffEditor.removedTextBackground`: Background color for text that got removed. The color must not be opaque so as not to hide underlying decorations.
-- `diffEditor.removedTextBorder`: Outline color for text that got removed.
-- `diffEditor.border`: Border color between the two text editors.
-- `diffEditor.diagonalFill`: Color of the diff editor's diagonal fill. The diagonal fill is used in side-by-side diff views.
-- `diffEditor.insertedLineBackground`: Background color for lines that got inserted. The color must not be opaque so as not to hide underlying decorations.
-- `diffEditor.removedLineBackground`: Background color for lines that got removed. The color must not be opaque so as not to hide underlying decorations.
-- `diffEditorGutter.insertedLineBackground`: Background color for the margin where lines got inserted.
-- `diffEditorGutter.removedLineBackground`: Background color for the margin where lines got removed.
-- `diffEditorOverview.insertedForeground`: Diff overview ruler foreground for inserted content.
-- `diffEditorOverview.removedForeground`: Diff overview ruler foreground for removed content.
-- `diffEditor.unchangedRegionBackground`: The color of unchanged blocks in diff editor.
-- `diffEditor.unchangedRegionForeground`: The foreground color of unchanged blocks in the diff editor.
-- `diffEditor.unchangedRegionShadow`: The color of the shadow around unchanged region widgets.
-- `diffEditor.unchangedCodeBackground`: The background color of unchanged code in the diff editor.
-- `diffEditor.move.border`: The border color for text that got moved in the diff editor.
-- `diffEditor.moveActive.border`: The active border color for text that got moved in the diff editor.
-- `multiDiffEditor.headerBackground`: The background color of the diff editor's header
-- `multiDiffEditor.background`: The background color of the multi file diff editor
-- `multiDiffEditor.border`: The border color of the multi file diff editor
-
-## Chat colors
-
-- `chat.requestBorder`: The border color of a chat request.
-- `chat.requestBackground`: The background color of a chat request.
-- `chat.slashCommandBackground`: The background color of a chat slash command.
-- `chat.slashCommandForeground`: The foreground color of a chat slash command.
-- `chat.avatarBackground`: The background color of a chat avatar.
-- `chat.avatarForeground`: The foreground color of a chat avatar.
-- `chat.editedFileForeground`: The foreground color of a chat edited file in the edited file list.
-- `chat.linesAddedForeground`: Foreground color of lines added in chat code block pill.
-- `chat.linesRemovedForeground`: Foreground color of lines removed in chat code block pill.
-- `chat.requestCodeBorder`: Border color of code blocks within the chat request bubble.
-- `chat.requestBubbleBackground`: Background color of the chat request bubble.
-- `chat.requestBubbleHoverBackground`: Background color of the chat request bubble on hover.
-- `chat.checkpointSeparator`: Chat checkpoint separator color.
-- `chatManagement.sashBorder`: The color of the Chat Management editor splitview sash border.
-
-## Inline Chat colors
-
-- `inlineChat.background`: Background color of the interactive editor widget.
-- `inlineChat.foreground`: Foreground color of the interactive editor widget
-- `inlineChat.border`: Border color of the interactive editor widget.
-- `inlineChat.shadow`: Shadow color of the interactive editor widget.
-- `inlineChatInput.border`: Border color of the interactive editor input.
-- `inlineChatInput.focusBorder`: Border color of the interactive editor input when focused.
-- `inlineChatInput.placeholderForeground`: Foreground color of the interactive editor input placeholder.
-- `inlineChatInput.background`: Background color of the interactive editor input.
-- `inlineChatDiff.inserted`: Background color of inserted text in the interactive editor input.
-- `inlineChatDiff.removed`: Background color of removed text in the interactive editor input.
-
-## Panel Chat colors
-
-- `interactive.activeCodeBorder`: The border color for the current interactive code cell when the editor has focus.
-- `interactive.inactiveCodeBorder`: The border color for the current interactive code cell when the editor does not have focus.
-
-## Editor widget colors
-
-The Editor widget is shown in front of the editor content. Examples are the Find/Replace dialog, the suggestion widget, and the editor hover.
-
-- `editorWidget.foreground`: Foreground color of editor widgets, such as find/replace.
-- `editorWidget.background`: Background color of editor widgets, such as Find/Replace.
-- `editorWidget.border`: Border color of the editor widget unless the widget does not contain a border or defines its own border color.
-- `editorWidget.resizeBorder`: Border color of the resize bar of editor widgets. The color is only used if the widget chooses to have a resize border and if the color is not overridden by a widget.
-
-- `editorSuggestWidget.background`: Background color of the suggestion widget.
-- `editorSuggestWidget.border`: Border color of the suggestion widget.
-- `editorSuggestWidget.foreground`: Foreground color of the suggestion widget.
-- `editorSuggestWidget.focusHighlightForeground`: Color of the match highlights in the suggest widget when an item is focused.
-- `editorSuggestWidget.highlightForeground`: Color of the match highlights in the suggestion widget.
-- `editorSuggestWidget.selectedBackground`: Background color of the selected entry in the suggestion widget.
-- `editorSuggestWidget.selectedForeground`: Foreground color of the selected entry in the suggest widget.
-- `editorSuggestWidget.selectedIconForeground`: Icon foreground color of the selected entry in the suggest widget.
-- `editorSuggestWidgetStatus.foreground`: Foreground color of the suggest widget status.
-
-- `editorHoverWidget.foreground`: Foreground color of the editor hover.
-- `editorHoverWidget.background`: Background color of the editor hover.
-- `editorHoverWidget.border`: Border color of the editor hover.
-- `editorHoverWidget.highlightForeground`: Foreground color of the active item in the parameter hint.
-- `editorHoverWidget.statusBarBackground`: Background color of the editor hover status bar.
-
-- `editorGhostText.border`: Border color of the ghost text shown by inline completion providers and the suggest preview.
-- `editorGhostText.background`: Background color of the ghost text in the editor.
-- `editorGhostText.foreground`: Foreground color of the ghost text shown by inline completion providers and the suggest preview.
-
-- `editorStickyScroll.background`: Editor sticky scroll background color.
-- `editorStickyScroll.border`: Border color of sticky scroll in the editor.
-- `editorStickyScroll.shadow`:  Shadow color of sticky scroll in the editor.
-- `editorStickyScrollGutter.background`: Background color of the gutter part of sticky scroll in the editor.
-- `editorStickyScrollHover.background`: Editor sticky scroll on hover background color.
-
-The Debug Exception widget is a peek view that shows in the editor when debug stops at an exception.
-
-- `debugExceptionWidget.background`: Exception widget background color.
-- `debugExceptionWidget.border`: Exception widget border color.
-
-The editor marker view shows when navigating to errors and warnings in the editor (**Go to Next Error or Warning** command).
-
-- `editorMarkerNavigation.background`: Editor marker navigation widget background.
-- `editorMarkerNavigationError.background`: Editor marker navigation widget error color.
-- `editorMarkerNavigationWarning.background`: Editor marker navigation widget warning color.
-- `editorMarkerNavigationInfo.background`: Editor marker navigation widget info color.
-- `editorMarkerNavigationError.headerBackground`: Editor marker navigation widget error heading background.
-- `editorMarkerNavigationWarning.headerBackground`: Editor marker navigation widget warning heading background.
-- `editorMarkerNavigationInfo.headerBackground`: Editor marker navigation widget info heading background.
-
-## Peek view colors
-
-Peek views are used to show references and declarations as a view inside the editor.
+括号匹配：
 
 <!-- 图片已移除 -->
 
-- `peekView.border`: Color of the peek view borders and arrow.
-- `peekViewEditor.background`: Background color of the peek view editor.
-- `peekViewEditorGutter.background`: Background color of the gutter in the peek view editor.
-- `peekViewEditor.matchHighlightBackground`: Match highlight color in the peek view editor.
-- `peekViewEditor.matchHighlightBorder`: Match highlight border color in the peek view editor.
-- `peekViewResult.background`: Background color of the peek view result list.
-- `peekViewResult.fileForeground`: Foreground color for file nodes in the peek view result list.
-- `peekViewResult.lineForeground`: Foreground color for line nodes in the peek view result list.
-- `peekViewResult.matchHighlightBackground`: Match highlight color in the peek view result list.
-- `peekViewResult.selectionBackground`: Background color of the selected entry in the peek view result list.
-- `peekViewResult.selectionForeground`: Foreground color of the selected entry in the peek view result list.
-- `peekViewTitle.background`: Background color of the peek view title area.
-- `peekViewTitleDescription.foreground`: Color of the peek view title info.
-- `peekViewTitleLabel.foreground`: Color of the peek view title.
-- `peekViewEditorStickyScroll.background`: Background color of sticky scroll in the peek view editor.
-- `peekViewEditorStickyScrollGutter.background`: Background color of the gutter part of sticky scroll in the peek view editor.
+- `editorBracketMatch.background`: 匹配括号后面的背景颜色。
+- `editorBracketMatch.border`: 匹配括号框的颜色。
 
-## Merge conflicts colors
+括号对彩色化：
 
-Merge conflict decorations are shown when the editor contains special diff ranges.
+- `editorBracketHighlight.foreground1`: 括号 (1) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.foreground2`: 括号 (2) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.foreground3`: 括号 (3) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.foreground4`: 括号 (4) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.foreground5`: 括号 (5) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.foreground6`: 括号 (6) 的前景色。需要启用括号对彩色化。
+- `editorBracketHighlight.unexpectedBracket.foreground`: 意外括号的前景色。
+
+括号对指南：
+
+- `editorBracketPairGuide.activeBackground1`: 活动括号对指南 (1) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.activeBackground2`: 活动括号对指南 (2) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.activeBackground3`: 活动括号对指南 (3) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.activeBackground4`: 活动括号对指南 (4) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.activeBackground5`: 活动括号对指南 (5) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.activeBackground6`: 活动括号对指南 (6) 的背景颜色。需要启用括号对指南。
+
+- `editorBracketPairGuide.background1`: 非活动括号对指南 (1) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.background2`: 非活动括号对指南 (2) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.background3`: 非活动括号对指南 (3) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.background4`: 非活动括号对指南 (4) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.background5`: 非活动括号对指南 (5) 的背景颜色。需要启用括号对指南。
+- `editorBracketPairGuide.background6`: 非活动括号对指南 (6) 的背景颜色。需要启用括号对指南。
+
+折叠：
+
+- `editor.foldBackground`: 折叠范围的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editor.foldPlaceholderForeground`: 折叠范围第一行后折叠文本的颜色。
+
+概览标尺：
+
+此标尺位于编辑器右边缘的滚动条下方，提供编辑器中装饰的概览。
+
+- `editorOverviewRuler.background`: 编辑器概览标尺的背景颜色。仅当启用了缩略图并将其放置在编辑器右侧时才使用。
+- `editorOverviewRuler.border`: 概览标尺边框的颜色。
+- `editorOverviewRuler.findMatchForeground`: 查找匹配项的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.rangeHighlightForeground`: 高亮范围（如快速打开、文件中的符号和查找功能）的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.selectionHighlightForeground`: 选择高亮的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.wordHighlightForeground`: 符号高亮的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.wordHighlightStrongForeground`: 写入访问符号高亮的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.wordHighlightTextForeground`: 符号文本出现的概览标尺标记颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.modifiedForeground`: 已修改内容的概览标尺标记颜色。
+- `editorOverviewRuler.addedForeground`: 已添加内容的概览标尺标记颜色。
+- `editorOverviewRuler.deletedForeground`: 已删除内容的概览标尺标记颜色。
+- `editorOverviewRuler.errorForeground`: 错误的概览标尺标记颜色。
+- `editorOverviewRuler.warningForeground`: 警告的概览标尺标记颜色。
+- `editorOverviewRuler.infoForeground`: 信息的概览标尺标记颜色。
+- `editorOverviewRuler.bracketMatchForeground`: 匹配括号的概览标尺标记颜色。
+- `editorOverviewRuler.inlineChatInserted`: 内联聊天插入内容的概览标尺标记颜色。
+- `editorOverviewRuler.inlineChatRemoved`: 内联聊天删除内容的概览标尺标记颜色。
+
+错误和警告：
+
+- `editorError.foreground`: 编辑器中错误波浪线的前景色。
+- `editorError.border`: 编辑器中错误框的边框颜色。
+- `editorError.background`: 编辑器中错误文本的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorWarning.foreground`: 编辑器中警告波浪线的前景色。
+- `editorWarning.border`: 编辑器中警告框的边框颜色。
+- `editorWarning.background`: 编辑器中警告文本的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorInfo.foreground`: 编辑器中信息波浪线的前景色。
+- `editorInfo.border`: 编辑器中信息框的边框颜色。
+- `editorInfo.background`: 编辑器中信息文本的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `editorHint.foreground`: 编辑器中提示的前景色。
+- `editorHint.border`: 编辑器中提示框的边框颜色。
+- `problemsErrorIcon.foreground`: 问题错误图标使用的颜色。
+- `problemsWarningIcon.foreground`: 问题警告图标使用的颜色。
+- `problemsInfoIcon.foreground`: 问题信息图标使用的颜色。
+
+未使用的源代码：
+
+- `editorUnnecessaryCode.border`: 编辑器中不必要（未使用）源代码的边框颜色。
+- `editorUnnecessaryCode.opacity`: 编辑器中不必要（未使用）源代码的不透明度。例如，`"#000000c0"` 将以 75% 的不透明度渲染代码。对于高对比度主题，使用 `"editorUnnecessaryCode.border"` 主题颜色来下划线不必要的代码，而不是使其淡出。
+
+装订线包含字形边距和行号：
+
+- `editorGutter.background`: 编辑器装订线的背景颜色。装订线包含字形边距和行号。
+- `editorGutter.modifiedBackground`: 已修改行的编辑器装订线背景颜色。
+- `editorGutter.modifiedSecondaryBackground`: 已修改行的编辑器装订线次要背景颜色。
+- `editorGutter.addedBackground`: 已添加行的编辑器装订线背景颜色。
+- `editorGutter.addedSecondaryBackground`: 已添加行的编辑器装订线次要背景颜色。
+- `editorGutter.deletedBackground`: 已删除行的编辑器装订线背景颜色。
+- `editorGutter.deletedSecondaryBackground`: 已删除行的编辑器装订线次要背景颜色。
+- `editorGutter.commentRangeForeground`: 评论范围的编辑器装订线装饰颜色。
+- `editorGutter.commentGlyphForeground`: 评论字形的编辑器装订线装饰颜色。
+- `editorGutter.commentUnresolvedGlyphForeground`: 未解决评论线程的评论字形的编辑器装订线装饰颜色。
+- `editorGutter.foldingControlForeground`: 编辑器装订线中折叠控件的颜色。
+- `editorGutter.itemGlyphForeground`: 装订线项目字形的编辑器装订线装饰颜色。
+- `editorGutter.itemBackground`: 装订线项目背景的编辑器装订线装饰颜色。此颜色应为不透明。
+
+审查拉取请求时可以看到编辑器评论小部件：
+
+- `editorCommentsWidget.resolvedBorder`: 已解决评论的边框和箭头的颜色。
+- `editorCommentsWidget.unresolvedBorder`: 未解决评论的边框和箭头的颜色。
+- `editorCommentsWidget.rangeBackground`: 评论范围的背景颜色。
+- `editorCommentsWidget.rangeActiveBackground`: 当前选中或悬停的评论范围的背景颜色。
+- `editorCommentsWidget.replyInputBackground`: 评论回复输入框的背景颜色。
+
+在使用 Copilot 建议下一个更改时，可以看到编辑器内联编辑：
+
+- `inlineEdit.gutterIndicator.primaryBorder`: 主要内联编辑装订线指示器的边框颜色。
+- `inlineEdit.gutterIndicator.primaryForeground`: 主要内联编辑装订线指示器的前景色。
+- `inlineEdit.gutterIndicator.primaryBackground`: 主要内联编辑装订线指示器的背景颜色。
+- `inlineEdit.gutterIndicator.secondaryBorder`: 次要内联编辑装订线指示器的边框颜色。
+- `inlineEdit.gutterIndicator.secondaryForeground`: 次要内联编辑装订线指示器的前景色。
+- `inlineEdit.gutterIndicator.secondaryBackground`: 次要内联编辑装订线指示器的背景颜色。
+- `inlineEdit.gutterIndicator.successfulBorder`: 成功内联编辑装订线指示器的边框颜色。
+- `inlineEdit.gutterIndicator.successfulForeground`: 成功内联编辑装订线指示器的前景色。
+- `inlineEdit.gutterIndicator.successfulBackground`: 成功内联编辑装订线指示器的背景颜色。
+- `inlineEdit.gutterIndicator.background`: 内联编辑装订线指示器的背景颜色。
+- `inlineEdit.originalBackground`: 内联编辑中原始文本的背景颜色。
+- `inlineEdit.modifiedBackground`: 内联编辑中修改后文本的背景颜色。
+- `inlineEdit.originalChangedLineBackground`: 内联编辑原始文本中已更改行的背景颜色。
+- `inlineEdit.originalChangedTextBackground`: 内联编辑原始文本中已更改文本的叠加颜色。
+- `inlineEdit.modifiedChangedLineBackground`: 内联编辑修改后文本中已更改行的背景颜色。
+- `inlineEdit.modifiedChangedTextBackground`: 内联编辑修改后文本中已更改文本的叠加颜色。
+- `inlineEdit.originalBorder`: 内联编辑中原始文本的边框颜色。
+- `inlineEdit.modifiedBorder`: 内联编辑中修改后文本的边框颜色。
+- `inlineEdit.tabWillAcceptModifiedBorder`: 当 tab 键将接受修改时，内联编辑小部件的修改边框颜色。
+- `inlineEdit.tabWillAcceptOriginalBorder`: 当 tab 键将接受修改时，内联编辑小部件覆盖原始文本的原始边框颜色。
+
+## 差异编辑器颜色
+
+对于插入和删除文本的着色，请使用背景或边框颜色，但不要同时使用两者。
+
+- `diffEditor.insertedTextBackground`: 插入文本的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `diffEditor.insertedTextBorder`: 插入文本的轮廓颜色。
+- `diffEditor.removedTextBackground`: 移除文本的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `diffEditor.removedTextBorder`: 移除文本的轮廓颜色。
+- `diffEditor.border`: 两个文本编辑器之间的边框颜色。
+- `diffEditor.diagonalFill`: 差异编辑器对角线填充的颜色。对角线填充用于并排差异视图。
+- `diffEditor.insertedLineBackground`: 插入行的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `diffEditor.removedLineBackground`: 移除行的背景颜色。颜色不得为不透明，以免遮挡底层装饰。
+- `diffEditorGutter.insertedLineBackground`: 插入行所在边距的背景颜色。
+- `diffEditorGutter.removedLineBackground`: 移除行所在边距的背景颜色。
+- `diffEditorOverview.insertedForeground`: 插入内容的差异概览标尺前景。
+- `diffEditorOverview.removedForeground`: 移除内容的差异概览标尺前景。
+- `diffEditor.unchangedRegionBackground`: 差异编辑器中未更改块的颜色。
+- `diffEditor.unchangedRegionForeground`: 差异编辑器中未更改块的前景色。
+- `diffEditor.unchangedRegionShadow`: 未更改区域小部件周围阴影的颜色。
+- `diffEditor.unchangedCodeBackground`: 差异编辑器中未更改代码的背景颜色。
+- `diffEditor.move.border`: 差异编辑器中移动文本的边框颜色。
+- `diffEditor.moveActive.border`: 差异编辑器中移动文本的活动边框颜色。
+- `multiDiffEditor.headerBackground`: 差异编辑器标题的背景颜色
+- `multiDiffEditor.background`: 多文件差异编辑器的背景颜色
+- `multiDiffEditor.border`: 多文件差异编辑器的边框颜色
+
+## 聊天颜色
+
+- `chat.requestBorder`: 聊天请求的边框颜色。
+- `chat.requestBackground`: 聊天请求的背景颜色。
+- `chat.slashCommandBackground`: 聊天斜杠命令的背景颜色。
+- `chat.slashCommandForeground`: 聊天斜杠命令的前景色。
+- `chat.avatarBackground`: 聊天头像的背景颜色。
+- `chat.avatarForeground`: 聊天头像的前景色。
+- `chat.editedFileForeground`: 已编辑文件列表中聊天编辑文件的前景色。
+- `chat.linesAddedForeground`: 聊天代码块药丸中添加行的前景色。
+- `chat.linesRemovedForeground`: 聊天代码块药丸中移除行的前景色。
+- `chat.requestCodeBorder`: 聊天请求气泡内代码块的边框颜色。
+- `chat.requestBubbleBackground`: 聊天请求气泡的背景颜色。
+- `chat.requestBubbleHoverBackground`: 悬停时聊天请求气泡的背景颜色。
+- `chat.checkpointSeparator`: 聊天检查点分隔符颜色。
+- `chatManagement.sashBorder`: 聊天管理编辑器拆分视图分隔条边框的颜色。
+
+## 内联聊天颜色
+
+- `inlineChat.background`: 交互式编辑器小部件的背景颜色。
+- `inlineChat.foreground`: 交互式编辑器小部件的前景色
+- `inlineChat.border`: 交互式编辑器小部件的边框颜色。
+- `inlineChat.shadow`: 交互式编辑器小部件的阴影颜色。
+- `inlineChatInput.border`: 交互式编辑器输入的边框颜色。
+- `inlineChatInput.focusBorder`: 聚焦时交互式编辑器输入的边框颜色。
+- `inlineChatInput.placeholderForeground`: 交互式编辑器输入占位符的前景色。
+- `inlineChatInput.background`: 交互式编辑器输入的背景颜色。
+- `inlineChatDiff.inserted`: 交互式编辑器输入中插入文本的背景颜色。
+- `inlineChatDiff.removed`: 交互式编辑器输入中移除文本的背景颜色。
+
+## 面板聊天颜色
+
+- `interactive.activeCodeBorder`: 编辑器获得焦点时当前交互式代码单元的边框颜色。
+- `interactive.inactiveCodeBorder`: 编辑器未获得焦点时当前交互式代码单元的边框颜色。
+
+## 编辑器小部件颜色
+
+编辑器小部件显示在编辑器内容的前面。例如查找/替换对话框、建议小部件和编辑器悬停。
+
+- `editorWidget.foreground`: 编辑器小部件（如查找/替换）的前景色。
+- `editorWidget.background`: 编辑器小部件（如查找/替换）的背景颜色。
+- `editorWidget.border`: 编辑器小部件的边框颜色，除非小部件不包含边框或定义了自己的边框颜色。
+- `editorWidget.resizeBorder`: 编辑器小部件调整大小条的边框颜色。仅当小部件选择具有调整大小边框且颜色未被小部件覆盖时使用。
+
+- `editorSuggestWidget.background`: 建议小部件的背景颜色。
+- `editorSuggestWidget.border`: 建议小部件的边框颜色。
+- `editorSuggestWidget.foreground`: 建议小部件的前景色。
+- `editorSuggestWidget.focusHighlightForeground`: 当项目聚焦时，建议小部件中匹配高亮显示的颜色。
+- `editorSuggestWidget.highlightForeground`: 建议小部件中匹配高亮显示的颜色。
+- `editorSuggestWidget.selectedBackground`: 建议小部件中所选项的背景颜色。
+- `editorSuggestWidget.selectedForeground`: 建议小部件中所选项的前景色。
+- `editorSuggestWidget.selectedIconForeground`: 建议小部件中所选项的图标前景色。
+- `editorSuggestWidgetStatus.foreground`: 建议小部件状态的前景色。
+
+- `editorHoverWidget.foreground`: 编辑器悬停的前景色。
+- `editorHoverWidget.background`: 编辑器悬停的背景颜色。
+- `editorHoverWidget.border`: 编辑器悬停的边框颜色。
+- `editorHoverWidget.highlightForeground`: 参数提示中活动项的前景色。
+- `editorHoverWidget.statusBarBackground`: 编辑器悬停状态栏的背景颜色。
+
+- `editorGhostText.border`: 内联补全提供程序和建议预览显示的幽灵文本的边框颜色。
+- `editorGhostText.background`: 编辑器中幽灵文本的背景颜色。
+- `editorGhostText.foreground`: 内联补全提供程序和建议预览显示的幽灵文本的前景色。
+
+- `editorStickyScroll.background`: 编辑器粘性滚动背景颜色。
+- `editorStickyScroll.border`: 编辑器中粘性滚动的边框颜色。
+- `editorStickyScroll.shadow`:  编辑器中粘性滚动的阴影颜色。
+- `editorStickyScrollGutter.background`: 编辑器中粘性滚动装订线部分的背景颜色。
+- `editorStickyScrollHover.background`: 编辑器粘性滚动悬停背景颜色。
+
+调试异常小部件是一个快速查看视图，当调试在异常处停止时在编辑器中显示。
+
+- `debugExceptionWidget.background`: 异常小部件背景颜色。
+- `debugExceptionWidget.border`: 异常小部件边框颜色。
+
+当导航到编辑器中的错误和警告时（**转到下一个错误或警告** 命令），显示编辑器标记视图。
+
+- `editorMarkerNavigation.background`: 编辑器标记导航小部件背景。
+- `editorMarkerNavigationError.background`: 编辑器标记导航小部件错误颜色。
+- `editorMarkerNavigationWarning.background`: 编辑器标记导航小部件警告颜色。
+- `editorMarkerNavigationInfo.background`: 编辑器标记导航小部件信息颜色。
+- `editorMarkerNavigationError.headerBackground`: 编辑器标记导航小部件错误标题背景。
+- `editorMarkerNavigationWarning.headerBackground`: 编辑器标记导航小部件警告标题背景。
+- `editorMarkerNavigationInfo.headerBackground`: 编辑器标记导航小部件信息标题背景。
+
+## 快速查看 (Peek View) 颜色
+
+快速查看用于在编辑器内作为视图显示引用和声明。
 
 <!-- 图片已移除 -->
 
-- `merge.currentHeaderBackground`: Current header background in inline merge conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `merge.currentContentBackground`: Current content background in inline merge conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `merge.incomingHeaderBackground`: Incoming header background in inline merge conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `merge.incomingContentBackground`: Incoming content background in inline merge conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `merge.border`: Border color on headers and the splitter in inline merge conflicts.
-- `merge.commonContentBackground`: Common ancestor content background in inline merge-conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `merge.commonHeaderBackground`: Common ancestor header background in inline merge-conflicts. The color must not be opaque so as not to hide underlying decorations.
-- `editorOverviewRuler.currentContentForeground`: Current overview ruler foreground for inline merge conflicts.
-- `editorOverviewRuler.incomingContentForeground`: Incoming overview ruler foreground for inline merge conflicts.
-- `editorOverviewRuler.commonContentForeground`: Common ancestor overview ruler foreground for inline merge conflicts.
-- `editorOverviewRuler.commentForeground`: Editor overview ruler decoration color for resolved comments. This color should be opaque.
-- `editorOverviewRuler.commentUnresolvedForeground`: Editor overview ruler decoration color for unresolved comments. This color should be opaque.
-- `mergeEditor.change.background`: The background color for changes.
-- `mergeEditor.change.word.background`: The background color for word changes.
-- `mergeEditor.conflict.unhandledUnfocused.border`: The border color of unhandled unfocused conflicts.
-- `mergeEditor.conflict.unhandledFocused.border`: The border color of unhandled focused conflicts.
-- `mergeEditor.conflict.handledUnfocused.border`: The border color of handled unfocused conflicts.
-- `mergeEditor.conflict.handledFocused.border`: The border color of handled focused conflicts.
-- `mergeEditor.conflict.handled.minimapOverViewRuler`: The foreground color for changes in input 1.
-- `mergeEditor.conflict.unhandled.minimapOverViewRuler`: The foreground color for changes in input 1.
-- `mergeEditor.conflictingLines.background`: The background of the "Conflicting Lines" text.
-- `mergeEditor.changeBase.background`: The background color for changes in base.
-- `mergeEditor.changeBase.word.background`: The background color for word changes in base.
-- `mergeEditor.conflict.input1.background`: The background color of decorations in input 1.
-- `mergeEditor.conflict.input2.background`: The background color of decorations in input 2.
+- `peekView.border`: 快速查看边框和箭头的颜色。
+- `peekViewEditor.background`: 快速查看编辑器的背景颜色。
+- `peekViewEditorGutter.background`: 快速查看编辑器中装订线的背景颜色。
+- `peekViewEditor.matchHighlightBackground`: 快速查看编辑器中匹配高亮显示的颜色。
+- `peekViewEditor.matchHighlightBorder`: 快速查看编辑器中匹配高亮显示的边框颜色。
+- `peekViewResult.background`: 快速查看结果列表的背景颜色。
+- `peekViewResult.fileForeground`: 快速查看结果列表中文件节点的前景色。
+- `peekViewResult.lineForeground`: 快速查看结果列表中行节点的前景色。
+- `peekViewResult.matchHighlightBackground`: 快速查看结果列表中匹配高亮显示的颜色。
+- `peekViewResult.selectionBackground`: 快速查看结果列表中所选项的背景颜色。
+- `peekViewResult.selectionForeground`: 快速查看结果列表中所选项的前景色。
+- `peekViewTitle.background`: 快速查看标题区域的背景颜色。
+- `peekViewTitleDescription.foreground`: 快速查看标题信息的颜色。
+- `peekViewTitleLabel.foreground`: 快速查看标题的颜色。
+- `peekViewEditorStickyScroll.background`: 快速查看编辑器中粘性滚动的背景颜色。
+- `peekViewEditorStickyScrollGutter.background`: 快速查看编辑器中粘性滚动的装订线部分的背景颜色。
 
-## Panel colors
+## 合并冲突颜色
 
-Panels are shown below the editor area and contain views like Output and Integrated Terminal.
-
-- `panel.background`: Panel background color.
-- `panel.border`: Panel border color to separate the panel from the editor.
-- `panel.dropBorder`: Drag and drop feedback color for the panel titles. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelTitle.activeBorder`: Border color for the active panel title.
-- `panelTitle.activeForeground`: Title color for the active panel.
-- `panelTitle.inactiveForeground`: Title color for the inactive panel.
-- `panelTitle.border`: Panel title border color on the bottom, separating the title from the views. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelTitleBadge.background`: Panel title badge background color. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelTitleBadge.foreground`: Panel title badge foreground color. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelInput.border`: Input box border for inputs in the panel.
-- `panelSection.border`: Panel section border color used when multiple views are stacked horizontally in the panel. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelSection.dropBackground`: Drag and drop feedback color for the panel sections. The color should have transparency so that the panel sections can still shine through. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelSectionHeader.background`: Panel section header background color. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelSectionHeader.foreground`: Panel section header foreground color. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `panelStickyScroll.background`: Background color of sticky scroll in the panel.
-- `panelStickyScroll.border`: Border color of sticky scroll in the panel.
-- `panelStickyScroll.shadow`: Shadow color of sticky scroll in the panel.
-- `panelSectionHeader.border`: Panel section header border color used when multiple views are stacked vertically in the panel. Panels are shown below the editor area and contain views like output and integrated terminal.
-- `outputView.background`: Output view background color.
-- `outputViewStickyScroll.background`: Output view sticky scroll background color.
-
-## Status Bar colors
-
-The Status Bar is shown in the bottom of the workbench.
-
-- `statusBar.background`: Standard Status Bar background color.
-- `statusBar.foreground`: Status Bar foreground color.
-- `statusBar.border`: Status Bar border color separating the Status Bar and editor.
-- `statusBar.debuggingBackground`: Status Bar background color when a program is being debugged.
-- `statusBar.debuggingForeground`: Status Bar foreground color when a program is being debugged.
-- `statusBar.debuggingBorder`: Status Bar border color separating the Status Bar and editor when a program is being debugged.
-- `statusBar.noFolderForeground`: Status Bar foreground color when no folder is opened.
-- `statusBar.noFolderBackground`: Status Bar background color when no folder is opened.
-- `statusBar.noFolderBorder`: Status Bar border color separating the Status Bar and editor when no folder is opened.
-- `statusBarItem.activeBackground`: Status Bar item background color when clicking.
-- `statusBarItem.hoverForeground`: Status bar item foreground color when hovering. The status bar is shown in the bottom of the window.
-- `statusBarItem.hoverBackground`: Status Bar item background color when hovering.
-- `statusBarItem.prominentForeground`: Status Bar prominent items foreground color.
-- `statusBarItem.prominentBackground`: Status Bar prominent items background color.
-- `statusBarItem.prominentHoverForeground`: Status bar prominent items foreground color when hovering. Prominent items stand out from other status bar entries to indicate importance. The status bar is shown in the bottom of the window.
-- `statusBarItem.prominentHoverBackground`: Status Bar prominent items background color when hovering.
-- `statusBarItem.remoteBackground`: Background color for the remote indicator on the status bar.
-- `statusBarItem.remoteForeground`: Foreground color for the remote indicator on the status bar.
-- `statusBarItem.remoteHoverBackground`: Background color for the remote indicator on the status bar when hovering.
-- `statusBarItem.remoteHoverForeground`: Foreground color for the remote indicator on the status bar when hovering.
-- `statusBarItem.errorBackground`: Status bar error items background color. Error items stand out from other status bar entries to indicate error conditions.
-- `statusBarItem.errorForeground`: Status bar error items foreground color. Error items stand out from other status bar entries to indicate error conditions.
-- `statusBarItem.errorHoverBackground`: Status bar error items background color when hovering. Error items stand out from other status bar entries to indicate error conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.errorHoverForeground`: Status bar error items foreground color when hovering. Error items stand out from other status bar entries to indicate error conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.warningBackground`: Status bar warning items background color. Warning items stand out from other status bar entries to indicate warning conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.warningForeground`: Status bar warning items foreground color. Warning items stand out from other status bar entries to indicate warning conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.warningHoverBackground`: Status bar warning items background color when hovering. Warning items stand out from other status bar entries to indicate warning conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.warningHoverForeground`: Status bar warning items foreground color when hovering. Warning items stand out from other status bar entries to indicate warning conditions. The status bar is shown in the bottom of the window.
-- `statusBarItem.compactHoverBackground`: Status bar item background color when hovering an item that contains two hovers. The status bar is shown in the bottom of the window.
-- `statusBarItem.focusBorder`: Status bar item border color when focused on keyboard navigation. The status bar is shown in the bottom of the window.
-- `statusBar.focusBorder`: Status bar border color when focused on keyboard navigation. The status bar is shown in the bottom of the window.
-- `statusBarItem.offlineBackground`: Status bar item background color when the workbench is offline.
-- `statusBarItem.offlineForeground`: Status bar item foreground color when the workbench is offline.
-- `statusBarItem.offlineHoverForeground`: Status bar item foreground hover color when the workbench is offline.
-- `statusBarItem.offlineHoverBackground`: Status bar item background hover color when the workbench is offline.
-
-Prominent items stand out from other Status Bar entries to indicate importance. One example is the **Toggle Tab Key Moves Focus** command change mode indicator.
-
-## Title Bar colors
-
-- `titleBar.activeBackground`: Title Bar background when the window is active.
-- `titleBar.activeForeground`: Title Bar foreground when the window is active.
-- `titleBar.inactiveBackground`: Title Bar background when the window is inactive.
-- `titleBar.inactiveForeground`: Title Bar foreground when the window is inactive.
-- `titleBar.border`: Title bar border color.
-
-## Menu Bar colors
-
-- `menubar.selectionForeground`: Foreground color of the selected menu item in the menubar.
-- `menubar.selectionBackground`: Background color of the selected menu item in the menubar.
-- `menubar.selectionBorder`: Border color of the selected menu item in the menubar.
-- `menu.foreground`: Foreground color of menu items.
-- `menu.background`: Background color of menu items.
-- `menu.selectionForeground`: Foreground color of the selected menu item in menus.
-- `menu.selectionBackground`: Background color of the selected menu item in menus.
-- `menu.selectionBorder`: Border color of the selected menu item in menus.
-- `menu.separatorBackground`: Color of a separator menu item in menus.
-- `menu.border`: Border color of menus.
-
-## Command Center colors
-
-- `commandCenter.foreground`: Foreground color of the Command Center.
-- `commandCenter.activeForeground`: Active foreground color of the Command Center.
-- `commandCenter.background`: Background color of the Command Center.
-- `commandCenter.activeBackground`: Active background color of the Command Center.
-- `commandCenter.border`: Border color of the Command Center.
-- `commandCenter.inactiveForeground`: Foreground color of the Command Center when the window is inactive.
-- `commandCenter.inactiveBorder`: Border color of the Command Center when the window is inactive.
-- `commandCenter.activeBorder`: Active border color of the Command Center.
-- `commandCenter.debuggingBackground`: Command Center background color when a program is being debugged.
-
-## Notification colors
-
-Notification toasts slide up from the bottom-right of the workbench.
+当编辑器包含特殊的差异范围时，会显示合并冲突装饰。
 
 <!-- 图片已移除 -->
 
-Once opened in the Notification Center, they are displayed in a list with a header:
+- `merge.currentHeaderBackground`: 内联合并冲突中的当前标题背景。颜色不得为不透明，以免遮挡底层装饰。
+- `merge.currentContentBackground`: 内联合并冲突中的当前内容背景。颜色不得为不透明，以免遮挡底层装饰。
+- `merge.incomingHeaderBackground`: 内联合并冲突中的传入标题背景。颜色不得为不透明，以免遮挡底层装饰。
+- `merge.incomingContentBackground`: 内联合并冲突中的传入内容背景。颜色不得为不透明，以免遮挡底层装饰。
+- `merge.border`: 内联合并冲突中标题和拆分器的边框颜色。
+- `merge.commonContentBackground`: 内联合并冲突中的共同祖先内容背景。颜色不得为不透明，以免遮挡底层装饰。
+- `merge.commonHeaderBackground`: 内联合并冲突中的共同祖先标题背景。颜色不得为不透明，以免遮挡底层装饰。
+- `editorOverviewRuler.currentContentForeground`: 内联合并冲突的当前概览标尺前景。
+- `editorOverviewRuler.incomingContentForeground`: 内联合并冲突的传入概览标尺前景。
+- `editorOverviewRuler.commonContentForeground`: 内联合并冲突的共同祖先概览标尺前景。
+- `editorOverviewRuler.commentForeground`: 已解决评论的编辑器概览标尺装饰颜色。此颜色应为不透明。
+- `editorOverviewRuler.commentUnresolvedForeground`: 未解决评论的编辑器概览标尺装饰颜色。此颜色应为不透明。
+- `mergeEditor.change.background`: 更改的背景颜色。
+- `mergeEditor.change.word.background`: 单词更改的背景颜色。
+- `mergeEditor.conflict.unhandledUnfocused.border`: 未处理未聚焦冲突的边框颜色。
+- `mergeEditor.conflict.unhandledFocused.border`: 未处理聚焦冲突的边框颜色。
+- `mergeEditor.conflict.handledUnfocused.border`: 已处理未聚焦冲突的边框颜色。
+- `mergeEditor.conflict.handledFocused.border`: 已处理聚焦冲突的边框颜色。
+- `mergeEditor.conflict.handled.minimapOverViewRuler`: 输入 1 中更改的前景色。
+- `mergeEditor.conflict.unhandled.minimapOverViewRuler`: 输入 1 中更改的前景色。
+- `mergeEditor.conflictingLines.background`: “冲突行”文本的背景。
+- `mergeEditor.changeBase.background`: 基础中更改的背景颜色。
+- `mergeEditor.changeBase.word.background`: 基础中单词更改的背景颜色。
+- `mergeEditor.conflict.input1.background`: 输入 1 中装饰的背景颜色。
+- `mergeEditor.conflict.input2.background`: 输入 2 中装饰的背景颜色。
+
+## 面板颜色
+
+面板显示在编辑器区域下方，包含输出和集成终端等视图。
+
+- `panel.background`: 面板背景颜色。
+- `panel.border`: 面板边框颜色，用于将面板与编辑器分隔开。
+- `panel.dropBorder`: 面板标题的拖放反馈颜色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelTitle.activeBorder`: 活动面板标题的边框颜色。
+- `panelTitle.activeForeground`: 活动面板的标题颜色。
+- `panelTitle.inactiveForeground`: 非活动面板的标题颜色。
+- `panelTitle.border`: 面板标题底部的边框颜色，将标题与视图分隔开。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelTitleBadge.background`: 面板标题徽章背景颜色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelTitleBadge.foreground`: 面板标题徽章前景色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelInput.border`: 面板中输入的输入框边框。
+- `panelSection.border`: 当多个视图在面板中水平堆叠时使用的面板部分边框颜色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelSection.dropBackground`: 面板部分的拖放反馈颜色。颜色应具有透明度，以便面板部分仍然可以透出。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelSectionHeader.background`: 面板部分标题背景颜色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelSectionHeader.foreground`: 面板部分标题前景色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `panelStickyScroll.background`: 面板中粘性滚动的背景颜色。
+- `panelStickyScroll.border`: 面板中粘性滚动的边框颜色。
+- `panelStickyScroll.shadow`: 面板中粘性滚动的阴影颜色。
+- `panelSectionHeader.border`: 当多个视图在面板中垂直堆叠时使用的面板部分标题边框颜色。面板显示在编辑器区域下方，包含输出和集成终端等视图。
+- `outputView.background`: 输出视图背景颜色。
+- `outputViewStickyScroll.background`: 输出视图粘性滚动背景颜色。
+
+## 状态栏颜色
+
+状态栏显示在工作台的底部。
+
+- `statusBar.background`: 标准状态栏背景颜色。
+- `statusBar.foreground`: 状态栏前景色。
+- `statusBar.border`: 分隔状态栏和编辑器的状态栏边框颜色。
+- `statusBar.debuggingBackground`: 调试程序时的状态栏背景颜色。
+- `statusBar.debuggingForeground`: 调试程序时的状态栏前景色。
+- `statusBar.debuggingBorder`: 调试程序时分隔状态栏和编辑器的状态栏边框颜色。
+- `statusBar.noFolderForeground`: 未打开文件夹时的状态栏前景色。
+- `statusBar.noFolderBackground`: 未打开文件夹时的状态栏背景颜色。
+- `statusBar.noFolderBorder`: 未打开文件夹时分隔状态栏和编辑器的状态栏边框颜色。
+- `statusBarItem.activeBackground`: 点击时的状态栏项目背景颜色。
+- `statusBarItem.hoverForeground`: 悬停时的状态栏项目前景色。状态栏显示在窗口底部。
+- `statusBarItem.hoverBackground`: 悬停时的状态栏项目背景颜色。
+- `statusBarItem.prominentForeground`: 状态栏突出项目前景色。
+- `statusBarItem.prominentBackground`: 状态栏突出项目背景颜色。
+- `statusBarItem.prominentHoverForeground`: 悬停时的状态栏突出项目前景色。突出项目与其他状态栏条目区分开来以指示重要性。状态栏显示在窗口底部。
+- `statusBarItem.prominentHoverBackground`: 悬停时的状态栏突出项目背景颜色。
+- `statusBarItem.remoteBackground`: 状态栏上远程指示器的背景颜色。
+- `statusBarItem.remoteForeground`: 状态栏上远程指示器的前景色。
+- `statusBarItem.remoteHoverBackground`: 悬停时状态栏上远程指示器的背景颜色。
+- `statusBarItem.remoteHoverForeground`: 悬停时状态栏上远程指示器的前景色。
+- `statusBarItem.errorBackground`: 状态栏错误项目背景颜色。错误项目与其他状态栏条目区分开来以指示错误条件。
+- `statusBarItem.errorForeground`: 状态栏错误项目前景色。错误项目与其他状态栏条目区分开来以指示错误条件。
+- `statusBarItem.errorHoverBackground`: 悬停时的状态栏错误项目背景颜色。错误项目与其他状态栏条目区分开来以指示错误条件。状态栏显示在窗口底部。
+- `statusBarItem.errorHoverForeground`: 悬停时的状态栏错误项目前景色。错误项目与其他状态栏条目区分开来以指示错误条件。状态栏显示在窗口底部。
+- `statusBarItem.warningBackground`: 状态栏警告项目背景颜色。警告项目与其他状态栏条目区分开来以指示警告条件。状态栏显示在窗口底部。
+- `statusBarItem.warningForeground`: 状态栏警告项目前景色。警告项目与其他状态栏条目区分开来以指示警告条件。状态栏显示在窗口底部。
+- `statusBarItem.warningHoverBackground`: 悬停时的状态栏警告项目背景颜色。警告项目与其他状态栏条目区分开来以指示警告条件。状态栏显示在窗口底部。
+- `statusBarItem.warningHoverForeground`: 悬停时的状态栏警告项目前景色。警告项目与其他状态栏条目区分开来以指示警告条件。状态栏显示在窗口底部。
+- `statusBarItem.compactHoverBackground`: 悬停包含两个悬停的项目时的状态栏项目背景颜色。状态栏显示在窗口底部。
+- `statusBarItem.focusBorder`: 键盘导航聚焦时的状态栏项目边框颜色。状态栏显示在窗口底部。
+- `statusBar.focusBorder`: 键盘导航聚焦时的状态栏边框颜色。状态栏显示在窗口底部。
+- `statusBarItem.offlineBackground`: 工作台脱机时的状态栏项目背景颜色。
+- `statusBarItem.offlineForeground`: 工作台脱机时的状态栏项目前景色。
+- `statusBarItem.offlineHoverForeground`: 工作台脱机时的状态栏项目前景悬停颜色。
+- `statusBarItem.offlineHoverBackground`: 工作台脱机时的状态栏项目背景悬停颜色。
+
+突出项目与其他状态栏条目区分开来以指示重要性。一个例子是 **切换 Tab 键移动焦点** 命令更改模式指示器。
+
+## 标题栏颜色
+
+- `titleBar.activeBackground`: 窗口处于活动状态时的标题栏背景。
+- `titleBar.activeForeground`: 窗口处于活动状态时的标题栏前景。
+- `titleBar.inactiveBackground`: 窗口处于非活动状态时的标题栏背景。
+- `titleBar.inactiveForeground`: 窗口处于非活动状态时的标题栏前景。
+- `titleBar.border`: 标题栏边框颜色。
+
+## 菜单栏颜色
+
+- `menubar.selectionForeground`: 菜单栏中所选菜单项的前景色。
+- `menubar.selectionBackground`: 菜单栏中所选菜单项的背景颜色。
+- `menubar.selectionBorder`: 菜单栏中所选菜单项的边框颜色。
+- `menu.foreground`: 菜单项的前景色。
+- `menu.background`: 菜单项的背景颜色。
+- `menu.selectionForeground`: 菜单中所选菜单项的前景色。
+- `menu.selectionBackground`: 菜单中所选菜单项的背景颜色。
+- `menu.selectionBorder`: 菜单中所选菜单项的边框颜色。
+- `menu.separatorBackground`: 菜单中分隔符菜单项的颜色。
+- `menu.border`: 菜单的边框颜色。
+
+## 命令中心颜色
+
+- `commandCenter.foreground`: 命令中心的前景色。
+- `commandCenter.activeForeground`: 命令中心的活动前景色。
+- `commandCenter.background`: 命令中心的背景颜色。
+- `commandCenter.activeBackground`: 命令中心的活动背景颜色。
+- `commandCenter.border`: 命令中心的边框颜色。
+- `commandCenter.inactiveForeground`: 窗口处于非活动状态时命令中心的前景色。
+- `commandCenter.inactiveBorder`: 窗口处于非活动状态时命令中心的边框颜色。
+- `commandCenter.activeBorder`: 命令中心的活动边框颜色。
+- `commandCenter.debuggingBackground`: 调试程序时命令中心的背景颜色。
+
+## 通知颜色
+
+通知 toast 从工作台右下角滑出。
 
 <!-- 图片已移除 -->
 
-- `notificationCenter.border`: Notification Center border color.
-- `notificationCenterHeader.foreground`: Notification Center header foreground color.
-- `notificationCenterHeader.background`: Notification Center header background color.
-- `notificationToast.border`: Notification toast border color.
-- `notifications.foreground`: Notification foreground color.
-- `notifications.background`: Notification background color.
-- `notifications.border`: Notification border color separating from other notifications in the Notification Center.
-- `notificationLink.foreground`: Notification links foreground color.
-- `notificationsErrorIcon.foreground`: The color used for the notification error icon.
-- `notificationsWarningIcon.foreground`: The color used for the notification warning icon.
-- `notificationsInfoIcon.foreground`: The color used for the notification info icon.
-
-## Banner colors
-
-The banner appears below the title bar and spans the entire width of the workbench when visible.
-
-- `banner.background`: Banner background color.
-- `banner.foreground`: Banner foreground color.
-- `banner.iconForeground`: Color for the icon in front of the banner text.
-
-## 插件 colors
-
-- `extensionButton.prominentForeground`: 插件 view button foreground color (for example **Install** button).
-- `extensionButton.prominentBackground`: 插件 view button background color.
-- `extensionButton.prominentHoverBackground`: 插件 view button background hover color.
-- `extensionButton.background`: Button background color for 插件 actions.
-- `extensionButton.foreground`: Button foreground color for 插件 actions.
-- `extensionButton.hoverBackground`: Button background hover color for 插件 actions.
-- `extensionButton.separator`: Button separator color for 插件 actions.
-- `extensionBadge.remoteBackground`: Background color for the remote badge in the 插件 view.
-- `extensionBadge.remoteForeground`: Foreground color for the remote badge in the 插件 view.
-- `extensionIcon.starForeground`: The icon color for 插件 ratings.
-- `extensionIcon.verifiedForeground`: The icon color for 插件 verified publisher.
-- `extensionIcon.preReleaseForeground`: The icon color for pre-release 插件.
-- `extensionIcon.sponsorForeground`: The icon color for 插件 sponsor.
-- `extensionIcon.privateForeground`: The icon color for private 插件.
-- `mcpIcon.starForeground`: The icon color for mcp starred.
-
-## Quick picker colors
-
-- `pickerGroup.border`: Quick picker (Quick Open) color for grouping borders.
-- `pickerGroup.foreground`: Quick picker (Quick Open) color for grouping labels.
-- `quickInput.background`: Quick input background color. The quick input widget is the container for views like the color theme picker.
-- `quickInput.foreground`: Quick input foreground color. The quick input widget is the container for views like the color theme picker.
-- `quickInputList.focusBackground`: Quick picker background color for the focused item.
-- `quickInputList.focusForeground`: Quick picker foreground color for the focused item.
-- `quickInputList.focusIconForeground`: Quick picker icon foreground color for the focused item.
-- `quickInputTitle.background`: Quick picker title background color. The quick picker widget is the container for pickers like the Command Palette.
-
-## Keybinding label colors
-
-Keybinding labels are shown when there is a keybinding associated with a command. An example of the keybinding label can be seen in the Command Palette:
+一旦在通知中心打开，它们将显示在带有标题的列表中：
 
 <!-- 图片已移除 -->
 
-Usages of the keybinding label include (but are not limited to):
+- `notificationCenter.border`: 通知中心边框颜色。
+- `notificationCenterHeader.foreground`: 通知中心标题前景色。
+- `notificationCenterHeader.background`: 通知中心标题背景颜色。
+- `notificationToast.border`: 通知 toast 边框颜色。
+- `notifications.foreground`: 通知前景色。
+- `notifications.background`: 通知背景颜色。
+- `notifications.border`: 与通知中心中其他通知分隔的通知边框颜色。
+- `notificationLink.foreground`: 通知链接前景色。
+- `notificationsErrorIcon.foreground`: 通知错误图标使用的颜色。
+- `notificationsWarningIcon.foreground`: 通知警告图标使用的颜色。
+- `notificationsInfoIcon.foreground`: 通知信息图标使用的颜色。
 
-- The Command Palette
-- The Keyboard Shortcuts editor
-- The Keyboard Shortcuts recorder modal
-- The "feature contribution" section of an 插件's marketplace page
+## 横幅颜色
 
-The following customizations are available:
+横幅出现在标题栏下方，可见时跨越工作台的整个宽度。
 
-- `keybindingLabel.background`: Keybinding label background color. The keybinding label is used to represent a keyboard shortcut.
-- `keybindingLabel.foreground`: Keybinding label foreground color. The keybinding label is used to represent a keyboard shortcut.
-- `keybindingLabel.border`: Keybinding label border color. The keybinding label is used to represent a keyboard shortcut.
-- `keybindingLabel.bottomBorder`: Keybinding label border bottom color. The keybinding label is used to represent a keyboard shortcut.
+- `banner.background`: 横幅背景颜色。
+- `banner.foreground`: 横幅前景色。
+- `banner.iconForeground`: 横幅文本前面图标的颜色。
 
-## Keyboard shortcut table colors
+## 插件颜色
 
-- `keybindingTable.headerBackground`: Background color for the keyboard shortcuts table header.
-- `keybindingTable.rowsBackground`: Background color for the keyboard shortcuts table alternating rows.
+- `extensionButton.prominentForeground`: 插件视图按钮前景色（例如 **安装** 按钮）。
+- `extensionButton.prominentBackground`: 插件视图按钮背景颜色。
+- `extensionButton.prominentHoverBackground`: 插件视图按钮背景悬停颜色。
+- `extensionButton.background`: 插件操作的按钮背景颜色。
+- `extensionButton.foreground`: 插件操作的按钮前景色。
+- `extensionButton.hoverBackground`: 插件操作的按钮背景悬停颜色。
+- `extensionButton.separator`: 插件操作的按钮分隔符颜色。
+- `extensionBadge.remoteBackground`: 插件视图中远程徽章的背景颜色。
+- `extensionBadge.remoteForeground`: 插件视图中远程徽章的前景色。
+- `extensionIcon.starForeground`: 插件评分的图标颜色。
+- `extensionIcon.verifiedForeground`: 插件已验证发布者的图标颜色。
+- `extensionIcon.preReleaseForeground`: 预发布插件的图标颜色。
+- `extensionIcon.sponsorForeground`: 插件赞助商的图标颜色。
+- `extensionIcon.privateForeground`: 私有插件的图标颜色。
+- `mcpIcon.starForeground`: mcp 星标的图标颜色。
 
-## Integrated Terminal colors
+## 快速选择器颜色
 
-- `terminal.background`: The background of the Integrated Terminal's viewport.
-- `terminal.border`: The color of the border that separates split panes within the terminal. This defaults to panel.border.
-- `terminal.foreground`: The default foreground color of the Integrated Terminal.
-- `terminal.ansiBlack`: 'Black' ANSI color in the terminal.
-- `terminal.ansiBlue`: 'Blue' ANSI color in the terminal.
-- `terminal.ansiBrightBlack`: 'BrightBlack' ANSI color in the terminal.
-- `terminal.ansiBrightBlue`: 'BrightBlue' ANSI color in the terminal.
-- `terminal.ansiBrightCyan`: 'BrightCyan' ANSI color in the terminal.
-- `terminal.ansiBrightGreen`: 'BrightGreen' ANSI color in the terminal.
-- `terminal.ansiBrightMagenta`: 'BrightMagenta' ANSI color in the terminal.
-- `terminal.ansiBrightRed`: 'BrightRed' ANSI color in the terminal.
-- `terminal.ansiBrightWhite`: 'BrightWhite' ANSI color in the terminal.
-- `terminal.ansiBrightYellow`: 'BrightYellow' ANSI color in the terminal.
-- `terminal.ansiCyan`: 'Cyan' ANSI color in the terminal.
-- `terminal.ansiGreen`: 'Green' ANSI color in the terminal.
-- `terminal.ansiMagenta`: 'Magenta' ANSI color in the terminal.
-- `terminal.ansiRed`: 'Red' ANSI color in the terminal.
-- `terminal.ansiWhite`: 'White' ANSI color in the terminal.
-- `terminal.ansiYellow`: 'Yellow' ANSI color in the terminal.
-- `terminal.selectionBackground`: The selection background color of the terminal.
-- `terminal.selectionForeground`: The selection foreground color of the terminal. When this is null the selection foreground will be retained and have the minimum contrast ratio feature applied.
-- `terminal.inactiveSelectionBackground`: The selection background color of the terminal when it does not have focus.
-- `terminal.findMatchBackground`: Color of the current search match in the terminal. The color must not be opaque so as not to hide underlying terminal content.
-- `terminal.findMatchBorder`: Border color of the current search match in the terminal.
-- `terminal.findMatchHighlightBackground`: Color of the other search matches in the terminal. The color must not be opaque so as not to hide underlying terminal content.
-- `terminal.findMatchHighlightBorder`: Border color of the other search matches in the terminal.
-- `terminal.hoverHighlightBackground`: Color of the highlight when hovering a link in the terminal.
-- `terminalCursor.background`: The background color of the terminal cursor. Allows customizing the color of a character overlapped by a block cursor.
-- `terminalCursor.foreground`: The foreground color of the terminal cursor.
-- `terminal.dropBackground`: The background color when dragging on top of terminals. The color should have transparency so that the terminal contents can still shine through.
-- `terminal.tab.activeBorder`: Border on the side of the terminal tab in the panel. This defaults to `tab.activeBorder`.
-- `terminalCommandDecoration.defaultBackground`: The default terminal command decoration background color.
-- `terminalCommandDecoration.successBackground`: The terminal command decoration background color for successful commands.
-- `terminalCommandDecoration.errorBackground`: The terminal command decoration background color for error commands.
-- `terminalOverviewRuler.cursorForeground`: The overview ruler cursor color.
-- `terminalOverviewRuler.findMatchForeground`: Overview ruler marker color for find matches in the terminal.
-- `terminalStickyScroll.background`: The background color of the sticky scroll overlay in the terminal.
-- `terminalStickyScroll.border`: The border of the sticky scroll overlay in the terminal.
-- `terminalStickyScrollHover.background`: The background color of the sticky scroll overlay in the terminal when hovered.
-- `terminal.initialHintForeground`: Foreground color of the terminal initial hint.
-- `terminalOverviewRuler.border`: The overview ruler left-side border color.
-- `terminalCommandGuide.foreground`: The foreground color of the terminal command guide that appears to the left of a command and its output on hover.
+- `pickerGroup.border`: 快速选择器（快速打开）分组边框的颜色。
+- `pickerGroup.foreground`: 快速选择器（快速打开）分组标签的颜色。
+- `quickInput.background`: 快速输入背景颜色。快速输入小部件是颜色主题选择器等视图的容器。
+- `quickInput.foreground`: 快速输入前景色。快速输入小部件是颜色主题选择器等视图的容器。
+- `quickInputList.focusBackground`: 聚焦项的快速选择器背景颜色。
+- `quickInputList.focusForeground`: 聚焦项的快速选择器前景色。
+- `quickInputList.focusIconForeground`: 聚焦项的快速选择器图标前景色。
+- `quickInputTitle.background`: 快速选择器标题背景颜色。快速选择器小部件是命令面板等选择器的容器。
 
-- `terminalSymbolIcon.aliasForeground`: The foreground color for an alias icon. These icons will appear in the terminal suggest widget
-- `terminalSymbolIcon.branchForeground`: The foreground color for a branch icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.commitForeground`: The foreground color for a commit icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.flagForeground`: The foreground color for an flag icon. These icons will appear in the terminal suggest widget
-- `terminalSymbolIcon.optionForeground`: The foreground color for an option icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.optionValueForeground`: The foreground color for an enum member icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.methodForeground`: The foreground color for a method icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.argumentForeground`: The foreground color for an argument icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.inlineSuggestionForeground`: The foreground color for an inline suggestion icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.fileForeground`: The foreground color for a file icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.folderForeground`: The foreground color for a folder icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.pullRequestDoneForeground`: The foreground color for a completed pull request icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.pullRequestForeground`: The foreground color for a pull request icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.remoteForeground`: The foreground color for a remote icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.stashForeground`: The foreground color for a stash icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.symbolText`: The foreground color for a plaintext suggestion. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.symbolicLinkFileForeground`: The foreground color for a symbolic link file icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.symbolicLinkFolderForeground`: The foreground color for a symbolic link folder icon. These icons will appear in the terminal suggest widget.
-- `terminalSymbolIcon.tagForeground`: The foreground color for a tag icon. These icons will appear in the terminal suggest widget.
+## 键绑定标签颜色
 
-## Debug colors
+当命令有关联的键绑定时，会显示键绑定标签。在命令面板中可以看到键绑定标签的示例：
 
-- `debugToolBar.background`: Debug toolbar background color.
-- `debugToolBar.border`: Debug toolbar border color.
-- `editor.stackFrameHighlightBackground`: Background color of the top stack frame highlight in the editor.
-- `editor.focusedStackFrameHighlightBackground`: Background color of the focused stack frame highlight in the editor.
-- `editor.inlineValuesForeground`: Color for the debug inline value text.
-- `editor.inlineValuesBackground`: Color for the debug inline value background.
-- `debugView.exceptionLabelForeground`: Foreground color for a label shown in the CALL STACK view when the debugger breaks on an exception.
-- `debugView.exceptionLabelBackground`: Background color for a label shown in the CALL STACK view when the debugger breaks on an exception.
-- `debugView.stateLabelForeground`: Foreground color for a label in the CALL STACK view showing the current session's or thread's state.
-- `debugView.stateLabelBackground`: Background color for a label in the CALL STACK view showing the current session's or thread's state.
-- `debugView.valueChangedHighlight`: Color used to highlight value changes in the debug views (such as in the Variables view).
-- `debugTokenExpression.name`: Foreground color for the token names shown in debug views (such as in the Variables or Watch view).
-- `debugTokenExpression.value`: Foreground color for the token values shown in debug views.
-- `debugTokenExpression.string`: Foreground color for strings in debug views.
-- `debugTokenExpression.boolean`: Foreground color for booleans in debug views.
-- `debugTokenExpression.number`: Foreground color for numbers in debug views.
-- `debugTokenExpression.error`: Foreground color for expression errors in debug views.
-- `debugTokenExpression.type`: Foreground color for the token types shown in the debug views (ie. the Variables or Watch view).
+<!-- 图片已移除 -->
 
-## Testing colors
+键绑定标签的用途包括（但不限于）：
 
-- `testing.runAction`: Color for 'run' icons in the editor.
-- `testing.iconErrored`: Color for the 'Errored' icon in the test explorer.
-- `testing.iconFailed`: Color for the 'failed' icon in the test explorer.
-- `testing.iconPassed`: Color for the 'passed' icon in the test explorer.
-- `testing.iconQueued`: Color for the 'Queued' icon in the test explorer.
-- `testing.iconUnset`: Color for the 'Unset' icon in the test explorer.
-- `testing.iconSkipped`: Color for the 'Skipped' icon in the test explorer.
-- `testing.iconErrored.retired`: Retired color for the 'Errored' icon in the test explorer.
-- `testing.iconFailed.retired`: Retired color for the 'failed' icon in the test explorer.
-- `testing.iconPassed.retired`: Retired color for the 'passed' icon in the test explorer.
-- `testing.iconQueued.retired`: Retired color for the 'Queued' icon in the test explorer.
-- `testing.iconUnset.retired`: Retired color for the 'Unset' icon in the test explorer.
-- `testing.iconSkipped.retired`: Retired color for the 'Skipped' icon in the test explorer.
-- `testing.peekBorder`: Color of the peek view borders and arrow.
-- `testing.peekHeaderBackground`: Color of the peek view borders and arrow.
-- `testing.message.error.lineBackground`: Margin color beside error messages shown inline in the editor.
-- `testing.message.info.decorationForeground`: Text color of test info messages shown inline in the editor.
-- `testing.message.info.lineBackground`: Margin color beside info messages shown inline in the editor.
-- `testing.messagePeekBorder`: Color of the peek view borders and arrow when peeking a logged message.
-- `testing.messagePeekHeaderBackground`: Color of the peek view borders and arrow when peeking a logged message.
-- `testing.coveredBackground`: Background color of text that was covered.
-- `testing.coveredBorder`: Border color of text that was covered.
-- `testing.coveredGutterBackground`: Gutter color of regions where code was covered.
-- `testing.uncoveredBranchBackground`: Background of the widget shown for an uncovered branch.
-- `testing.uncoveredBackground`: Background color of text that was not covered.
-- `testing.uncoveredBorder`: Border color of text that was not covered.
-- `testing.uncoveredGutterBackground`: Gutter color of regions where code not covered.
-- `testing.coverCountBadgeBackground`: Background for the badge indicating execution count
-- `testing.coverCountBadgeForeground`: Foreground for the badge indicating execution count
-- `testing.message.error.badgeBackground`: Background color of test error messages shown inline in the editor.
-- `testing.message.error.badgeBorder`: Border color of test error messages shown inline in the editor.
-- `testing.message.error.badgeForeground`: Text color of test error messages shown inline in the editor.
+- 命令面板
+- 键盘快捷方式编辑器
+- 键盘快捷方式记录器模态框
+- 插件市场页面的“功能贡献”部分
 
-## Welcome page colors
+以下自定义可用：
 
-- `welcomePage.background`: Background color for the Welcome page.
-- `welcomePage.progress.background`: Foreground color for the Welcome page progress bars.
-- `welcomePage.progress.foreground`: Background color for the Welcome page progress bars.
-- `welcomePage.tileBackground`: Background color for the tiles on the Welcome page.
-- `welcomePage.tileHoverBackground`: Hover background color for the tiles on the Welcome page.
-- `welcomePage.tileBorder`: Border color for the tiles on the Welcome page.
+- `keybindingLabel.background`: 键绑定标签背景颜色。键绑定标签用于表示键盘快捷键。
+- `keybindingLabel.foreground`: 键绑定标签前景色。键绑定标签用于表示键盘快捷键。
+- `keybindingLabel.border`: 键绑定标签边框颜色。键绑定标签用于表示键盘快捷键。
+- `keybindingLabel.bottomBorder`: 键绑定标签底部边框颜色。键绑定标签用于表示键盘快捷键。
 
-- `walkThrough.embeddedEditorBackground`: Background color for the embedded editors on the Interactive Playground.
-- `walkthrough.stepTitle.foreground`: Foreground color of the heading of each walkthrough step.
+## 键盘快捷方式表颜色
 
-## Git colors
+- `keybindingTable.headerBackground`: 键盘快捷方式表标题的背景颜色。
+- `keybindingTable.rowsBackground`: 键盘快捷方式表交替行的背景颜色。
 
-- `gitDecoration.addedResourceForeground`: Color for added Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.modifiedResourceForeground`: Color for modified Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.deletedResourceForeground`: Color for deleted Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.renamedResourceForeground`: Color for renamed or copied Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.stageModifiedResourceForeground`: Color for staged modifications git decorations.  Used for file labels and the SCM viewlet.
-- `gitDecoration.stageDeletedResourceForeground`: Color for staged deletions git decorations.  Used for file labels and the SCM viewlet.
-- `gitDecoration.untrackedResourceForeground`: Color for untracked Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.ignoredResourceForeground`: Color for ignored Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.conflictingResourceForeground`: Color for conflicting Git resources. Used for file labels and the SCM viewlet.
-- `gitDecoration.submoduleResourceForeground`: Color for submodule resources.
-- `git.blame.editorDecorationForeground`: Color for the blame editor decoration.
+## 集成终端颜色
 
-## Source Control Graph colors
+- `terminal.background`: 集成终端视口的背景。
+- `terminal.border`: 分隔终端内拆分窗格的边框颜色。默认为 panel.border。
+- `terminal.foreground`: 集成终端的默认前景色。
+- `terminal.ansiBlack`: 终端中的“黑色” ANSI 颜色。
+- `terminal.ansiBlue`: 终端中的“蓝色” ANSI 颜色。
+- `terminal.ansiBrightBlack`: 终端中的“亮黑色” ANSI 颜色。
+- `terminal.ansiBrightBlue`: 终端中的“亮蓝色” ANSI 颜色。
+- `terminal.ansiBrightCyan`: 终端中的“亮青色” ANSI 颜色。
+- `terminal.ansiBrightGreen`: 终端中的“亮绿色” ANSI 颜色。
+- `terminal.ansiBrightMagenta`: 终端中的“亮洋红色” ANSI 颜色。
+- `terminal.ansiBrightRed`: 终端中的“亮红色” ANSI 颜色。
+- `terminal.ansiBrightWhite`: 终端中的“亮白色” ANSI 颜色。
+- `terminal.ansiBrightYellow`: 终端中的“亮黄色” ANSI 颜色。
+- `terminal.ansiCyan`: 终端中的“青色” ANSI 颜色。
+- `terminal.ansiGreen`: 终端中的“绿色” ANSI 颜色。
+- `terminal.ansiMagenta`: 终端中的“洋红色” ANSI 颜色。
+- `terminal.ansiRed`: 终端中的“红色” ANSI 颜色。
+- `terminal.ansiWhite`: 终端中的“白色” ANSI 颜色。
+- `terminal.ansiYellow`: 终端中的“黄色” ANSI 颜色。
+- `terminal.selectionBackground`: 终端的选择背景颜色。
+- `terminal.selectionForeground`: 终端的选择前景色。当此项为 null 时，将保留选择前景并应用最小对比度特性。
+- `terminal.inactiveSelectionBackground`: 终端未获得焦点时的选择背景颜色。
+- `terminal.findMatchBackground`: 终端中当前搜索匹配项的颜色。颜色不得为不透明，以免遮挡底层终端内容。
+- `terminal.findMatchBorder`: 终端中当前搜索匹配项的边框颜色。
+- `terminal.findMatchHighlightBackground`: 终端中其他搜索匹配项的颜色。颜色不得为不透明，以免遮挡底层终端内容。
+- `terminal.findMatchHighlightBorder`: 终端中其他搜索匹配项的边框颜色。
+- `terminal.hoverHighlightBackground`: 悬停在终端链接上时的高亮颜色。
+- `terminalCursor.background`: 终端光标的背景颜色。允许自定义被块光标覆盖的字符的颜色。
+- `terminalCursor.foreground`: 终端光标的前景色。
+- `terminal.dropBackground`: 拖动到终端顶部时的背景颜色。颜色应具有透明度，以便终端内容仍然可以透出。
+- `terminal.tab.activeBorder`: 面板中终端选项卡侧面的边框。默认为 `tab.activeBorder`。
+- `terminalCommandDecoration.defaultBackground`: 默认终端命令装饰背景颜色。
+- `terminalCommandDecoration.successBackground`: 成功命令的终端命令装饰背景颜色。
+- `terminalCommandDecoration.errorBackground`: 错误命令的终端命令装饰背景颜色。
+- `terminalOverviewRuler.cursorForeground`: 概览标尺光标颜色。
+- `terminalOverviewRuler.findMatchForeground`: 终端中查找匹配项的概览标尺标记颜色。
+- `terminalStickyScroll.background`: 终端中粘性滚动叠加层的背景颜色。
+- `terminalStickyScroll.border`: 终端中粘性滚动叠加层的边框。
+- `terminalStickyScrollHover.background`: 悬停时终端中粘性滚动叠加层的背景颜色。
+- `terminal.initialHintForeground`: 终端初始提示的前景色。
+- `terminalOverviewRuler.border`: 概览标尺左侧边框颜色。
+- `terminalCommandGuide.foreground`: 悬停时出现在命令及其输出左侧的终端命令指南的前景色。
 
-- `scmGraph.historyItemHoverLabelForeground`: History item hover label foreground color.
-- `scmGraph.foreground1`: Source control graph foreground color (1).
-- `scmGraph.foreground2`: Source control graph foreground color (2).
-- `scmGraph.foreground3`: Source control graph foreground color (3).
-- `scmGraph.foreground4`: Source control graph foreground color (4).
-- `scmGraph.foreground5`: Source control graph foreground color (5).
-- `scmGraph.historyItemHoverAdditionsForeground`: History item hover additions foreground color.
-- `scmGraph.historyItemHoverDeletionsForeground`: History item hover deletions foreground color.
-- `scmGraph.historyItemRefColor`: History item reference color.
-- `scmGraph.historyItemRemoteRefColor`: History item remote reference color.
-- `scmGraph.historyItemBaseRefColor`: History item base reference color.
-- `scmGraph.historyItemHoverDefaultLabelForeground`: History item hover default label foreground color.
-- `scmGraph.historyItemHoverDefaultLabelBackground`: History item hover default label background color.
+- `terminalSymbolIcon.aliasForeground`: 别名图标的前景色。这些图标将出现在终端建议小部件中
+- `terminalSymbolIcon.branchForeground`: 分支图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.commitForeground`: 提交图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.flagForeground`: 标志图标的前景色。这些图标将出现在终端建议小部件中
+- `terminalSymbolIcon.optionForeground`: 选项图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.optionValueForeground`: 枚举成员图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.methodForeground`: 方法图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.argumentForeground`: 参数图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.inlineSuggestionForeground`: 内联建议图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.fileForeground`: 文件图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.folderForeground`: 文件夹图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.pullRequestDoneForeground`: 已完成拉取请求图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.pullRequestForeground`: 拉取请求图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.remoteForeground`: 远程图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.stashForeground`: 藏匿图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.symbolText`: 纯文本建议的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.symbolicLinkFileForeground`: 符号链接文件图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.symbolicLinkFolderForeground`: 符号链接文件夹图标的前景色。这些图标将出现在终端建议小部件中。
+- `terminalSymbolIcon.tagForeground`: 标签图标的前景色。这些图标将出现在终端建议小部件中。
 
-## Settings Editor colors
+## 调试颜色
 
-**Note:** These colors are for the GUI settings editor which can be opened with the `Preferences: Open Settings (UI)` command.
+- `debugToolBar.background`: 调试工具栏背景颜色。
+- `debugToolBar.border`: 调试工具栏边框颜色。
+- `editor.stackFrameHighlightBackground`: 编辑器中顶部堆栈帧高亮的背景颜色。
+- `editor.focusedStackFrameHighlightBackground`: 编辑器中聚焦堆栈帧高亮的背景颜色。
+- `editor.inlineValuesForeground`: 调试内联值文本的颜色。
+- `editor.inlineValuesBackground`: 调试内联值背景的颜色。
+- `debugView.exceptionLabelForeground`: 当调试器在异常处中断时，调用堆栈视图中显示的标签的前景色。
+- `debugView.exceptionLabelBackground`: 当调试器在异常处中断时，调用堆栈视图中显示的标签的背景颜色。
+- `debugView.stateLabelForeground`: 调用堆栈视图中显示当前会话或线程状态的标签的前景色。
+- `debugView.stateLabelBackground`: 调用堆栈视图中显示当前会话或线程状态的标签的背景颜色。
+- `debugView.valueChangedHighlight`: 用于在调试视图（例如变量视图）中高亮显示值更改的颜色。
+- `debugTokenExpression.name`: 调试视图（例如变量或监视视图）中显示的标记名称的前景色。
+- `debugTokenExpression.value`: 调试视图中显示的标记值的前景色。
+- `debugTokenExpression.string`: 调试视图中字符串的前景色。
+- `debugTokenExpression.boolean`: 调试视图中布尔值的前景色。
+- `debugTokenExpression.number`: 调试视图中数字的前景色。
+- `debugTokenExpression.error`: 调试视图中表达式错误的前景色。
+- `debugTokenExpression.type`: 调试视图（即变量或监视视图）中显示的标记类型的前景色。
 
-- `settings.headerForeground`: The foreground color for a section header or active title.
-- `settings.modifiedItemIndicator`: The line that indicates a modified setting.
-- `settings.dropdownBackground`: Dropdown background.
-- `settings.dropdownForeground`: Dropdown foreground.
-- `settings.dropdownBorder`: Dropdown border.
-- `settings.dropdownListBorder`: Dropdown list border.
-- `settings.checkboxBackground`: Checkbox background.
-- `settings.checkboxForeground`: Checkbox foreground.
-- `settings.checkboxBorder`: Checkbox border.
-- `settings.rowHoverBackground`: The background color of a settings row when hovered.
-- `settings.textInputBackground`: Text input box background.
-- `settings.textInputForeground`: Text input box foreground.
-- `settings.textInputBorder`: Text input box border.
-- `settings.numberInputBackground`: Number input box background.
-- `settings.numberInputForeground`: Number input box foreground.
-- `settings.numberInputBorder`: Number input box border.
-- `settings.focusedRowBackground`: Background color of a focused setting row.
-- `settings.focusedRowBorder`: The color of the row's top and bottom border when the row is focused.
-- `settings.headerBorder`: The color of the header container border.
-- `settings.sashBorder`: The color of the Settings editor splitview sash border.
-- `settings.settingsHeaderHoverForeground`: The foreground color for a section header or hovered title.
+## 测试颜色
 
-## Breadcrumbs colors
+- `testing.runAction`: 编辑器中“运行”图标的颜色。
+- `testing.iconErrored`: 测试资源管理器中“出错”图标的颜色。
+- `testing.iconFailed`: 测试资源管理器中“失败”图标的颜色。
+- `testing.iconPassed`: 测试资源管理器中“通过”图标的颜色。
+- `testing.iconQueued`: 测试资源管理器中“已排队”图标的颜色。
+- `testing.iconUnset`: 测试资源管理器中“未设置”图标的颜色。
+- `testing.iconSkipped`: 测试资源管理器中“已跳过”图标的颜色。
+- `testing.iconErrored.retired`: 测试资源管理器中“出错”图标的过期颜色。
+- `testing.iconFailed.retired`: 测试资源管理器中“失败”图标的过期颜色。
+- `testing.iconPassed.retired`: 测试资源管理器中“通过”图标的过期颜色。
+- `testing.iconQueued.retired`: 测试资源管理器中“已排队”图标的过期颜色。
+- `testing.iconUnset.retired`: 测试资源管理器中“未设置”图标的过期颜色。
+- `testing.iconSkipped.retired`: 测试资源管理器中“已跳过”图标的过期颜色。
+- `testing.peekBorder`: 快速查看边框和箭头的颜色。
+- `testing.peekHeaderBackground`: 快速查看边框和箭头的颜色。
+- `testing.message.error.lineBackground`: 编辑器中内联显示的错误消息旁边的边距颜色。
+- `testing.message.info.decorationForeground`: 编辑器中内联显示的测试信息消息的文本颜色。
+- `testing.message.info.lineBackground`: 编辑器中内联显示的信息消息旁边的边距颜色。
+- `testing.messagePeekBorder`: 查看记录的消息时快速查看边框和箭头的颜色。
+- `testing.messagePeekHeaderBackground`: 查看记录的消息时快速查看边框和箭头的颜色。
+- `testing.coveredBackground`: 已覆盖文本的背景颜色。
+- `testing.coveredBorder`: 已覆盖文本的边框颜色。
+- `testing.coveredGutterBackground`: 代码已覆盖区域的装订线颜色。
+- `testing.uncoveredBranchBackground`: 为未覆盖分支显示的小部件的背景。
+- `testing.uncoveredBackground`: 未覆盖文本的背景颜色。
+- `testing.uncoveredBorder`: 未覆盖文本的边框颜色。
+- `testing.uncoveredGutterBackground`: 代码未覆盖区域的装订线颜色。
+- `testing.coverCountBadgeBackground`: 指示执行计数的徽章的背景
+- `testing.coverCountBadgeForeground`: 指示执行计数的徽章的前景
+- `testing.message.error.badgeBackground`: 编辑器中内联显示的测试错误消息的背景颜色。
+- `testing.message.error.badgeBorder`: 编辑器中内联显示的测试错误消息的边框颜色。
+- `testing.message.error.badgeForeground`: 编辑器中内联显示的测试错误消息的文本颜色。
 
-The theme colors for breadcrumbs navigation:
+## 欢迎页面颜色
 
-- `breadcrumb.foreground`: Color of breadcrumb items.
-- `breadcrumb.background`: Background color of breadcrumb items.
-- `breadcrumb.focusForeground`: Color of focused breadcrumb items.
-- `breadcrumb.activeSelectionForeground`: Color of selected breadcrumb items.
-- `breadcrumbPicker.background`: Background color of breadcrumb item picker.
+- `welcomePage.background`: 欢迎页面的背景颜色。
+- `welcomePage.progress.background`: 欢迎页面进度条的前景色。
+- `welcomePage.progress.foreground`: 欢迎页面进度条的背景颜色。
+- `welcomePage.tileBackground`: 欢迎页面上磁贴的背景颜色。
+- `welcomePage.tileHoverBackground`: 欢迎页面上磁贴的悬停背景颜色。
+- `welcomePage.tileBorder`: 欢迎页面上磁贴的边框颜色。
 
-## Snippets colors
+- `walkThrough.embeddedEditorBackground`: 交互式游乐场上嵌入式编辑器的背景颜色。
+- `walkthrough.stepTitle.foreground`: 每个入门指引步骤标题的前景色。
 
-The theme colors for snippets:
+## Git 颜色
 
-- `editor.snippetTabstopHighlightBackground`: Highlight background color of a snippet tabstop.
-- `editor.snippetTabstopHighlightBorder`: Highlight border color of a snippet tabstop.
-- `editor.snippetFinalTabstopHighlightBackground`: Highlight background color of the final tabstop of a snippet.
-- `editor.snippetFinalTabstopHighlightBorder`: Highlight border color of the final tabstop of a snippet.
+- `gitDecoration.addedResourceForeground`: 已添加 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.modifiedResourceForeground`: 已修改 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.deletedResourceForeground`: 已删除 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.renamedResourceForeground`: 已重命名或复制 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.stageModifiedResourceForeground`: 已暂存修改 git 装饰的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.stageDeletedResourceForeground`: 已暂存删除 git 装饰的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.untrackedResourceForeground`: 未跟踪 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.ignoredResourceForeground`: 已忽略 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.conflictingResourceForeground`: 冲突 Git 资源的颜色。用于文件标签和 SCM 视图。
+- `gitDecoration.submoduleResourceForeground`: 子模块资源的颜色。
+- `git.blame.editorDecorationForeground`: blame 编辑器装饰的颜色。
 
-## Symbol Icons colors
+## 源代码管理图颜色
 
-The theme colors for symbol icons that appears in the Outline view, breadcrumb navigation, and suggest widget:
+- `scmGraph.historyItemHoverLabelForeground`: 历史项目悬停标签前景色。
+- `scmGraph.foreground1`: 源代码管理图前景色 (1)。
+- `scmGraph.foreground2`: 源代码管理图前景色 (2)。
+- `scmGraph.foreground3`: 源代码管理图前景色 (3)。
+- `scmGraph.foreground4`: 源代码管理图前景色 (4)。
+- `scmGraph.foreground5`: 源代码管理图前景色 (5)。
+- `scmGraph.historyItemHoverAdditionsForeground`: 历史项目悬停添加前景色。
+- `scmGraph.historyItemHoverDeletionsForeground`: 历史项目悬停删除前景色。
+- `scmGraph.historyItemRefColor`: 历史项目引用颜色。
+- `scmGraph.historyItemRemoteRefColor`: 历史项目远程引用颜色。
+- `scmGraph.historyItemBaseRefColor`: 历史项目基础引用颜色。
+- `scmGraph.historyItemHoverDefaultLabelForeground`: 历史项目悬停默认标签前景色。
+- `scmGraph.historyItemHoverDefaultLabelBackground`: 历史项目悬停默认标签背景颜色。
 
-- `symbolIcon.arrayForeground`: The foreground color for array symbols.
-- `symbolIcon.booleanForeground`: The foreground color for boolean symbols.
-- `symbolIcon.classForeground`: The foreground color for class symbols.
-- `symbolIcon.colorForeground`: The foreground color for color symbols.
-- `symbolIcon.constantForeground`: The foreground color for constant symbols.
-- `symbolIcon.constructorForeground`: The foreground color for constructor symbols.
-- `symbolIcon.enumeratorForeground`: The foreground color for enumerator symbols.
-- `symbolIcon.enumeratorMemberForeground`: The foreground color for enumerator member symbols.
-- `symbolIcon.eventForeground`: The foreground color for event symbols.
-- `symbolIcon.fieldForeground`: The foreground color for field symbols.
-- `symbolIcon.fileForeground`: The foreground color for file symbols.
-- `symbolIcon.folderForeground`: The foreground color for folder symbols.
-- `symbolIcon.functionForeground`: The foreground color for function symbols.
-- `symbolIcon.interfaceForeground`: The foreground color for interface symbols.
-- `symbolIcon.keyForeground`: The foreground color for key symbols.
-- `symbolIcon.keywordForeground`: The foreground color for keyword symbols.
-- `symbolIcon.methodForeground`: The foreground color for method symbols.
-- `symbolIcon.moduleForeground`: The foreground color for module symbols.
-- `symbolIcon.namespaceForeground`: The foreground color for namespace symbols.
-- `symbolIcon.nullForeground`: The foreground color for null symbols.
-- `symbolIcon.numberForeground`: The foreground color for number symbols.
-- `symbolIcon.objectForeground`: The foreground color for object symbols.
-- `symbolIcon.operatorForeground`: The foreground color for operator symbols.
-- `symbolIcon.packageForeground`: The foreground color for package symbols.
-- `symbolIcon.propertyForeground`: The foreground color for property symbols.
-- `symbolIcon.referenceForeground`: The foreground color for reference symbols.
-- `symbolIcon.snippetForeground`: The foreground color for snippet symbols.
-- `symbolIcon.stringForeground`: The foreground color for string symbols.
-- `symbolIcon.structForeground`: The foreground color for struct symbols.
-- `symbolIcon.textForeground`: The foreground color for text symbols.
-- `symbolIcon.typeParameterForeground`: The foreground color for type parameter symbols.
-- `symbolIcon.unitForeground`: The foreground color for unit symbols.
-- `symbolIcon.variableForeground`: The foreground color for variable symbols.
+## 设置编辑器颜色
 
-## Debug Icons colors
+**注意：** 这些颜色用于 GUI 设置编辑器，可以使用 `Preferences: Open Settings (UI)` 命令打开。
 
-- `debugIcon.breakpointForeground`: Icon color for breakpoints.
-- `debugIcon.breakpointDisabledForeground`: Icon color for disabled breakpoints.
-- `debugIcon.breakpointUnverifiedForeground`: Icon color for unverified breakpoints.
-- `debugIcon.breakpointCurrentStackframeForeground`: Icon color for the current breakpoint stack frame.
-- `debugIcon.breakpointStackframeForeground`: Icon color for all breakpoint stack frames.
-- `debugIcon.startForeground`: Debug toolbar icon for start debugging.
-- `debugIcon.pauseForeground`: Debug toolbar icon for pause.
-- `debugIcon.stopForeground`: Debug toolbar icon for stop.
-- `debugIcon.disconnectForeground`: Debug toolbar icon for disconnect.
-- `debugIcon.restartForeground`: Debug toolbar icon for restart.
-- `debugIcon.stepOverForeground`: Debug toolbar icon for step over.
-- `debugIcon.stepIntoForeground`: Debug toolbar icon for step into.
-- `debugIcon.stepOutForeground`: Debug toolbar icon for step over.
-- `debugIcon.continueForeground`: Debug toolbar icon for continue.
-- `debugIcon.stepBackForeground`: Debug toolbar icon for step back.
+- `settings.headerForeground`: 部分标题或活动标题的前景色。
+- `settings.modifiedItemIndicator`: 指示已修改设置的线。
+- `settings.dropdownBackground`: 下拉背景。
+- `settings.dropdownForeground`: 下拉前景。
+- `settings.dropdownBorder`: 下拉边框。
+- `settings.dropdownListBorder`: 下拉列表边框。
+- `settings.checkboxBackground`: 复选框背景。
+- `settings.checkboxForeground`: 复选框前景。
+- `settings.checkboxBorder`: 复选框边框。
+- `settings.rowHoverBackground`: 悬停时设置行的背景颜色。
+- `settings.textInputBackground`: 文本输入框背景。
+- `settings.textInputForeground`: 文本输入框前景。
+- `settings.textInputBorder`: 文本输入框边框。
+- `settings.numberInputBackground`: 数字输入框背景。
+- `settings.numberInputForeground`: 数字输入框前景。
+- `settings.numberInputBorder`: 数字输入框边框。
+- `settings.focusedRowBackground`: 聚焦设置行的背景颜色。
+- `settings.focusedRowBorder`: 聚焦行时行的顶部和底部边框的颜色。
+- `settings.headerBorder`: 标题容器边框的颜色。
+- `settings.sashBorder`: 设置编辑器拆分视图分隔条边框的颜色。
+- `settings.settingsHeaderHoverForeground`: 部分标题或悬停标题的前景色。
 
-- `debugConsole.infoForeground`: Foreground color for info messages in debug REPL console.
-- `debugConsole.warningForeground`: Foreground color for warning messages in debug REPL console.
-- `debugConsole.errorForeground`: Foreground color for error messages in debug REPL console.
-- `debugConsole.sourceForeground`: Foreground color for source filenames in debug REPL console.
-- `debugConsoleInputIcon.foreground`: Foreground color for debug console input marker icon.
+## 面包屑颜色
 
-## Notebook colors
+面包屑导航的主题颜色：
 
-- `notebook.editorBackground`: Notebook background color.
-- `notebook.cellBorderColor`: The border color for notebook cells.
-- `notebook.cellHoverBackground`: The background color of a cell when the cell is hovered.
-- `notebook.cellInsertionIndicator`: The color of the notebook cell insertion indicator.
-- `notebook.cellStatusBarItemHoverBackground`: The background color of notebook cell status bar items.
-- `notebook.cellToolbarSeparator`: The color of the separator in the cell bottom toolbar
-- `notebook.cellEditorBackground`: The color of the notebook cell editor background
-- `notebook.focusedCellBackground`: The background color of a cell when the cell is focused.
-- `notebook.focusedCellBorder`: The color of the cell's focus indicator borders when the cell is focused.
-- `notebook.focusedEditorBorder`: The color of the notebook cell editor border.
-- `notebook.inactiveFocusedCellBorder`: The color of the cell's top and bottom border when a cell is focused while the primary focus is outside of the editor.
-- `notebook.inactiveSelectedCellBorder`: The color of the cell's borders when multiple cells are selected.
-- `notebook.outputContainerBackgroundColor`: The Color of the notebook output container background.
-- `notebook.outputContainerBorderColor`: The border color of the notebook output container.
-- `notebook.selectedCellBackground`: The background color of a cell when the cell is selected.
-- `notebook.selectedCellBorder`: The color of the cell's top and bottom border when the cell is selected but not focused.
-- `notebook.symbolHighlightBackground`: Background color of highlighted cell
-- `notebookScrollbarSlider.activeBackground`: Notebook scrollbar slider background color when clicked on.
-- `notebookScrollbarSlider.background`: Notebook scrollbar slider background color.
-- `notebookScrollbarSlider.hoverBackground`: Notebook scrollbar slider background color when hovering.
-- `notebookStatusErrorIcon.foreground`: The error icon color of notebook cells in the cell status bar.
-- `notebookStatusRunningIcon.foreground`: The running icon color of notebook cells in the cell status bar.
-- `notebookStatusSuccessIcon.foreground`: The success icon color of notebook cells in the cell status bar.
-- `notebookEditorOverviewRuler.runningCellForeground`: The color of the running cell decoration in the notebook editor overview ruler.
+- `breadcrumb.foreground`: 面包屑项目的颜色。
+- `breadcrumb.background`: 面包屑项目的背景颜色。
+- `breadcrumb.focusForeground`: 聚焦面包屑项目的颜色。
+- `breadcrumb.activeSelectionForeground`: 选定面包屑项目的颜色。
+- `breadcrumbPicker.background`: 面包屑项目选择器的背景颜色。
 
-## Chart colors
+## 代码片段颜色
 
-- `charts.foreground`: Contrast color for text in charts.
-- `charts.lines`: Color for lines in charts.
-- `charts.red`: Color for red elements in charts.
-- `charts.blue`: Color for blue elements in charts.
-- `charts.yellow`: Color for yellow elements in charts.
-- `charts.orange`: Color for orange elements in charts.
-- `charts.green`: Color for green elements in charts.
-- `charts.purple`: Color for purple elements in charts.
-- `chart.line`: Line color for the chart.
-- `chart.axis`: Axis color for the chart.
-- `chart.guide`: Guide line for the chart.
+代码片段的主题颜色：
 
-## Ports colors
+- `editor.snippetTabstopHighlightBackground`: 代码片段制表位的高亮背景颜色。
+- `editor.snippetTabstopHighlightBorder`: 代码片段制表位的高亮边框颜色。
+- `editor.snippetFinalTabstopHighlightBackground`: 代码片段最终制表位的高亮背景颜色。
+- `editor.snippetFinalTabstopHighlightBorder`: 代码片段最终制表位的高亮边框颜色。
 
-- `ports.iconRunningProcessForeground`: The color of the icon for a port that has an associated running process.
+## 符号图标颜色
 
-## Comments View colors
+出现在大纲视图、面包屑导航和建议小部件中的符号图标的主题颜色：
 
-- `commentsView.resolvedIcon`: Icon color for resolved comments.
-- `commentsView.unresolvedIcon`: Icon color for unresolved comments.
+- `symbolIcon.arrayForeground`: 数组符号的前景色。
+- `symbolIcon.booleanForeground`: 布尔符号的前景色。
+- `symbolIcon.classForeground`: 类符号的前景色。
+- `symbolIcon.colorForeground`: 颜色符号的前景色。
+- `symbolIcon.constantForeground`: 常量符号的前景色。
+- `symbolIcon.constructorForeground`: 构造函数符号的前景色。
+- `symbolIcon.enumeratorForeground`: 枚举器符号的前景色。
+- `symbolIcon.enumeratorMemberForeground`: 枚举器成员符号的前景色。
+- `symbolIcon.eventForeground`: 事件符号的前景色。
+- `symbolIcon.fieldForeground`: 字段符号的前景色。
+- `symbolIcon.fileForeground`: 文件符号的前景色。
+- `symbolIcon.folderForeground`: 文件夹符号的前景色。
+- `symbolIcon.functionForeground`: 函数符号的前景色。
+- `symbolIcon.interfaceForeground`: 接口符号的前景色。
+- `symbolIcon.keyForeground`: 键符号的前景色。
+- `symbolIcon.keywordForeground`: 关键字符号的前景色。
+- `symbolIcon.methodForeground`: 方法符号的前景色。
+- `symbolIcon.moduleForeground`: 模块符号的前景色。
+- `symbolIcon.namespaceForeground`: 命名空间符号的前景色。
+- `symbolIcon.nullForeground`: 空符号的前景色。
+- `symbolIcon.numberForeground`: 数字符号的前景色。
+- `symbolIcon.objectForeground`: 对象符号的前景色。
+- `symbolIcon.operatorForeground`: 运算符符号的前景色。
+- `symbolIcon.packageForeground`: 包符号的前景色。
+- `symbolIcon.propertyForeground`: 属性符号的前景色。
+- `symbolIcon.referenceForeground`: 参考符号的前景色。
+- `symbolIcon.snippetForeground`: 代码片段符号的前景色。
+- `symbolIcon.stringForeground`: 字符串符号的前景色。
+- `symbolIcon.structForeground`: 结构符号的前景色。
+- `symbolIcon.textForeground`: 文本符号的前景色。
+- `symbolIcon.typeParameterForeground`: 类型参数符号的前景色。
+- `symbolIcon.unitForeground`: 单位符号的前景色。
+- `symbolIcon.variableForeground`: 变量符号的前景色。
 
-## Action Bar colors
+## 调试图标颜色
 
-- `actionBar.toggledBackground`: Background color for toggled action items in action bar.
+- `debugIcon.breakpointForeground`: 断点的图标颜色。
+- `debugIcon.breakpointDisabledForeground`: 禁用断点的图标颜色。
+- `debugIcon.breakpointUnverifiedForeground`: 未验证断点的图标颜色。
+- `debugIcon.breakpointCurrentStackframeForeground`: 当前断点堆栈帧的图标颜色。
+- `debugIcon.breakpointStackframeForeground`: 所有断点堆栈帧的图标颜色。
+- `debugIcon.startForeground`: 开始调试的调试工具栏图标。
+- `debugIcon.pauseForeground`: 暂停的调试工具栏图标。
+- `debugIcon.stopForeground`: 停止的调试工具栏图标。
+- `debugIcon.disconnectForeground`: 断开连接的调试工具栏图标。
+- `debugIcon.restartForeground`: 重启的调试工具栏图标。
+- `debugIcon.stepOverForeground`: 步过的调试工具栏图标。
+- `debugIcon.stepIntoForeground`: 步入的调试工具栏图标。
+- `debugIcon.stepOutForeground`: 步出的调试工具栏图标。
+- `debugIcon.continueForeground`: 继续的调试工具栏图标。
+- `debugIcon.stepBackForeground`: 后退的调试工具栏图标。
 
-## Simple Find Widget colors
+- `debugConsole.infoForeground`: 调试 REPL 控制台中信息消息的前景色。
+- `debugConsole.warningForeground`: 调试 REPL 控制台中警告消息的前景色。
+- `debugConsole.errorForeground`: 调试 REPL 控制台中错误消息的前景色。
+- `debugConsole.sourceForeground`: 调试 REPL 控制台中源文件名的前景色。
+- `debugConsoleInputIcon.foreground`: 调试控制台输入标记图标的前景色。
 
-- `simpleFindWidget.sashBorder`: Border color of the sash border.
+## 笔记本颜色
 
-## Gauge colors
+- `notebook.editorBackground`: 笔记本背景颜色。
+- `notebook.cellBorderColor`: 笔记本单元格的边框颜色。
+- `notebook.cellHoverBackground`: 单元格悬停时的背景颜色。
+- `notebook.cellInsertionIndicator`: 笔记本单元格插入指示器的颜色。
+- `notebook.cellStatusBarItemHoverBackground`: 笔记本单元格状态栏项目的背景颜色。
+- `notebook.cellToolbarSeparator`: 单元格底部工具栏中分隔符的颜色
+- `notebook.cellEditorBackground`: 笔记本单元格编辑器背景的颜色
+- `notebook.focusedCellBackground`: 单元格聚焦时的背景颜色。
+- `notebook.focusedCellBorder`: 单元格聚焦时单元格焦点指示器边框的颜色。
+- `notebook.focusedEditorBorder`: 笔记本单元格编辑器边框的颜色。
+- `notebook.inactiveFocusedCellBorder`: 当单元格聚焦而主焦点在编辑器外部时，单元格顶部和底部边框的颜色。
+- `notebook.inactiveSelectedCellBorder`: 当选中多个单元格时，单元格边框的颜色。
+- `notebook.outputContainerBackgroundColor`: 笔记本输出容器背景的颜色。
+- `notebook.outputContainerBorderColor`: 笔记本输出容器的边框颜色。
+- `notebook.selectedCellBackground`: 单元格被选中时的背景颜色。
+- `notebook.selectedCellBorder`: 当单元格被选中但未聚焦时，单元格顶部和底部边框的颜色。
+- `notebook.symbolHighlightBackground`: 高亮单元格的背景颜色
+- `notebookScrollbarSlider.activeBackground`: 点击时的笔记本滚动条滑块背景颜色。
+- `notebookScrollbarSlider.background`: 笔记本滚动条滑块背景颜色。
+- `notebookScrollbarSlider.hoverBackground`: 悬停时的笔记本滚动条滑块背景颜色。
+- `notebookStatusErrorIcon.foreground`: 单元格状态栏中笔记本单元格的错误图标颜色。
+- `notebookStatusRunningIcon.foreground`: 单元格状态栏中笔记本单元格的运行图标颜色。
+- `notebookStatusSuccessIcon.foreground`: 单元格状态栏中笔记本单元格的成功图标颜色。
+- `notebookEditorOverviewRuler.runningCellForeground`: 笔记本编辑器概览标尺中正在运行的单元格装饰的颜色。
 
-- `gauge.background`: Gauge background color.
-- `gauge.foreground`: Gauge foreground color.
-- `gauge.border`: Gauge border color.
-- `gauge.warningBackground`: Gauge warning background color.
-- `gauge.warningForeground`: Gauge warning foreground color.
-- `gauge.errorBackground`: Gauge error background color.
-- `gauge.errorForeground`: Gauge error foreground color.
+## 图表颜色
+
+- `charts.foreground`: 图表中文字的对比色。
+- `charts.lines`: 图表中线条的颜色。
+- `charts.red`: 图表中红色元素的颜色。
+- `charts.blue`: 图表中蓝色元素的颜色。
+- `charts.yellow`: 图表中黄色元素的颜色。
+- `charts.orange`: 图表中橙色元素的颜色。
+- `charts.green`: 图表中绿色元素的颜色。
+- `charts.purple`: 图表中紫色元素的颜色。
+- `chart.line`: 图表的线条颜色。
+- `chart.axis`: 图表的轴颜色。
+- `chart.guide`: 图表的参考线。
+
+## 端口颜色
+
+- `ports.iconRunningProcessForeground`: 具有关联正在运行进程的端口的图标颜色。
+
+## 评论视图颜色
+
+- `commentsView.resolvedIcon`: 已解决评论的图标颜色。
+- `commentsView.unresolvedIcon`: 未解决评论的图标颜色。
+
+## 动作栏颜色
+
+- `actionBar.toggledBackground`: 动作栏中切换动作项的背景颜色。
+
+## 简单查找小部件颜色
+
+- `simpleFindWidget.sashBorder`: 分隔条边框的边框颜色。
+
+## 仪表颜色
+
+- `gauge.background`: 仪表背景颜色。
+- `gauge.foreground`: 仪表前景色。
+- `gauge.border`: 仪表边框颜色。
+- `gauge.warningBackground`: 仪表警告背景颜色。
+- `gauge.warningForeground`: 仪表警告前景色。
+- `gauge.errorBackground`: 仪表错误背景颜色。
+- `gauge.errorForeground`: 仪表错误前景色。
 
 ## Markdown
 
-- `markdownAlert.note.foreground`: Foreground color for note alerts in markdown.
-- `markdownAlert.tip.foreground`: Foreground color for tip alerts in markdown.
-- `markdownAlert.important.foreground`: Foreground color for important alerts in markdown.
-- `markdownAlert.warning.foreground`: Foreground color for warning alerts in markdown.
-- `markdownAlert.caution.foreground`: Foreground color for caution alerts in markdown.
+- `markdownAlert.note.foreground`: Markdown 中笔记警报的前景色。
+- `markdownAlert.tip.foreground`: Markdown 中提示警报的前景色。
+- `markdownAlert.important.foreground`: Markdown 中重要警报的前景色。
+- `markdownAlert.warning.foreground`: Markdown 中警告警报的前景色。
+- `markdownAlert.caution.foreground`: Markdown 中注意警报的前景色。
 
-## 插件 colors
+## 插件颜色
 
-Color IDs can also be contributed by 插件 through the [color contribution point](/api/references/contribution-points#contributes.colors). These colors also appear when using code complete in the `workbench.colorCustomizations` settings and the color theme definition file. Users can see what colors an 插件 defines in the [插件 contributions](/docs/configure/插件/插件-marketplace#插件-details) tab.
+颜色 ID 也可以由插件通过 [颜色贡献点](/api/references/contribution-points#contributes.colors) 贡献。在 `workbench.colorCustomizations` 设置和颜色主题定义文件中使用代码补全时，这些颜色也会出现。用户可以在 [插件贡献](/docs/configure/extensions/extension-marketplace#extension-details) 选项卡中查看插件定义了哪些颜色。
